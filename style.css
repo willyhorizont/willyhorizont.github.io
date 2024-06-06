@@ -14,18 +14,20 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+header,
+main {
+    padding: 8px;
+}
+
 nav ul {
     list-style: none;
-    padding: 0;
-    text-align: center;
 }
 
 nav ul li {
     display: inline;
-    margin: 0 16px;
 }
 
-nav ul li a {
-    color: white;
+a {
+    color: #999;
     text-decoration: none;
 }
