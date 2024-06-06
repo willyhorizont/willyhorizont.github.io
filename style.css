@@ -1,7 +1,11 @@
-body {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html,
+body {
     background: #000;
     color: #9f9f9f;
     min-height: 100vh;
