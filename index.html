@@ -19,15 +19,36 @@
 </head>
 <body>
     <header>
-        <nav>
+        <nav class="navbar">
             <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/portfolio">Portfolio</a></li>
+                <li class="navbar-item app-logo"><a href="/"><img src="./favicon-192x192.png" alt="Willy Horizont's logo">
+                    <!-- <span>Willy Horizont</span> -->
+                </a></li>
+                <li class="navbar-item-selected"><a href="/">Home</a></li>
+                <li class="navbar-item"><a href="/portfolio">Portfolio</a></li>
+                <li class="navbar-item"><a href="/cv">CV</a></li>
+                <li class="navbar-item"><a href="/blog">Blog</a></li>
+                <li class="navbar-item"><a href="/links">Links</a></li>
+                <li class="navbar-item"><a href="/about">About</a></li>
+                <li class="navbar-item"><a href="/contact">Contact</a></li>
             </ul>
         </nav>
     </header>
     <main>
-        <h1>Welcome to Willy Horizont's Homepage</h1>
+        <div class="jumbotron">
+            <div class="jumbotron-item">
+                <h2>Hello, It's me</h2>
+                <h1>Willy Horizont</h1>
+                <h2>I'm a <span class="who-am-i">Web Developer</span></h2>
+                <p class="what-i-like-to-do">I like to code!</p>
+            </div>
+            <div class="jumbotron-item">
+                <img src="./favicon-512x512.png" alt="Willy Horizont's logo">
+            </div>
+        </div>
     </main>
+    <footer>
+        <p>Made with ❤️ by Willy Horizont</p>
+    </footer>
 </body>
 </html>
