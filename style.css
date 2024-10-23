@@ -24,7 +24,7 @@ a {
 header,
 main,
 footer {
-    padding: 8px 100px;
+    padding: 8px 8px;
 }
 
 header {
@@ -99,6 +99,8 @@ main {
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
+    flex-wrap: wrap;
+    row-gap: 8px;
 }
 
 .jumbotron h1 {
@@ -119,6 +121,9 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+    text-align: left;
+    flex: 1;
 }
 
 .who-am-i {
@@ -175,4 +180,58 @@ footer {
 .my-links ul ol a img,
 .my-links ul ol a span {
     transition: opacity 0.3s ease;
+}
+
+.navbar-hamburger-menu {
+    display: none;
+}
+
+.navbar-item.navbar-menu-close {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .navbar ul {
+        display: none;
+    }
+    .jumbotron-image {
+        display: none;
+    }
+
+    .navbar-hamburger-menu {
+        display: block;
+    }
+
+    .navbar-item.navbar-menu-close {
+        display: block;
+    }
+
+    .navbar ul {
+        display: none;
+        flex-direction: column;
+        align-items: flex-end;
+        width: 100%;
+        text-align: right;
+    }
+
+    .navbar-item a {
+        display: block;
+        padding: 16px;
+    }
+
+    .navbar-item-selected a {
+        display: block;
+        padding: 16px;
+    }
+
+    .navbar.responsive ul {
+        display: flex;
+    }
+    .navbar.responsive {
+        align-items: flex-start;
+    }
+
+    .navbar-hamburger-menu.visible {
+        display: none;
+    }
 }
