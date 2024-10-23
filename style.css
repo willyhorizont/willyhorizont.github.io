@@ -32,6 +32,11 @@ header {
     position: sticky;
 }
 
+.navbar {
+    display: flex;
+    align-items: center;
+}
+
 .navbar ul {
     display: flex;
     align-items: center;
