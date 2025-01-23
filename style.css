@@ -143,49 +143,6 @@ footer {
     text-align: center;
 }
 
-.my-links {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.my-links h1 {
-    margin-bottom: 16px;
-}
-
-.my-links ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    row-gap: 8px;
-}
-
-.my-links ul ol {
-    padding: 8px;
-    border-radius: 8px;
-    border: 2px solid #666;
-    text-align: center;
-    min-height: 68px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.my-links ul ol a img {
-    height: 48px;
-    vertical-align: middle;
-    margin-right: 8px;
-}
-
-.my-links ul ol a span {
-    display: inline-block;
-}
-
-.my-links ul ol a img,
-.my-links ul ol a span {
-    transition: opacity 0.3s ease;
-}
-
 .navbar-hamburger-menu {
     min-width: 30px;
     cursor: pointer;
@@ -200,6 +157,15 @@ footer {
 
 .navbar-item.navbar-menu-close:hover {
     opacity: 0.6;
+}
+
+@keyframes loading-spinner {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 @media (max-width: 768px) {

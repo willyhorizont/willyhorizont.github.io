@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Willy Horizont's Homepage">
-    <meta name="keywords" content="Willy Horizont">
+    <meta name="description" content="Willy Horizont's portfolio">
+    <meta name="keywords" content="Willy Horizont's portfolio">
     <meta name="author" content="Willy Horizont">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#000000">
@@ -28,22 +28,21 @@
                 <li class="navbar-item"><a href="/">Home</a></li>
                 <li class="navbar-item-selected"><a href="/portfolio">Portfolio</a></li>
                 <li class="navbar-item"><a href="/cv">CV</a></li>
-                <li class="navbar-item"><a href="/blog">Blog</a></li>
                 <li class="navbar-item"><a href="/links">Links</a></li>
                 <li class="navbar-item"><a href="/about">About</a></li>
                 <li class="navbar-item"><a href="/support">Support</a></li>
                 <li class="navbar-item"><a href="/contact">Contact</a></li>
-                <li class="navbar-item navbar-menu-close" onclick="toggleMenu()" style="padding: 16px;">x</li>
+                <li class="navbar-item navbar-menu-close" onclick="toggleMenu()" style="padding: 16px;">&#11205;</li>
             </ul>
             <span id="navbar-hamburger-menu" class="navbar-hamburger-menu" onclick="toggleMenu()">&#9776;</span>
         </nav>
     </header>
     <main>
-        <h1>Portfolio</h1>
-        <!-- <ul>
-            <li><a href="/portfolio/fizzbuzz">FizzBuzz Project</a></li>
-        </ul> -->
-        <p style="font-size: 5em;">coming soon...</p>
+        <div class="my-portfolio">
+            <h1 style="text-align: center;">Willy Horizont's Portfolio</h1>
+            <div id="portfolio-container" style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 16px; margin-top: 16px;">
+            </div>
+        </div>
     </main>
     <footer>
         <p>Made with ❤️ by Willy Horizont</p>
@@ -54,7 +53,115 @@
             navbarElement.classList.toggle("responsive");
             const hamburgerMenuButtonElement = document.getElementById("navbar-hamburger-menu");
             hamburgerMenuButtonElement.classList.toggle("visible");
-        }
+        };
+
+        const stringToHexColor = (anyString) => {
+            let theHash = 0;
+            let anIndex;
+
+            /* eslint-disable no-bitwise */
+            for (anIndex = 0; anIndex < anyString.length; anIndex += 1) {
+                theHash = anyString.charCodeAt(anIndex) + ((theHash << 5) - theHash);
+            }
+
+            let hexColorResult = '#';
+
+            for (anIndex = 0; anIndex < 3; anIndex += 1) {
+                const value = (theHash >> (anIndex * 8)) & 0xff;
+                hexColorResult += `00${value.toString(16)}`.slice(-2);
+            }
+            /* eslint-enable no-bitwise */
+
+            return hexColorResult;
+        };
+
+        const myPortfolio = [
+            {
+                "title": "Opsi Ambil Cuti Generator (front-end web app / tool)",
+                "href": "/portfolio/opsi-ambil-cuti-generator",
+                "target": "_self",
+                "body": `is a tools to generate / get Rekomendasi / Opsi Ambil Cuti Untuk Holiday`,
+            },
+            {
+                "title": "Ludido (back-end RESTful API)",
+                "href": "https://www.api.ludido.id",
+                "target": "_blank",
+                "body": `api.ludido.id is an e-ccommerce that sells cosmetic products (back-end RESTful API)
+- working in progress 2023 - present.
+- developed using NodeJS, ExpressJS and MongoDB.
+- authentication and authorization using firebase and JWT.
+- real-time chat feature using Socket.IO.
+- payment functionality using the Midtrans API.
+- delivery features using the SiCepat API.`,
+            },
+            {
+                "title": "Ludido (front-end web app)",
+                "href": "https://www.ludido.id",
+                "target": "_blank",
+                "body": `ludido.id is an e-ccommerce that sells cosmetic products (front-end web app)
+- working in progress 2023 - present.
+- developed using ReactJS.
+- authentication and authorization using firebase and JWT.
+- real-time chat feature using Socket.IO.
+- payment functionality using the Midtrans API.
+- delivery features using the SiCepat API.`,
+            },
+            {
+                "title": "ATS-Mart (front-end hybrid mobile app)",
+                "href": "/portfolio",
+                "target": "_self",
+                "body": `is an e-commerce that sells herbal products (front-end hybrid mobile app)
+- finished in only about 1 week sep 2022 - oct 2022.
+- developed using React Native.
+- authentication and authorization using firebase and JWT.
+- real-time chat feature using Socket.IO.
+- payment functionality using the Midtrans API.
+- delivery features using the MAS Kargo API and Paxel API.`,
+            },
+            {
+                "title": "ATS-Mart (back-end RESTful API)",
+                "href": "https://www.api.ats-mart.com",
+                "target": "_blank",
+                "body": `api.ats-mart.com is an e-commerce that sells herbal products (back-end RESTful API)
+- finished in only about 1 year sep 2021 - sep 2022.
+- developed using NodeJS, ExpressJS and MongoDB.
+- authentication and authorization using firebase and JWT.
+- real-time chat feature using Socket.IO.
+- payment functionality using the Midtrans API.
+- delivery features using the MAS Kargo API and Paxel API.`,
+            },
+            {
+                "title": "ATS-Mart (front-end web app)",
+                "href": "https://www.ats-mart.com",
+                "target": "_blank",
+                "body": `ats-mart.com is an e-commerce that sells herbal products (front-end web app)
+- finished in only about 1 year sep 2021 - sep 2022.
+- developed using ReactJS.
+- authentication and authorization using firebase and JWT.
+- real-time chat feature using Socket.IO.
+- payment functionality using the Midtrans API.
+- delivery features using the MAS Kargo API and Paxel API.`,
+            },
+        ];
+
+        (async () => {
+            const portfolioContainerElement = document.getElementById("portfolio-container");
+            myPortfolio.forEach((myPortfolioItem) => {
+                const portfolioItemCardElementNew = document.createElement("div");
+                portfolioItemCardElementNew.style = "width: 100%; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden;";
+
+                portfolioItemCardElementNew.innerHTML = `
+                    <a href="${myPortfolioItem.href}" target="${myPortfolioItem.target}" aria-label="${myPortfolioItem.title}">
+                        <div style="padding: 8px; display: flex; flex-direction: row; align-items: center; gap: 8px; background-color: #091929;">
+                            <div style="width: 16px; height: 16px; border-radius: 0.5em; background-color: ${`${stringToHexColor(myPortfolioItem.title)}`};"></div>
+                            <p style="text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;">${myPortfolioItem.title}</p>
+                        </div>
+                        <pre style="padding: 8px;">${myPortfolioItem.body}</pre>
+                    </a>
+                `;
+                portfolioContainerElement.appendChild(portfolioItemCardElementNew);
+            });
+        })();
     </script>
 </body>
 </html>

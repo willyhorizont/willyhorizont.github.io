@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Willy Horizont's Homepage">
-    <meta name="keywords" content="Willy Horizont">
+    <meta name="description" content="Support Willy Horizont">
+    <meta name="keywords" content="Support Willy Horizont">
     <meta name="author" content="Willy Horizont">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#000000">
@@ -28,12 +28,11 @@
                 <li class="navbar-item"><a href="/">Home</a></li>
                 <li class="navbar-item"><a href="/portfolio">Portfolio</a></li>
                 <li class="navbar-item"><a href="/cv">CV</a></li>
-                <li class="navbar-item"><a href="/blog">Blog</a></li>
                 <li class="navbar-item"><a href="/links">Links</a></li>
                 <li class="navbar-item"><a href="/about">About</a></li>
                 <li class="navbar-item-selected"><a href="/support">Support</a></li>
                 <li class="navbar-item"><a href="/contact">Contact</a></li>
-                <li class="navbar-item navbar-menu-close" onclick="toggleMenu()" style="padding: 16px;">x</li>
+                <li class="navbar-item navbar-menu-close" onclick="toggleMenu()" style="padding: 16px;">&#11205;</li>
             </ul>
             <span id="navbar-hamburger-menu" class="navbar-hamburger-menu" onclick="toggleMenu()">&#9776;</span>
         </nav>
@@ -41,11 +40,32 @@
     <main>
         <div class="my-links">
             <h1 style="text-align: center;">Support Me</h1>
-            <ul>
-                <ol><a href="https://trakteer.id/p3thvx/link?open=true" target="_blank" aria-label="Trakteer"><span>https://trakteer.id/p3thvx/link?open=true</span></a></ol>
-                <ol><a href="https://saweria.co/p3thvx" target="_blank" aria-label="Saweria"><span>https://saweria.co/p3thvx</span></a></ol>
-                <ol><a href="https://nyawer.co/p3thvx" target="_blank" aria-label="Nyawer"><span>https://nyawer.co/p3thvx</span></a></ol>
-            </ul>
+            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; flex-wrap: wrap; gap: 16px; margin-top: 16px;">
+                <div style="width: 80%; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden;">
+                    <a href="https://trakteer.id/p3thvx/link?open=true" target="_blank" aria-label="Trakteer">
+                        <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; gap: 8px;">
+                            <img src="https://trakteer.id/favicon/favicon-32x32.png" alt="Trakteer's logo" width="16px" height="16px">
+                            <p style="text-align: center;">Support me via Trakteer</p>
+                        </div>
+                    </a>
+                </div>
+                <div style="width: 80%; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden;">
+                    <a href="https://saweria.co/p3thvx" target="_blank" aria-label="Saweria">
+                        <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; gap: 8px;">
+                            <img src="https://encrypted-tbn2.gstatic.com/faviconV2?url=https://saweria.co&client=VFE&size=64&type=FAVICON&fallback_opts=TYPE,SIZE,URL&nfrp=2" alt="Saweria's logo" width="16px" height="16px">
+                            <p style="text-align: center;">Support me via Saweria</p>
+                        </div>
+                    </a>
+                </div>
+                <div style="width: 80%; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden;">
+                    <a href="https://nyawer.co/p3thvx" target="_blank" aria-label="Nyawer">
+                        <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; gap: 8px;">
+                            <img src="https://nyawer.co/favicon_io/favicon.ico" alt="Nyawer's logo" width="16px" height="16px">
+                            <p style="text-align: center;">Support me via Nyawer</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
     </main>
     <footer>
@@ -57,7 +77,7 @@
             navbarElement.classList.toggle("responsive");
             const hamburgerMenuButtonElement = document.getElementById("navbar-hamburger-menu");
             hamburgerMenuButtonElement.classList.toggle("visible");
-        }
+        };
     </script>
 </body>
 </html>
