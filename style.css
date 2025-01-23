@@ -62,7 +62,7 @@ header {
     transition: opacity 0.3s ease;
 }
 
-.app-logo {
+.spacer {
     flex: 1;
 }
 
@@ -72,6 +72,10 @@ header {
 
 .navbar-item a {
     transition: opacity 0.3s ease;
+}
+
+.navbar-item-selected a:hover {
+    opacity: 0.6;
 }
 
 .navbar-item a:hover {
@@ -183,11 +187,19 @@ footer {
 }
 
 .navbar-hamburger-menu {
+    min-width: 30px;
+    cursor: pointer;
+    text-align: center;
     display: none;
 }
 
 .navbar-item.navbar-menu-close {
     display: none;
+    cursor: pointer;
+}
+
+.navbar-item.navbar-menu-close:hover {
+    opacity: 0.6;
 }
 
 @media (max-width: 768px) {
@@ -233,5 +245,13 @@ footer {
 
     .navbar-hamburger-menu.visible {
         display: none;
+    }
+
+    .navbar-item {
+        margin-right: 0px;
+    }
+
+    .navbar-item-selected {
+        margin-right: 0px;
     }
 }
