@@ -40,7 +40,8 @@
     <main>
         <div class="portfolio-opsi-ambil-cuti-generator">
             <h1 style="text-align: center;">Kalender Cuti Generator</h1>
-            <h2 id="current-year-h2" style="text-align: center; font-size: 2em; margin-bottom: 16px;"></h2>
+            <h2 id="current-year-h2" style="text-align: center; font-size: 2em;"></h2>
+            <p style="text-align: center; font-size: 0.75em; margin-bottom: 16px;">* data hari libur didapatkan dari google calendar</p>
             <div id="loading-spinner" style="text-align: center; margin: 20px 0;">
                 <div style="border: 4px solid #ccc; border-top: 4px solid #333; border-radius: 50%; width: 40px; height: 40px; animation: loading-spinner 1s linear infinite; margin: 0 auto;"></div>
                 <p style="font-size: 2em; margin-top: 10px;">Loading...</p>
@@ -561,10 +562,10 @@
     
                 const currentYearNumeric = new Date().getFullYear();
                 const nextYearNumeric = (currentYearNumeric + 1);
-                const dayoffRecommendationOptionsGroupEventMonthStart = dayoffRecommendationOptionsGroup[0]["event_month"];
                 const dayoffRecommendationOptionsGroupEventDateStart = twoDigitNumericStringify(getDayFromDateStringYyyyMmDdInNumericOneBasedIndex(dayoffRecommendationOptionsGroup[0]["event_date"]));
-                const dayoffRecommendationOptionsGroupEventMonthEnd = dayoffRecommendationOptionsGroup[dayoffRecommendationOptionsGroup.length - 1]["event_month"];
+                const dayoffRecommendationOptionsGroupEventMonthStart = getMonthNameFromDateStringYyyyMmDdInString(dayoffRecommendationOptionsGroup[0]["event_date"], "id");
                 const dayoffRecommendationOptionsGroupEventDateEnd = twoDigitNumericStringify(getDayFromDateStringYyyyMmDdInNumericOneBasedIndex(dayoffRecommendationOptionsGroup[dayoffRecommendationOptionsGroup.length - 1]["event_date"]));
+                const dayoffRecommendationOptionsGroupEventMonthEnd = getMonthNameFromDateStringYyyyMmDdInString(dayoffRecommendationOptionsGroup[dayoffRecommendationOptionsGroup.length - 1]["event_date"], "id");
                 const dayoffRecommendationOptionsGroupTitle = `${dayoffRecommendationOptionsGroupEventDateStart} ${dayoffRecommendationOptionsGroupEventMonthStart} - ${dayoffRecommendationOptionsGroupEventDateEnd} ${dayoffRecommendationOptionsGroupEventMonthEnd}${((dayoffRecommendationOptionsGroup[dayoffRecommendationOptionsGroup.length - 1]["event_date"] === `${nextYearNumeric}-01-01`) ? ` ${nextYearNumeric}` : "")}`;
 
                 dayoffRecommendationOptionsGroupElementNew.innerHTML = `
