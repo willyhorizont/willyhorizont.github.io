@@ -171,6 +171,7 @@
         };
 
         const abcCalendarPassvvords = [
+            ["A", "I", "z", "a", "S", "y", "D", "H", "o", "G", "F", "B", "a", "W", "1", "J", "D", "d", "S", "b", "w", "9", "4", "V", "q", "m", "2", "K", "e", "w", "w", "-", "F", "x", "f", "p", "J", "i", "A"],
             ["A", "I", "z", "a", "S", "y", "A", "s", "w", "R", "e", "D", "o", "p", "h", "b", "Z", "g", "M", "u", "3", "N", "n", "k", "P", "p", "6", "K", "V", "2", "7", "O", "r", "1", "u", "2", "r", "S", "4"],
             ["A", "I", "z", "a", "S", "y", "C", "-", "K", "z", "x", "S", "L", "m", "m", "Z", "i", "t", "s", "C", "V", "v", "2", "D", "e", "u", "e", "e", "U", "x", "o", "V", "w", "P", "0", "r", "a", "V", "k"],
             ["A", "I", "z", "a", "S", "y", "A", "O", "u", "D", "z", "S", "l", "G", "2", "4", "R", "P", "B", "n", "3", "O", "K", "V", "A", "y", "j", "W", "3", "O", "K", "_", "E", "J", "h", "C", "U", "b", "p"],
@@ -561,12 +562,17 @@
                 const dayoffRecommendationOptionsGroupEventDateEnd = twoDigitNumericStringify(getDayFromDateStringYyyyMmDdInNumericOneBasedIndex(dayoffRecommendationOptionsGroup[dayoffRecommendationOptionsGroup.length - 1]["event_date"]));
                 const dayoffRecommendationOptionsGroupEventMonthEnd = getMonthNameFromDateStringYyyyMmDdInString(dayoffRecommendationOptionsGroup[dayoffRecommendationOptionsGroup.length - 1]["event_date"], "id");
                 const dayoffRecommendationOptionsGroupTitle = `${dayoffRecommendationOptionsGroupEventDateStart} ${dayoffRecommendationOptionsGroupEventMonthStart} - ${dayoffRecommendationOptionsGroupEventDateEnd} ${dayoffRecommendationOptionsGroupEventMonthEnd}${((dayoffRecommendationOptionsGroup[dayoffRecommendationOptionsGroup.length - 1]["event_date"] === `${nextYearNumeric}-01-01`) ? ` ${nextYearNumeric}` : "")}`;
+                const dayoffRecommendationOptionsGroupRowsString = dayoffRecommendationOptionsGroup.map((currentHoliday, currentItemIndex) => (
+                    `<p style="padding: 4px; margin-left: 8px; margin-right: 8px; margin-bottom: 8px; border-radius: 0.2em; background-color: ${(((currentItemIndex % 2) !== 0) ? "#450042" : "#003d01")}">
+                        ${getDayNameFromDateStringYyyyMmDdInString(currentHoliday["event_date"], "id")} ${twoDigitNumericStringify(getDayFromDateStringYyyyMmDdInNumericOneBasedIndex(currentHoliday["event_date"]))} ${getMonthNameFromDateStringYyyyMmDdInString(currentHoliday["event_date"], "id")} : ${currentHoliday["event_name"]}
+                    </p>`
+                )).join("");
 
                 dayoffRecommendationOptionsGroupElementNew.innerHTML = `
                     <p style="font-size: 1.5em; text-align: center; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; background-color: #091929;">${dayoffRecommendationOptionsGroupTitle}</p>
                     <div style="font-size: 1.5em; margin-bottom: 8px; border-bottom: 1px solid #ccc;"></div>
                     <div style="display: flex; flex-direction: column; margin-bottom: 0; flex: 1">
-                        ${dayoffRecommendationOptionsGroup.map((currentHoliday, currentItemIndex) => (`<p style="padding: 4px; margin-left: 8px; margin-right: 8px; margin-bottom: 8px; border-radius: 0.2em; background-color: ${(((currentItemIndex % 2) !== 0) ? "#450042" : "#003d01")}">${getDayNameFromDateStringYyyyMmDdInString(currentHoliday["event_date"], "id")} ${twoDigitNumericStringify(getDayFromDateStringYyyyMmDdInNumericOneBasedIndex(currentHoliday["event_date"]))} ${getMonthNameFromDateStringYyyyMmDdInString(currentHoliday["event_date"], "id")} : ${currentHoliday["event_name"]}</p>`)).join("")}
+                        ${dayoffRecommendationOptionsGroupRowsString}
                     </div>
                     <div style="font-size: 1.5em; margin-top: 8px; border-top: 1px solid #ccc;"></div>
                     <p style="text-align: center; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; background-color: #600; font-weight: bold">Bisa Holiday ${dayoffRecommendationOptionsGroup.length} Hari</p>
