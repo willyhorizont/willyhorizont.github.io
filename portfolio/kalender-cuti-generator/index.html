@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Rekomendasi Ambil Cuti Untuk Holiday, Opsi ambil cuti generator by Willy Horizont">
-    <meta name="keywords" content="Rekomendasi Ambil Cuti Untuk Holiday, Opsi ambil cuti generator by Willy Horizont">
+    <meta name="description" content="Kalender Cuti Generator by Willy Horizont, Rekomendasi Ambil Cuti Untuk Holiday Tahun Ini, Opsi Ambil Cuti Tahun Ini, Calendar Cuti Tahun Ini, Kalender Cuti Tahun Ini, Hari Libur Tahun Ini, Liburan, Tanggal Libur Tahun Ini, Hari Kejepit, Hari Kecepit, Tanggal Kejepit, Tanggal Kecepit, Hari Kejepit, Tanggal Merah">
+    <meta name="keywords" content="Kalender Cuti Generator by Willy Horizont, Rekomendasi Ambil Cuti Untuk Holiday Tahun Ini, Opsi Ambil Cuti Tahun Ini, Calendar Cuti Tahun Ini, Kalender Cuti Tahun Ini, Hari Libur Tahun Ini, Liburan, Tanggal Libur Tahun Ini, Hari Kejepit, Hari Kecepit, Tanggal Kejepit, Tanggal Kecepit, Hari Kejepit, Tanggal Merah">
     <meta name="author" content="Willy Horizont">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#000000">
@@ -15,7 +15,7 @@
     <link rel="icon" type="image/png" sizes="512x512" href="../../android-chrome-512x512.png">
     <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png">
     <link rel="stylesheet" href="../../style.css">
-    <title>Rekomendasi Ambil Cuti Untuk Holiday | Opsi Ambil Cuti Generator | Portfolio | Willy Horizont</title>
+    <title>Kalender Cuti Generator | Portfolio | Willy Horizont</title>
 </head>
 <body>
     <header>
@@ -34,18 +34,20 @@
                 <li class="navbar-item"><a href="/contact">Contact</a></li>
                 <li class="navbar-item navbar-menu-close" onclick="toggleMenu()" style="padding: 16px;">&#11205;</li>
             </ul>
-            <span id="navbar-hamburger-menu" class="navbar-hamburger-menu" onclick="toggleMenu()">&#9776;</span>
+            <span id="navbar-hamburger-menu" class="navbar-hamburger-menu" onclick="toggleMenu()">x</span>
         </nav>
     </header>
     <main>
         <div class="portfolio-opsi-ambil-cuti-generator">
-            <h1 style="text-align: center;">Opsi Ambil Cuti Generator</h1>
-            <div id="current-year-container"></div>
+            <h1 style="text-align: center;">Kalender Cuti Generator</h1>
+            <h2 id="current-year-h2" style="text-align: center; font-size: 2em; margin-bottom: 16px;"></h2>
             <div id="loading-spinner" style="text-align: center; margin: 20px 0;">
                 <div style="border: 4px solid #ccc; border-top: 4px solid #333; border-radius: 50%; width: 40px; height: 40px; animation: loading-spinner 1s linear infinite; margin: 0 auto;"></div>
                 <p style="font-size: 2em; margin-top: 10px;">Loading...</p>
             </div>
-            <div id="opsi-ambil-cuti-result-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; visibility: hidden;"></div>
+            <div id="error-message-container" style="text-align: center; margin: 20px 0;">
+            </div>
+            <div id="opsi-ambil-cuti-result-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 16px; visibility: hidden;"></div>
             <div style="display: flex; flex-direction: row; justify-content: center; align-items: center; flex-wrap: wrap; gap: 16px; margin-top: 16px;">
                 <div style="width: fit-content; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden;">
                     <a href="https://trakteer.id/p3thvx/link?open=true" target="_blank" aria-label="Trakteer">
@@ -83,7 +85,7 @@
             navbarElement.classList.toggle("responsive");
             const hamburgerMenuButtonElement = document.getElementById("navbar-hamburger-menu");
             hamburgerMenuButtonElement.classList.toggle("visible");
-        };
+        }
 
         const jsType = { "Null": "Null", "Boolean": "Boolean", "String": "String", "Numeric": "Numeric", "Object": "Object", "Array": "Array", "Function": "Function" };
 
@@ -147,7 +149,7 @@
         };
 
         const selectedLanguageOption = "fullId";
-        const dayoffName = "Opsi ambil cuti";
+        const dayoffPrefix = "Opsi ambil cuti";
 
         const pythonLikeSleep = (anySeconds) => {
             const secondInMiliseconds = 1_000;
@@ -347,31 +349,41 @@
             return dateYyyyMmDdInStringNew;
         };
 
-        const addEventToDayoffRecommendationOptionsOnlyIfNotExist = (currentResult, dateYyyyMmDdInString, currentHolidayName) => {
+        const processDayoffRecommendationOptions = (processCurrentHolidayCurrentResult, arrayOfEvents) => {
             const currentYearNumeric = new Date().getFullYear();
-            if (dateYyyyMmDdInString.includes(`${currentYearNumeric}-00-`)) return;
-            if (dateYyyyMmDdInString.includes(`${currentYearNumeric}-13-`)) return;
-            const isDateAlreadyExist = currentResult.some((currentItem) => (currentItem["event_date"] === dateYyyyMmDdInString));
-            if (isDateAlreadyExist === false) {
+            arrayOfEvents.forEach((currentEvent) => {
+                const dateYyyyMmDdInString = currentEvent["event_date"];
+                if (dateYyyyMmDdInString.includes(`${currentYearNumeric}-00-`)) return;
+                if (dateYyyyMmDdInString.includes(`${currentYearNumeric}-13-`)) return;
+                const isDateAlreadyExist = processCurrentHolidayCurrentResult.some((currentItem) => (currentItem["event_date"] === dateYyyyMmDdInString));
+                if (isDateAlreadyExist === true) return;
                 const dayNameInString = getDayNameFromDateStringYyyyMmDdInString(dateYyyyMmDdInString);
                 const monthNameInString = getMonthNameFromDateStringYyyyMmDdInString(dateYyyyMmDdInString);
-                currentResult.push({
+                const eventNameNew = ((currentEvent["event_name"] !== null) 
+                        ? `${currentEvent["event_name"]} (Hari ${dayNameInString})`
+                        : (((dayNameInString === dayObject[selectedLanguageOption][5]) || (dayNameInString === dayObject[selectedLanguageOption][6]))
+                            ? `Hari ${dayNameInString}`
+                            : `${dayoffPrefix} (Hari ${dayNameInString})`
+                        )
+                    );
+                processCurrentHolidayCurrentResult.push({
                     "event_date": dateYyyyMmDdInString,
-                    "event_name": ((currentHolidayName !== undefined) ? currentHolidayName : (((dayNameInString === dayObject[selectedLanguageOption][5]) || (dayNameInString === dayObject[selectedLanguageOption][6])) ? `Hari ${dayNameInString}` : `${dayoffName} (Hari ${dayNameInString})`)),
+                    "event_name": eventNameNew,
                     "event_day": dayNameInString,
                     "event_month": monthNameInString,
                 });
                 const nextYearNumeric = (currentYearNumeric + 1);
                 const currentYearDesemberMaxDaysInNumeric = getMonthMaxDaysFromDateStringYyyyMmDdInCurrentMonthInNumeric(`${currentYearNumeric}-12-01`);
                 if (dateYyyyMmDdInString === `${currentYearNumeric}-12-${currentYearDesemberMaxDaysInNumeric}`) {
-                    currentResult.push({
+                    processCurrentHolidayCurrentResult.push({
                         "event_date": `${nextYearNumeric}-01-01`,
-                        "event_name": "Hari Tahun Baru",
+                        "event_name": `Hari Tahun Baru ${nextYearNumeric} (Hari ${dayNameInString})`,
                         "event_day": getDayNameFromDateStringYyyyMmDdInString(`${nextYearNumeric}-01-01`),
                         "event_month": getMonthNameFromDateStringYyyyMmDdInString(`${nextYearNumeric}-01-01`),
                     });
                 }
-            }
+            });
+            return processCurrentHolidayCurrentResult;
         };
 
         const processCurrentHoliday = (currentResult, currentHoliday) => {
@@ -380,52 +392,139 @@
             const currentHolidayDayNameInString = getDayNameFromDateStringYyyyMmDdInString(currentHolidayDateYyyyMmDdInString);
 
             if (currentHolidayDayNameInString === dayObject[selectedLanguageOption][0]) {
-                addEventToDayoffRecommendationOptionsOnlyIfNotExist(currentResult, getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, -2));
-                addEventToDayoffRecommendationOptionsOnlyIfNotExist(currentResult, getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, -1));
-                addEventToDayoffRecommendationOptionsOnlyIfNotExist(currentResult, getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 0), currentHolidayName);
-                return currentResult;
+                return processDayoffRecommendationOptions(currentResult, [
+                    {
+                        "event_date": getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, -2),
+                        "event_name": null,
+                    },
+                    {
+                        "event_date": getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, -1),
+                        "event_name": null,
+                    },
+                    {
+                        "event_date": getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 0),
+                        "event_name": currentHolidayName,
+                    },
+                ]);
             }
 
             if (currentHolidayDayNameInString === dayObject[selectedLanguageOption][1]) {
-                addEventToDayoffRecommendationOptionsOnlyIfNotExist(currentResult, getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, -3));
-                addEventToDayoffRecommendationOptionsOnlyIfNotExist(currentResult, getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, -2));
-                addEventToDayoffRecommendationOptionsOnlyIfNotExist(currentResult, getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, -1));
-                addEventToDayoffRecommendationOptionsOnlyIfNotExist(currentResult, getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 0), currentHolidayName);
-                return currentResult;
+                return processDayoffRecommendationOptions(currentResult, [
+                    {
+                        "event_date": getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, -3),
+                        "event_name": null,
+                    },
+                    {
+                        "event_date": getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, -2),
+                        "event_name": null,
+                    },
+                    {
+                        "event_date": getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, -1),
+                        "event_name": null,
+                    },
+                    {
+                        "event_date": getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 0),
+                        "event_name": currentHolidayName,
+                    },
+                ]);
             }
 
             if (currentHolidayDayNameInString === dayObject[selectedLanguageOption][2]) {
-                addEventToDayoffRecommendationOptionsOnlyIfNotExist(currentResult, getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, -4));
-                addEventToDayoffRecommendationOptionsOnlyIfNotExist(currentResult, getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, -3));
-                addEventToDayoffRecommendationOptionsOnlyIfNotExist(currentResult, getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, -2));
-                addEventToDayoffRecommendationOptionsOnlyIfNotExist(currentResult, getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, -1));
-                addEventToDayoffRecommendationOptionsOnlyIfNotExist(currentResult, getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 0), currentHolidayName);
-                addEventToDayoffRecommendationOptionsOnlyIfNotExist(currentResult, getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 1));
-                addEventToDayoffRecommendationOptionsOnlyIfNotExist(currentResult, getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 2));
-                addEventToDayoffRecommendationOptionsOnlyIfNotExist(currentResult, getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 3));
-                addEventToDayoffRecommendationOptionsOnlyIfNotExist(currentResult, getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 4));
-                return currentResult;
+                return processDayoffRecommendationOptions(currentResult, [
+                    {
+                        "event_date": getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, -4),
+                        "event_name": null,
+                    },
+                    {
+                        "event_date": getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, -3),
+                        "event_name": null,
+                    },
+                    {
+                        "event_date": getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, -2),
+                        "event_name": null,
+                    },
+                    {
+                        "event_date": getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, -1),
+                        "event_name": null,
+                    },
+                    {
+                        "event_date": getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 0),
+                        "event_name": currentHolidayName,
+                    },
+                    {
+                        "event_date": getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 1),
+                        "event_name": null,
+                    },
+                    {
+                        "event_date": getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 2),
+                        "event_name": null,
+                    },
+                    {
+                        "event_date": getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 3),
+                        "event_name": null,
+                    },
+                    {
+                        "event_date": getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 4),
+                        "event_name": null,
+                    },
+                ]);
             }
 
             if (currentHolidayDayNameInString === dayObject[selectedLanguageOption][3]) {
-                addEventToDayoffRecommendationOptionsOnlyIfNotExist(currentResult, getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 0), currentHolidayName);
-                addEventToDayoffRecommendationOptionsOnlyIfNotExist(currentResult, getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 1));
-                addEventToDayoffRecommendationOptionsOnlyIfNotExist(currentResult, getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 2));
-                addEventToDayoffRecommendationOptionsOnlyIfNotExist(currentResult, getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 3));
-                return currentResult;
+                return processDayoffRecommendationOptions(currentResult, [
+                    {
+                        "event_date": getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 0),
+                        "event_name": currentHolidayName,
+                    },
+                    {
+                        "event_date": getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 1),
+                        "event_name": null,
+                    },
+                    {
+                        "event_date": getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 2),
+                        "event_name": null,
+                    },
+                    {
+                        "event_date": getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 3),
+                        "event_name": null,
+                    },
+                ]);
             }
 
             if (currentHolidayDayNameInString === dayObject[selectedLanguageOption][4]) {
-                addEventToDayoffRecommendationOptionsOnlyIfNotExist(currentResult, getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 0), currentHolidayName);
-                addEventToDayoffRecommendationOptionsOnlyIfNotExist(currentResult, getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 1));
-                addEventToDayoffRecommendationOptionsOnlyIfNotExist(currentResult, getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 2));
-                return currentResult;
+                return processDayoffRecommendationOptions(currentResult, [
+                    {
+                        "event_date": getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 0),
+                        "event_name": currentHolidayName,
+                    },
+                    {
+                        "event_date": getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 1),
+                        "event_name": null,
+                    },
+                    {
+                        "event_date": getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 2),
+                        "event_name": null,
+                    },
+                ]);
             }
 
             return currentResult;
         };
 
-        const generateDayoffRecommendationOptions = (indonesiaHolidays) => indonesiaHolidays?.reduce?.(processCurrentHoliday, []);
+        const generateDayoffRecommendationOptions = (indonesiaHolidays) => indonesiaHolidays.reduce(processCurrentHoliday, []);
+
+        const correctDayoffRecommendationOptionsEvents = (dayoffRecommendationOptions, indonesiaHolidays) => dayoffRecommendationOptions.map((currentEvent) => {
+            const dayoffRecommendationOptionsDateYyyyMmDdInString = currentEvent["event_date"];
+            const indonesiaHolidaysDateYyyyMmDdInString = indonesiaHolidays.find((currentIndonesiaHoliday) => (currentIndonesiaHoliday.start.date === dayoffRecommendationOptionsDateYyyyMmDdInString));
+            if (indonesiaHolidaysDateYyyyMmDdInString !== undefined) {
+                const currentHolidayName = indonesiaHolidaysDateYyyyMmDdInString.summary;
+                return {
+                    ...currentEvent,
+                    "event_name": currentHolidayName
+                };
+            }
+            return currentEvent;
+        });
 
         const groupDayoffRecommendationOptions = (dayoffRecommendationOptions) => {
             const currentYearNumeric = new Date().getFullYear();
@@ -459,10 +558,14 @@
             dayoffRecommendationOptionsGrouped.forEach((dayoffRecommendationOptionsGroup) => {
                 const dayoffRecommendationOptionsGroupElementNew = document.createElement("div");
                 dayoffRecommendationOptionsGroupElementNew.style = "border: 1px solid #ccc; border-radius: 8px; padding: 0px; background-color: #000; color: #9f9f9f; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden;";
-
+    
+                const currentYearNumeric = new Date().getFullYear();
+                const nextYearNumeric = (currentYearNumeric + 1);
                 const dayoffRecommendationOptionsGroupEventMonthStart = dayoffRecommendationOptionsGroup[0]["event_month"];
+                const dayoffRecommendationOptionsGroupEventDateStart = twoDigitNumericStringify(getDayFromDateStringYyyyMmDdInNumericOneBasedIndex(dayoffRecommendationOptionsGroup[0]["event_date"]));
                 const dayoffRecommendationOptionsGroupEventMonthEnd = dayoffRecommendationOptionsGroup[dayoffRecommendationOptionsGroup.length - 1]["event_month"];
-                const dayoffRecommendationOptionsGroupTitle = ((dayoffRecommendationOptionsGroupEventMonthStart === dayoffRecommendationOptionsGroupEventMonthEnd) ? dayoffRecommendationOptionsGroupEventMonthStart : `${dayoffRecommendationOptionsGroupEventMonthStart} - ${dayoffRecommendationOptionsGroupEventMonthEnd}`);
+                const dayoffRecommendationOptionsGroupEventDateEnd = twoDigitNumericStringify(getDayFromDateStringYyyyMmDdInNumericOneBasedIndex(dayoffRecommendationOptionsGroup[dayoffRecommendationOptionsGroup.length - 1]["event_date"]));
+                const dayoffRecommendationOptionsGroupTitle = `${dayoffRecommendationOptionsGroupEventDateStart} ${dayoffRecommendationOptionsGroupEventMonthStart} - ${dayoffRecommendationOptionsGroupEventDateEnd} ${dayoffRecommendationOptionsGroupEventMonthEnd}${((dayoffRecommendationOptionsGroup[dayoffRecommendationOptionsGroup.length - 1]["event_date"] === `${nextYearNumeric}-01-01`) ? ` ${nextYearNumeric}` : "")}`;
 
                 dayoffRecommendationOptionsGroupElementNew.innerHTML = `
                     <p style="font-size: 1.5em; text-align: center; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; background-color: #091929;">${dayoffRecommendationOptionsGroupTitle}</p>
@@ -481,31 +584,33 @@
 
         (async () => {
             try {
-                const portfolioOpsiAmbilCutiElement = document.getElementById("current-year-container");
-                const h2CurrentYearElementNew = document.createElement("h2");
-                h2CurrentYearElementNew.style = "text-align: center; margin-top: 16px; margin-bottom: 16px;";
+                document.getElementById("error-message-container").innerHTML = "";
+                const h2CurrentYearElementNew = document.getElementById("current-year-h2");
                 const currentYearNumeric = new Date().getFullYear();
-                h2CurrentYearElementNew.innerHTML = `Rekomendasi Ambil Cuti Untuk Holiday ${currentYearNumeric}`;
-                portfolioOpsiAmbilCutiElement.appendChild(h2CurrentYearElementNew);
+                h2CurrentYearElementNew.innerHTML = `${currentYearNumeric}`;
 
                 let dayoffRecommendationOptionsGrouped = JSON.parse(localStorage.getItem("dayoff_recommendation_options_grouped"));
+                let indonesiaHolidaysResult = null;
                 if (dayoffRecommendationOptionsGrouped === null) {
                     toggleLoadingSpinner(true);
-                    let indonesiaHolidaysResult = null;
                     while (indonesiaHolidaysResult === null) {
                         indonesiaHolidaysResult = await getIndonesiaHolidays();
+                        // console.table({ indonesiaHolidaysResult });
                         await pythonLikeSleep(1);
                     }
                     const dayoffRecommendationOptions = generateDayoffRecommendationOptions(indonesiaHolidaysResult);
-                    dayoffRecommendationOptionsGrouped = groupDayoffRecommendationOptions(dayoffRecommendationOptions);
+                    // console.table({ dayoffRecommendationOptions });
+                    const dayoffRecommendationOptionsCorrectEvents = correctDayoffRecommendationOptionsEvents(dayoffRecommendationOptions, indonesiaHolidaysResult);
+                    // console.table({ dayoffRecommendationOptionsCorrectEvents });
+                    dayoffRecommendationOptionsGrouped = groupDayoffRecommendationOptions(dayoffRecommendationOptionsCorrectEvents);
+                    // console.table({ dayoffRecommendationOptionsGrouped });
                     localStorage.setItem("dayoff_recommendation_options_grouped", JSON.stringify(dayoffRecommendationOptionsGrouped));
                 }
                 renderDayoffRecommendationOptionsGrouped(dayoffRecommendationOptionsGrouped);
-                toggleLoadingSpinner(false);
             } catch (anyError) {
                 console.error(anyError);
-                document.getElementById("loading-spinner").innerHTML = `
-                    <p style="color: red; text-align: center;">Failed to generate opsi ambil cuti. Please try again later. :(</p>
+                document.getElementById("error-message-container").innerHTML = `
+                    <p style="color: red; text-align: center;">Gagal untuk meng-generate kalender cuti. Mohon coba lagi nanti.</p>
                 `;
             } finally {
                 toggleLoadingSpinner(false);

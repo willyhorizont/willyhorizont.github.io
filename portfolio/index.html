@@ -34,7 +34,7 @@
                 <li class="navbar-item"><a href="/contact">Contact</a></li>
                 <li class="navbar-item navbar-menu-close" onclick="toggleMenu()" style="padding: 16px;">&#11205;</li>
             </ul>
-            <span id="navbar-hamburger-menu" class="navbar-hamburger-menu" onclick="toggleMenu()">&#9776;</span>
+            <span id="navbar-hamburger-menu" class="navbar-hamburger-menu" onclick="toggleMenu()">x</span>
         </nav>
     </header>
     <main>
@@ -48,7 +48,7 @@
         <p>Made with ❤️ by Willy Horizont</p>
     </footer>
     <script>
-        function toggleMenu() {
+        const toggleMenu = () => {
             const navbarElement = document.getElementById("navbar");
             navbarElement.classList.toggle("responsive");
             const hamburgerMenuButtonElement = document.getElementById("navbar-hamburger-menu");
@@ -77,17 +77,18 @@
 
         const myPortfolio = [
             {
-                "title": "Opsi Ambil Cuti Generator (front-end web app / tool)",
-                "href": "/portfolio/opsi-ambil-cuti-generator",
+                "title": "Kalender Cuti Generator (front-end web tool)",
+                "href": "/portfolio/kalender-cuti-generator",
                 "target": "_self",
-                "body": `is a tools to generate / get Rekomendasi / Opsi Ambil Cuti Untuk Holiday`,
+                "body": `Kalender Cuti Generator (front-end web tool).
+finished at (2025/01[Jan]/27[Mon]|04:20[AM]/04:20) in just a couple days.`,
             },
             {
-                "title": "Ludido (back-end RESTful API)",
+                "title": "api.ludido.id (back-end RESTful API of an e-ccommerce that sells cosmetic products)",
                 "href": "https://www.api.ludido.id",
                 "target": "_blank",
-                "body": `api.ludido.id is an e-ccommerce that sells cosmetic products (back-end RESTful API)
-- working in progress 2023 - present.
+                "body": `api.ludido.id (back-end RESTful API of an e-ccommerce that sells cosmetic products).
+working in progress (2023 - present).
 - developed using NodeJS, ExpressJS and MongoDB.
 - authentication and authorization using firebase and JWT.
 - real-time chat feature using Socket.IO.
@@ -95,11 +96,11 @@
 - delivery features using the SiCepat API.`,
             },
             {
-                "title": "Ludido (front-end web app)",
+                "title": "ludido.id (front-end web app of an e-ccommerce that sells cosmetic products)",
                 "href": "https://www.ludido.id",
                 "target": "_blank",
-                "body": `ludido.id is an e-ccommerce that sells cosmetic products (front-end web app)
-- working in progress 2023 - present.
+                "body": `ludido.id (front-end web app of an e-ccommerce that sells cosmetic products).
+working in progress (2023 - present).
 - developed using ReactJS.
 - authentication and authorization using firebase and JWT.
 - real-time chat feature using Socket.IO.
@@ -107,11 +108,11 @@
 - delivery features using the SiCepat API.`,
             },
             {
-                "title": "ATS-Mart (front-end hybrid mobile app)",
+                "title": "ATS-Mart (front-end hybrid mobile app of an e-commerce that sells herbal products)",
                 "href": "/portfolio",
                 "target": "_self",
-                "body": `is an e-commerce that sells herbal products (front-end hybrid mobile app)
-- finished in only about 1 week sep 2022 - oct 2022.
+                "body": `ATS-Mart (front-end hybrid mobile app of an e-commerce that sells herbal products).
+finished in only about 1 week (sep 2022 - oct 2022).
 - developed using React Native.
 - authentication and authorization using firebase and JWT.
 - real-time chat feature using Socket.IO.
@@ -119,11 +120,11 @@
 - delivery features using the MAS Kargo API and Paxel API.`,
             },
             {
-                "title": "ATS-Mart (back-end RESTful API)",
+                "title": "api.ats-mart.com (back-end RESTful API of an e-commerce that sells herbal products)",
                 "href": "https://www.api.ats-mart.com",
                 "target": "_blank",
-                "body": `api.ats-mart.com is an e-commerce that sells herbal products (back-end RESTful API)
-- finished in only about 1 year sep 2021 - sep 2022.
+                "body": `api.ats-mart.com (back-end RESTful API of an e-commerce that sells herbal products).
+finished in only about 1 year (sep 2021 - sep 2022).
 - developed using NodeJS, ExpressJS and MongoDB.
 - authentication and authorization using firebase and JWT.
 - real-time chat feature using Socket.IO.
@@ -131,11 +132,11 @@
 - delivery features using the MAS Kargo API and Paxel API.`,
             },
             {
-                "title": "ATS-Mart (front-end web app)",
+                "title": "ats-mart.com (front-end web app of an e-commerce that sells herbal products)",
                 "href": "https://www.ats-mart.com",
                 "target": "_blank",
-                "body": `ats-mart.com is an e-commerce that sells herbal products (front-end web app)
-- finished in only about 1 year sep 2021 - sep 2022.
+                "body": `ats-mart.com (front-end web app of an e-commerce that sells herbal products).
+finished in only about 1 year (sep 2021 - sep 2022).
 - developed using ReactJS.
 - authentication and authorization using firebase and JWT.
 - real-time chat feature using Socket.IO.

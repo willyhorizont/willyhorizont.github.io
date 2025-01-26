@@ -34,7 +34,7 @@
                 <li class="navbar-item"><a href="/contact">Contact</a></li>
                 <li class="navbar-item navbar-menu-close" onclick="toggleMenu()" style="padding: 16px;">&#11205;</li>
             </ul>
-            <span id="navbar-hamburger-menu" class="navbar-hamburger-menu" onclick="toggleMenu()">&#9776;</span>
+            <span id="navbar-hamburger-menu" class="navbar-hamburger-menu" onclick="toggleMenu()">x</span>
         </nav>
     </header>
     <main>
@@ -53,7 +53,7 @@
         <p>Made with ❤️ by Willy Horizont</p>
     </footer>
     <script>
-        function toggleMenu() {
+        const toggleMenu = () => {
             const navbarElement = document.getElementById("navbar");
             navbarElement.classList.toggle("responsive");
             const hamburgerMenuButtonElement = document.getElementById("navbar-hamburger-menu");
