@@ -360,13 +360,7 @@
                 if (isDateAlreadyExist === true) return;
                 const dayNameInString = getDayNameFromDateStringYyyyMmDdInString(dateYyyyMmDdInString);
                 const monthNameInString = getMonthNameFromDateStringYyyyMmDdInString(dateYyyyMmDdInString);
-                const eventNameNew = ((currentEvent["event_name"] !== null) 
-                        ? `${currentEvent["event_name"]} (Hari ${dayNameInString})`
-                        : (((dayNameInString === dayObject[selectedLanguageOption][5]) || (dayNameInString === dayObject[selectedLanguageOption][6]))
-                            ? `Hari ${dayNameInString}`
-                            : `${dayoffPrefix} (Hari ${dayNameInString})`
-                        )
-                    );
+                const eventNameNew = (((dayNameInString === dayObject[selectedLanguageOption][5]) || (dayNameInString === dayObject[selectedLanguageOption][6])) ? `Hari ${dayNameInString}` : `${dayoffPrefix} (Hari ${dayNameInString})`);
                 processCurrentHolidayCurrentResult.push({
                     "event_date": dateYyyyMmDdInString,
                     "event_name": eventNameNew,
@@ -519,9 +513,11 @@
             const indonesiaHolidaysDateYyyyMmDdInString = indonesiaHolidays.find((currentIndonesiaHoliday) => (currentIndonesiaHoliday.start.date === dayoffRecommendationOptionsDateYyyyMmDdInString));
             if (indonesiaHolidaysDateYyyyMmDdInString !== undefined) {
                 const currentHolidayName = indonesiaHolidaysDateYyyyMmDdInString.summary;
+                const dateYyyyMmDdInString = currentEvent["event_date"];
+                const dayNameInString = getDayNameFromDateStringYyyyMmDdInString(dateYyyyMmDdInString);
                 return {
                     ...currentEvent,
-                    "event_name": currentHolidayName
+                    "event_name": `${currentHolidayName} / Hari ${dayNameInString}`,
                 };
             }
             return currentEvent;
