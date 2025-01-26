@@ -81,12 +81,12 @@
         <p>Made with ❤️ by Willy Horizont</p>
     </footer>
     <script>
-        function toggleMenu() {
+        const toggleMenu = () => {
             const navbarElement = document.getElementById("navbar");
             navbarElement.classList.toggle("responsive");
             const hamburgerMenuButtonElement = document.getElementById("navbar-hamburger-menu");
             hamburgerMenuButtonElement.classList.toggle("visible");
-        }
+        };
 
         const jsType = { "Null": "Null", "Boolean": "Boolean", "String": "String", "Numeric": "Numeric", "Object": "Object", "Array": "Array", "Function": "Function" };
 
@@ -299,10 +299,10 @@
             return monthIndex;
         };
 
-        const getDayNameFromDateStringYyyyMmDdInString = (dateStringYyyyMmDd) => {
+        const getDayNameFromDateStringYyyyMmDdInString = (dateStringYyyyMmDd, languageOption) => {
             const dateDate = new Date(dateStringYyyyMmDd);
             const dayIndex = dateDate.getDay(); // (0-based index)
-            return dayObject[selectedLanguageOption][((dayIndex === 0) ? 6 : (dayIndex - 1))];
+            return ((languageOption !== undefined) ? dayObject[languageOption][((dayIndex === 0) ? 6 : (dayIndex - 1))] : dayObject[selectedLanguageOption][((dayIndex === 0) ? 6 : (dayIndex - 1))]);
         };
 
         const getMonthNameFromDateStringYyyyMmDdInString = (dateStringYyyyMmDd, languageOption) => {
@@ -513,11 +513,9 @@
             const indonesiaHolidaysDateYyyyMmDdInString = indonesiaHolidays.find((currentIndonesiaHoliday) => (currentIndonesiaHoliday.start.date === dayoffRecommendationOptionsDateYyyyMmDdInString));
             if (indonesiaHolidaysDateYyyyMmDdInString !== undefined) {
                 const currentHolidayName = indonesiaHolidaysDateYyyyMmDdInString.summary;
-                const dateYyyyMmDdInString = currentEvent["event_date"];
-                const dayNameInString = getDayNameFromDateStringYyyyMmDdInString(dateYyyyMmDdInString);
                 return {
                     ...currentEvent,
-                    "event_name": `${currentHolidayName} / Hari ${dayNameInString}`,
+                    "event_name": currentHolidayName,
                 };
             }
             return currentEvent;
@@ -555,7 +553,7 @@
             dayoffRecommendationOptionsGrouped.forEach((dayoffRecommendationOptionsGroup) => {
                 const dayoffRecommendationOptionsGroupElementNew = document.createElement("div");
                 dayoffRecommendationOptionsGroupElementNew.style = "border: 1px solid #ccc; border-radius: 8px; padding: 0px; background-color: #000; color: #9f9f9f; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden;";
-    
+
                 const currentYearNumeric = new Date().getFullYear();
                 const nextYearNumeric = (currentYearNumeric + 1);
                 const dayoffRecommendationOptionsGroupEventDateStart = twoDigitNumericStringify(getDayFromDateStringYyyyMmDdInNumericOneBasedIndex(dayoffRecommendationOptionsGroup[0]["event_date"]));
@@ -568,9 +566,7 @@
                     <p style="font-size: 1.5em; text-align: center; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; background-color: #091929;">${dayoffRecommendationOptionsGroupTitle}</p>
                     <div style="font-size: 1.5em; margin-bottom: 8px; border-bottom: 1px solid #ccc;"></div>
                     <div style="display: flex; flex-direction: column; margin-bottom: 0; flex: 1">
-                        ${dayoffRecommendationOptionsGroup.map((currentHoliday, currentItemIndex) => (
-                            `<p style="padding: 4px; margin-left: 8px; margin-right: 8px; margin-bottom: 8px; border-radius: 0.2em; background-color: ${(((currentItemIndex % 2) !== 0) ? "#450042" : "#003d01")}">${twoDigitNumericStringify(getDayFromDateStringYyyyMmDdInNumericOneBasedIndex(currentHoliday["event_date"]))} ${getMonthNameFromDateStringYyyyMmDdInString(currentHoliday["event_date"], "id")} : ${currentHoliday["event_name"]}</p>`
-                        )).join("")}
+                        ${dayoffRecommendationOptionsGroup.map((currentHoliday, currentItemIndex) => (`<p style="padding: 4px; margin-left: 8px; margin-right: 8px; margin-bottom: 8px; border-radius: 0.2em; background-color: ${(((currentItemIndex % 2) !== 0) ? "#450042" : "#003d01")}">${getDayNameFromDateStringYyyyMmDdInString(currentHoliday["event_date"], "id")} ${twoDigitNumericStringify(getDayFromDateStringYyyyMmDdInNumericOneBasedIndex(currentHoliday["event_date"]))} ${getMonthNameFromDateStringYyyyMmDdInString(currentHoliday["event_date"], "id")} : ${currentHoliday["event_name"]}</p>`)).join("")}
                     </div>
                     <div style="font-size: 1.5em; margin-top: 8px; border-top: 1px solid #ccc;"></div>
                     <p style="text-align: center; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; background-color: #600; font-weight: bold">Bisa Holiday ${dayoffRecommendationOptionsGroup.length} Hari</p>
