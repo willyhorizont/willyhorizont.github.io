@@ -50,7 +50,7 @@
             </div>
             <div id="opsi-ambil-cuti-result-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 16px; visibility: hidden;"></div>
             <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 16px;">
-                <div style="width: 50%; display: flex; flex-direction: row; justify-content: center; align-items: center; flex-wrap: wrap; gap: 16px;">
+                <div style="max-width: 50%; display: flex; flex-direction: row; justify-content: center; align-items: center; flex-wrap: wrap; gap: 16px;">
                     <div style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;">
                         <a href="https://trakteer.id/p3thvx/link?open=true" target="_blank" aria-label="Trakteer">
                             <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; flex-wrap: wrap; column-gap: 8px;">
@@ -596,22 +596,9 @@
                 const dayoffRecommendationOptionsGroupEventMonthEnd = getMonthNameFromDateStringYyyyMmDdInString(dayoffRecommendationOptionsGroup[dayoffRecommendationOptionsGroup.length - 1]["event_date"], "id");
                 const dayoffRecommendationOptionsGroupTitle = `${dayoffRecommendationOptionsGroupEventDateStart} ${dayoffRecommendationOptionsGroupEventMonthStart} - ${dayoffRecommendationOptionsGroupEventDateEnd} ${dayoffRecommendationOptionsGroupEventMonthEnd}${((dayoffRecommendationOptionsGroup[dayoffRecommendationOptionsGroup.length - 1]["event_date"] === `${nextYearNumeric}-01-01`) ? ` ${nextYearNumeric}` : "")}`;
                 const dayoffRecommendationOptionsGroupRowsString = dayoffRecommendationOptionsGroup.map((currentHoliday, currentItemIndex) => (
-                    `<div style="display: flex; flex-direction: row; flex-wrap: wrap; padding: 4px; margin-left: 8px; margin-right: 8px; margin-bottom: 8px; border-radius: 0.2em; background-color: ${(((currentItemIndex % 2) !== 0) ? "#450042" : "#003d01")};">
-                        <div style="display: flex; flex-direction: row; justify-content: space-between; flex: 1;">
-                            <p style="margin-right: 4px;">
-                                ${getDayNameFromDateStringYyyyMmDdInString(currentHoliday["event_date"], "id")}
-                            </p>
-                            <p style="margin-right: 4px;">
-                                ${twoDigitNumericStringify(getDayFromDateStringYyyyMmDdInNumericOneBasedIndex(currentHoliday["event_date"]))}
-                            </p>
-                            <p style="margin-right: 4px;">
-                                ${getMonthNameFromDateStringYyyyMmDdInString(currentHoliday["event_date"], "id")}
-                            </p>
-                        </div>
-                        <p style="flex: 4; flex-wrap: wrap;">
-                            : ${currentHoliday["event_name"]}
-                        </p>
-                    </div>`
+                    `<p style="padding: 4px; margin-left: 8px; margin-right: 8px; margin-bottom: 8px; border-radius: 0.2em; background-color: ${(((currentItemIndex % 2) !== 0) ? "#450042" : "#003d01")};">
+                        ${getDayNameFromDateStringYyyyMmDdInString(currentHoliday["event_date"], "id")} ${twoDigitNumericStringify(getDayFromDateStringYyyyMmDdInNumericOneBasedIndex(currentHoliday["event_date"]))} ${getMonthNameFromDateStringYyyyMmDdInString(currentHoliday["event_date"], "id")} : ${currentHoliday["event_name"]}
+                    </p>`
                 )).join("");
 
                 dayoffRecommendationOptionsGroupElementNew.innerHTML = `
