@@ -126,7 +126,21 @@ footer {
     }
 }
 
+.home-body {
+    display: flex;
+    flex-direction: row;
+    column-gap: 8px;
+    row-gap: 0px;
+}
+
 @media (max-width: 768px) {
+    .home-body {
+        display: flex;
+        flex-direction: column;
+        column-gap: 0px;
+        row-gap: 8px;
+    }
+
     .navbar ul {
         display: none;
     }

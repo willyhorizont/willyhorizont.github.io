@@ -326,8 +326,7 @@
         const YEAR_HIJRIAH_NUMERIC_2025 = 1447; // Satu Muharam / Tahun Baru Hijriah 1 Muharam 1447 Hijriah
         const YEAR_SAKA_NUMERIC_2025 = 1947; // Hari Suci Nyepi (Tahun Baru Saka 1947)
         const YEAR_CHINESE_LUNAR_NUMERIC_2025 = 2576; // Tahun Baru Imlek 2576 Kongzili
-        const YEAR_CHINESE_LUNAR_NUMERIC_2026 = 2577; // Tahun Baru Imlek 2577 Kongzili
-        const YEAR_BUDDHIS_NUMERIC_2025 = 2569; // Waisak 2569 Buddhist Era
+        const YEAR_BUDDHIST_NUMERIC_2025 = 2569; // Waisak 2569 Buddhist Era
         const YEAR_INDONESIA_INDEPENDENCE_PROCLAMATION_NUMERIC_2025 = 80; // Hari Proklamasi Kemerdekaan R.I. ke - 80
 
         const twoDigitNumericStringify = (anyNumeric) => {
@@ -591,11 +590,15 @@
         const convertYearAnnoDominiToHijriah = (yearAnnoDominiNumeric) => (YEAR_HIJRIAH_NUMERIC_2025 + (yearAnnoDominiNumeric - YEAR_ANNO_DOMINI_NUMERIC_2025));
         const convertYearAnnoDominiToSaka = (yearAnnoDominiNumeric) => (YEAR_SAKA_NUMERIC_2025 + (yearAnnoDominiNumeric - YEAR_ANNO_DOMINI_NUMERIC_2025));
         const convertYearAnnoDominiToChineseLunar = (yearAnnoDominiNumeric) => (YEAR_CHINESE_LUNAR_NUMERIC_2025 + (yearAnnoDominiNumeric - YEAR_ANNO_DOMINI_NUMERIC_2025));
-        const convertYearAnnoDominiToBuddhis = (yearAnnoDominiNumeric) => (YEAR_BUDDHIS_NUMERIC_2025 + (yearAnnoDominiNumeric - YEAR_ANNO_DOMINI_NUMERIC_2025));
+        const convertYearAnnoDominiToBuddhis = (yearAnnoDominiNumeric) => (YEAR_BUDDHIST_NUMERIC_2025 + (yearAnnoDominiNumeric - YEAR_ANNO_DOMINI_NUMERIC_2025));
         const convertYearAnnoDominiToIndonesiaIndependenceProclamation = (yearAnnoDominiNumeric) => (YEAR_INDONESIA_INDEPENDENCE_PROCLAMATION_NUMERIC_2025 + (yearAnnoDominiNumeric - YEAR_ANNO_DOMINI_NUMERIC_2025));
 
-        const getChineseZodiacOrShio = (yearChineseLunarNumeric) => {
+        const getChineseZodiacOrShio = (yearAnnoDominiNumeric) => {
             const zodiacsOrShios = [
+                { name_en: "Monkey", name_id: "Monyet", icon: "🐒" },
+                { name_en: "Rooster", name_id: "Ayam", icon: "🐓" },
+                { name_en: "Dog", name_id: "Anjing", icon: "🐕" },
+                { name_en: "Pig", name_id: "Babi", icon: "🐖" },
                 { name_en: "Rat", name_id: "Tikus", icon: "🐀" },
                 { name_en: "Ox", name_id: "Kerbau", icon: "🐂" },
                 { name_en: "Tiger", name_id: "Macan", icon: "🐅" },
@@ -604,12 +607,24 @@
                 { name_en: "Snake", name_id: "Ular", icon: "🐍" },
                 { name_en: "Horse", name_id: "Kuda", icon: "🐎" },
                 { name_en: "Goat", name_id: "Kambing", icon: "🐐" },
-                { name_en: "Monkey", name_id: "Monyet", icon: "🐒" },
-                { name_en: "Rooster", name_id: "Ayam", icon: "🐓" },
-                { name_en: "Dog", name_id: "Anjing", icon: "🐕" },
-                { name_en: "Pig", name_id: "Babi", icon: "🐖" }
             ];
-            return zodiacsOrShios[(yearChineseLunarNumeric + 8) % 12];
+            return zodiacsOrShios[yearAnnoDominiNumeric % 12];
+        };
+
+        const getChineseZodiacOrShioWithElement = (yearAnnoDominiNumeric) => {
+            const zodiacOrShioElements = [
+                { name_en: "Metal", name_id: "Logam", icon: "🔩" },
+                { name_en: "Metal", name_id: "Logam", icon: "🔩" },
+                { name_en: "Water", name_id: "Air", icon: "💧" },
+                { name_en: "Water", name_id: "Air", icon: "💧" },
+                { name_en: "Wood", name_id: "Kayu", icon: "🌳" },
+                { name_en: "Wood", name_id: "Kayu", icon: "🌳" },
+                { name_en: "Fire", name_id: "Api", icon: "🔥" },
+                { name_en: "Fire", name_id: "Api", icon: "🔥" },
+                { name_en: "Earth", name_id: "Tanah", icon: "🌍" },
+                { name_en: "Earth", name_id: "Tanah", icon: "🌍" },
+            ];
+            return zodiacOrShioElements[yearAnnoDominiNumeric.toString().at(-1)];
         };
 
         const correctDayoffRecommendationOptionsEvents = (dayoffRecommendationOptions, indonesiaHolidays) => {
@@ -639,10 +654,12 @@
                         };
                     }
                     if (indonesiaHolidaysDateYyyyMmDdInString.summary.includes("Tahun Baru Imlek")) {
-                        const currentChineseZodiacOrShio = getChineseZodiacOrShio(convertYearAnnoDominiToChineseLunar(currentYearNumeric) + 1);
+                        const currentChineseLunarYearNumeric = convertYearAnnoDominiToChineseLunar(currentYearNumeric);
+                        const currentChineseZodiacOrShio = getChineseZodiacOrShio(currentYearNumeric);
+                        const currentChineseZodiacOrShioElement = getChineseZodiacOrShioWithElement(currentYearNumeric);
                         return {
                             ...currentEvent,
-                            "event_name": `${indonesiaHolidaysDateYyyyMmDdInString.summary} ${convertYearAnnoDominiToChineseLunar(currentYearNumeric)} Kongzili Memasuki Tahun ${currentChineseZodiacOrShio.name_id} ${currentChineseZodiacOrShio.icon}`,
+                            "event_name": `${indonesiaHolidaysDateYyyyMmDdInString.summary} ${currentChineseLunarYearNumeric} Kongzili Tahun ${currentChineseZodiacOrShio.name_id} ${currentChineseZodiacOrShioElement.name_id} ${currentChineseZodiacOrShio.icon} ${currentChineseZodiacOrShioElement.icon}`,
                         };
                     }
                     if (indonesiaHolidaysDateYyyyMmDdInString.summary.includes("Hari Suci Nyepi (Tahun Baru Saka)")) {
@@ -722,7 +739,7 @@
                 const dayoffRecommendationOptionsGroupEventMonthEnd = getMonthNameFromDateStringYyyyMmDdInString(dayoffRecommendationOptionsGroup[dayoffRecommendationOptionsGroup.length - 1]["event_date"], "id");
                 const dayoffRecommendationOptionsGroupTitle = `${dayoffRecommendationOptionsGroupEventDateStart} ${dayoffRecommendationOptionsGroupEventMonthStart} - ${dayoffRecommendationOptionsGroupEventDateEnd} ${dayoffRecommendationOptionsGroupEventMonthEnd}${((dayoffRecommendationOptionsGroup[dayoffRecommendationOptionsGroup.length - 1]["event_date"] === `${nextYearNumeric}-01-01`) ? ` ${nextYearNumeric}` : "")}`;
                 const dayoffRecommendationOptionsGroupRowsString = dayoffRecommendationOptionsGroup.map((currentHoliday, currentItemIndex) => (
-                    `<p style="padding: 4px; margin-left: 8px; margin-right: 8px; margin-bottom: 8px; border-radius: 0.2em; background-color: ${(((currentItemIndex % 2) !== 0) ? "#450042" : "#003d01")};">
+                    `<p style="padding: 4px; margin-left: 8px; margin-right: 8px; margin-bottom: 8px; border-radius: 0.2em; border: 1px solid #ccc;">
     ${getDayNameFromDateStringYyyyMmDdInString(currentHoliday["event_date"], "id")} ${twoDigitNumericStringify(getDayFromDateStringYyyyMmDdInNumericOneBasedIndex(currentHoliday["event_date"]))} ${getMonthNameFromDateStringYyyyMmDdInString(currentHoliday["event_date"], "id")} : ${currentHoliday["event_name"]}
 </p>`
                 )).join("");
@@ -733,8 +750,7 @@
     <div style="display: flex; flex-direction: column; margin-bottom: 0; flex: 1">
         ${dayoffRecommendationOptionsGroupRowsString}
     </div>
-    <div style="font-size: 1.5em; margin-top: 8px; border-top: 1px solid #ccc;"></div>
-    <p style="text-align: center; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; background-color: #500; font-weight: bold">${((dayoffRecommendationOptionsGroup.length == 2) ? "-" : `Bisa Holiday ${dayoffRecommendationOptionsGroup.length} Hari`)}</p>
+    <p style="text-align: center; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; border-top: 1px solid #ccc; background-color: #500; font-weight: bold">${((dayoffRecommendationOptionsGroup.length == 2) ? "-" : `Bisa Holiday ${dayoffRecommendationOptionsGroup.length} Hari`)}</p>
 </div>`;
             }, "");
             ospiAmbilCutiResultContainerElement.innerHTML = ospiAmbilCutiResultContainerElementInnerHtml
@@ -746,11 +762,12 @@
                 const h2CurrentYearElementNew = document.getElementById("current-year-h2");
                 const currentYearNumeric = new Date().getFullYear();
                 h2CurrentYearElementNew.innerHTML = `${currentYearNumeric}`;
-                const dayoffRecommendationOptionsGroupedKey = `kalender_cuti_${currentYearNumeric}`;
+                const dayoffRecommendationOptionsGroupedKey = `kalender-cuti-${currentYearNumeric}-update-20250225-1-0-0`;
 
                 let dayoffRecommendationOptionsGrouped = JSON.parse(localStorage.getItem(dayoffRecommendationOptionsGroupedKey));
                 let indonesiaHolidaysResult = null;
-                if (dayoffRecommendationOptionsGrouped === null) {
+                const isDevelopmentMode = false;
+                if ((dayoffRecommendationOptionsGrouped === null) || (isDevelopmentMode === true)) {
                     localStorage.clear();
                     toggleLoadingSpinner(true);
                     while (indonesiaHolidaysResult === null) {

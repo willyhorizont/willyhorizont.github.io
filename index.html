@@ -48,7 +48,7 @@
         </nav>
     </header>
     <main>
-        <div style="min-height: calc(100vh - 68px); width: 100%; display: flex; flex-direction: row; flex-wrap: wrap; column-gap: 8px; padding: 8px;">
+        <div class="home-body" style="min-height: calc(100vh - 68px); width: 100%; flex-wrap: wrap; padding: 8px;">
             <div style="display: flex; flex-direction: column; flex-wrap: wrap; row-gap: 8px; flex: 3;">
                 <div style="width: 100%; display: flex; flex-direction: row; align-items: center; justify-content: space-evenly; flex-wrap: wrap; column-gap: 8px;">
                     <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: left; flex: 1;">
@@ -67,7 +67,7 @@
                             <p style="color: #efefef; margin-bottom: 16px;">Programming Languages</p>
                             <div id="bar-chart-container" style="display: flex; background-color:#0A0E12; width: 100%; height: 8px; border-radius: 6px; border: 1px solid #0000; column-gap: 2px; overflow: hidden;">
                             </div>
-                            <div id="languages-container" style="display: flex; flex-direction: row; margin-top: 8px; flex-wrap: wrap; row-gap: 16px; padding: 4px;">
+                            <div id="languages-container" style="display: flex; flex-direction: row; margin-top: 8px; flex-wrap: wrap; row-gap: 8px; padding: 4px;">
                             </div>
                         </div>
                     </div>
@@ -89,164 +89,204 @@
         const languages = [
             {
                 "language_name": "JavaScript",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/javascript/src",
                 "color_hex": "#f1e05a",
                 "custom_percentage": 5.56
             },
             {
                 "language_name": "Python",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/python",
                 "color_hex": "#3572A5",
                 "custom_percentage": 5.56
             },
             {
                 "language_name": "PHP",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/php",
                 "color_hex": "#4F5D95",
                 "custom_percentage": 5.56
             },
             {
                 "language_name": "Go",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/go",
                 "color_hex": "#00ADD8",
                 "custom_percentage": 5.56
             },
             {
                 "language_name": "Perl",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/perl",
                 "color_hex": "#0298c3",
                 "custom_percentage": 5.56
             },
             {
                 "language_name": "Julia",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/julia",
                 "color_hex": "#a270ba",
                 "custom_percentage": 5.56
             },
             {
                 "language_name": "Lua",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/lua",
                 "color_hex": "#000080",
                 "custom_percentage": 5.56
             },
             {
                 "language_name": "Ruby",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/ruby",
                 "color_hex": "#701516",
                 "custom_percentage": 5.56
             },
             {
                 "language_name": "R",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/r",
                 "color_hex": "#198CE7",
                 "custom_percentage": 5.56
             },
             {
                 "language_name": "Kotlin",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/kotlin",
                 "color_hex": "#A97BFF",
                 "custom_percentage": 5.56
             },
             {
                 "language_name": "Swift",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/swift",
                 "color_hex": "#f15c44",
                 "custom_percentage": 5.56
             },
             {
                 "language_name": "Dart",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/dart",
                 "color_hex": "#009089",
                 "custom_percentage": 5.56
             },
             {
                 "language_name": "Visual Basic .NET",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/visual_basic_dotnet",
                 "color_hex": "#945db7",
                 "custom_percentage": 5.56
             },
             {
                 "language_name": "C#",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/csharp",
                 "color_hex": "#178600",
                 "custom_percentage": 5.56
             },
             {
                 "language_name": "Matlab",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/matlab",
                 "color_hex": "#e16737",
                 "custom_percentage": 5.56
             },
             {
                 "language_name": "GNU Octave",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/gnu_octave",
                 "color_hex": "#e16737",
                 "custom_percentage": 5.56
             },
             {
                 "language_name": "Wolfram",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/wolfram",
                 "color_hex": "#ff4131",
                 "custom_percentage": 5.56
             },
             {
                 "language_name": "Raku",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/raku",
                 "color_hex": "#357fff",
                 "custom_percentage": 5.56
             },
             {
                 "language_name": "Scala",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/scala",
                 "color_hex": "#c22d40",
                 "custom_percentage": 5.56
             },
-            // {
-            //     "language_name": "Groovy",
-            //     "color_hex": "#4298b8",
-            //     "custom_percentage": 5.56
-            // },
-            // {
-            //     "language_name": "F#",
-            //     "color_hex": "#b845fc",
-            //     "custom_percentage": 5.56
-            // },
-            // {
-            //     "language_name": "Erlang",
-            //     "color_hex": "#B83998",
-            //     "custom_percentage": 5.56
-            // },
-            // {
-            //     "language_name": "Elixir",
-            //     "color_hex": "#6e4a7e",
-            //     "custom_percentage": 5.56
-            // },
-            // {
-            //     "language_name": "Gleam",
-            //     "color_hex": "#ffaff3",
-            //     "custom_percentage": 5.56
-            // },
-            // {
-            //     "language_name": "Clojure",
-            //     "color_hex": "#db5855",
-            //     "custom_percentage": 5.56
-            // },
-            // {
-            //     "language_name": "Java",
-            //     "color_hex": "#b07219",
-            //     "custom_percentage": 5.56
-            // },
-            // {
-            //     "language_name": "Mojo",
-            //     "color_hex": "#ff4c1f",
-            //     "custom_percentage": 5.56
-            // },
-            // {
-            //     "language_name": "Crystal",
-            //     "color_hex": "#000100",
-            //     "custom_percentage": 5.56
-            // },
-            // {
-            //     "language_name": "Rust",
-            //     "color_hex": "#dea584",
-            //     "custom_percentage": 5.56
-            // },
-            // {
-            //     "language_name": "Zig",
-            //     "color_hex": "#ec915c",
-            //     "custom_percentage": 5.56
-            // },
-            // {
-            //     "language_name": "C",
-            //     "color_hex": "#555555",
-            //     "custom_percentage": 5.56
-            // },
-            // {
-            //     "language_name": "C++",
-            //     "color_hex": "#f34b7d",
-            //     "custom_percentage": 5.56
-            // },
+            /*
+            {
+                "language_name": "Groovy",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/groovy",
+                "color_hex": "#4298b8",
+                "custom_percentage": 5.56
+            },
+            {
+                "language_name": "F#",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/fsharp",
+                "color_hex": "#b845fc",
+                "custom_percentage": 5.56
+            },
+            {
+                "language_name": "Erlang",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/erlang",
+                "color_hex": "#B83998",
+                "custom_percentage": 5.56
+            },
+            {
+                "language_name": "Elixir",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/elixir",
+                "color_hex": "#6e4a7e",
+                "custom_percentage": 5.56
+            },
+            {
+                "language_name": "Gleam",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/gleam",
+                "color_hex": "#ffaff3",
+                "custom_percentage": 5.56
+            },
+            {
+                "language_name": "Clojure",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/clojure",
+                "color_hex": "#db5855",
+                "custom_percentage": 5.56
+            },
+            {
+                "language_name": "Java",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/java",
+                "color_hex": "#b07219",
+                "custom_percentage": 5.56
+            },
+            {
+                "language_name": "Mojo",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/mojo",
+                "color_hex": "#ff4c1f",
+                "custom_percentage": 5.56
+            },
+            {
+                "language_name": "Crystal",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/crystal",
+                "color_hex": "#000100",
+                "custom_percentage": 5.56
+            },
+            {
+                "language_name": "Rust",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/rust",
+                "color_hex": "#dea584",
+                "custom_percentage": 5.56
+            },
+            {
+                "language_name": "Zig",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/zig",
+                "color_hex": "#ec915c",
+                "custom_percentage": 5.56
+            },
+            {
+                "language_name": "C",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/c",
+                "color_hex": "#555555",
+                "custom_percentage": 5.56
+            },
+            {
+                "language_name": "C++",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/cpp",
+                "color_hex": "#f34b7d",
+                "custom_percentage": 5.56
+            },
+            */
+            {
+                "language_name": "Other",
+                "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes_trial",
+                "color_hex": "#ededed",
+                "custom_percentage": 5.56
+            },
         ];
 
         (() => {
@@ -254,11 +294,11 @@
             const languagesContainer = document.getElementById("languages-container");
             const [barChartContainerInnerHtml, languagesContainerInnerHtml] = languages.reduce((currentResult, language) => {
                 currentResult[0] += `<div style="width: ${(100 / languages.length)}%; height: 100%; background-color: ${language["color_hex"]};"></div>`;
-                currentResult[1] += `<div style="display: flex; flex-direction: row; align-items: center; margin-right: 16px;">
-    <div style="width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; background-color: ${language["color_hex"]};"></div>
-    <p style="font-size: 10px; line-height: 0px; color: #efefef; margin-right: 8px;">${language["language_name"]}</p>
-    <p style="font-size: 10px; line-height: 0px; color: #a5a5a5;">${(100 / languages.length).toFixed(2)}%</p>
-</div>`;
+                currentResult[1] += `<a href="${language.language_url}" target="_blank" style="text-decoration: none; color: inherit; display: flex; flex-direction: row; align-items: center; margin-right: 16px;">
+    <div style="width: 0.5em; height: 0.5em; border-radius: 50%; margin-right: 8px; background-color: ${language["color_hex"]};"></div>
+    <p style="font-size: 0.75em; color: #efefef; margin-right: 8px;">${language["language_name"]}</p>
+    <p style="font-size: 0.75em; color: #a5a5a5;">${(100 / languages.length).toFixed(2)}%</p>
+</a>`;
                 return currentResult;
             }, ["", ""]);
             barChartContainer.innerHTML = barChartContainerInnerHtml;
