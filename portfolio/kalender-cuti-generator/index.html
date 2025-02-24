@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LECMLYN21B"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-LECMLYN21B');
+    </script>
+    <meta name="google-site-verification" content="UqB5vtnZNIl-hvyiqwM0PDgX772rcbWWjt0g9onB_BQ" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Kalender Cuti Generator by Willy Horizont, Kalender Izin Generator, Kalender Ijin Generator, Kalender Izin Cuti Generator, Kalender Ijin Cuti Generator, Rekomendasi Ambil Cuti Untuk Holiday Tahun Ini, Opsi Ambil Cuti Tahun Ini, Calendar Cuti Tahun Ini, Kalender Cuti Tahun Ini, Hari Libur Tahun Ini, Liburan, Tanggal Libur Tahun Ini, Hari Kejepit, Tanggal Kejepit, Hari Kecepit, Tanggal Kecepit, Tanggal Merah, Ijin Sekolah, Izin Sekolah, Bolos Sekolah, Ijin Ngantor, Izin Ngantor, Bolos Ngantor">
@@ -38,7 +48,7 @@
         </nav>
     </header>
     <main>
-        <div class="portfolio-opsi-ambil-cuti-generator">
+        <div class="portfolio-opsi-ambil-cuti-generator" style="padding: 8px;">
             <h1 style="text-align: center;">Kalender Cuti Generator</h1>
             <h2 id="current-year-h2" style="text-align: center; font-size: 2em;"></h2>
             <p style="text-align: center; font-size: 0.75em;">* data hari libur didapatkan dari Google Calendar</p>
@@ -703,10 +713,7 @@
 
         const renderDayoffRecommendationOptionsGrouped = (dayoffRecommendationOptionsGrouped) => {
             const ospiAmbilCutiResultContainerElement = document.getElementById("opsi-ambil-cuti-result-container");
-            dayoffRecommendationOptionsGrouped.forEach((dayoffRecommendationOptionsGroup) => {
-                const dayoffRecommendationOptionsGroupElementNew = document.createElement("div");
-                dayoffRecommendationOptionsGroupElementNew.style = "border: 1px solid #ccc; border-radius: 8px; padding: 0px; background-color: #000; color: #9f9f9f; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden;";
-
+            const ospiAmbilCutiResultContainerElementInnerHtml = dayoffRecommendationOptionsGrouped.reduce((currentResult, dayoffRecommendationOptionsGroup) => {
                 const currentYearNumeric = new Date().getFullYear();
                 const nextYearNumeric = (currentYearNumeric + 1);
                 const dayoffRecommendationOptionsGroupEventDateStart = twoDigitNumericStringify(getDayFromDateStringYyyyMmDdInNumericOneBasedIndex(dayoffRecommendationOptionsGroup[0]["event_date"]));
@@ -716,21 +723,21 @@
                 const dayoffRecommendationOptionsGroupTitle = `${dayoffRecommendationOptionsGroupEventDateStart} ${dayoffRecommendationOptionsGroupEventMonthStart} - ${dayoffRecommendationOptionsGroupEventDateEnd} ${dayoffRecommendationOptionsGroupEventMonthEnd}${((dayoffRecommendationOptionsGroup[dayoffRecommendationOptionsGroup.length - 1]["event_date"] === `${nextYearNumeric}-01-01`) ? ` ${nextYearNumeric}` : "")}`;
                 const dayoffRecommendationOptionsGroupRowsString = dayoffRecommendationOptionsGroup.map((currentHoliday, currentItemIndex) => (
                     `<p style="padding: 4px; margin-left: 8px; margin-right: 8px; margin-bottom: 8px; border-radius: 0.2em; background-color: ${(((currentItemIndex % 2) !== 0) ? "#450042" : "#003d01")};">
-                        ${getDayNameFromDateStringYyyyMmDdInString(currentHoliday["event_date"], "id")} ${twoDigitNumericStringify(getDayFromDateStringYyyyMmDdInNumericOneBasedIndex(currentHoliday["event_date"]))} ${getMonthNameFromDateStringYyyyMmDdInString(currentHoliday["event_date"], "id")} : ${currentHoliday["event_name"]}
-                    </p>`
+    ${getDayNameFromDateStringYyyyMmDdInString(currentHoliday["event_date"], "id")} ${twoDigitNumericStringify(getDayFromDateStringYyyyMmDdInNumericOneBasedIndex(currentHoliday["event_date"]))} ${getMonthNameFromDateStringYyyyMmDdInString(currentHoliday["event_date"], "id")} : ${currentHoliday["event_name"]}
+</p>`
                 )).join("");
 
-                dayoffRecommendationOptionsGroupElementNew.innerHTML = `
-                    <p style="font-size: 1.5em; text-align: center; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; background-color: #091929;">${dayoffRecommendationOptionsGroupTitle}</p>
-                    <div style="font-size: 1.5em; margin-bottom: 8px; border-bottom: 1px solid #ccc;"></div>
-                    <div style="display: flex; flex-direction: column; margin-bottom: 0; flex: 1">
-                        ${dayoffRecommendationOptionsGroupRowsString}
-                    </div>
-                    <div style="font-size: 1.5em; margin-top: 8px; border-top: 1px solid #ccc;"></div>
-                    <p style="text-align: center; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; background-color: #500; font-weight: bold">${((dayoffRecommendationOptionsGroup.length == 2) ? "-" : `Bisa Holiday ${dayoffRecommendationOptionsGroup.length} Hari`)}</p>
-                `;
-                ospiAmbilCutiResultContainerElement.appendChild(dayoffRecommendationOptionsGroupElementNew);
-            });
+                return `${currentResult}<div style="border: 1px solid #ccc; border-radius: 8px; padding: 0px; background-color: #000; color: #9f9f9f; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden;">
+    <p style="font-size: 1.5em; text-align: center; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; background-color: #091929;">${dayoffRecommendationOptionsGroupTitle}</p>
+    <div style="font-size: 1.5em; margin-bottom: 8px; border-bottom: 1px solid #ccc;"></div>
+    <div style="display: flex; flex-direction: column; margin-bottom: 0; flex: 1">
+        ${dayoffRecommendationOptionsGroupRowsString}
+    </div>
+    <div style="font-size: 1.5em; margin-top: 8px; border-top: 1px solid #ccc;"></div>
+    <p style="text-align: center; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; background-color: #500; font-weight: bold">${((dayoffRecommendationOptionsGroup.length == 2) ? "-" : `Bisa Holiday ${dayoffRecommendationOptionsGroup.length} Hari`)}</p>
+</div>`;
+            }, "");
+            ospiAmbilCutiResultContainerElement.innerHTML = ospiAmbilCutiResultContainerElementInnerHtml
         };
 
         (async () => {
