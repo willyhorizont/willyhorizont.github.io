@@ -30,6 +30,8 @@ footer {
 header {
     background: #091929;
     position: sticky;
+    top: 0px;
+    left: 0px;
 }
 
 .navbar {
@@ -94,7 +96,7 @@ main {
     flex: 1;
     display: flex;
     flex-direction: column;
-    row-gap: 16px;
+    /* row-gap: 16px; */
 }
 
 footer {

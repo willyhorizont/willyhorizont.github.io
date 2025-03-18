@@ -48,16 +48,20 @@
         </nav>
     </header>
     <main>
-        <div class="portfolio-opsi-ambil-cuti-generator" style="padding: 8px;">
-            <h1 style="text-align: center;">Kalender Cuti Generator</h1>
-            <h2 id="current-year-h2" style="text-align: center; font-size: 2em;"></h2>
+        <div style="display: flex; flex-direction: column; position: sticky; top: 67px; left: 0px; background-color: #091929; border-top: 1px solid #ccc; padding: 8px;">
+            <div style="display: flex; flex-direction: row; justify-content: center; column-gap: 8px;">
+                <h1 style="text-align: center;">Kalender Cuti Generator</h1>
+                <h2 id="current-year-h2" style="text-align: center; font-size: 2em;"></h2>
+            </div>
             <p style="text-align: center; font-size: 0.75em;">* data hari libur didapatkan dari Google Calendar</p>
-            <p style="text-align: center; font-size: 0.75em; margin-bottom: 16px;">* kalender cuti akan tergenerasi otomatis setiap tahun</p>
-            <div id="loading-spinner" style="text-align: center; margin: 20px 0;">
+            <p style="text-align: center; font-size: 0.75em;">* kalender cuti akan tergenerasi otomatis setiap tahun</p>
+        </div>
+        <div class="portfolio-opsi-ambil-cuti-generator" style="padding: 8px;">
+            <div id="loading-spinner" style="text-align: center;">
                 <div style="border: 4px solid #ccc; border-top: 4px solid #333; border-radius: 50%; width: 40px; height: 40px; animation: loading-spinner 1s linear infinite; margin: 0 auto;"></div>
                 <p style="font-size: 2em; margin-top: 10px;">Loading...</p>
             </div>
-            <div id="error-message-container" style="text-align: center; margin: 20px 0;">
+            <div id="error-message-container" style="text-align: center;">
             </div>
             <div id="opsi-ambil-cuti-result-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 16px; visibility: hidden;"></div>
             <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 16px;">
@@ -150,48 +154,7 @@
 
         const getType = (anything) => ((isNull(anything) === true) ? jsType.Null : ((isBoolean(anything) === true) ? jsType.Boolean : ((isString(anything) === true) ? jsType.String : ((isNumeric(anything) === true) ? jsType.Numeric : ((isObject(anything) === true) ? jsType.Object : ((isArray(anything) === true) ? jsType.Array : ((isFunction(anything) === true) ? jsType.Function : Object.prototype.toString.call(anything))))))));
 
-        const jsonStringify = (anything, { pretty = false } = {}) => {
-            // custom JSON.stringify() function jsonStringifyV3
-            const indent = " ".repeat(4);
-            let indentLevel = 0;
-            const jsonStringifyInner = (anythingInner) => {
-                const anythingInnerType = getType(anythingInner);
-                if (anythingInnerType === jsType.Null) return "null";
-                if (anythingInnerType === jsType.String) return `"${anythingInner}"`;
-                if ((anythingInnerType === jsType.Numeric) || (anythingInnerType === jsType.Boolean)) return `${anythingInner}`;
-                if (anythingInnerType === jsType.Object) {
-                    if (Object.keys(anythingInner).length === 0) return "{}";
-                    indentLevel += 1;
-                    let result = ((pretty === true) ? (`{\n${indent.repeat(indentLevel)}`) : "{ ");
-                    Object.entries(anythingInner).forEach(([objectKey, objectValue], objectEntryIndex) => {
-                        result = `${result}"${objectKey}": ${jsonStringifyInner(objectValue)}`;
-                        if ((objectEntryIndex + 1) !== Object.keys(anythingInner).length) {
-                            result = `${result}${((pretty === true) ? (`,\n${indent.repeat(indentLevel)}`) : ", ")}`;
-                        }
-                    });
-                    indentLevel -= 1;
-                    result = `${result}${((pretty === true) ? (`\n${indent.repeat(indentLevel)}}`) : " }")}`;
-                    return result;
-                }
-                if (anythingInnerType === jsType.Array) {
-                    if (anythingInner.length === 0) return "[]";
-                    indentLevel += 1;
-                    let result = ((pretty === true) ? (`[\n${indent.repeat(indentLevel)}`) : "[");
-                    anythingInner.forEach((arrayItem, arrayItemIndex) => {
-                        result = `${result}${jsonStringifyInner(arrayItem)}`;
-                        if ((arrayItemIndex + 1) !== anythingInner.length) {
-                            result = `${result}${((pretty === true) ? (`,\n${indent.repeat(indentLevel)}`) : ", ")}`;
-                        }
-                    });
-                    indentLevel -= 1;
-                    result = `${result}${((pretty === true) ? (`\n${indent.repeat(indentLevel)}]`) : "]")}`;
-                    return result;
-                }
-                if (anythingInnerType === jsType.Function) return "[object Function]";
-                return anythingInnerType;
-            };
-            return jsonStringifyInner(anything);
-        };
+        const jsonStringify = (anything, { pretty = false, indent = " ".repeat(4), indentLevel = 0, argumentType = getType(anything) } = {}) => ((argumentType === jsType.Null) ? "null" : ((argumentType === jsType.String) ? `"${anything}"` : (((argumentType === jsType.Numeric) || (argumentType === jsType.Boolean)) ? `${anything}` : ((argumentType === jsType.Object) ? ((Object.keys(anything).length === 0) ? "{}" : (`${((pretty === true) ? (`{\n${indent.repeat(indentLevel + 1)}`) : "{ ")}${Object.entries(anything).reduce((currentResult, [objectKey, objectValue], objectEntryIndex) => (`${currentResult}${(((objectEntryIndex + 1) !== Object.keys(anything).length) ? `"${objectKey}": ${jsonStringify(objectValue, { pretty, indentLevel: (indentLevel + 1) })}${((pretty === true) ? (`,\n${indent.repeat(indentLevel + 1)}`) : ", ")}` : `"${objectKey}": ${jsonStringify(objectValue, { pretty, indentLevel: (indentLevel + 1) })}`)}`), "")}${((pretty === true) ? (`\n${indent.repeat(indentLevel)}}`) : " }")}`)) : ((argumentType === jsType.Array) ? ((anything.length === 0) ? "[]" : (`${((pretty === true) ? (`[\n${indent.repeat(indentLevel + 1)}`) : "[")}${anything.reduce((currentResult, arrayItem, arrayItemIndex) => ((((arrayItemIndex + 1) !== anything.length) ? `${currentResult}${jsonStringify(arrayItem, { pretty, indentLevel: (indentLevel + 1) })}${((pretty === true) ? (`,\n${indent.repeat(indentLevel + 1)}`) : ", ")}` : `${currentResult}${jsonStringify(arrayItem, { pretty, indentLevel: (indentLevel + 1) })}`)), "")}${((pretty === true) ? (`\n${indent.repeat(indentLevel)}]`) : "]")}`)) : ((argumentType === jsType.Function) ? "[object Function]" : argumentType)))))); // custom JSON.stringify() function jsonStringifyV4
 
         const selectedLanguageOption = "fullId";
         const dayoffPrefix = "Opsi Ambil Cuti";
@@ -762,7 +725,7 @@
                 const h2CurrentYearElementNew = document.getElementById("current-year-h2");
                 const currentYearNumeric = new Date().getFullYear();
                 h2CurrentYearElementNew.innerHTML = `${currentYearNumeric}`;
-                const dayoffRecommendationOptionsGroupedKey = `kalender-cuti-${currentYearNumeric}-update-20250225-1-0-0`;
+                const dayoffRecommendationOptionsGroupedKey = `kalender-cuti-${currentYearNumeric}-update-20250225-1-0-1`;
 
                 let dayoffRecommendationOptionsGrouped = JSON.parse(localStorage.getItem(dayoffRecommendationOptionsGroupedKey));
                 let indonesiaHolidaysResult = null;
@@ -772,6 +735,7 @@
                     toggleLoadingSpinner(true);
                     while (indonesiaHolidaysResult === null) {
                         indonesiaHolidaysResult = await getIndonesiaHolidays();
+                        indonesiaHolidaysResult = indonesiaHolidaysResult.filter((currentHoliday) => (currentHoliday?.summary !== "Diwali"));
                         // console.table({ indonesiaHolidaysResult });
                         await pythonLikeSleep(1);
                     }
