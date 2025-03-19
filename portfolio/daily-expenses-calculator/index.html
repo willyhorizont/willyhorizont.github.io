@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LECMLYN21B"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-LECMLYN21B');
+    </script>
+    <meta name="google-site-verification" content="UqB5vtnZNIl-hvyiqwM0PDgX772rcbWWjt0g9onB_BQ" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Daily Expenses Calculator by Willy Horizont, Daily Expenses Calculator by Willy Horizont">
+    <meta name="keywords" content="Daily Expenses Calculator by Willy Horizont, Daily Expenses Calculator by Willy Horizont">
+    <meta name="author" content="Willy Horizont">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#000000">
+    <link rel="icon" type="image/x-icon" href="../../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../../android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="../../android-chrome-512x512.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png">
+    <link rel="stylesheet" href="../../style.css">
+    <title>Daily Expenses Calculator | Portfolio | Willy Horizont</title>
+</head>
+<body>
+    <header>
+        <nav id="navbar" class="navbar">
+            <a href="/" class="app-logo"><img src="../../android-chrome-192x192.png" alt="Willy Horizont's logo" width="48px" height="48px">
+                <!-- <span>Willy Horizont</span> -->
+            </a>
+            <div class="spacer"></div>
+            <ul>
+                <li class="navbar-item"><a href="/">Home</a></li>
+                <li class="navbar-item-selected"><a href="/portfolio">Portfolio</a></li>
+                <li class="navbar-item"><a href="/cv">CV</a></li>
+                <li class="navbar-item"><a href="/links">Links</a></li>
+                <li class="navbar-item"><a href="/about">About</a></li>
+                <li class="navbar-item"><a href="/support">Support</a></li>
+                <li class="navbar-item"><a href="/contact">Contact</a></li>
+                <li class="navbar-item navbar-menu-close" onclick="toggleMenu()" style="padding: 16px;">X</li>
+            </ul>
+            <span id="navbar-hamburger-menu" class="navbar-hamburger-menu" onclick="toggleMenu()">&#9776;</span>
+        </nav>
+    </header>
+    <main>
+        <div class="portfolio-daily-expenses-calculator" style="padding: 8px;">
+            <div class="portfolio-daily-expenses-calculator-container">
+                <h1 style="text-align: center;">Daily Expenses Calculator</h1>
+                <div id="daily-expenses-calculator-container" style="padding: 4px; width: 100%; display: flex; flex-direction: column; row-gap: 8px;">
+                </div>
+                <div style="padding: 8px; width: 100%; display: flex; flex-direction: column;">
+                    <button onclick="createNewExpensesItem()" style="padding: 0.2em 0.4em; width: fit-content; background-color: #007bff; color: #ccc;">+</button>
+                    <h2 style="margin-top: 8px;">Total Today Expenses: <span id="total-daily-expenses">0</span></h2>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 16px;">
+                <div style="max-width: 50%; display: flex; flex-direction: row; justify-content: center; align-items: center; flex-wrap: wrap; gap: 16px;">
+                    <div style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;">
+                        <a href="https://trakteer.id/p3thvx/link?open=true" target="_blank" aria-label="Trakteer">
+                            <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; flex-wrap: wrap; column-gap: 8px;">
+                                <p style="white-space: nowrap;">Support me via</p>
+                                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                    <img src="https://trakteer.id/favicon/favicon-32x32.png" alt="Trakteer's logo" width="16px" height="16px">
+                                    <p style="white-space: nowrap; margin-left: 4px;">Trakteer</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;">
+                        <a href="https://saweria.co/p3thvx" target="_blank" aria-label="Saweria">
+                            <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; flex-wrap: wrap; column-gap: 8px;">
+                                <p style="white-space: nowrap;">Support me via</p>
+                                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                    <img src="https://encrypted-tbn2.gstatic.com/faviconV2?url=https://saweria.co&client=VFE&size=64&type=FAVICON&fallback_opts=TYPE,SIZE,URL&nfrp=2" alt="Saweria's logo" width="16px" height="16px">
+                                    <p style="white-space: nowrap; margin-left: 4px;">Saweria</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;">
+                        <a href="https://sociabuzz.com/p3thvx" target="_blank" aria-label="Sociabuzz">
+                            <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; flex-wrap: wrap; column-gap: 8px;">
+                                <p style="white-space: nowrap;">Support me via</p>
+                                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                    <img src="https://storage.sociabuzz.com/storage/img/tribe/logo.png" alt="Sociabuzz's logo" width="16px" height="16px">
+                                    <p style="white-space: nowrap; margin-left: 4px;">Sociabuzz</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;">
+                        <a href="https://www.nihbuatjajan.com/p3thvx" target="_blank" aria-label="Nih Buat Jajan">
+                            <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; flex-wrap: wrap; column-gap: 8px;">
+                                <p style="white-space: nowrap;">Support me via</p>
+                                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxp6o2dSrvX4XsYqykH8l5-APqtOuniis61Q&s" alt="Nih Buat Jajan's logo" width="16px" height="16px">
+                                    <p style="white-space: nowrap; margin-left: 4px;">Nih Buat Jajan</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;">
+                        <a href="https://nyawer.co/p3thvx" target="_blank" aria-label="Nyawer">
+                            <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; flex-wrap: wrap; column-gap: 8px;">
+                                <p style="white-space: nowrap;">Support me via</p>
+                                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                    <img src="https://nyawer.co/favicon_io/favicon.ico" alt="Nyawer's logo" width="16px" height="16px">
+                                    <p style="white-space: nowrap; margin-left: 4px;">Nyawer</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>Made with ❤️ by Willy Horizont</p>
+    </footer>
+    <script>
+        const toggleMenu = () => {
+            const navbarElement = document.getElementById("navbar");
+            navbarElement.classList.toggle("responsive");
+            const hamburgerMenuButtonElement = document.getElementById("navbar-hamburger-menu");
+            hamburgerMenuButtonElement.classList.toggle("visible");
+        };
+
+        const jsType = { "Null": "Null", "Boolean": "Boolean", "String": "String", "Numeric": "Numeric", "Object": "Object", "Array": "Array", "Function": "Function" };
+
+        const isNull = (anything) => (((Object.prototype.toString.call(anything) === "[object Null]") && (anything === null)) || ((Object.prototype.toString.call(anything) === "[object Undefined]") && (anything === undefined)));
+
+        const isBoolean = (anything) => ((Object.prototype.toString.call(anything) === "[object Boolean]") && ((anything === true) || (anything === false)));
+
+        const isString = (anything) => (Object.prototype.toString.call(anything) === "[object String]");
+
+        const isNumeric = (anything) => ((Object.prototype.toString.call(anything) === "[object Number]") && (Number.isNaN(anything) === false) && (Number.isFinite(anything) === true));
+
+        const isObject = (anything) => (Object.prototype.toString.call(anything) === "[object Object]");
+
+        const isArray = (anything) => ((Object.prototype.toString.call(anything) === "[object Array]") && (Array.isArray(anything) === true));
+
+        const isFunction = (anything) => (Object.prototype.toString.call(anything) === "[object Function]");
+
+        const getType = (anything) => ((isNull(anything) === true) ? jsType.Null : ((isBoolean(anything) === true) ? jsType.Boolean : ((isString(anything) === true) ? jsType.String : ((isNumeric(anything) === true) ? jsType.Numeric : ((isObject(anything) === true) ? jsType.Object : ((isArray(anything) === true) ? jsType.Array : ((isFunction(anything) === true) ? jsType.Function : Object.prototype.toString.call(anything))))))));
+
+        const jsonStringify = (anything, { pretty = false, indent = " ".repeat(4), indentLevel = 0, argumentType = getType(anything) } = {}) => ((argumentType === jsType.Null) ? "null" : ((argumentType === jsType.String) ? `"${anything}"` : (((argumentType === jsType.Numeric) || (argumentType === jsType.Boolean)) ? `${anything}` : ((argumentType === jsType.Object) ? ((Object.keys(anything).length === 0) ? "{}" : (`${((pretty === true) ? (`{\n${indent.repeat(indentLevel + 1)}`) : "{ ")}${Object.entries(anything).reduce((currentResult, [objectKey, objectValue], objectEntryIndex) => (`${currentResult}${(((objectEntryIndex + 1) !== Object.keys(anything).length) ? `"${objectKey}": ${jsonStringify(objectValue, { pretty, indentLevel: (indentLevel + 1) })}${((pretty === true) ? (`,\n${indent.repeat(indentLevel + 1)}`) : ", ")}` : `"${objectKey}": ${jsonStringify(objectValue, { pretty, indentLevel: (indentLevel + 1) })}`)}`), "")}${((pretty === true) ? (`\n${indent.repeat(indentLevel)}}`) : " }")}`)) : ((argumentType === jsType.Array) ? ((anything.length === 0) ? "[]" : (`${((pretty === true) ? (`[\n${indent.repeat(indentLevel + 1)}`) : "[")}${anything.reduce((currentResult, arrayItem, arrayItemIndex) => ((((arrayItemIndex + 1) !== anything.length) ? `${currentResult}${jsonStringify(arrayItem, { pretty, indentLevel: (indentLevel + 1) })}${((pretty === true) ? (`,\n${indent.repeat(indentLevel + 1)}`) : ", ")}` : `${currentResult}${jsonStringify(arrayItem, { pretty, indentLevel: (indentLevel + 1) })}`)), "")}${((pretty === true) ? (`\n${indent.repeat(indentLevel)}]`) : "]")}`)) : ((argumentType === jsType.Function) ? "[object Function]" : argumentType)))))); // custom JSON.stringify() function jsonStringifyV4
+
+        const localStorageKey = "daily-expenses";
+
+        const chipInputString = `<input onkeydown="changeCurrentExpensesItemItemsOnKeyDown(event)" onfocusout="changeCurrentExpensesItemItemsOnBlur(event)" type="text" placeholder="item" style="margin: 4px 0px; width: 100%; background-color: #000; color: #ccc; padding: 4px; border: none; outline: none;">`;
+
+        const dailyExpensesCalculatorContainer = document.getElementById("daily-expenses-calculator-container");
+        const totalDailyExpensesElement = document.getElementById("total-daily-expenses");
+
+        const saveToLocalStorage = () => {
+            const expensesData = Array.from(dailyExpensesCalculatorContainer.children).map((expensesItemElement) => ({
+                priceDisplay: expensesItemElement.dataset.priceDisplay ?? "",
+                priceValue: expensesItemElement.dataset.priceValue ?? "",
+                items: expensesItemElement.dataset.items ?? ""
+            }));
+            localStorage.setItem(localStorageKey, JSON.stringify(expensesData));
+        };
+
+        const removeDuplicateStringFromArrayOfString = (anyArray) => {
+            const seen = {};
+            const uniqueArray = [];
+
+            anyArray.forEach((item) => {
+                if (seen?.[item] === undefined) {
+                    seen[item] = true;
+                    uniqueArray.push(item);
+                }
+            });
+
+            return uniqueArray;
+        };
+
+        const updateTotalDailyExpenses = () => {
+            const totalDailyExpenses = Array.from(document.querySelectorAll("#daily-expenses-calculator-container div")).reduce((currentResult, currentExpensesItemItem) => (currentResult + parseFloat(currentExpensesItemItem.dataset.priceValue ?? 0)), 0);
+            totalDailyExpensesElement.innerText = totalDailyExpenses.toLocaleString("id-ID");
+        };
+
+        const changeCurrentExpensesItemPrice = (priceInputElement) => {
+            const priceInputValue = priceInputElement.value.split("_").join("").split(".").join("");
+            priceInputElement.parentElement.dataset.priceValue = priceInputValue;
+            priceInputElement.parentElement.dataset.priceDisplay = priceInputElement.value;
+            priceInputElement.parentElement.insertAdjacentHTML("afterbegin", `<input value="${priceInputElement.value}" onchange="changeCurrentExpensesItemPrice(this)" type="text" placeholder="money spent" style="background-color: #000; color: #ccc; border: 1px solid #ccc; padding: 4px 8px; outline: none;">`);
+            priceInputElement.remove();
+            updateTotalDailyExpenses();
+            saveToLocalStorage();
+        };
+
+        const removeCurrentChip = (closeButtonEl) => {
+            closeButtonEl.parentElement.parentElement.parentElement.dataset.items = closeButtonEl.parentElement.parentElement.parentElement.dataset.items.split(",").filter((item) => (item.trim() !== closeButtonEl.parentElement.dataset.item)).join(",");
+            closeButtonEl.parentElement.remove();
+            saveToLocalStorage();
+        };
+
+        const changeCurrentExpensesItemItems = (event) => {
+            const inputElement = event.target;
+            const parentElement = inputElement.parentElement.parentElement;
+            const inputElementValue = inputElement.value.split(",").filter((item) => (item.trim() !== "")).join(",");
+            const inputElementValueNew = (inputElement.parentElement.parentElement.dataset.items === "" ? inputElementValue : inputElement.parentElement.parentElement.dataset.items + ", " + inputElementValue);
+            const inputElementValueNoDuplicate = removeDuplicateStringFromArrayOfString(inputElementValueNew.split(",").map((item) => (item.trim()))).join(", ");
+            inputElement.parentElement.parentElement.dataset.items = inputElementValueNoDuplicate;
+
+            const chips = inputElementValueNoDuplicate.split(",").map((value) => (`<div data-item="${value.trim()}" style="margin-left: 4px; margin-top: 8px; margin-bottom: 8px; background: rgb(0, 123, 255); color: rgb(238, 238, 238); padding: 0.2em 0.4em; border-radius: 0.2em; display: flex; align-items: center; gap: 8px;">
+<span>${value.trim()}</span><span onclick="removeCurrentChip(this)" style="cursor: pointer; font-weight: bold;">×</span>
+</div>`)).join("");
+
+            inputElement.parentElement.innerHTML = `${chips}
+${chipInputString}`;
+            inputElement.value = "";
+            saveToLocalStorage();
+        };
+
+        const changeCurrentExpensesItemItemsOnKeyDown = (event) => {
+            if (event.key === "Enter") {
+                if (event.target.value.trim() === "") {
+                    event.preventDefault();
+                    return;
+                }
+                changeCurrentExpensesItemItems(event);
+                event.target.focus();
+                event.preventDefault();
+            }
+        };
+
+        const changeCurrentExpensesItemItemsOnBlur = (event) => {
+            if (event.target.value.trim() === "") {
+                event.preventDefault();
+                return;
+            }
+            changeCurrentExpensesItemItems(event);
+            event.preventDefault();
+        };
+
+        const removeCurrentExpensesItemItem = (removeButtonEl) => {
+            removeButtonEl.parentElement.remove();
+            updateTotalDailyExpenses();
+            saveToLocalStorage();
+        };
+
+        const createNewExpensesItem = () => {
+            dailyExpensesCalculatorContainer.innerHTML += `<div data-price-value="" data-price-display="" data-items="" style="width: 100%; padding: 8px; display: flex; flex-direction: row; border: 1px solid #fff;">
+    <input value="" onchange="changeCurrentExpensesItemPrice(this)" type="text" placeholder="money spent" style="background-color: #000; color: #ccc; border: 1px solid #ccc; padding: 4px 8px; outline: none;">
+    <div style="margin-left: 8px; display: flex; flex-flow: wrap; background-color: #000; border: 1px solid #ccc; flex: 1 1 0%; padding: 0px 4px;">
+        ${chipInputString}
+    </div>
+    <button onclick="removeCurrentExpensesItemItem(this)" style="margin-left: 8px; background: red; color: white; border: none; padding: 0.2em 0.4em; cursor: pointer;">x</button>
+</div>`;
+        };
+
+        const loadFromLocalStorage = () => {
+            const dailyExpensesCalculatorSavedData = JSON.parse(localStorage.getItem(localStorageKey));
+            if (dailyExpensesCalculatorSavedData === null) return;
+            dailyExpensesCalculatorContainer.innerHTML = dailyExpensesCalculatorSavedData.map(({ priceValue, priceDisplay, items }) => (`<div data-price-value="${priceValue}" data-price-display="${priceDisplay}" data-items="${items}" style="width: 100%; padding: 8px; display: flex; flex-direction: row; border: 1px solid #fff;">
+    <input value="${priceDisplay}" onchange="changeCurrentExpensesItemPrice(this)" type="text" placeholder="money spent" style="background-color: #000; color: #ccc; border: 1px solid #ccc; padding: 4px 8px; outline: none;">
+    <div style="margin-left: 8px; display: flex; flex-flow: wrap; background-color: #000; border: 1px solid #ccc; flex: 1 1 0%; padding: 0px 4px;">
+        ${items.split(", ").map((item) => (`<div data-item="${item}" style="margin-left: 4px; margin-top: 8px; margin-bottom: 8px; background: rgb(0, 123, 255); color: rgb(238, 238, 238); padding: 0.2em 0.4em; border-radius: 0.2em; display: flex; align-items: center; gap: 8px;">
+    <span>${item}</span><span onclick="removeCurrentChip(this)" style="cursor: pointer; font-weight: bold;">×</span>
+</div>`)).join("")}
+        ${chipInputString}
+    </div>
+    <button onclick="removeCurrentExpensesItemItem(this)" style="margin-left: 8px; background: red; color: white; border: none; padding: 0.2em 0.4em; cursor: pointer;">x</button>
+</div>`)).join("");
+updateTotalDailyExpenses();
+        };
+
+        loadFromLocalStorage();
+    </script>
+</body>
+</html>
