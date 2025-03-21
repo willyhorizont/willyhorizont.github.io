@@ -13,8 +13,8 @@
     <meta name="google-site-verification" content="UqB5vtnZNIl-hvyiqwM0PDgX772rcbWWjt0g9onB_BQ" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Daily Expenses Calculator by Willy Horizont, Daily Expenses Calculator by Willy Horizont">
-    <meta name="keywords" content="Daily Expenses Calculator by Willy Horizont, Daily Expenses Calculator by Willy Horizont">
+    <meta name="description" content="Kalkulator Pengeluaran by Willy Horizont, Kalkulator Pengeluaran by Willy Horizont">
+    <meta name="keywords" content="Kalkulator Pengeluaran by Willy Horizont, Kalkulator Pengeluaran by Willy Horizont">
     <meta name="author" content="Willy Horizont">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#000000">
@@ -25,7 +25,7 @@
     <link rel="icon" type="image/png" sizes="512x512" href="../../android-chrome-512x512.png">
     <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png">
     <link rel="stylesheet" href="../../style.css">
-    <title>Daily Expenses Calculator | Portfolio | Willy Horizont</title>
+    <title>Kalkulator Pengeluaran | Portfolio | Willy Horizont</title>
 </head>
 <body>
     <header>
@@ -48,14 +48,22 @@
         </nav>
     </header>
     <main>
-        <div class="portfolio-daily-expenses-calculator" style="padding: 8px;">
-            <div class="portfolio-daily-expenses-calculator-container">
-                <h1 style="text-align: center;">Daily Expenses Calculator</h1>
-                <div id="daily-expenses-calculator-container" style="padding: 4px; width: 100%; display: flex; flex-direction: column; row-gap: 8px;">
+        <div class="portfolio-expenses-calculator" style="padding: 8px;">
+            <div class="portfolio-expenses-calculator-container">
+                <h1 style="text-align: center;">Kalkulator Pengeluaran</h1>
+                <!-- <p style="text-align: center; font-size: 1em;">Type whatever you spent that money on, separate 'em with a comma, and then hit "Enter" key - or just hit "Enter" key after each one.</p> -->
+                <!-- <p style="text-align: center; font-size: 1em;">Ketik untuk apa saja uangnya dihabiskan, pisahkan dengan koma, lalu tekan "Enter" pada keyboard - atau langsung tekan tombol "Enter" setelah selesai mengetik satu.</p> -->
+                <div style="display: flex; flex-direction: column; padding: 4px 0px; row-gap: 8px;">
+                    <p style="text-align: center; font-size: 1em;">pada kolom kiri, agar angka mudah dibaca bisa pisahkan angka dengan underscore atau titik. contoh 10_000 atau 14.000</p>
+                    <p style="text-align: center; font-size: 1em;">pada kolom tengah, bisa pisahkan dengan koma, lalu tekan "Enter" pada keyboard - atau langsung tekan tombol "Enter" setelah selesai mengetik satu.</p>
                 </div>
-                <div style="padding: 8px; width: 100%; display: flex; flex-direction: column;">
-                    <button onclick="createNewExpensesItem()" style="padding: 0.2em 0.4em; width: fit-content; background-color: #007bff; color: #ccc;">+</button>
-                    <h2 style="margin-top: 8px;">Total Today Expenses: <span id="total-daily-expenses">0</span></h2>
+                <div id="expenses-calculator-container" style="padding: 4px; width: 100%; display: flex; flex-direction: column; row-gap: 8px;">
+                </div>
+                <div style="padding: 4px; width: 100%; display: flex; flex-direction: column;">
+                    <div style="padding: 4px; width: 100%; display: flex; flex-direction: column;">
+                        <button onclick="createNewExpensesItem()" style="padding: 0.2em 0.4em; width: 1.9em; aspect-ratio: 1 / 1; background-color: #007bff; color: #ccc;">+</button>
+                    </div>
+                    <h2 style="margin-top: 8px;">Total Pengeluaran: <span id="total-expenses">0</span></h2>
                 </div>
             </div>
             <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 16px;">
@@ -122,6 +130,10 @@
     <footer>
         <p>Made with ❤️ by Willy Horizont</p>
     </footer>
+    <!-- <script type="module">
+        import { jsonStringify } from "../../utils.js";
+        console.log(jsonStringify({ "foo": "bar" }, { pretty: true }));
+    </script> -->
     <script>
         const toggleMenu = () => {
             const navbarElement = document.getElementById("navbar");
@@ -130,37 +142,45 @@
             hamburgerMenuButtonElement.classList.toggle("visible");
         };
 
-        const jsType = { "Null": "Null", "Boolean": "Boolean", "String": "String", "Numeric": "Numeric", "Object": "Object", "Array": "Array", "Function": "Function" };
+        const isNan = (num) => Number.isNaN(parseFloat(num));
 
-        const isNull = (anything) => (((Object.prototype.toString.call(anything) === "[object Null]") && (anything === null)) || ((Object.prototype.toString.call(anything) === "[object Undefined]") && (anything === undefined)));
+        const localStorageKey = "expenses";
 
-        const isBoolean = (anything) => ((Object.prototype.toString.call(anything) === "[object Boolean]") && ((anything === true) || (anything === false)));
+        const chipInputString = `<input onkeydown="changeCurrentExpensesItemItemsOnKeyDown(event)" onfocusout="changeCurrentExpensesItemItemsOnBlur(event)" type="text" placeholder="untuk apa saja" style="margin: 8px 4px 8px 4px; width: 100%; background-color: #000; color: #ccc; padding: 8px 4px; border: none; outline: none;">`;
 
-        const isString = (anything) => (Object.prototype.toString.call(anything) === "[object String]");
+        const chipRemoveButtonString = `<div style="display: flex; align-items: center; justify-content: center; background-color: #000; color: #ccc; width: 1.2em; aspect-ratio: 1 / 1; border-radius: 50%;">
+    <span onclick="removeCurrentChip(this)" style="cursor: pointer; font-weight: bold;">×</span>
+</div>`;
 
-        const isNumeric = (anything) => ((Object.prototype.toString.call(anything) === "[object Number]") && (Number.isNaN(anything) === false) && (Number.isFinite(anything) === true));
+        const removeExpenseItemButtonString = `<div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;">
+    <button onclick="removeCurrentExpensesItemItem(this)" style="margin-left: 8px; background: red; color: white; border: none; padding: 0.2em 0.4em; cursor: pointer; width: 1.6em; aspect-ratio: 1 / 1;">x</button>
+</div>`;
 
-        const isObject = (anything) => (Object.prototype.toString.call(anything) === "[object Object]");
+        const getPriceInputString = (value = "", priceValue = "", priceDisplay = "") => `<div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;">
+    <input value="${value}" data-price-value="${priceValue}" data-price-display="${priceDisplay}" onchange="changeCurrentExpensesItemPrice(this)" type="text" placeholder="jumlah uang" style="background-color: #000; color: #ccc; border: 1px solid #ccc; padding: 4px 8px; outline: none; max-width: 120px;">
+</div>`;
 
-        const isArray = (anything) => ((Object.prototype.toString.call(anything) === "[object Array]") && (Array.isArray(anything) === true));
+        const getExpenseChipInputString = (children) => `<div style="margin-left: 8px; display: flex; flex-flow: wrap; background-color: #000; border: 1px solid #ccc; flex: 1; padding: 0px 4px; overflow-x: scroll;">
+    ${children}
+</div>`;
 
-        const isFunction = (anything) => (Object.prototype.toString.call(anything) === "[object Function]");
+    const getExpenseChipString = (children, item) => `<div data-item="${item}" style="margin: 8px 4px; background: #999; color: #222; padding: 0.2em 0.4em; border-radius: 0.2em; display: flex; align-items: center; gap: 8px;">
+${children}
+</div>`;
 
-        const getType = (anything) => ((isNull(anything) === true) ? jsType.Null : ((isBoolean(anything) === true) ? jsType.Boolean : ((isString(anything) === true) ? jsType.String : ((isNumeric(anything) === true) ? jsType.Numeric : ((isObject(anything) === true) ? jsType.Object : ((isArray(anything) === true) ? jsType.Array : ((isFunction(anything) === true) ? jsType.Function : Object.prototype.toString.call(anything))))))));
+    const getExpenseChipValueContainerString = (value) => `<span style="white-space: nowrap;">${value}</span>`;
 
-        const jsonStringify = (anything, { pretty = false, indent = " ".repeat(4), indentLevel = 0, argumentType = getType(anything) } = {}) => ((argumentType === jsType.Null) ? "null" : ((argumentType === jsType.String) ? `"${anything}"` : (((argumentType === jsType.Numeric) || (argumentType === jsType.Boolean)) ? `${anything}` : ((argumentType === jsType.Object) ? ((Object.keys(anything).length === 0) ? "{}" : (`${((pretty === true) ? (`{\n${indent.repeat(indentLevel + 1)}`) : "{ ")}${Object.entries(anything).reduce((currentResult, [objectKey, objectValue], objectEntryIndex) => (`${currentResult}${(((objectEntryIndex + 1) !== Object.keys(anything).length) ? `"${objectKey}": ${jsonStringify(objectValue, { pretty, indentLevel: (indentLevel + 1) })}${((pretty === true) ? (`,\n${indent.repeat(indentLevel + 1)}`) : ", ")}` : `"${objectKey}": ${jsonStringify(objectValue, { pretty, indentLevel: (indentLevel + 1) })}`)}`), "")}${((pretty === true) ? (`\n${indent.repeat(indentLevel)}}`) : " }")}`)) : ((argumentType === jsType.Array) ? ((anything.length === 0) ? "[]" : (`${((pretty === true) ? (`[\n${indent.repeat(indentLevel + 1)}`) : "[")}${anything.reduce((currentResult, arrayItem, arrayItemIndex) => ((((arrayItemIndex + 1) !== anything.length) ? `${currentResult}${jsonStringify(arrayItem, { pretty, indentLevel: (indentLevel + 1) })}${((pretty === true) ? (`,\n${indent.repeat(indentLevel + 1)}`) : ", ")}` : `${currentResult}${jsonStringify(arrayItem, { pretty, indentLevel: (indentLevel + 1) })}`)), "")}${((pretty === true) ? (`\n${indent.repeat(indentLevel)}]`) : "]")}`)) : ((argumentType === jsType.Function) ? "[object Function]" : argumentType)))))); // custom JSON.stringify() function jsonStringifyV4
+        const getExpensesItemString = (children, priceValue = "", priceDisplay = "", items = "") => `<div data-price-value="${priceValue}" data-price-display="${priceDisplay}" data-items="${items}" style="width: 100%; padding: 8px; display: flex; flex-direction: row; border: 1px solid #fff; background-color: #091929;">
+    ${children}
+</div>`;
 
-        const localStorageKey = "daily-expenses";
-
-        const chipInputString = `<input onkeydown="changeCurrentExpensesItemItemsOnKeyDown(event)" onfocusout="changeCurrentExpensesItemItemsOnBlur(event)" type="text" placeholder="item" style="margin: 4px 0px; width: 100%; background-color: #000; color: #ccc; padding: 4px; border: none; outline: none;">`;
-
-        const dailyExpensesCalculatorContainer = document.getElementById("daily-expenses-calculator-container");
-        const totalDailyExpensesElement = document.getElementById("total-daily-expenses");
+        const expensesCalculatorContainer = document.getElementById("expenses-calculator-container");
+        const totalExpensesElement = document.getElementById("total-expenses");
 
         const saveToLocalStorage = () => {
-            const expensesData = Array.from(dailyExpensesCalculatorContainer.children).map((expensesItemElement) => ({
+            const expensesData = Array.from(expensesCalculatorContainer.children).map((expensesItemElement) => ({
                 priceDisplay: expensesItemElement.dataset.priceDisplay ?? "",
-                priceValue: expensesItemElement.dataset.priceValue ?? "",
+                priceValue: parseFloat(isNan(expensesItemElement.dataset.priceValue) ? 0 : expensesItemElement.dataset.priceValue),
                 items: expensesItemElement.dataset.items ?? ""
             }));
             localStorage.setItem(localStorageKey, JSON.stringify(expensesData));
@@ -180,43 +200,48 @@
             return uniqueArray;
         };
 
-        const updateTotalDailyExpenses = () => {
-            const totalDailyExpenses = Array.from(document.querySelectorAll("#daily-expenses-calculator-container div")).reduce((currentResult, currentExpensesItemItem) => (currentResult + parseFloat(currentExpensesItemItem.dataset.priceValue ?? 0)), 0);
-            totalDailyExpensesElement.innerText = totalDailyExpenses.toLocaleString("id-ID");
+        const updateTotalExpenses = () => {
+            const totalExpenses = Array.from(document.querySelectorAll("#expenses-calculator-container div")).reduce((currentResult, currentExpensesItemItem) => (currentResult + parseFloat(isNan(currentExpensesItemItem.dataset.priceValue) ? 0 : currentExpensesItemItem.dataset.priceValue)), 0);
+            if (isNan(totalExpenses) === true) {
+                totalExpensesElement.innerText = 0
+                return;
+            }
+            totalExpensesElement.innerText = totalExpenses.toLocaleString("id-ID");
         };
 
         const changeCurrentExpensesItemPrice = (priceInputElement) => {
             const priceInputValue = priceInputElement.value.split("_").join("").split(".").join("");
-            priceInputElement.parentElement.dataset.priceValue = priceInputValue;
-            priceInputElement.parentElement.dataset.priceDisplay = priceInputElement.value;
-            priceInputElement.parentElement.insertAdjacentHTML("afterbegin", `<input value="${priceInputElement.value}" onchange="changeCurrentExpensesItemPrice(this)" type="text" placeholder="money spent" style="background-color: #000; color: #ccc; border: 1px solid #ccc; padding: 4px 8px; outline: none;">`);
-            priceInputElement.remove();
-            updateTotalDailyExpenses();
+            priceInputElement.parentElement.parentElement.dataset.priceValue = priceInputValue;
+            priceInputElement.parentElement.parentElement.dataset.priceDisplay = priceInputElement.value;
+            priceInputElement.parentElement.parentElement.insertAdjacentHTML("afterbegin", getPriceInputString(priceInputElement.value, priceInputValue, priceInputElement.value));
+            priceInputElement.parentElement.remove();
+            updateTotalExpenses();
             saveToLocalStorage();
         };
 
         const removeCurrentChip = (closeButtonEl) => {
-            closeButtonEl.parentElement.parentElement.parentElement.dataset.items = closeButtonEl.parentElement.parentElement.parentElement.dataset.items.split(",").filter((item) => (item.trim() !== closeButtonEl.parentElement.dataset.item)).join(",");
-            closeButtonEl.parentElement.remove();
+            closeButtonEl.parentElement.parentElement.parentElement.parentElement.dataset.items = closeButtonEl.parentElement.parentElement.parentElement.parentElement.dataset.items.split(",").filter((item) => (item.trim() !== closeButtonEl.parentElement.parentElement.dataset.item)).join(",");
+            closeButtonEl.parentElement.parentElement.remove();
             saveToLocalStorage();
         };
 
         const changeCurrentExpensesItemItems = (event) => {
             const inputElement = event.target;
-            const parentElement = inputElement.parentElement.parentElement;
+            const expenseChipInputElement = inputElement.parentElement;
             const inputElementValue = inputElement.value.split(",").filter((item) => (item.trim() !== "")).join(",");
             const inputElementValueNew = (inputElement.parentElement.parentElement.dataset.items === "" ? inputElementValue : inputElement.parentElement.parentElement.dataset.items + ", " + inputElementValue);
             const inputElementValueNoDuplicate = removeDuplicateStringFromArrayOfString(inputElementValueNew.split(",").map((item) => (item.trim()))).join(", ");
             inputElement.parentElement.parentElement.dataset.items = inputElementValueNoDuplicate;
 
-            const chips = inputElementValueNoDuplicate.split(",").map((value) => (`<div data-item="${value.trim()}" style="margin-left: 4px; margin-top: 8px; margin-bottom: 8px; background: rgb(0, 123, 255); color: rgb(238, 238, 238); padding: 0.2em 0.4em; border-radius: 0.2em; display: flex; align-items: center; gap: 8px;">
-<span>${value.trim()}</span><span onclick="removeCurrentChip(this)" style="cursor: pointer; font-weight: bold;">×</span>
-</div>`)).join("");
+            const chips = inputElementValueNoDuplicate.split(",").map((value) => (getExpenseChipString(`${getExpenseChipValueContainerString(value.trim())}
+${chipRemoveButtonString}`, value.trim()))).join("");
 
             inputElement.parentElement.innerHTML = `${chips}
 ${chipInputString}`;
             inputElement.value = "";
             saveToLocalStorage();
+            const newInput = expenseChipInputElement.querySelector("input");
+            return newInput;
         };
 
         const changeCurrentExpensesItemItemsOnKeyDown = (event) => {
@@ -225,8 +250,9 @@ ${chipInputString}`;
                     event.preventDefault();
                     return;
                 }
-                changeCurrentExpensesItemItems(event);
-                event.target.focus();
+                // changeCurrentExpensesItemItems(event);
+                const newInput = changeCurrentExpensesItemItems(event);
+                newInput.focus();
                 event.preventDefault();
             }
         };
@@ -241,35 +267,26 @@ ${chipInputString}`;
         };
 
         const removeCurrentExpensesItemItem = (removeButtonEl) => {
-            removeButtonEl.parentElement.remove();
-            updateTotalDailyExpenses();
+            removeButtonEl.parentElement.parentElement.remove();
+            updateTotalExpenses();
             saveToLocalStorage();
         };
 
         const createNewExpensesItem = () => {
-            dailyExpensesCalculatorContainer.innerHTML += `<div data-price-value="" data-price-display="" data-items="" style="width: 100%; padding: 8px; display: flex; flex-direction: row; border: 1px solid #fff;">
-    <input value="" onchange="changeCurrentExpensesItemPrice(this)" type="text" placeholder="money spent" style="background-color: #000; color: #ccc; border: 1px solid #ccc; padding: 4px 8px; outline: none;">
-    <div style="margin-left: 8px; display: flex; flex-flow: wrap; background-color: #000; border: 1px solid #ccc; flex: 1 1 0%; padding: 0px 4px;">
-        ${chipInputString}
-    </div>
-    <button onclick="removeCurrentExpensesItemItem(this)" style="margin-left: 8px; background: red; color: white; border: none; padding: 0.2em 0.4em; cursor: pointer;">x</button>
-</div>`;
+            expensesCalculatorContainer.innerHTML += getExpensesItemString(`${getPriceInputString()}
+${getExpenseChipInputString(chipInputString)}
+${removeExpenseItemButtonString}`);
         };
 
         const loadFromLocalStorage = () => {
-            const dailyExpensesCalculatorSavedData = JSON.parse(localStorage.getItem(localStorageKey));
-            if (dailyExpensesCalculatorSavedData === null) return;
-            dailyExpensesCalculatorContainer.innerHTML = dailyExpensesCalculatorSavedData.map(({ priceValue, priceDisplay, items }) => (`<div data-price-value="${priceValue}" data-price-display="${priceDisplay}" data-items="${items}" style="width: 100%; padding: 8px; display: flex; flex-direction: row; border: 1px solid #fff;">
-    <input value="${priceDisplay}" onchange="changeCurrentExpensesItemPrice(this)" type="text" placeholder="money spent" style="background-color: #000; color: #ccc; border: 1px solid #ccc; padding: 4px 8px; outline: none;">
-    <div style="margin-left: 8px; display: flex; flex-flow: wrap; background-color: #000; border: 1px solid #ccc; flex: 1 1 0%; padding: 0px 4px;">
-        ${items.split(", ").map((item) => (`<div data-item="${item}" style="margin-left: 4px; margin-top: 8px; margin-bottom: 8px; background: rgb(0, 123, 255); color: rgb(238, 238, 238); padding: 0.2em 0.4em; border-radius: 0.2em; display: flex; align-items: center; gap: 8px;">
-    <span>${item}</span><span onclick="removeCurrentChip(this)" style="cursor: pointer; font-weight: bold;">×</span>
-</div>`)).join("")}
-        ${chipInputString}
-    </div>
-    <button onclick="removeCurrentExpensesItemItem(this)" style="margin-left: 8px; background: red; color: white; border: none; padding: 0.2em 0.4em; cursor: pointer;">x</button>
-</div>`)).join("");
-updateTotalDailyExpenses();
+            const expensesCalculatorSavedData = JSON.parse(localStorage.getItem(localStorageKey));
+            if (expensesCalculatorSavedData === null) return;
+            expensesCalculatorContainer.innerHTML = expensesCalculatorSavedData.map(({ priceValue, priceDisplay, items }) => (getExpensesItemString(`${getPriceInputString(priceDisplay, priceValue, priceDisplay)}
+    ${getExpenseChipInputString(`${items.split(", ").map((item) => (getExpenseChipString(`${getExpenseChipValueContainerString(item)}
+${chipRemoveButtonString}`, item))).join("")}
+    ${chipInputString}`)}
+    ${removeExpenseItemButtonString}`, priceValue, priceDisplay, items))).join("");
+            updateTotalExpenses();
         };
 
         loadFromLocalStorage();
