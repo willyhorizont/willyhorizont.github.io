@@ -34,6 +34,10 @@ header {
     left: 0px;
 }
 
+.test-color {
+    background: #552c00;
+}
+
 .navbar {
     display: flex;
     align-items: center;
