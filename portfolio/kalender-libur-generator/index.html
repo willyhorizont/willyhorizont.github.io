@@ -718,7 +718,7 @@
                     localStorage.clear();
                     toggleLoadingSpinner(true);
                     while (indonesiaHolidaysResult === null) {
-                        const [anyError, getIndonesiaHolidaysResult] = await catchAnyError(getIndonesiaHolidays());
+                        const [getIndonesiaHolidaysError, getIndonesiaHolidaysResult] = await catchAnyError(getIndonesiaHolidays());
                         indonesiaHolidaysResult = getIndonesiaHolidaysResult.filter((currentHoliday) => (currentHoliday?.summary !== "Diwali"));
                         localStorage.setItem(indonesiaHolidaysResultKey, JSON.stringify(indonesiaHolidaysResult));
                         // console.table({ indonesiaHolidaysResult });

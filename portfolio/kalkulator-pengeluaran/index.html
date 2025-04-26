@@ -53,10 +53,12 @@
                 <h1 style="text-align: center;">Kalkulator Pengeluaran</h1>
                 <!-- <p style="text-align: center; font-size: 1em;">Type whatever you spent that money on, separate 'em with a comma, and then hit "Enter" key - or just hit "Enter" key after each one.</p> -->
                 <!-- <p style="text-align: center; font-size: 1em;">Ketik untuk apa saja uangnya dihabiskan, pisahkan dengan koma, lalu tekan "Enter" pada keyboard - atau langsung tekan tombol "Enter" setelah selesai mengetik satu.</p> -->
+                <!-- 
                 <div style="display: flex; flex-direction: column; padding: 4px 0px; row-gap: 8px;">
                     <p style="text-align: center; font-size: 1em;">pada kolom kiri, agar angka mudah dibaca bisa pisahkan angka dengan underscore atau titik. contoh 10_000 atau 14.000</p>
                     <p style="text-align: center; font-size: 1em;">pada kolom tengah, bisa pisahkan dengan koma, lalu tekan "Enter" pada keyboard - atau langsung tekan tombol "Enter" setelah selesai mengetik satu.</p>
                 </div>
+                 -->
                 <div id="expenses-calculator-container" style="padding: 4px; width: 100%; display: flex; flex-direction: column; row-gap: 8px;">
                 </div>
                 <div style="padding: 4px; width: 100%; display: flex; flex-direction: column;">
@@ -64,6 +66,12 @@
                         <button onclick="createNewExpensesItem()" style="padding: 0.2em 0.4em; width: 1.9em; aspect-ratio: 1 / 1; background-color: #007bff; color: #ccc;">+</button>
                     </div>
                     <h2 style="margin-top: 8px;">Total Pengeluaran: <span id="total-expenses">0</span></h2>
+                </div>
+                <div style="padding: 4px; width: 100%; display: flex; flex-direction: column;">
+                    <h2 style="margin-top: 8px;">Backup & Restore:</h2>
+                    <textarea id="expenses-calculator-backup-restore-textarea" rows="4" cols="50" style="background-color: #000; color: #ccc; margin-top: 16px;" onblur="updateTextAreaContentToLocalStorageOnBlur(event)"></textarea>
+                    <div id="error-message-container" style="margin-top: 8px;">
+                    </div>
                 </div>
             </div>
             <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 16px;">
@@ -164,11 +172,11 @@
     ${children}
 </div>`;
 
-    const getExpenseChipString = (children, item) => `<div data-item="${item}" style="margin: 8px 4px; background: #999; color: #222; padding: 0.2em 0.4em; border-radius: 0.2em; display: flex; align-items: center; gap: 8px;">
+        const getExpenseChipString = (children, item) => `<div data-item="${item}" style="margin: 8px 4px; background: #999; color: #222; padding: 0.2em 0.4em; border-radius: 0.2em; display: flex; align-items: center; gap: 8px;">
 ${children}
 </div>`;
 
-    const getExpenseChipValueContainerString = (value) => `<span style="white-space: nowrap;">${value}</span>`;
+        const getExpenseChipValueContainerString = (value) => `<span style="white-space: nowrap;">${value}</span>`;
 
         const getExpensesItemString = (children, priceValue = "", priceDisplay = "", items = "") => `<div data-price-value="${priceValue}" data-price-display="${priceDisplay}" data-items="${items}" style="width: 100%; padding: 8px; display: flex; flex-direction: row; border: 1px solid #fff; background-color: #091929;">
     ${children}
@@ -177,13 +185,21 @@ ${children}
         const expensesCalculatorContainer = document.getElementById("expenses-calculator-container");
         const totalExpensesElement = document.getElementById("total-expenses");
 
+        const updateTextAreaContentFromLocalStorage = (expensesData) => {
+            const expensesCalculatorBackupRestoreTextareaElement = document.getElementById("expenses-calculator-backup-restore-textarea");
+            expensesCalculatorBackupRestoreTextareaElement.value = expensesData === null ? "" : JSON.stringify(expensesData);
+        };
+
         const saveToLocalStorage = () => {
-            const expensesData = Array.from(expensesCalculatorContainer.children).map((expensesItemElement) => ({
+            let expensesData = Array.from(expensesCalculatorContainer.children).map((expensesItemElement) => ({
                 priceDisplay: expensesItemElement.dataset.priceDisplay ?? "",
                 priceValue: parseFloat(isNan(expensesItemElement.dataset.priceValue) ? 0 : expensesItemElement.dataset.priceValue),
                 items: expensesItemElement.dataset.items ?? ""
             }));
+            expensesData = ((expensesData.length === 0) ? null : expensesData);
             localStorage.setItem(localStorageKey, JSON.stringify(expensesData));
+            updateTextAreaContentFromLocalStorage(expensesData);
+            document.getElementById("error-message-container").innerHTML = "";
         };
 
         const removeDuplicateStringFromArrayOfString = (anyArray) => {
@@ -278,15 +294,46 @@ ${getExpenseChipInputString(chipInputString)}
 ${removeExpenseItemButtonString}`);
         };
 
-        const loadFromLocalStorage = () => {
-            const expensesCalculatorSavedData = JSON.parse(localStorage.getItem(localStorageKey));
-            if (expensesCalculatorSavedData === null) return;
-            expensesCalculatorContainer.innerHTML = expensesCalculatorSavedData.map(({ priceValue, priceDisplay, items }) => (getExpensesItemString(`${getPriceInputString(priceDisplay, priceValue, priceDisplay)}
+        const rerenderExpensesCalculator = (expensesData) => {
+            expensesCalculatorContainer.innerHTML = expensesData.map(({ priceValue, priceDisplay, items }) => (getExpensesItemString(`${getPriceInputString(priceDisplay, priceValue, priceDisplay)}
     ${getExpenseChipInputString(`${items.split(", ").map((item) => (getExpenseChipString(`${getExpenseChipValueContainerString(item)}
 ${chipRemoveButtonString}`, item))).join("")}
     ${chipInputString}`)}
     ${removeExpenseItemButtonString}`, priceValue, priceDisplay, items))).join("");
             updateTotalExpenses();
+        }
+
+        const loadFromLocalStorage = () => {
+            const expensesCalculatorSavedData = JSON.parse(localStorage.getItem(localStorageKey));
+            if (expensesCalculatorSavedData === null) return;
+            updateTextAreaContentFromLocalStorage(expensesCalculatorSavedData);
+            rerenderExpensesCalculator(expensesCalculatorSavedData);
+        };
+
+        const updateTextAreaContentToLocalStorage = (event) => {
+            const expensesCalculatorBackupRestoreTextareaElement = event.target;
+            const expensesCalculatorBackupRestoreTextareaElementValue = expensesCalculatorBackupRestoreTextareaElement.value;
+            try {
+                const expensesData = JSON.parse(expensesCalculatorBackupRestoreTextareaElementValue);
+                // console.log(expensesCalculatorBackupRestoreTextareaElementValue);
+                // console.log(JSON.stringify(expensesData));
+                localStorage.setItem(localStorageKey, JSON.stringify(expensesData));
+                rerenderExpensesCalculator(expensesData);
+            } catch (anyError) {
+                document.getElementById("error-message-container").innerHTML = `
+                    <p style="color: red;">Format backup-an yang di-restore tidak sesuai.</p>
+                `;
+            }
+        };
+
+        const updateTextAreaContentToLocalStorageOnBlur = (event) => {
+            if (event.target.value.trim() === "") {
+                event.preventDefault();
+                return;
+            }
+            updateTextAreaContentToLocalStorage(event);
+            // loadFromLocalStorage();
+            event.preventDefault();
         };
 
         loadFromLocalStorage();
