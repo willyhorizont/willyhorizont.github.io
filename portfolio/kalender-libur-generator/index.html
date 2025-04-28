@@ -134,7 +134,7 @@
         };
 
         const selectedLanguageOption = "fullId";
-        const dayoffPrefix = "Rekomendasi Ambil Libur";
+        const dayoffPrefix = "Rekomendasi Ambil Izin Libur";
 
         const pythonLikeSleep = (anySeconds) => {
             const secondInMiliseconds = 1_000;
@@ -685,8 +685,8 @@
 </p>`
                 )).join("");
 
-                const holidaySummaryDetailString = ((amountRekomendasiAmbilLibur > 0) ? ` (Tanggal Merah ${amountTanggalMerah} Hari + Ambil Libur ${amountRekomendasiAmbilLibur} Hari)`: " Tanpa Ambil Libur")
-                const holidaySummaryString = ((dayoffRecommendationOptionsGroup.length == 2) ? "-" : `Bisa Liburan ${dayoffRecommendationOptionsGroup.length} Hari${holidaySummaryDetailString}`)
+                const holidaySummaryDetailString = ((amountRekomendasiAmbilLibur > 0) ? ` (Tanggal Merah ${amountTanggalMerah} Hari + Ambil Izin Libur ${amountRekomendasiAmbilLibur} Hari)`: " Tanpa Ambil Izin Libur")
+                const holidaySummaryString = ((dayoffRecommendationOptionsGroup.length == 2) ? "Tanggal Merah Di Hari Sabtu / Minggu :v" : `Bisa Liburan ${dayoffRecommendationOptionsGroup.length} Hari${holidaySummaryDetailString}`)
 
                 return `${currentResult}<div style="border: 1px solid #ccc; border-radius: 8px; padding: 0px; background-color: #000; color: #9f9f9f; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden;">
     <p style="font-size: 1.5em; text-align: center; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; background-color: #091929;">${dayoffRecommendationOptionsGroupTitle}</p>
@@ -708,8 +708,8 @@
                 const h2CurrentYearElementNew = document.getElementById("current-year-span");
                 const currentYearNumeric = new Date().getFullYear();
                 h2CurrentYearElementNew.innerHTML = `${currentYearNumeric}`;
-                const dayoffRecommendationOptionsGroupedKey = `kalender-libur-${currentYearNumeric}-update-20250426-1-0-0`;
-                const indonesiaHolidaysResultKey = `holidays-indonesia-${currentYearNumeric}-update-20250426-1-0-0`;
+                const dayoffRecommendationOptionsGroupedKey = `kalender-libur-${currentYearNumeric}-update-20250428-1-0-2`;
+                const indonesiaHolidaysResultKey = `holidays-indonesia-${currentYearNumeric}-update-20250428-1-0-2`;
 
                 let dayoffRecommendationOptionsGrouped = JSON.parse(localStorage.getItem(dayoffRecommendationOptionsGroupedKey));
                 let indonesiaHolidaysResult = JSON.parse(localStorage.getItem(indonesiaHolidaysResultKey));
