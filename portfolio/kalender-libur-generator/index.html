@@ -743,7 +743,7 @@
                 let indonesiaHolidaysResult = JSON.parse(localStorage.getItem(indonesiaHolidaysResultKey));
                 const isDevelopmentMode = true;
                 if ((dayoffRecommendationOptionsGrouped === null) || (isDevelopmentMode === true)) {
-                    localStorage.clear();
+                    // localStorage.clear();
                     toggleLoadingSpinner(true);
                     while (indonesiaHolidaysResult === null) {
                         const [getIndonesiaHolidaysError, getIndonesiaHolidaysResult] = await catchAnyError(getIndonesiaHolidays());
