@@ -48,7 +48,7 @@
         </nav>
     </header>
     <main>
-        <div class="portfolio-kalender-libur" style="padding: 8px;">
+        <div class="portfolio-kalender-libur-generator" style="padding: 8px;">
             <div style="display: flex; flex-direction: row; justify-content: center; column-gap: 8px;">
                 <h1 style="text-align: center;">Kalender Libur Generator <span id="current-year-span"></span></h1>
             </div>
@@ -60,7 +60,7 @@
             </div>
             <div id="error-message-container" style="margin-top: 8px; text-align: center;">
             </div>
-            <div id="kalender-libur-result-container" style="margin-top: 8px; display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 16px; visibility: hidden;"></div>
+            <div id="kalender-libur-generator-result-container" style="margin-top: 8px; display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 16px; visibility: hidden;"></div>
             <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 16px;">
                 <div style="max-width: 50%; display: flex; flex-direction: row; justify-content: center; align-items: center; flex-wrap: wrap; gap: 16px;">
                     <div style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;">
@@ -135,6 +135,8 @@
 
         const selectedLanguageOption = "fullId";
         const dayoffPrefix = "Rekomendasi Ambil Izin Libur";
+
+        const undefinedIshCoalescing = (leftExpr, rightExpr) => ((leftExpr === undefined) ? rightExpr : leftExpr);
 
         const pythonLikeSleep = (anySeconds) => {
             const secondInMiliseconds = 1_000;
@@ -569,7 +571,7 @@
 
         const correctDayoffRecommendationOptionsEvents = (dayoffRecommendationOptions, indonesiaHolidays) => {
             const currentYearNumeric = new Date().getFullYear();
-            const nextYearNumeric = currentYearNumeric + 1;
+            const nextYearNumeric = (currentYearNumeric + 1);
 
             return dayoffRecommendationOptions.map((currentEvent) => {
                 const dayoffRecommendationOptionsDateYyyyMmDdInString = currentEvent["event_date"];
@@ -657,7 +659,7 @@
 
         const toggleLoadingSpinner = (isLoading) => {
             const loadingSpinnerElement = document.getElementById("loading-spinner");
-            const kalenderLiburResultContainerElement = document.getElementById("kalender-libur-result-container");
+            const kalenderLiburResultContainerElement = document.getElementById("kalender-libur-generator-result-container");
 
             if (isLoading === true) {
                 loadingSpinnerElement.style.display = "block";
@@ -669,7 +671,7 @@
         };
 
         const renderDayoffRecommendationOptionsGrouped = (dayoffRecommendationOptionsGrouped) => {
-            const kalenderLiburResultContainerElement = document.getElementById("kalender-libur-result-container");
+            const kalenderLiburResultContainerElement = document.getElementById("kalender-libur-generator-result-container");
             const kalenderLiburResultContainerElementInnerHtml = dayoffRecommendationOptionsGrouped.reduce((currentResult, dayoffRecommendationOptionsGroup) => {
                 const currentYearNumeric = new Date().getFullYear();
                 const nextYearNumeric = (currentYearNumeric + 1);
@@ -708,8 +710,8 @@
                 const h2CurrentYearElementNew = document.getElementById("current-year-span");
                 const currentYearNumeric = new Date().getFullYear();
                 h2CurrentYearElementNew.innerHTML = `${currentYearNumeric}`;
-                const dayoffRecommendationOptionsGroupedKey = `kalender-libur-${currentYearNumeric}-update-20250428-1-0-2`;
-                const indonesiaHolidaysResultKey = `holidays-indonesia-${currentYearNumeric}-update-20250428-1-0-2`;
+                const dayoffRecommendationOptionsGroupedKey = `kalender-libur-${currentYearNumeric}-update-20250506-1-0-0`;
+                const indonesiaHolidaysResultKey = `holidays-indonesia-${currentYearNumeric}-update-20250506-1-0-0`;
 
                 let dayoffRecommendationOptionsGrouped = JSON.parse(localStorage.getItem(dayoffRecommendationOptionsGroupedKey));
                 let indonesiaHolidaysResult = JSON.parse(localStorage.getItem(indonesiaHolidaysResultKey));
@@ -719,7 +721,8 @@
                     toggleLoadingSpinner(true);
                     while (indonesiaHolidaysResult === null) {
                         const [getIndonesiaHolidaysError, getIndonesiaHolidaysResult] = await catchAnyError(getIndonesiaHolidays());
-                        indonesiaHolidaysResult = getIndonesiaHolidaysResult.filter((currentHoliday) => (currentHoliday?.summary !== "Diwali"));
+                        indonesiaHolidaysResult = getIndonesiaHolidaysResult?.filter?.((currentHoliday) => (currentHoliday?.summary !== "Diwali"));
+                        indonesiaHolidaysResult = undefinedIshCoalescing(indonesiaHolidaysResult, null);
                         localStorage.setItem(indonesiaHolidaysResultKey, JSON.stringify(indonesiaHolidaysResult));
                         // console.table({ indonesiaHolidaysResult });
                         await pythonLikeSleep(1);
