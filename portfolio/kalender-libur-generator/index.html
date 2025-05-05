@@ -365,6 +365,13 @@
             const currentHolidayDateYyyyMmDdInString = currentHoliday?.["event_date"];
             const currentHolidayDayNameInString = getDayNameFromDateStringYyyyMmDdInString(currentHolidayDateYyyyMmDdInString);
 
+            if (currentHolidayDayNameInString === dayObject[selectedLanguageOption][2]) {
+                currentResult.push(generateNonHolidayEvent(getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 1)));
+                currentResult.push(generateNonHolidayEvent(getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 2)));
+                currentResult.push(generateNonHolidayEvent(getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 3)));
+                currentResult.push(generateNonHolidayEvent(getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 4)));
+            }
+
             if (currentHolidayDayNameInString === dayObject[selectedLanguageOption][3]) {
                 currentResult.push(generateNonHolidayEvent(getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 1)));
                 currentResult.push(generateNonHolidayEvent(getDateYyyyMmDdInString(currentHolidayDateYyyyMmDdInString, 2)));
