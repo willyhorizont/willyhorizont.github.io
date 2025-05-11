@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LECMLYN21B"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-LECMLYN21B');
+    </script>
+    <meta name="google-site-verification" content="UqB5vtnZNIl-hvyiqwM0PDgX772rcbWWjt0g9onB_BQ" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Score Counter by Willy Horizont">
+    <meta name="keywords" content="Score Counter by Willy Horizont">
+    <meta name="author" content="Willy Horizont">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#000000">
+    <link rel="icon" type="image/x-icon" href="../../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../../android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="../../android-chrome-512x512.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png">
+    <link rel="stylesheet" href="../../style.css">
+    <title>Score Counter | Portfolio | Willy Horizont</title>
+</head>
+<body>
+    <header>
+        <nav id="navbar" class="navbar">
+            <a href="/" class="app-logo"><img src="../../android-chrome-192x192.png" alt="Willy Horizont's logo" width="48px" height="48px">
+                <!-- <span>Willy Horizont</span> -->
+            </a>
+            <div class="spacer"></div>
+            <ul>
+                <li class="navbar-item"><a href="/">Home</a></li>
+                <li class="navbar-item-selected"><a href="/portfolio">Portfolio</a></li>
+                <li class="navbar-item"><a href="/cv">CV</a></li>
+                <li class="navbar-item"><a href="/links">Links</a></li>
+                <li class="navbar-item"><a href="/about">About</a></li>
+                <li class="navbar-item"><a href="/support">Support</a></li>
+                <li class="navbar-item"><a href="/contact">Contact</a></li>
+                <li class="navbar-item navbar-menu-close" onclick="toggleMenu()" style="padding: 16px;">X</li>
+            </ul>
+            <span id="navbar-hamburger-menu" class="navbar-hamburger-menu" onclick="toggleMenu()">&#9776;</span>
+        </nav>
+    </header>
+    <main>
+        <div class="portfolio-score-counter" style="padding: 8px;">
+            <div class="portfolio-score-counter-container">
+                <h1 style="text-align: center;">Score Counter</h1>
+                <div style="width: 100%; display: flex; flex-direction: column; overflow-x: auto;">
+                    <div style="width: 100%; display: flex; flex-direction: column; margin-bottom: 8px;">
+                        <button onclick="addPlayer()" style="align-self: center; cursor: pointer; width: fit-content; padding: 0.2em 0.4em; background-color: #007bff; color: #ccc; border: none; outline: none; white-space: nowrap;">+ Player</button>
+                    </div>
+                    <div style="width: 100%; display: flex; flex-direction: column;">
+                        <div id="scores-container" style="display: flex; flex-direction: row; width: 100%; align-items: flex-start; overflow-x: auto;">
+                        </div>
+                    </div>
+                </div>
+                <div style="padding: 4px; width: 100%; display: flex; flex-direction: column;">
+                    <h2 style="margin-top: 8px;">Import & Export:</h2>
+                    <textarea id="score-counter-backup-restore-textarea" rows="4" cols="50" style="background-color: #000; color: #ccc; margin-top: 16px;" onblur="updateTextAreaContentToLocalStorageOnBlur(event)"></textarea>
+                    <div id="error-message-container" style="margin-top: 8px;">
+                    </div>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 16px;">
+                <div style="max-width: 50%; display: flex; flex-direction: row; justify-content: center; align-items: center; flex-wrap: wrap; gap: 16px;">
+                    <div style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;">
+                        <a href="https://trakteer.id/p3thvx/link?open=true" target="_blank" aria-label="Trakteer">
+                            <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; flex-wrap: wrap; column-gap: 8px;">
+                                <p style="white-space: nowrap;">Support me via</p>
+                                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                    <img src="https://trakteer.id/favicon/favicon-32x32.png" alt="Trakteer's logo" width="16px" height="16px">
+                                    <p style="white-space: nowrap; margin-left: 4px;">Trakteer</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;">
+                        <a href="https://saweria.co/p3thvx" target="_blank" aria-label="Saweria">
+                            <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; flex-wrap: wrap; column-gap: 8px;">
+                                <p style="white-space: nowrap;">Support me via</p>
+                                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                    <img src="https://encrypted-tbn2.gstatic.com/faviconV2?url=https://saweria.co&client=VFE&size=64&type=FAVICON&fallback_opts=TYPE,SIZE,URL&nfrp=2" alt="Saweria's logo" width="16px" height="16px">
+                                    <p style="white-space: nowrap; margin-left: 4px;">Saweria</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;">
+                        <a href="https://sociabuzz.com/p3thvx" target="_blank" aria-label="Sociabuzz">
+                            <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; flex-wrap: wrap; column-gap: 8px;">
+                                <p style="white-space: nowrap;">Support me via</p>
+                                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                    <img src="https://storage.sociabuzz.com/storage/img/tribe/logo.png" alt="Sociabuzz's logo" width="16px" height="16px">
+                                    <p style="white-space: nowrap; margin-left: 4px;">Sociabuzz</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;">
+                        <a href="https://www.nihbuatjajan.com/p3thvx" target="_blank" aria-label="Nih Buat Jajan">
+                            <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; flex-wrap: wrap; column-gap: 8px;">
+                                <p style="white-space: nowrap;">Support me via</p>
+                                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxp6o2dSrvX4XsYqykH8l5-APqtOuniis61Q&s" alt="Nih Buat Jajan's logo" width="16px" height="16px">
+                                    <p style="white-space: nowrap; margin-left: 4px;">Nih Buat Jajan</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;">
+                        <a href="https://nyawer.co/p3thvx" target="_blank" aria-label="Nyawer">
+                            <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; flex-wrap: wrap; column-gap: 8px;">
+                                <p style="white-space: nowrap;">Support me via</p>
+                                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                    <img src="https://nyawer.co/favicon_io/favicon.ico" alt="Nyawer's logo" width="16px" height="16px">
+                                    <p style="white-space: nowrap; margin-left: 4px;">Nyawer</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>Made with ❤️ by Willy Horizont</p>
+    </footer>
+    <script>
+        const toggleMenu = () => {
+            const navbarElement = document.getElementById("navbar");
+            navbarElement.classList.toggle("responsive");
+            const hamburgerMenuButtonElement = document.getElementById("navbar-hamburger-menu");
+            hamburgerMenuButtonElement.classList.toggle("visible");
+        };
+        
+        const stringToHexColor = (anyString) => {
+            let theHash = 0;
+            let anIndex;
+
+            /* eslint-disable no-bitwise */
+            for (anIndex = 0; anIndex < anyString.length; anIndex += 1) {
+                theHash = anyString.charCodeAt(anIndex) + ((theHash << 5) - theHash);
+            }
+
+            let hexColorResult = '#';
+
+            for (anIndex = 0; anIndex < 3; anIndex += 1) {
+                const value = (theHash >> (anIndex * 8)) & 0xff;
+                hexColorResult += `00${value.toString(16)}`.slice(-2);
+            }
+            /* eslint-enable no-bitwise */
+
+            return hexColorResult;
+        };
+
+        const removeDuplicateStringFromArrayOfString = (anyArray) => {
+            const seen = {};
+            const uniqueArray = [];
+
+            anyArray.forEach((item) => {
+                if (seen?.[item] === undefined) {
+                    seen[item] = true;
+                    uniqueArray.push(item);
+                }
+            });
+
+            return uniqueArray;
+        };
+
+        const localStorageKey = "scores";
+
+        const updateTextAreaContentFromLocalStorage = (scoresData) => {
+            const elementImportExportScoresTextarea = document.getElementById("score-counter-backup-restore-textarea");
+            elementImportExportScoresTextarea.value = ((scoresData === null) ? "" : JSON.stringify(scoresData));
+        };
+
+        const saveToLocalStorage = () => {
+            const elementScoresContainer = document.getElementById("scores-container");
+            let scoresData = Array.from(elementScoresContainer.children).map((elementScore) => ({
+                "player_name": elementScore.dataset.playerName ?? "",
+                "player_scores": elementScore.dataset.currentPlayerScores ?? "",
+            }));
+            scoresData = ((scoresData.length === 0) ? null : scoresData);
+            localStorage.setItem(localStorageKey, JSON.stringify(scoresData));
+            updateTextAreaContentFromLocalStorage(scoresData);
+            document.getElementById("error-message-container").innerHTML = "";
+        };
+
+        const removeCurrentPlayer = (htmlElementRemoveButton) => {
+            htmlElementRemoveButton.parentElement.parentElement.remove();
+            saveToLocalStorage();
+        };
+
+        const getHtmlStringScoreInput = (currentScorePlusButtonIndex, playerScore = "0") => `<input data-current-input-index="${currentScorePlusButtonIndex}" onkeydown="changeThisCurrentPlayerScoreOnKeyDown(event)" onfocusout="changeThisCurrentPlayerScoreOnBlur(event)" type="text" placeholder="${playerScore}" style="text-align: center; width: 100%; border: 1px solid #ccc; outline: none; padding: 4px;">`;
+
+        const addScoreForCurrentPlayer = (htmlElementPlusButton) => {
+            const currentScorePlusButtonIndex = ((!htmlElementPlusButton.parentElement.parentElement.dataset.currentScorePlusButtonIndex) ? 0 : parseInt(htmlElementPlusButton.parentElement.parentElement.dataset.currentScorePlusButtonIndex, 10) + 1);
+            htmlElementPlusButton.parentElement.parentElement.dataset.currentScorePlusButtonIndex = currentScorePlusButtonIndex;
+            htmlElementPlusButton.parentElement.insertAdjacentHTML("beforebegin", getHtmlStringScoreInput(currentScorePlusButtonIndex));
+            htmlElementPlusButton.parentElement.previousElementSibling.focus();
+            htmlElementPlusButton.parentElement.parentElement.dataset.currentPlayerScores = ((htmlElementPlusButton.parentElement.parentElement.dataset.currentPlayerScores?.trim?.() === "") ? "0" : `${htmlElementPlusButton.parentElement.parentElement.dataset.currentPlayerScores}, 0`);
+        };
+
+        const calculateCurrentPlayerScores = (elementCurrentPlayerColumn) => {
+            if (elementCurrentPlayerColumn.dataset.currentPlayerScores?.trim?.() === "") return;
+            elementCurrentPlayerColumn.lastElementChild.lastElementChild.innerHTML = elementCurrentPlayerColumn.dataset.currentPlayerScores?.split?.(", ")?.reduce?.((currentResult, currentPlayerScore) => (currentResult + parseInt(currentPlayerScore, 10)), 0);
+        };
+
+        const changeCurrentPlayerScores = (event) => {
+            const inputElement = event.target;
+            const currentInputIndex = parseInt(inputElement.dataset.currentInputIndex, 10);
+            const currentPlayerScores = ((inputElement.parentElement.dataset.currentPlayerScores?.trim?.() === "") ? inputElement.value : inputElement.parentElement.dataset.currentPlayerScores?.split?.(", ")?.map?.((playerScore, playerScoreIndex) => ((playerScoreIndex === currentInputIndex) ? inputElement.value : playerScore))?.join?.(", "));
+            inputElement.parentElement.dataset.currentPlayerScores = currentPlayerScores;
+            inputElement.placeholder = inputElement.value;
+            inputElement.value = "";
+
+            calculateCurrentPlayerScores(inputElement.parentElement);
+            saveToLocalStorage();
+        };
+
+        const changeThisCurrentPlayerScoreOnKeyDown = (event) => {
+            if (event.key === "Enter") {
+                if (event.target.value?.trim?.() === "") {
+                    event.preventDefault();
+                    return;
+                }
+                changeCurrentPlayerScores(event);
+                event.preventDefault();
+            }
+        };
+
+        const changeThisCurrentPlayerScoreOnBlur = (event) => {
+            if (event.target.value?.trim?.() === "") {
+                event.preventDefault();
+                return;
+            }
+            changeCurrentPlayerScores(event);
+            event.preventDefault();
+        };
+
+        const getHtmlStringPlayerScore = (playerName = "player name", { playerColor = "", playerScores = "", plusButtonIndex = "", siblings = "", totalScores = "0", playerNamePlaceholder = "player name" } = {}) => (`<div data-player-name="${playerName}" data-current-player-scores="${playerScores}" data-current-score-plus-button-index="${plusButtonIndex}" style="box-sizing: border-box; display: flex; flex-direction: row; flex-wrap: wrap; min-width: 200px; max-width: 200px; justify-content: flex-end; align-items: center; padding: 8px; gap: 8px; background-color: ${playerColor};">
+    <div style="width: 100%; display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+        <!--
+            <p style="background-color: #000; color: #fff; border: 1px solid white; padding: 4px 8px;">${playerName}</p>
+        -->
+        <button onclick="removeCurrentPlayer(this)" style="margin-left: auto; background: red; color: white; border: none; cursor: pointer; width: 2.1em; aspect-ratio: 1 / 1;">x</button>
+    </div>
+    <input onkeydown="changeCurrentPlayerNameOnKeyDown(event)" onfocusout="changeCurrentPlayerNameOnBlur(event)" type="text" placeholder="${playerNamePlaceholder}" style="text-align: center; width: 100%; border: 1px solid #ccc; outline: none; padding: 4px;">
+    ${siblings}
+    <div style="display: flex; flex-direction: column; flex: 1; justify-content: center; align-items: center; border: 1px solid #000;">
+        <button onclick="addScoreForCurrentPlayer(this)" style="background: #007bff; color: white; border: none; cursor: pointer; width: 100%;">+ score</button>
+    </div>
+    <div style="display: flex; flex-direction: column; width: 100%; justify-content: center; align-items: center; border: 1px solid #ccc;">
+        <p style="width: 100%; text-align: center; padding: 4px 8px; background-color: #091929; color: #fff; border-bottom: 1px solid #ccc;">Total</p>
+        <p style="width: 100%; text-align: center; padding: 4px 8px; background-color: #000; color: #fff;">${totalScores}</p>
+    </div>
+</div>`);
+
+        const changeCurrentPlayerName = (event) => {
+            const inputElement = event.target;
+            if (inputElement.value.includes(",")) {
+                const elementScoresContainer = document.getElementById("scores-container");
+                elementScoresContainer.removeChild(elementScoresContainer.lastChild);
+                elementScoresContainer.innerHTML += inputElement.value.split(",").map((playerName) => getHtmlStringPlayerScore(playerName?.trim?.(), { playerColor: stringToHexColor(playerName?.trim?.()), playerNamePlaceholder: playerName })).join("");
+                inputElement.value = "";
+                saveToLocalStorage();
+                return;
+            }
+            inputElement.parentElement.dataset.playerName = inputElement.value;
+            inputElement.parentElement.style.backgroundColor = stringToHexColor(inputElement.value);
+            inputElement.parentElement.children[0].children[0].innerHTML = inputElement.value;
+            inputElement.placeholder = inputElement.value;
+            inputElement.value = "";
+            saveToLocalStorage();
+        };
+
+        const changeCurrentPlayerNameOnKeyDown = (event) => {
+            if (event.key === "Enter") {
+                if (event.target.value?.trim?.() === "") {
+                    event.preventDefault();
+                    return;
+                }
+                try {
+                    changeCurrentPlayerName(event);
+                } catch (err) {
+                    // false alarm error | ignored error
+                }
+                event.preventDefault();
+            }
+        };
+
+        const changeCurrentPlayerNameOnBlur = (event) => {
+            if (event.target.value?.trim?.() === "") {
+                event.preventDefault();
+                return;
+            }
+            try {
+                changeCurrentPlayerName(event);
+            } catch (err) {
+                // false alarm error | ignored error
+            }
+            event.preventDefault();
+        };
+
+        const addPlayer = () => {
+            const elementScoresContainer = document.getElementById("scores-container");
+            elementScoresContainer.innerHTML += getHtmlStringPlayerScore();
+            elementScoresContainer.lastElementChild.querySelector('input[type="text"]').focus();
+        };
+
+        const rerenderScoreCounter = (scoresData) => {
+            const elementScoresContainer = document.getElementById("scores-container");
+            elementScoresContainer.innerHTML = scoresData.map((playerScore) => {
+                const arrayPlayerScores = playerScore?.["player_scores"]?.split?.(", ");
+                return getHtmlStringPlayerScore(playerScore?.["player_name"], {
+                    playerColor: stringToHexColor(playerScore?.["player_name"]),
+                    playerScores: playerScore?.["player_scores"],
+                    plusButtonIndex: `${((arrayPlayerScores?.length === undefined) ? 0 : (arrayPlayerScores?.length - 1))}`,
+                    siblings: arrayPlayerScores?.map?.((currentPlayerScore, currentScorePlusButtonIndex) => getHtmlStringScoreInput(currentScorePlusButtonIndex, ((currentPlayerScore?.trim?.() === "") ? "0" : currentPlayerScore)))?.join?.(""),
+                    totalScores: arrayPlayerScores?.reduce?.((currentResult, currentPlayerScore) => {
+                        const currentPlayerScoreParsed = parseInt(currentPlayerScore, 10);
+                        return (currentResult + ((isNaN(currentPlayerScoreParsed) === true) ? 0 : currentPlayerScoreParsed));
+                    }, 0),
+                    playerNamePlaceholder: playerScore?.["player_name"],
+                })}).join("");
+        };
+
+        const loadFromLocalStorage = () => {
+            const scoreCounterSavedData = JSON.parse(localStorage.getItem(localStorageKey));
+            if (scoreCounterSavedData === null) return;
+            updateTextAreaContentFromLocalStorage(scoreCounterSavedData);
+            rerenderScoreCounter(scoreCounterSavedData);
+        };
+
+        const updateTextAreaContentToLocalStorage = (event) => {
+            const backupRestoreScoreCounterTextareaElement = event.target;
+            const backupRestoreScoreCounterTextareaElementValue = backupRestoreScoreCounterTextareaElement.value;
+            try {
+                const scoresData = JSON.parse(backupRestoreScoreCounterTextareaElementValue);
+                // console.log(backupRestoreScoreCounterTextareaElementValue);
+                // console.log(JSON.stringify(scoresData));
+                localStorage.setItem(localStorageKey, JSON.stringify(scoresData));
+                rerenderScoreCounter(scoresData);
+            } catch (anyError) {
+                document.getElementById("error-message-container").innerHTML = `
+                    <p style="color: red;">Format backup-an yang di-restore tidak sesuai.</p>
+                `;
+            }
+        };
+
+        const updateTextAreaContentToLocalStorageOnBlur = (event) => {
+            if (event.target.value.trim() === "") {
+                localStorage.removeItem(localStorageKey);
+                const elementScoresContainer = document.getElementById("scores-container");
+                elementScoresContainer.innerHTML = "";
+                event.preventDefault();
+                return;
+            }
+            updateTextAreaContentToLocalStorage(event);
+            // loadFromLocalStorage();
+            event.preventDefault();
+        };
+
+        loadFromLocalStorage();
+        // cak gondrong, cak ucup, cak kentir, willy
+    </script>
+</body>
+</html>

@@ -180,8 +180,8 @@ ${children}
         const totalExpensesElement = document.getElementById("total-expenses");
 
         const updateTextAreaContentFromLocalStorage = (expensesData) => {
-            const expensesCalculatorBackupRestoreTextareaElement = document.getElementById("expenses-calculator-backup-restore-textarea");
-            expensesCalculatorBackupRestoreTextareaElement.value = expensesData === null ? "" : JSON.stringify(expensesData);
+            const elementImportExportExpensesCalculatorTextarea = document.getElementById("expenses-calculator-backup-restore-textarea");
+            elementImportExportExpensesCalculatorTextarea.value = ((expensesData === null) ? "" : JSON.stringify(expensesData));
         };
 
         const saveToLocalStorage = () => {
@@ -295,7 +295,7 @@ ${chipRemoveButtonString}`, item))).join("")}
     ${chipInputString}`)}
     ${removeExpenseItemButtonString}`, priceValue, priceDisplay, items))).join("");
             updateTotalExpenses();
-        }
+        };
 
         const loadFromLocalStorage = () => {
             const expensesCalculatorSavedData = JSON.parse(localStorage.getItem(localStorageKey));
@@ -305,8 +305,8 @@ ${chipRemoveButtonString}`, item))).join("")}
         };
 
         const updateTextAreaContentToLocalStorage = (event) => {
-            const expensesCalculatorBackupRestoreTextareaElement = event.target;
-            const expensesCalculatorBackupRestoreTextareaElementValue = expensesCalculatorBackupRestoreTextareaElement.value;
+            const elementImportExportExpensesCalculatorTextarea = event.target;
+            const expensesCalculatorBackupRestoreTextareaElementValue = elementImportExportExpensesCalculatorTextarea.value;
             try {
                 const expensesData = JSON.parse(expensesCalculatorBackupRestoreTextareaElementValue);
                 // console.log(expensesCalculatorBackupRestoreTextareaElementValue);
