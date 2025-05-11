@@ -256,7 +256,7 @@
         -->
         <button onclick="removeCurrentPlayer(this)" style="margin-left: auto; background: red; color: white; border: none; cursor: pointer; width: 2.1em; aspect-ratio: 1 / 1;">x</button>
     </div>
-    <input onkeydown="changeCurrentPlayerNameOnKeyDown(event)" onfocusout="changeCurrentPlayerNameOnBlur(event)" type="text" placeholder="${playerNamePlaceholder}" style="text-align: center; width: 100%; border: 1px solid #ccc; outline: none; padding: 4px;">
+    <input onkeydown="changeCurrentPlayerNameOnKeyDown(event)" onfocusout="changeCurrentPlayerNameOnBlur(event)" type="text" placeholder="${playerNamePlaceholder}" style="text-align: center; width: 100%; border: 1px solid #ccc; outline: none; padding: 4px; font-weight: bold;">
     ${siblings}
     <div style="display: flex; flex-direction: column; flex: 1; justify-content: center; align-items: center; border: 1px solid #000;">
         <button onclick="addScoreForCurrentPlayer(this)" style="background: #007bff; color: white; border: none; cursor: pointer; width: 100%;">+ score</button>
