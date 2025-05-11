@@ -13,8 +13,8 @@
     <meta name="google-site-verification" content="UqB5vtnZNIl-hvyiqwM0PDgX772rcbWWjt0g9onB_BQ" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Score Counter by Willy Horizont">
-    <meta name="keywords" content="Score Counter by Willy Horizont">
+    <meta name="description" content="Compare Tool by Willy Horizont">
+    <meta name="keywords" content="Compare Tool by Willy Horizont">
     <meta name="author" content="Willy Horizont">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#000000">
@@ -25,7 +25,7 @@
     <link rel="icon" type="image/png" sizes="512x512" href="../../android-chrome-512x512.png">
     <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png">
     <link rel="stylesheet" href="../../style.css">
-    <title>Score Counter | Portfolio | Willy Horizont</title>
+    <title>Compare Tool | Portfolio | Willy Horizont</title>
 </head>
 <body>
     <header>
@@ -48,21 +48,21 @@
         </nav>
     </header>
     <main>
-        <div class="portfolio-score-counter" style="padding: 8px;">
-            <div class="portfolio-score-counter-container">
-                <h1 style="text-align: center;">Score Counter</h1>
+        <div class="portfolio-compare-tool" style="padding: 8px;">
+            <div class="portfolio-compare-tool-container">
+                <h1 style="text-align: center;">Compare Tool</h1>
                 <div style="width: 100%; display: flex; flex-direction: column; overflow-x: auto;">
                     <div style="width: 100%; display: flex; flex-direction: column; margin-bottom: 8px;">
-                        <button onclick="addPlayer()" style="align-self: center; cursor: pointer; width: fit-content; padding: 0.2em 0.4em; background-color: #007bff; color: #ccc; border: none; outline: none; white-space: nowrap;">+ Player</button>
+                        <button onclick="addNewColumnKey()" style="align-self: center; cursor: pointer; width: fit-content; padding: 0.2em 0.4em; background-color: #007bff; color: #ccc; border: none; outline: none; white-space: nowrap;">+ column</button>
                     </div>
                     <div style="width: 100%; display: flex; flex-direction: column;">
-                        <div id="scores-container" style="display: flex; flex-direction: row; width: 100%; align-items: flex-start; overflow-x: auto;">
+                        <div id="compare-tool-items-container" style="display: flex; flex-direction: row; width: 100%; align-items: flex-start; overflow-x: auto;">
                         </div>
                     </div>
                 </div>
                 <div style="padding: 4px; width: 100%; display: flex; flex-direction: column;">
                     <h2 style="margin-top: 8px;">Import & Export:</h2>
-                    <textarea id="score-counter-backup-restore-textarea" rows="4" cols="50" style="background-color: #000; color: #ccc; margin-top: 16px;" onblur="updateTextAreaContentToLocalStorageOnBlur(event)"></textarea>
+                    <textarea id="import-export-textarea-compare-tool" rows="4" cols="50" style="background-color: #000; color: #ccc; margin-top: 16px;" onblur="updateTextAreaContentToLocalStorageOnBlur(event)"></textarea>
                     <div id="error-message-container" style="margin-top: 8px;">
                     </div>
                 </div>
@@ -173,126 +173,115 @@
             return uniqueArray;
         };
 
-        const localStorageKey = "scores";
+        const localStorageKey = "compare_tool_items";
 
-        const updateTextAreaContentFromLocalStorage = (scoresData) => {
-            const elementImportExportScoresTextarea = document.getElementById("score-counter-backup-restore-textarea");
-            elementImportExportScoresTextarea.value = ((scoresData === null) ? "" : JSON.stringify(scoresData));
+        const updateTextAreaContentFromLocalStorage = (compareToolItemsData) => {
+            const elementImportExportCompareToolItemsTextarea = document.getElementById("import-export-textarea-compare-tool");
+            elementImportExportCompareToolItemsTextarea.value = ((compareToolItemsData === null) ? "" : JSON.stringify(compareToolItemsData));
         };
 
         const saveToLocalStorage = () => {
-            const elementScoresContainer = document.getElementById("scores-container");
-            let scoresData = Array.from(elementScoresContainer.children).map((elementScore) => ({
-                "player_name": elementScore.dataset.playerName ?? "",
-                "player_scores": elementScore.dataset.currentPlayerScores ?? "",
+            const elementContainerCompareToolItems = document.getElementById("compare-tool-items-container");
+            let compareToolItemsData = Array.from(elementContainerCompareToolItems.children).map((elementCompareToolItem) => ({
+                "item_column_key": elementCompareToolItem.dataset.itemColumnKey ?? "",
+                "item_column_values": elementCompareToolItem.dataset.currentItemColumnValues ?? "",
             }));
-            scoresData = ((scoresData.length === 0) ? null : scoresData);
-            localStorage.setItem(localStorageKey, JSON.stringify(scoresData));
-            updateTextAreaContentFromLocalStorage(scoresData);
+            compareToolItemsData = ((compareToolItemsData.length === 0) ? null : compareToolItemsData);
+            localStorage.setItem(localStorageKey, JSON.stringify(compareToolItemsData));
+            updateTextAreaContentFromLocalStorage(compareToolItemsData);
             document.getElementById("error-message-container").innerHTML = "";
         };
 
-        const removeCurrentPlayer = (htmlElementRemoveButton) => {
+        const removeCurrentColumn = (htmlElementRemoveButton) => {
             htmlElementRemoveButton.parentElement.parentElement.remove();
             saveToLocalStorage();
         };
 
-        const getHtmlStringScoreInput = (currentScorePlusButtonIndex, playerScore = "0") => `<input data-current-input-index="${currentScorePlusButtonIndex}" onkeydown="changeThisCurrentPlayerScoreOnKeyDown(event)" onfocusout="changeThisCurrentPlayerScoreOnBlur(event)" type="text" placeholder="${playerScore}" style="text-align: center; width: 100%; border: 1px solid #ccc; outline: none; padding: 4px;">`;
+        const getHtmlStringInputItemRow = (currentItemRowPlusButtonIndex, itemColumnValue = "value") => `<input data-current-input-index="${currentItemRowPlusButtonIndex}" onkeydown="changeThisCurrentItemColumnValueOnKeyDown(event)" onfocusout="changeThisCurrentItemColumnValueOnBlur(event)" type="text" placeholder="${itemColumnValue}" style="text-align: center; width: 100%; border: 1px solid #ccc; outline: none; padding: 4px;">`;
 
-        const addScoreForCurrentPlayer = (htmlElementPlusButton) => {
-            const currentScorePlusButtonIndex = ((!htmlElementPlusButton.parentElement.parentElement.dataset.currentScorePlusButtonIndex) ? 0 : parseInt(htmlElementPlusButton.parentElement.parentElement.dataset.currentScorePlusButtonIndex, 10) + 1);
-            htmlElementPlusButton.parentElement.parentElement.dataset.currentScorePlusButtonIndex = currentScorePlusButtonIndex;
-            htmlElementPlusButton.parentElement.insertAdjacentHTML("beforebegin", getHtmlStringScoreInput(currentScorePlusButtonIndex));
+        const addNewItemColumnValueForCurrentRow = (htmlElementPlusButton) => {
+            const currentItemRowPlusButtonIndex = ((!htmlElementPlusButton.parentElement.parentElement.dataset.currentItemRowPlusButtonIndex) ? 0 : parseInt(htmlElementPlusButton.parentElement.parentElement.dataset.currentItemRowPlusButtonIndex, 10) + 1);
+            htmlElementPlusButton.parentElement.parentElement.dataset.currentItemRowPlusButtonIndex = currentItemRowPlusButtonIndex;
+            htmlElementPlusButton.parentElement.insertAdjacentHTML("beforebegin", getHtmlStringInputItemRow(currentItemRowPlusButtonIndex));
             htmlElementPlusButton.parentElement.previousElementSibling.focus();
-            htmlElementPlusButton.parentElement.parentElement.dataset.currentPlayerScores = ((htmlElementPlusButton.parentElement.parentElement.dataset.currentPlayerScores?.trim?.() === "") ? "0" : `${htmlElementPlusButton.parentElement.parentElement.dataset.currentPlayerScores}, 0`);
+            // htmlElementPlusButton.parentElement.parentElement.dataset.currentItemColumnValues = ((htmlElementPlusButton.parentElement.parentElement.dataset.currentItemColumnValues?.trim?.() === "") ? "0" : `${htmlElementPlusButton.parentElement.parentElement.dataset.currentItemColumnValues}, 0`);
         };
 
-        const calculateCurrentPlayerScores = (elementCurrentPlayerColumn) => {
-            if (elementCurrentPlayerColumn.dataset.currentPlayerScores?.trim?.() === "") return;
-            elementCurrentPlayerColumn.lastElementChild.lastElementChild.innerHTML = elementCurrentPlayerColumn.dataset.currentPlayerScores?.split?.(", ")?.reduce?.((currentResult, currentPlayerScore) => (currentResult + parseInt(currentPlayerScore, 10)), 0);
-        };
-
-        const changeCurrentPlayerScores = (event) => {
+        const changeCurrentItemColumnValues = (event) => {
             const inputElement = event.target;
             const currentInputIndex = parseInt(inputElement.dataset.currentInputIndex, 10);
-            if (inputElement.parentElement.dataset.currentPlayerScores?.trim?.() === "") {
-                inputElement.parentElement.dataset.currentPlayerScores = inputElement.value;
-            } else if (inputElement.parentElement.dataset.currentPlayerScores?.split?.(", ")?.[currentInputIndex] !== undefined) {
-                inputElement.parentElement.dataset.currentPlayerScores = inputElement.parentElement.dataset.currentPlayerScores?.split?.(", ")?.map?.((playerScore, playerScoreIndex) => ((playerScoreIndex === currentInputIndex) ? inputElement.value : playerScore))?.join?.(", ");
+            if (inputElement.parentElement.dataset.currentItemColumnValues?.trim?.() === "") {
+                inputElement.parentElement.dataset.currentItemColumnValues = inputElement.value;
+            } else if (inputElement.parentElement.dataset.currentItemColumnValues?.split?.(", ")?.[currentInputIndex] !== undefined) {
+                inputElement.parentElement.dataset.currentItemColumnValues = inputElement.parentElement.dataset.currentItemColumnValues?.split?.(", ")?.map?.((itemColumnValue, itemRowIndex) => ((itemRowIndex === currentInputIndex) ? inputElement.value : itemColumnValue))?.join?.(", ");
             } else {
-                inputElement.parentElement.dataset.currentPlayerScores += (", " + inputElement.value);
+                inputElement.parentElement.dataset.currentItemColumnValues += (", " + inputElement.value);
             }
             inputElement.placeholder = inputElement.value;
             inputElement.value = "";
 
-            calculateCurrentPlayerScores(inputElement.parentElement);
             saveToLocalStorage();
         };
 
-        const changeThisCurrentPlayerScoreOnKeyDown = (event) => {
+        const changeThisCurrentItemColumnValueOnKeyDown = (event) => {
             if (event.key === "Enter") {
                 if (event.target.value?.trim?.() === "") {
                     event.preventDefault();
                     return;
                 }
-                changeCurrentPlayerScores(event);
+                changeCurrentItemColumnValues(event);
                 event.preventDefault();
             }
         };
 
-        const changeThisCurrentPlayerScoreOnBlur = (event) => {
+        const changeThisCurrentItemColumnValueOnBlur = (event) => {
             if (event.target.value?.trim?.() === "") {
                 event.preventDefault();
                 return;
             }
-            changeCurrentPlayerScores(event);
+            changeCurrentItemColumnValues(event);
             event.preventDefault();
         };
 
-        const getHtmlStringPlayerScore = (playerName = "player name", { playerColor = "", playerScores = "", plusButtonIndex = "", siblings = "", totalScores = "0", playerNamePlaceholder = "player name" } = {}) => (`<div data-player-name="${playerName}" data-current-player-scores="${playerScores}" data-current-score-plus-button-index="${plusButtonIndex}" style="box-sizing: border-box; display: flex; flex-direction: row; flex-wrap: wrap; min-width: 200px; max-width: 200px; justify-content: flex-end; align-items: center; padding: 8px; gap: 8px; background-color: ${playerColor};">
+        const getHtmlStringItemRow = (itemColumnKey = "column key", { columnColor = "", itemColumnValues = "", plusButtonIndex = "", siblings = "", itemColumnKeyPlaceholder = "column key" } = {}) => (`<div data-item-column-key="${itemColumnKey}" data-current-item-column-values="${itemColumnValues}" data-current-item-row-plus-button-index="${plusButtonIndex}" style="box-sizing: border-box; display: flex; flex-direction: row; flex-wrap: wrap; min-width: 200px; max-width: 200px; justify-content: flex-end; align-items: center; padding: 8px; gap: 8px; background-color: ${columnColor};">
     <div style="width: 100%; display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
         <!--
-            <p style="background-color: #000; color: #fff; border: 1px solid white; padding: 4px 8px;">${playerName}</p>
+            <p style="background-color: #000; color: #fff; border: 1px solid white; padding: 4px 8px;">${itemColumnKey}</p>
         -->
-        <button onclick="removeCurrentPlayer(this)" style="margin-left: auto; background: red; color: white; border: none; cursor: pointer; width: 2.1em; aspect-ratio: 1 / 1;">x</button>
+        <button onclick="removeCurrentColumn(this)" style="margin-left: auto; background: red; color: white; border: none; cursor: pointer; width: 2.1em; aspect-ratio: 1 / 1;">x</button>
     </div>
-    <input onkeydown="changeCurrentPlayerNameOnKeyDown(event)" onfocusout="changeCurrentPlayerNameOnBlur(event)" type="text" placeholder="${playerNamePlaceholder}" style="text-align: center; width: 100%; border: 1px solid #ccc; outline: none; padding: 4px;">
+    <input onkeydown="changeCurrentItemColumnKeyOnKeyDown(event)" onfocusout="changeCurrentItemColumnKeyOnBlur(event)" type="text" placeholder="${itemColumnKeyPlaceholder}" style="text-align: center; width: 100%; border: 1px solid #ccc; outline: none; padding: 4px;">
     ${siblings}
     <div style="display: flex; flex-direction: column; flex: 1; justify-content: center; align-items: center; border: 1px solid #000;">
-        <button onclick="addScoreForCurrentPlayer(this)" style="background: #007bff; color: white; border: none; cursor: pointer; width: 100%;">+ score</button>
-    </div>
-    <div style="display: flex; flex-direction: column; width: 100%; justify-content: center; align-items: center; border: 1px solid #ccc;">
-        <p style="width: 100%; text-align: center; padding: 4px 8px; background-color: #091929; color: #fff; border-bottom: 1px solid #ccc;">Total</p>
-        <p style="width: 100%; text-align: center; padding: 4px 8px; background-color: #000; color: #fff;">${totalScores}</p>
+        <button onclick="addNewItemColumnValueForCurrentRow(this)" style="background: #007bff; color: white; border: none; cursor: pointer; width: 100%;">+ value</button>
     </div>
 </div>`);
 
-        const changeCurrentPlayerName = (event) => {
+        const changeCurrentItemColumnKey = (event) => {
             const inputElement = event.target;
             if (inputElement.value.includes(",")) {
-                const elementScoresContainer = document.getElementById("scores-container");
-                elementScoresContainer.removeChild(elementScoresContainer.lastChild);
-                elementScoresContainer.innerHTML += inputElement.value.split(",").map((playerName) => getHtmlStringPlayerScore(playerName?.trim?.(), { playerColor: stringToHexColor(playerName?.trim?.()), playerNamePlaceholder: playerName })).join("");
+                const elementContainerCompareToolItems = document.getElementById("compare-tool-items-container");
+                elementContainerCompareToolItems.removeChild(elementContainerCompareToolItems.lastChild);
+                elementContainerCompareToolItems.innerHTML += inputElement.value.split(",").map((itemColumnKey) => getHtmlStringItemRow(itemColumnKey?.trim?.(), { columnColor: stringToHexColor(itemColumnKey?.trim?.()), itemColumnKeyPlaceholder: itemColumnKey })).join("");
                 inputElement.value = "";
                 saveToLocalStorage();
                 return;
             }
-            inputElement.parentElement.dataset.playerName = inputElement.value;
+            inputElement.parentElement.dataset.itemColumnKey = inputElement.value;
             inputElement.parentElement.style.backgroundColor = stringToHexColor(inputElement.value);
-            // inputElement.parentElement.children[0].children[0].innerHTML = inputElement.value;
             inputElement.placeholder = inputElement.value;
             inputElement.value = "";
             saveToLocalStorage();
         };
 
-        const changeCurrentPlayerNameOnKeyDown = (event) => {
+        const changeCurrentItemColumnKeyOnKeyDown = (event) => {
             if (event.key === "Enter") {
                 if (event.target.value?.trim?.() === "") {
                     event.preventDefault();
                     return;
                 }
                 try {
-                    changeCurrentPlayerName(event);
+                    changeCurrentItemColumnKey(event);
                 } catch (err) {
                     // false alarm error | ignored error
                 }
@@ -300,58 +289,54 @@
             }
         };
 
-        const changeCurrentPlayerNameOnBlur = (event) => {
+        const changeCurrentItemColumnKeyOnBlur = (event) => {
             if (event.target.value?.trim?.() === "") {
                 event.preventDefault();
                 return;
             }
             try {
-                changeCurrentPlayerName(event);
+                changeCurrentItemColumnKey(event);
             } catch (err) {
                 // false alarm error | ignored error
             }
             event.preventDefault();
         };
 
-        const addPlayer = () => {
-            const elementScoresContainer = document.getElementById("scores-container");
-            elementScoresContainer.innerHTML += getHtmlStringPlayerScore();
-            elementScoresContainer.lastElementChild.querySelector('input[type="text"]').focus();
+        const addNewColumnKey = () => {
+            const elementContainerCompareToolItems = document.getElementById("compare-tool-items-container");
+            elementContainerCompareToolItems.innerHTML += getHtmlStringItemRow();
+            elementContainerCompareToolItems.lastElementChild.querySelector('input[type="text"]').focus();
         };
 
-        const rerenderScoreCounter = (scoresData) => {
-            const elementScoresContainer = document.getElementById("scores-container");
-            elementScoresContainer.innerHTML = scoresData.map((playerScore) => {
-                const arrayPlayerScores = playerScore?.["player_scores"]?.split?.(", ");
-                return getHtmlStringPlayerScore(playerScore?.["player_name"], {
-                    playerColor: stringToHexColor(playerScore?.["player_name"]),
-                    playerScores: playerScore?.["player_scores"],
-                    plusButtonIndex: `${((arrayPlayerScores?.length === undefined) ? 0 : (arrayPlayerScores?.length - 1))}`,
-                    siblings: arrayPlayerScores?.map?.((currentPlayerScore, currentScorePlusButtonIndex) => getHtmlStringScoreInput(currentScorePlusButtonIndex, ((currentPlayerScore?.trim?.() === "") ? "0" : currentPlayerScore)))?.join?.(""),
-                    totalScores: arrayPlayerScores?.reduce?.((currentResult, currentPlayerScore) => {
-                        const currentPlayerScoreParsed = parseInt(currentPlayerScore, 10);
-                        return (currentResult + ((isNaN(currentPlayerScoreParsed) === true) ? 0 : currentPlayerScoreParsed));
-                    }, 0),
-                    playerNamePlaceholder: playerScore?.["player_name"],
+        const rerenderCompareTool = (compareToolItemsData) => {
+            const elementContainerCompareToolItems = document.getElementById("compare-tool-items-container");
+            elementContainerCompareToolItems.innerHTML = compareToolItemsData.map((itemCompareTool) => {
+                const arrayItemColumnValues = itemCompareTool?.["item_column_values"]?.split?.(", ");
+                return getHtmlStringItemRow(itemCompareTool?.["item_column_key"], {
+                    columnColor: stringToHexColor(itemCompareTool?.["item_column_key"]),
+                    itemColumnValues: itemCompareTool?.["item_column_values"],
+                    plusButtonIndex: `${((arrayItemColumnValues?.length === undefined) ? 0 : (arrayItemColumnValues?.length - 1))}`,
+                    siblings: arrayItemColumnValues?.map?.((currentItemColumnValue, currentItemRowPlusButtonIndex) => getHtmlStringInputItemRow(currentItemRowPlusButtonIndex, ((currentItemColumnValue?.trim?.() === "") ? "value" : currentItemColumnValue)))?.join?.(""),
+                    itemColumnKeyPlaceholder: itemCompareTool?.["item_column_key"],
                 })}).join("");
         };
 
         const loadFromLocalStorage = () => {
-            const scoreCounterSavedData = JSON.parse(localStorage.getItem(localStorageKey));
-            if (scoreCounterSavedData === null) return;
-            updateTextAreaContentFromLocalStorage(scoreCounterSavedData);
-            rerenderScoreCounter(scoreCounterSavedData);
+            const savedDataCompareTool = JSON.parse(localStorage.getItem(localStorageKey));
+            if (savedDataCompareTool === null) return;
+            updateTextAreaContentFromLocalStorage(savedDataCompareTool);
+            rerenderCompareTool(savedDataCompareTool);
         };
 
         const updateTextAreaContentToLocalStorage = (event) => {
-            const backupRestoreScoreCounterTextareaElement = event.target;
-            const backupRestoreScoreCounterTextareaElementValue = backupRestoreScoreCounterTextareaElement.value;
+            const elementImportExportTextareaElementCompareTool = event.target;
+            const elementImportExportTextareaElementCompareToolValue = elementImportExportTextareaElementCompareTool.value;
             try {
-                const scoresData = JSON.parse(backupRestoreScoreCounterTextareaElementValue);
-                // console.log(backupRestoreScoreCounterTextareaElementValue);
-                // console.log(JSON.stringify(scoresData));
-                localStorage.setItem(localStorageKey, JSON.stringify(scoresData));
-                rerenderScoreCounter(scoresData);
+                const compareToolItemsData = JSON.parse(elementImportExportTextareaElementCompareToolValue);
+                // console.log(elementImportExportTextareaElementCompareToolValue);
+                // console.log(JSON.stringify(compareToolItemsData));
+                localStorage.setItem(localStorageKey, JSON.stringify(compareToolItemsData));
+                rerenderCompareTool(compareToolItemsData);
             } catch (anyError) {
                 document.getElementById("error-message-container").innerHTML = `
                     <p style="color: red;">Format backup-an yang di-restore tidak sesuai.</p>
@@ -362,8 +347,8 @@
         const updateTextAreaContentToLocalStorageOnBlur = (event) => {
             if (event.target.value.trim() === "") {
                 localStorage.removeItem(localStorageKey);
-                const elementScoresContainer = document.getElementById("scores-container");
-                elementScoresContainer.innerHTML = "";
+                const elementContainerCompareToolItems = document.getElementById("compare-tool-items-container");
+                elementContainerCompareToolItems.innerHTML = "";
                 event.preventDefault();
                 return;
             }
