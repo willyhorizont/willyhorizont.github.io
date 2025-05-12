@@ -42,7 +42,7 @@
                 <li class="navbar-item"><a href="/about">About</a></li>
                 <li class="navbar-item"><a href="/support">Support</a></li>
                 <li class="navbar-item"><a href="/contact">Contact</a></li>
-                <li class="navbar-item navbar-menu-close" onclick="toggleMenu()" style="padding: 16px;">X</li>
+                <li class="navbar-item navbar-menu-close" onclick="toggleMenu()" style="padding: 16px;">✖</li>
             </ul>
             <span id="navbar-hamburger-menu" class="navbar-hamburger-menu" onclick="toggleMenu()">&#9776;</span>
         </nav>
@@ -52,7 +52,7 @@
             <div class="portfolio-score-counter-container">
                 <h1 style="text-align: center;">Score Counter</h1>
                 <div style="width: 100%; display: flex; flex-direction: column; overflow-x: auto;">
-                    <div style="width: 100%; display: flex; flex-direction: column; margin-bottom: 8px;">
+                    <div style="width: 100%; display: flex; flex-direction: column; margin: 8px 0px;">
                         <button onclick="addPlayer()" style="align-self: center; cursor: pointer; width: fit-content; padding: 0.2em 0.4em; background-color: #007bff; color: #ccc; border: none; outline: none; white-space: nowrap;">+ Player</button>
                     </div>
                     <div style="width: 100%; display: flex; flex-direction: column;">
@@ -138,6 +138,13 @@
             const hamburgerMenuButtonElement = document.getElementById("navbar-hamburger-menu");
             hamburgerMenuButtonElement.classList.toggle("visible");
         };
+
+        const myIcon = {
+            "arrow_left": "◀",
+            "arrow_right": "▶",
+        };
+
+        const getDefaultValueIfNullOrUndefined = (anything, defaultValue) => (((anything === undefined) || (anything === null)) ? defaultValue : anything);
         
         const stringToHexColor = (anyString) => {
             let theHash = 0;
@@ -173,6 +180,20 @@
             return uniqueArray;
         };
 
+        const removeDuplicatePlayerNameFromArrayOfScores = (scoresData) => {
+            const seen = {};
+            const uniqueArray = [];
+
+            scoresData.forEach((scoreColumn) => {
+                if (seen?.[scoreColumn?.["player_name"]] === undefined) {
+                    seen[scoreColumn["player_name"]] = true;
+                    uniqueArray.push(scoreColumn);
+                }
+            });
+
+            return uniqueArray;
+        };
+
         const localStorageKey = "scores";
 
         const updateTextAreaContentFromLocalStorage = (scoresData) => {
@@ -180,13 +201,18 @@
             elementImportExportScoresTextarea.value = ((scoresData === null) ? "" : JSON.stringify(scoresData));
         };
 
-        const saveToLocalStorage = () => {
-            const elementScoresContainer = document.getElementById("scores-container");
-            let scoresData = Array.from(elementScoresContainer.children).map((elementScore) => ({
-                "player_name": elementScore.dataset.playerName ?? "",
-                "player_scores": elementScore.dataset.currentPlayerScores ?? "",
+        const getCurrentDataScores = () => {
+            const elementContainerScores = document.getElementById("scores-container");
+            let scoresData = Array.from(elementContainerScores.children).map((elementScore) => ({
+                "player_name": getDefaultValueIfNullOrUndefined(elementScore?.dataset?.playerName, ""),
+                "player_scores": getDefaultValueIfNullOrUndefined(elementScore?.dataset?.currentPlayerScores, ""),
             }));
             scoresData = ((scoresData.length === 0) ? null : scoresData);
+            return scoresData;
+        };
+
+        const saveToLocalStorage = () => {
+            const scoresData = getCurrentDataScores();
             localStorage.setItem(localStorageKey, JSON.stringify(scoresData));
             updateTextAreaContentFromLocalStorage(scoresData);
             document.getElementById("error-message-container").innerHTML = "";
@@ -251,10 +277,11 @@
 
         const getHtmlStringPlayerScore = (playerName = "player name", { playerColor = "", playerScores = "", plusButtonIndex = "", siblings = "", totalScores = "0", playerNamePlaceholder = "player name" } = {}) => (`<div data-player-name="${playerName}" data-current-player-scores="${playerScores}" data-current-score-plus-button-index="${plusButtonIndex}" style="box-sizing: border-box; display: flex; flex-direction: row; flex-wrap: wrap; min-width: 200px; max-width: 200px; justify-content: flex-end; align-items: center; padding: 8px; gap: 8px; background-color: ${playerColor};">
     <div style="width: 100%; display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
-        <!--
-            <p style="background-color: #000; color: #fff; border: 1px solid white; padding: 4px 8px;">${playerName}</p>
-        -->
-        <button onclick="removeCurrentPlayer(this)" style="margin-left: auto; background: red; color: white; border: none; cursor: pointer; width: 2.1em; aspect-ratio: 1 / 1;">x</button>
+        <div style="width: 100%; display: flex; flex-direction: row; justify-content: flex-start; align-items: center; column-gap: 8px;">
+            <button onclick="moveThisSelectedColumnToLeft(this)" style="background: #007bff; color: white; border: none; cursor: pointer; width: 2.1em; aspect-ratio: 1 / 1;">${myIcon["arrow_left"]}</button>
+            <button onclick="moveThisSelectedColumnToRight(this)" style="background: #007bff; color: white; border: none; cursor: pointer; width: 2.1em; aspect-ratio: 1 / 1;">${myIcon["arrow_right"]}</button>
+        </div>
+        <button onclick="removeCurrentPlayer(this)" style="background: red; color: white; border: none; cursor: pointer; width: 2.1em; aspect-ratio: 1 / 1;">✖</button>
     </div>
     <input onkeydown="changeCurrentPlayerNameOnKeyDown(event)" onfocusout="changeCurrentPlayerNameOnBlur(event)" type="text" placeholder="${playerNamePlaceholder}" style="text-align: center; width: 100%; border: 1px solid #ccc; outline: none; padding: 4px; font-weight: bold;">
     ${siblings}
@@ -267,20 +294,53 @@
     </div>
 </div>`);
 
+        const moveThisSelectedColumnToLeft = (htmlElementMoveToLeftButton) => {
+            const currentColumn = htmlElementMoveToLeftButton.parentElement.parentElement.parentElement;
+            const currentPlayerName = currentColumn.dataset.playerName;
+            const elementContainerScores = currentColumn.parentElement;
+            const childrenArrayScores = Array.from(elementContainerScores.children);
+            const currentColumnIndex = childrenArrayScores.findIndex((columnScore) => (columnScore.dataset.playerName === currentPlayerName));
+            if (currentColumnIndex === 0) return;
+            elementContainerScores.insertBefore(currentColumn, elementContainerScores.children[currentColumnIndex - 1]);
+            saveToLocalStorage();
+        };
+
+        const moveThisSelectedColumnToRight = (htmlElementMoveToRightButton) => {
+            const currentColumn = htmlElementMoveToRightButton.parentElement.parentElement.parentElement;
+            const currentPlayerName = currentColumn.dataset.playerName;
+            const elementContainerScores = currentColumn.parentElement;
+            const childrenArrayScores = Array.from(elementContainerScores.children);
+            const currentColumnIndex = childrenArrayScores.findIndex((columnScore) => (columnScore.dataset.playerName === currentPlayerName));
+            if (currentColumnIndex === (childrenArrayScores.length - 1)) return;
+            elementContainerScores.insertBefore(currentColumn, elementContainerScores.children[(currentColumnIndex + 2)]);
+            saveToLocalStorage();
+        };
+
         const changeCurrentPlayerName = (event) => {
             const inputElement = event.target;
+            const scoresData = getCurrentDataScores();
             if (inputElement.value.includes(",")) {
-                const elementScoresContainer = document.getElementById("scores-container");
-                elementScoresContainer.removeChild(elementScoresContainer.lastChild);
-                elementScoresContainer.innerHTML += inputElement.value.split(",").map((playerName) => getHtmlStringPlayerScore(playerName?.trim?.(), { playerColor: stringToHexColor(playerName?.trim?.()), playerNamePlaceholder: playerName })).join("");
+                const elementContainerScores = document.getElementById("scores-container");
+                const newPlayerNames = inputElement.value.split(",").reduce((currentResult, playerName) => {
+                    if (scoresData.some((scoreColumn) => (scoreColumn?.["player_name"] === playerName?.trim?.())) === true) return currentResult;
+                    currentResult.push(playerName?.trim?.());
+                    return currentResult;
+                }, []);
+                elementContainerScores.removeChild(elementContainerScores.lastChild);
+                elementContainerScores.innerHTML += newPlayerNames.map((playerName) => getHtmlStringPlayerScore(playerName, { playerColor: stringToHexColor(playerName), playerNamePlaceholder: playerName })).join("");
                 inputElement.value = "";
                 saveToLocalStorage();
                 return;
             }
-            inputElement.parentElement.dataset.playerName = inputElement.value;
-            inputElement.parentElement.style.backgroundColor = stringToHexColor(inputElement.value);
-            // inputElement.parentElement.children[0].children[0].innerHTML = inputElement.value;
-            inputElement.placeholder = inputElement.value;
+            if (scoresData.some((scoreColumn) => (scoreColumn?.["player_name"] === inputElement.value?.trim?.())) === true) {
+                inputElement.value = "";
+                inputElement.parentElement.remove();
+                return;
+            }
+            inputElement.parentElement.dataset.playerName = inputElement.value?.trim?.();
+            inputElement.parentElement.style.backgroundColor = stringToHexColor(inputElement.value?.trim?.());
+            // inputElement.parentElement.children[0].children[0].innerHTML = inputElement.value?.trim?.();
+            inputElement.placeholder = inputElement.value?.trim?.();
             inputElement.value = "";
             saveToLocalStorage();
         };
@@ -293,7 +353,8 @@
                 }
                 try {
                     changeCurrentPlayerName(event);
-                } catch (err) {
+                } catch (anyError) {
+                    console.log(anyError);
                     // false alarm error | ignored error
                 }
                 event.preventDefault();
@@ -307,21 +368,22 @@
             }
             try {
                 changeCurrentPlayerName(event);
-            } catch (err) {
+            } catch (anyError) {
+                console.log(anyError);
                 // false alarm error | ignored error
             }
             event.preventDefault();
         };
 
         const addPlayer = () => {
-            const elementScoresContainer = document.getElementById("scores-container");
-            elementScoresContainer.innerHTML += getHtmlStringPlayerScore();
-            elementScoresContainer.lastElementChild.querySelector('input[type="text"]').focus();
+            const elementContainerScores = document.getElementById("scores-container");
+            elementContainerScores.innerHTML += getHtmlStringPlayerScore();
+            elementContainerScores.lastElementChild.querySelector('input[type="text"]').focus();
         };
 
         const rerenderScoreCounter = (scoresData) => {
-            const elementScoresContainer = document.getElementById("scores-container");
-            elementScoresContainer.innerHTML = scoresData.map((playerScore) => {
+            const elementContainerScores = document.getElementById("scores-container");
+            elementContainerScores.innerHTML = scoresData.map((playerScore) => {
                 const arrayPlayerScores = playerScore?.["player_scores"]?.split?.(", ");
                 return getHtmlStringPlayerScore(playerScore?.["player_name"], {
                     playerColor: stringToHexColor(playerScore?.["player_name"]),
@@ -348,10 +410,13 @@
             const backupRestoreScoreCounterTextareaElementValue = backupRestoreScoreCounterTextareaElement.value;
             try {
                 const scoresData = JSON.parse(backupRestoreScoreCounterTextareaElementValue);
+                const scoresDataUniquePlayerNames = removeDuplicatePlayerNameFromArrayOfScores(scoresData);
                 // console.log(backupRestoreScoreCounterTextareaElementValue);
                 // console.log(JSON.stringify(scoresData));
-                localStorage.setItem(localStorageKey, JSON.stringify(scoresData));
-                rerenderScoreCounter(scoresData);
+                // console.log(JSON.stringify(scoresDataUniquePlayerNames));
+                localStorage.setItem(localStorageKey, JSON.stringify(scoresDataUniquePlayerNames));
+                rerenderScoreCounter(scoresDataUniquePlayerNames);
+                updateTextAreaContentFromLocalStorage(scoresDataUniquePlayerNames);
             } catch (anyError) {
                 document.getElementById("error-message-container").innerHTML = `
                     <p style="color: red;">Format backup-an yang di-restore tidak sesuai.</p>
@@ -362,8 +427,8 @@
         const updateTextAreaContentToLocalStorageOnBlur = (event) => {
             if (event.target.value.trim() === "") {
                 localStorage.removeItem(localStorageKey);
-                const elementScoresContainer = document.getElementById("scores-container");
-                elementScoresContainer.innerHTML = "";
+                const elementContainerScores = document.getElementById("scores-container");
+                elementContainerScores.innerHTML = "";
                 event.preventDefault();
                 return;
             }
