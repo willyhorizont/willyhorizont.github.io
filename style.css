@@ -38,15 +38,26 @@ header {
     background: #552c00;
 }
 
+.app-logo {
+  display: flex;
+  align-items: center;
+}
+
+.app-logo img {
+  vertical-align: middle;
+}
+
 .navbar {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center; /* vertically center children */
+  justify-content: space-between; /* optional: separate logo and menu */
 }
 
 .navbar ul {
     display: flex;
     align-items: center;
     list-style: none;
+    transition: right 0.3s ease;
 }
 
 .navbar ul li {
@@ -66,10 +77,6 @@ header {
 .navbar ul li a img,
 .navbar ul li a span {
     transition: opacity 0.3s ease;
-}
-
-.spacer {
-    flex: 1;
 }
 
 .navbar-item {
@@ -109,9 +116,11 @@ footer {
 
 .navbar-hamburger-menu {
     min-width: 30px;
-    cursor: pointer;
     text-align: center;
+
     display: none;
+    font-size: 32px;
+    cursor: pointer;
 }
 
 .navbar-item.navbar-menu-close {
@@ -139,7 +148,7 @@ footer {
     row-gap: 0px;
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
     .home-body {
         display: flex;
         flex-direction: column;
@@ -147,24 +156,34 @@ footer {
         row-gap: 8px;
     }
 
-    .navbar ul {
-        display: none;
-    }
-
     .navbar-hamburger-menu {
-        display: block;
+        display: inline-block;
     }
 
     .navbar-item.navbar-menu-close {
         display: block;
+        position: absolute;
+        top: 13px;
+        right: 10px;
+        font-size: 32px;
+        cursor: pointer;
     }
 
     .navbar ul {
         display: none;
-        flex-direction: column;
-        align-items: flex-end;
-        width: 100%;
         text-align: right;
+
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 60%;
+        max-width: 200px;
+        background: #091929;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-top: 64px;
+        z-index: 1000;
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
     }
 
     .navbar-item a {
@@ -179,14 +198,11 @@ footer {
 
     .navbar.responsive ul {
         display: flex;
+        right: 0;
     }
 
     .navbar.responsive {
-        align-items: flex-start;
-    }
-
-    .navbar-hamburger-menu.visible {
-        display: none;
+        align-items: center;
     }
 
     .navbar-item {
