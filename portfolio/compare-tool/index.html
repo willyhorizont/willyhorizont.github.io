@@ -61,6 +61,18 @@
                         </div>
                     </div>
                 </div>
+                <div style="width: 100%; display: flex; flex-direction: column; margin: 8px 0px; justify-content: center; align-items: center;">
+                    <div style="display: flex; flex-direction: column; min-width: 200px; max-width: 200px; background-color: #fff; justify-content: center; align-items: center; padding: 8px;">
+                        <div style="display: flex; flex-direction: column; width: 100%; justify-content: center; align-items: center; border: 1px solid #000">
+                            <p style="width: 100%; text-align: center; padding: 4px 8px; background-color: #091929; color: #fff;">Selected Column</p>
+                            <p id="countainer-selected-column" data-selected-column="" style="width: 100%; text-align: center; padding: 4px 8px; background-color: #fff; color: #000; min-height: 26.4px;"></p>
+                            <div style="width: 100%; display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 8px; padding: 8px; border-top: 1px solid #000;">
+                                <button onclick="moveSelectedColumnToLeft()" style="background-color: #007bff; color: white; border: none; cursor: pointer; width: 2.1em; aspect-ratio: 1 / 1;">◀</button>
+                                <button onclick="moveSelectedColumnToRight()" style="background-color: #007bff; color: white; border: none; cursor: pointer; width: 2.1em; aspect-ratio: 1 / 1;">▶</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div style="padding: 4px; width: 100%; display: flex; flex-direction: column;">
                     <h2 style="margin-top: 8px;">Import & Export:</h2>
                     <textarea id="import-export-textarea-compare-tool" rows="4" cols="50" style="background-color: #000; color: #ccc; margin-top: 16px;" onblur="updateTextAreaContentToLocalStorageOnBlur(event)"></textarea>
@@ -147,11 +159,6 @@
         const toggleMenu = () => {
             const navbarElement = document.getElementById("navbar");
             navbarElement.classList.toggle("responsive");
-        };
-
-        const myIcon = {
-            "arrow_left": "◀",
-            "arrow_right": "▶",
         };
 
         const getDefaultValueIfNullOrUndefined = (anything, defaultValue) => (((anything === undefined) || (anything === null)) ? defaultValue : anything);
@@ -291,25 +298,71 @@
 
         const getHtmlStringItemRow = (itemColumnKey = "column key", { columnColor = "", itemColumnValues = "", plusButtonIndex = "", siblings = "", itemColumnKeyPlaceholder = "column key" } = {}) => (`<div data-item-column-key="${itemColumnKey}" data-current-item-column-values="${itemColumnValues}" data-current-item-row-plus-button-index="${plusButtonIndex}" style="box-sizing: border-box; display: flex; flex-direction: row; flex-wrap: wrap; min-width: 200px; max-width: 200px; justify-content: flex-end; align-items: center; padding: 8px; gap: 8px; background-color: ${columnColor};">
     <div style="width: 100%; display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
-        <div style="width: 100%; display: flex; flex-direction: row; justify-content: flex-start; align-items: center; column-gap: 8px;">
-            <button onclick="moveThisSelectedColumnToLeft(this)" style="background: #007bff; color: white; border: none; cursor: pointer; width: 2.1em; aspect-ratio: 1 / 1;">${myIcon["arrow_left"]}</button>
-            <button onclick="moveThisSelectedColumnToRight(this)" style="background: #007bff; color: white; border: none; cursor: pointer; width: 2.1em; aspect-ratio: 1 / 1;">${myIcon["arrow_right"]}</button>
+        <div style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; column-gap: 8px;">
+            <button onclick="moveThisSelectedColumnToLeft(this)" style="background-color: #007bff; color: white; border: none; cursor: pointer; width: 2.1em; aspect-ratio: 1 / 1;">◀</button>
+            <button onclick="moveThisSelectedColumnToRight(this)" style="background-color: #007bff; color: white; border: none; cursor: pointer; width: 2.1em; aspect-ratio: 1 / 1;">▶</button>
         </div>
-        <button onclick="removeCurrentColumn(this)" style="margin-left: auto; background: red; color: white; border: none; cursor: pointer; width: 2.1em; aspect-ratio: 1 / 1;">x</button>
+        <button onclick="setThisSelectedColumnAsSelectedColumn(this)" style="background-color: #666; color: white; border: none; cursor: pointer; width: 2.1em; aspect-ratio: 1 / 1;">sel</button>
+        <button onclick="removeCurrentColumn(this)" style="background-color: red; color: white; border: none; cursor: pointer; width: 2.1em; aspect-ratio: 1 / 1;">x</button>
     </div>
     <input onkeydown="changeCurrentItemColumnKeyOnKeyDown(event)" onfocusout="changeCurrentItemColumnKeyOnBlur(event)" type="text" placeholder="${itemColumnKeyPlaceholder}" style="text-align: center; width: 100%; border: 1px solid #ccc; outline: none; padding: 4px; font-weight: bold;">
     ${siblings}
     <div style="display: flex; flex-direction: column; flex: 1; justify-content: center; align-items: center; border: 1px solid #000;">
-        <button onclick="addNewItemColumnValueForCurrentRow(this)" style="background: #007bff; color: white; border: none; cursor: pointer; width: 100%;">+ value</button>
+        <button onclick="addNewItemColumnValueForCurrentRow(this)" style="background-color: #007bff; color: white; border: none; cursor: pointer; width: 100%;">+ value</button>
     </div>
 </div>`);
 
+        const setThisSelectedColumnAsSelectedColumn = (htmlElementCheckboxToggleButton) => {
+            const currentColumn = htmlElementCheckboxToggleButton.parentElement.parentElement;
+            const currentItemColumnKey = currentColumn.dataset.itemColumnKey;
+            const elementHtmlCountainerSelectedColumn = document.getElementById("countainer-selected-column");
+            if (elementHtmlCountainerSelectedColumn.dataset.selectedColumn === currentItemColumnKey) {
+                elementHtmlCountainerSelectedColumn.removeAttribute("data-selected-column");
+                elementHtmlCountainerSelectedColumn.innerHTML = "";
+                elementHtmlCountainerSelectedColumn.parentElement.parentElement.style.backgroundColor = "#fff";
+                return;
+            }
+            elementHtmlCountainerSelectedColumn.dataset.selectedColumn = currentItemColumnKey;
+            elementHtmlCountainerSelectedColumn.innerHTML = currentItemColumnKey;
+            elementHtmlCountainerSelectedColumn.parentElement.parentElement.style.backgroundColor = stringToHexColor(currentItemColumnKey);
+        };
+
+        const moveSelectedColumnToLeft = () => {
+            const elementHtmlCountainerSelectedColumn = document.getElementById("countainer-selected-column");
+            const currentItemColumnKey = elementHtmlCountainerSelectedColumn.dataset.selectedColumn;
+            if (!currentItemColumnKey) return;
+            const elementContainerCompareToolItems = document.getElementById("compare-tool-items-container");
+            const childrenArrayCompareToolItems = Array.from(elementContainerCompareToolItems.children);
+            const currentColumnIndex = childrenArrayCompareToolItems.findIndex((columnItem) => (columnItem.dataset.itemColumnKey === currentItemColumnKey));
+            const currentColumn = elementContainerCompareToolItems.children[currentColumnIndex];
+
+            if (currentColumnIndex === 0) return;
+            elementContainerCompareToolItems.insertBefore(currentColumn, elementContainerCompareToolItems.children[currentColumnIndex - 1]);
+            saveToLocalStorage();
+        };
+
+        const moveSelectedColumnToRight = () => {
+            const elementHtmlCountainerSelectedColumn = document.getElementById("countainer-selected-column");
+            const currentItemColumnKey = elementHtmlCountainerSelectedColumn.dataset.selectedColumn;
+            if (!currentItemColumnKey) return;
+            const elementContainerCompareToolItems = document.getElementById("compare-tool-items-container");
+            const childrenArrayCompareToolItems = Array.from(elementContainerCompareToolItems.children);
+            const currentColumnIndex = childrenArrayCompareToolItems.findIndex((columnItem) => (columnItem.dataset.itemColumnKey === currentItemColumnKey));
+            const currentColumn = elementContainerCompareToolItems.children[currentColumnIndex];
+
+            if (currentColumnIndex === (childrenArrayCompareToolItems.length - 1)) return;
+            elementContainerCompareToolItems.insertBefore(currentColumn, elementContainerCompareToolItems.children[(currentColumnIndex + 2)]);
+            saveToLocalStorage();
+        };
+
         const moveThisSelectedColumnToLeft = (htmlElementMoveToLeftButton) => {
             const currentColumn = htmlElementMoveToLeftButton.parentElement.parentElement.parentElement;
+            
             const currentItemColumnKey = currentColumn.dataset.itemColumnKey;
             const elementContainerCompareToolItems = currentColumn.parentElement;
             const childrenArrayCompareToolItems = Array.from(elementContainerCompareToolItems.children);
             const currentColumnIndex = childrenArrayCompareToolItems.findIndex((columnItem) => (columnItem.dataset.itemColumnKey === currentItemColumnKey));
+
             if (currentColumnIndex === 0) return;
             elementContainerCompareToolItems.insertBefore(currentColumn, elementContainerCompareToolItems.children[currentColumnIndex - 1]);
             saveToLocalStorage();
@@ -317,10 +370,12 @@
 
         const moveThisSelectedColumnToRight = (htmlElementMoveToRightButton) => {
             const currentColumn = htmlElementMoveToRightButton.parentElement.parentElement.parentElement;
+
             const currentItemColumnKey = currentColumn.dataset.itemColumnKey;
             const elementContainerCompareToolItems = currentColumn.parentElement;
             const childrenArrayCompareToolItems = Array.from(elementContainerCompareToolItems.children);
             const currentColumnIndex = childrenArrayCompareToolItems.findIndex((columnItem) => (columnItem.dataset.itemColumnKey === currentItemColumnKey));
+
             if (currentColumnIndex === (childrenArrayCompareToolItems.length - 1)) return;
             elementContainerCompareToolItems.insertBefore(currentColumn, elementContainerCompareToolItems.children[(currentColumnIndex + 2)]);
             saveToLocalStorage();

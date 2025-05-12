@@ -300,15 +300,15 @@
         const getHtmlStringPlayerScore = (playerName = "player name", { playerColor = "", playerScores = "", plusButtonIndex = "", siblings = "", totalScores = "0", playerNamePlaceholder = "player name" } = {}) => (`<div data-player-name="${playerName}" data-current-player-scores="${playerScores}" data-current-score-plus-button-index="${plusButtonIndex}" style="box-sizing: border-box; display: flex; flex-direction: row; flex-wrap: wrap; min-width: 200px; max-width: 200px; justify-content: flex-end; align-items: center; padding: 8px; gap: 8px; background-color: ${playerColor};">
     <div style="width: 100%; display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
         <div style="width: 100%; display: flex; flex-direction: row; justify-content: flex-start; align-items: center; column-gap: 8px;">
-            <button onclick="moveThisSelectedColumnToLeft(this)" style="background: #007bff; color: white; border: none; cursor: pointer; width: 2.1em; aspect-ratio: 1 / 1;">${myIcon["arrow_left"]}</button>
-            <button onclick="moveThisSelectedColumnToRight(this)" style="background: #007bff; color: white; border: none; cursor: pointer; width: 2.1em; aspect-ratio: 1 / 1;">${myIcon["arrow_right"]}</button>
+            <button onclick="moveThisSelectedColumnToLeft(this)" style="background-color: #007bff; color: white; border: none; cursor: pointer; width: 2.1em; aspect-ratio: 1 / 1;">${myIcon["arrow_left"]}</button>
+            <button onclick="moveThisSelectedColumnToRight(this)" style="background-color: #007bff; color: white; border: none; cursor: pointer; width: 2.1em; aspect-ratio: 1 / 1;">${myIcon["arrow_right"]}</button>
         </div>
-        <button onclick="removeCurrentPlayer(this)" style="background: red; color: white; border: none; cursor: pointer; width: 2.1em; aspect-ratio: 1 / 1;">✖</button>
+        <button onclick="removeCurrentPlayer(this)" style="background-color: red; color: white; border: none; cursor: pointer; width: 2.1em; aspect-ratio: 1 / 1;">✖</button>
     </div>
     <input onkeydown="changeCurrentPlayerNameOnKeyDown(event)" onfocusout="changeCurrentPlayerNameOnBlur(event)" type="text" placeholder="${playerNamePlaceholder}" style="text-align: center; width: 100%; border: 1px solid #ccc; outline: none; padding: 4px; font-weight: bold;">
     ${siblings}
     <div style="display: flex; flex-direction: column; flex: 1; justify-content: center; align-items: center; border: 1px solid #000;">
-        <button onclick="addScoreForCurrentPlayer(this)" style="background: #007bff; color: white; border: none; cursor: pointer; width: 100%;">+ score</button>
+        <button onclick="addScoreForCurrentPlayer(this)" style="background-color: #007bff; color: white; border: none; cursor: pointer; width: 100%;">+ score</button>
     </div>
     <div style="display: flex; flex-direction: column; width: 100%; justify-content: center; align-items: center; border: 1px solid #ccc;">
         <p style="width: 100%; text-align: center; padding: 4px 8px; background-color: #091929; color: #fff; border-bottom: 1px solid #ccc;">Total</p>
