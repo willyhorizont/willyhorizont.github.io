@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- start of Google tag (gtag.js) -->
+    <!-- tagmanager.google.com -->
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LECMLYN21B"></script>
     <script>
@@ -10,15 +12,27 @@
 
         gtag('config', 'G-LECMLYN21B');
     </script>
+<!-- end of Google tag (gtag.js) -->
+
+<!-- start of Google Search Console Ownership verification -->
+    <!-- search.google.com * search-console/ownership -->
     <meta name="google-site-verification" content="UqB5vtnZNIl-hvyiqwM0PDgX772rcbWWjt0g9onB_BQ" />
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="notranslate">
+    <meta name="google" content="nopagereadaloud">
+<!-- end of Google Search Console Ownership verification -->
+
+<!-- start of Google AdSense -->
+    <!-- adsense.google.com/adsense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5944204031363480"
-     crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script>
+<!-- end of Google AdSense -->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Score Counter by Willy Horizont">
     <meta name="keywords" content="Score Counter by Willy Horizont">
     <meta name="author" content="Willy Horizont">
-    <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#000000">
     <link rel="icon" type="image/x-icon" href="../../favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png">
@@ -28,6 +42,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png">
     <link rel="stylesheet" href="../../style.css">
     <title>Score Counter | Portfolio | Willy Horizont</title>
+    <script src="../../utils.js"></script>
 </head>
 <body>
     <header>
@@ -154,56 +169,6 @@
             "arrow_right": "▶",
         };
 
-        const getDefaultValueIfNullOrUndefined = (anything, defaultValue) => (((anything === undefined) || (anything === null)) ? defaultValue : anything);
-        
-        const stringToHexColor = (anyString) => {
-            let theHash = 0;
-            let anIndex;
-
-            /* eslint-disable no-bitwise */
-            for (anIndex = 0; anIndex < anyString.length; anIndex += 1) {
-                theHash = anyString.charCodeAt(anIndex) + ((theHash << 5) - theHash);
-            }
-
-            let hexColorResult = '#';
-
-            for (anIndex = 0; anIndex < 3; anIndex += 1) {
-                const value = (theHash >> (anIndex * 8)) & 0xff;
-                hexColorResult += `00${value.toString(16)}`.slice(-2);
-            }
-            /* eslint-enable no-bitwise */
-
-            return hexColorResult;
-        };
-
-        const removeDuplicateStringFromArrayOfString = (anyArray) => {
-            const seen = {};
-            const uniqueArray = [];
-
-            anyArray.forEach((item) => {
-                if (seen?.[item] === undefined) {
-                    seen[item] = true;
-                    uniqueArray.push(item);
-                }
-            });
-
-            return uniqueArray;
-        };
-
-        const removeDuplicateKeyFromArrayOfObjects = (anyArray, anyObjectKeyName) => {
-            const seen = {};
-            const uniqueArray = [];
-
-            anyArray.forEach((anyObject) => {
-                if (seen?.[anyObject?.[anyObjectKeyName]] === undefined) {
-                    seen[anyObject[anyObjectKeyName]] = true;
-                    uniqueArray.push(anyObject);
-                }
-            });
-
-            return uniqueArray;
-        };
-
         const localStorageKey = "scores";
 
         const updateTextAreaContentFromLocalStorage = (scoresData) => {
@@ -214,8 +179,8 @@
         const getCurrentDataScores = () => {
             const elementContainerScores = document.getElementById("scores-container");
             let scoresData = Array.from(elementContainerScores.children).map((elementScore) => ({
-                "player_name": getDefaultValueIfNullOrUndefined(elementScore?.dataset?.playerName, ""),
-                "player_scores": getDefaultValueIfNullOrUndefined(elementScore?.dataset?.currentPlayerScores, ""),
+                "player_name": (elementScore?.dataset?.playerName || ""),
+                "player_scores": (elementScore?.dataset?.currentPlayerScores || ""),
             }));
             scoresData = ((scoresData.length === 0) ? null : scoresData);
             return scoresData;
@@ -349,7 +314,7 @@
                     return currentResult;
                 }, []);
                 elementContainerScores.removeChild(elementContainerScores.lastChild);
-                elementContainerScores.innerHTML += newPlayerNames.map((playerName) => getHtmlStringPlayerScore(playerName, { playerColor: stringToHexColor(playerName), playerNamePlaceholder: playerName })).join("");
+                elementContainerScores.innerHTML += newPlayerNames.map((playerName) => getHtmlStringPlayerScore(playerName, { playerColor: stringToRgbHexColor(playerName), playerNamePlaceholder: playerName })).join("");
                 inputElement.value = "";
                 saveToLocalStorage();
                 return;
@@ -360,7 +325,7 @@
                 return;
             }
             inputElement.parentElement.dataset.playerName = inputElement.value?.trim?.();
-            inputElement.parentElement.style.backgroundColor = stringToHexColor(inputElement.value?.trim?.());
+            inputElement.parentElement.style.backgroundColor = stringToRgbHexColor(inputElement.value?.trim?.());
             inputElement.placeholder = inputElement.value?.trim?.();
             inputElement.value = "";
             saveToLocalStorage();
@@ -402,19 +367,14 @@
 
         const rerenderScoreCounter = (scoresData) => {
             const elementContainerScores = document.getElementById("scores-container");
-            elementContainerScores.innerHTML = scoresData.map((playerScore) => {
-                const arrayPlayerScores = playerScore?.["player_scores"]?.split?.(", ");
-                return getHtmlStringPlayerScore(playerScore?.["player_name"], {
-                    playerColor: stringToHexColor(playerScore?.["player_name"]),
+            elementContainerScores.innerHTML = scoresData.map((playerScore) => ((arrayPlayerScores) => (getHtmlStringPlayerScore(playerScore?.["player_name"], {
+                    playerColor: stringToRgbHexColor(playerScore?.["player_name"]),
                     playerScores: playerScore?.["player_scores"],
                     plusButtonIndex: `${((arrayPlayerScores?.length === undefined) ? 0 : (arrayPlayerScores?.length - 1))}`,
                     siblings: arrayPlayerScores?.map?.((currentPlayerScore, currentScorePlusButtonIndex) => getHtmlStringScoreInput(currentScorePlusButtonIndex, ((currentPlayerScore?.trim?.() === "") ? "0" : currentPlayerScore)))?.join?.(""),
-                    totalScores: arrayPlayerScores?.reduce?.((currentResult, currentPlayerScore) => {
-                        const currentPlayerScoreParsed = parseInt(currentPlayerScore, 10);
-                        return (currentResult + ((isNaN(currentPlayerScoreParsed) === true) ? 0 : currentPlayerScoreParsed));
-                    }, 0),
+                    totalScores: arrayPlayerScores?.reduce?.((currentResult, currentPlayerScore) => ((currentPlayerScoreParsed) => (currentResult + ((getIsNumeric(currentPlayerScoreParsed) === false) ? 0 : currentPlayerScoreParsed)))(parseInt(currentPlayerScore, 10)), 0),
                     playerNamePlaceholder: playerScore?.["player_name"],
-                })}).join("");
+                })))(playerScore?.["player_scores"]?.split?.(", "))).join("");
         };
 
         const loadFromLocalStorage = () => {
@@ -429,7 +389,7 @@
             const backupRestoreScoreCounterTextareaElementValue = backupRestoreScoreCounterTextareaElement.value;
             try {
                 const scoresData = JSON.parse(backupRestoreScoreCounterTextareaElementValue);
-                const scoresDataUniquePlayerNames = removeDuplicateKeyFromArrayOfObjects(scoresData, "player_name");
+                const scoresDataUniquePlayerNames = removeDuplicateItems(scoresData, (anyArrayItem) => anyArrayItem?.["player_name"]);
                 // console.log(backupRestoreScoreCounterTextareaElementValue);
                 // console.log(JSON.stringify(scoresData));
                 // console.log(JSON.stringify(scoresDataUniquePlayerNames));
@@ -437,9 +397,7 @@
                 rerenderScoreCounter(scoresDataUniquePlayerNames);
                 updateTextAreaContentFromLocalStorage(scoresDataUniquePlayerNames);
             } catch (anyError) {
-                document.getElementById("error-message-container").innerHTML = `
-                    <p style="color: red;">Format backup-an yang di-restore tidak sesuai.</p>
-                `;
+                document.getElementById("error-message-container").innerHTML = '<p style="color: red;">Format backup-an yang di-restore tidak sesuai.</p>';
             }
         };
 

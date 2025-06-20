@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- start of Google tag (gtag.js) -->
+    <!-- tagmanager.google.com -->
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LECMLYN21B"></script>
     <script>
@@ -10,9 +12,19 @@
 
         gtag('config', 'G-LECMLYN21B');
     </script>
+<!-- end of Google tag (gtag.js) -->
+
+<!-- start of Google Search Console Ownership verification -->
+    <!-- search.google.com * search-console/ownership -->
     <meta name="google-site-verification" content="UqB5vtnZNIl-hvyiqwM0PDgX772rcbWWjt0g9onB_BQ" />
+<!-- end of Google Search Console Ownership verification -->
+
+<!-- start of Google AdSense -->
+    <!-- adsense.google.com/adsense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5944204031363480"
-     crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script>
+<!-- end of Google AdSense -->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Kalkulator Pengeluaran by Willy Horizont">
@@ -28,6 +40,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png">
     <link rel="stylesheet" href="../../style.css">
     <title>Kalkulator Pengeluaran | Portfolio | Willy Horizont</title>
+    <script src="../../utils.js"></script>
 </head>
 <body>
     <header>
@@ -154,8 +167,6 @@
             navbarElement.classList.toggle("responsive");
         };
 
-        const isNan = (num) => Number.isNaN(parseFloat(num));
-
         const localStorageKey = "expenses";
 
         const getHtmlStringChipInput = (placeholder = "") => `<input onkeydown="changeCurrentExpensesItemItemsOnKeyDown(event)" onfocusout="changeCurrentExpensesItemItemsOnBlur(event)" type="text" placeholder="${placeholder}" style="margin: 8px 4px 8px 4px; background-color: #000; color: #ccc; padding: 8px 4px; border: none; outline: none;">`;
@@ -197,7 +208,7 @@ ${children}
         const saveToLocalStorage = () => {
             let expensesData = Array.from(expensesCalculatorContainer.children).map((expensesItemElement) => ({
                 priceDisplay: expensesItemElement.dataset.priceDisplay ?? "",
-                priceValue: parseFloat(isNan(expensesItemElement.dataset.priceValue) ? 0 : expensesItemElement.dataset.priceValue),
+                priceValue: parseFloat((isNumeric(expensesItemElement.dataset.priceValue) === true) ? 0 : expensesItemElement.dataset.priceValue),
                 items: expensesItemElement.dataset.items ?? ""
             }));
             expensesData = ((expensesData.length === 0) ? null : expensesData);
@@ -206,23 +217,9 @@ ${children}
             document.getElementById("error-message-container").innerHTML = "";
         };
 
-        const removeDuplicateStringFromArrayOfString = (anyArray) => {
-            const seen = {};
-            const uniqueArray = [];
-
-            anyArray.forEach((item) => {
-                if (seen?.[item] === undefined) {
-                    seen[item] = true;
-                    uniqueArray.push(item);
-                }
-            });
-
-            return uniqueArray;
-        };
-
         const updateTotalExpenses = () => {
-            const totalExpenses = Array.from(document.querySelectorAll("#expenses-calculator-container div")).reduce((currentResult, currentExpensesItemItem) => (currentResult + parseFloat(isNan(currentExpensesItemItem.dataset.priceValue) ? 0 : currentExpensesItemItem.dataset.priceValue)), 0);
-            if (isNan(totalExpenses) === true) {
+            const totalExpenses = Array.from(document.querySelectorAll("#expenses-calculator-container div")).reduce((currentResult, currentExpensesItemItem) => (currentResult + parseFloat((isNumeric(currentExpensesItemItem.dataset.priceValue) === true) ? 0 : currentExpensesItemItem.dataset.priceValue)), 0);
+            if (isNumeric(totalExpenses) === true) {
                 totalExpensesElement.innerText = 0
                 return;
             }
@@ -252,7 +249,7 @@ ${children}
             const expenseChipInputElement = inputElement.parentElement;
             const inputElementValue = inputElement.value.split(",").filter((item) => (item.trim() !== "")).join(",");
             const inputElementValueNew = ((inputElement.parentElement.parentElement.dataset.items === "") ? inputElementValue : (inputElement.parentElement.parentElement.dataset.items + ", " + inputElementValue));
-            const inputElementValueNoDuplicate = removeDuplicateStringFromArrayOfString(inputElementValueNew.split(",").map((item) => (item.trim()))).join(", ");
+            const inputElementValueNoDuplicate = removeDuplicateItems(inputElementValueNew.split(",").map((item) => (item.trim()))).join(", ");
             inputElement.parentElement.parentElement.dataset.items = inputElementValueNoDuplicate;
 
             const chips = inputElementValueNoDuplicate.split(",").map((value) => (getExpenseChipString(`${getExpenseChipValueContainerString(value.trim())}

@@ -1,72 +1,36 @@
-export const jsType = { "Null": "Null", "Boolean": "Boolean", "String": "String", "Numeric": "Numeric", "Object": "Object", "Array": "Array", "Function": "Function" };
+const printThenReturn = (anything, { title = "", wrapper = (anythingInner) => anythingInner } = {}) => [console.log(`${title ? `${title}: ` : ""}${wrapper(anything)}`), anything][1];
+const AnyType = { "Null": "Null", "Undefined": "Undefined", "Boolean": "Boolean", "String": "String", "Numeric": "Numeric", "Object": "Object", "Array": "Array", "Function": "Function" };
+const getIsNull = (anything) => ((Object.prototype.toString.call(anything) === "[object Null]") && (anything === null));
+const getIsUndefined = (anything) => ((Object.prototype.toString.call(anything) === "[object Undefined]") && (anything === undefined));
+const getIsBoolean = (anything) => ((Object.prototype.toString.call(anything) === "[object Boolean]") && ((anything === true) || (anything === false)));
+const getIsString = (anything) => (Object.prototype.toString.call(anything) === "[object String]");
+const getIsNumeric = (anything) => ((Object.prototype.toString.call(anything) === "[object Number]") && (Number.isNaN(anything) === false) && (Number.isFinite(anything) === true));
+const getIsObject = (anything) => (Object.prototype.toString.call(anything) === "[object Object]");
+const getIsArray = (anything) => ((Object.prototype.toString.call(anything) === "[object Array]") && (Array.getIsArray(anything) === true));
+const getIsFunction = (anything) => (Object.prototype.toString.call(anything) === "[object Function]");
+const getIsError = (anything) => (Object.prototype.toString.call(anything) === "[object Error]");
+const getIsDate = (anything) => (Object.prototype.toString.call(anything) === "[object Date]");
+const getType = (anything) => ((getIsUndefined(anything) === true) ? AnyType["Undefined"] : ((getIsNull(anything) === true) ? AnyType["Null"] : ((getIsBoolean(anything) === true) ? AnyType["Boolean"] : ((getIsString(anything) === true) ? AnyType["String"] : ((getIsNumeric(anything) === true) ? AnyType["Numeric"] : ((getIsObject(anything) === true) ? AnyType["Object"] : ((getIsArray(anything) === true) ? AnyType["Array"] : ((getIsFunction(anything) === true) ? AnyType["Function"] : Object.prototype.toString.call(anything)))))))));
+const jsonStringify = (anything, { pretty = false, indent = " ".repeat(4), indentLevel = 0, argumentType = getType(anything), jsonStringifyInner = jsonStringify } = {}) => ((argumentType === AnyType["Undefined"]) ? "undefined" : (argumentType === AnyType["Null"]) ? "null" : ((argumentType === AnyType["String"]) ? `"${anything}"` : (((argumentType === AnyType["Numeric"]) || (argumentType === AnyType["Boolean"])) ? `${anything}` : ((argumentType === AnyType["Object"]) ? ((Object.keys(anything).length === 0) ? "{}" : (`${((pretty === true) ? (`{\n${indent.repeat(indentLevel + 1)}`) : "{ ")}${Object.entries(anything).reduce((currentResult, [objectKey, objectValue], objectEntryIndex) => (`${currentResult}${(((objectEntryIndex + 1) !== Object.keys(anything).length) ? `"${objectKey}": ${jsonStringifyInner(objectValue, { pretty, indentLevel: (indentLevel + 1) })}${((pretty === true) ? (`,\n${indent.repeat(indentLevel + 1)}`) : ", ")}` : `"${objectKey}": ${jsonStringifyInner(objectValue, { pretty, indentLevel: (indentLevel + 1) })}`)}`), "")}${((pretty === true) ? (`\n${indent.repeat(indentLevel)}}`) : " }")}`)) : ((argumentType === AnyType["Array"]) ? ((anything.length === 0) ? "[]" : (`${((pretty === true) ? (`[\n${indent.repeat(indentLevel + 1)}`) : "[")}${anything.reduce((currentResult, arrayItem, arrayItemIndex) => ((((arrayItemIndex + 1) !== anything.length) ? `${currentResult}${jsonStringifyInner(arrayItem, { pretty, indentLevel: (indentLevel + 1) })}${((pretty === true) ? (`,\n${indent.repeat(indentLevel + 1)}`) : ", ")}` : `${currentResult}${jsonStringifyInner(arrayItem, { pretty, indentLevel: (indentLevel + 1) })}`)), "")}${((pretty === true) ? (`\n${indent.repeat(indentLevel)}]`) : "]")}`)) : ((argumentType === AnyType["Function"]) ? anything.toString() : `${anything}`)))))); // custom JSON.jsonStringify() function jsonStringifyV4
+const randomIntInclusive = (lowerBound, upperBound) => (Math.floor(Math.random() * (upperBound - lowerBound + 1)) + lowerBound);
+const rangeInclusive = (startNumber, stopNumber) => Array.from({ length: (Math.abs(stopNumber - startNumber) + 1) }, (_, i) => ((startNumber < stopNumber) ? (startNumber + i) : ((startNumber > stopNumber) ? (startNumber - i) : (startNumber || stopNumber))));
+const removeDuplicateItems = (anyArray, callbackFunction = (anyArrayItem) => anyArrayItem) => anyArray.reduce(([uniqueKeyMap, uniqueArray], anyArrayItem) => ((newUniqueKeyString) => ((uniqueKeyMap.get(newUniqueKeyString) !== undefined) ? [uniqueKeyMap, uniqueArray] : [uniqueKeyMap.set(newUniqueKeyString, anyArrayItem), uniqueArray.push(anyArrayItem), [uniqueKeyMap, uniqueArray]][2]))(callbackFunction(anyArrayItem)), [new Map(), []])[1]; // removeDuplicateItemsV2
 
-export const isNull = (anything) => (((Object.prototype.toString.call(anything) === "[object Null]") && (anything === null)) || ((Object.prototype.toString.call(anything) === "[object Undefined]") && (anything === undefined)));
-
-export const isBoolean = (anything) => ((Object.prototype.toString.call(anything) === "[object Boolean]") && ((anything === true) || (anything === false)));
-
-export const isString = (anything) => (Object.prototype.toString.call(anything) === "[object String]");
-
-export const isNumeric = (anything) => ((Object.prototype.toString.call(anything) === "[object Number]") && (Number.isNaN(anything) === false) && (Number.isFinite(anything) === true));
-
-export const isObject = (anything) => (Object.prototype.toString.call(anything) === "[object Object]");
-
-export const isArray = (anything) => ((Object.prototype.toString.call(anything) === "[object Array]") && (Array.isArray(anything) === true));
-
-export const isFunction = (anything) => (Object.prototype.toString.call(anything) === "[object Function]");
-
-export const getType = (anything) => ((isNull(anything) === true) ? jsType.Null : ((isBoolean(anything) === true) ? jsType.Boolean : ((isString(anything) === true) ? jsType.String : ((isNumeric(anything) === true) ? jsType.Numeric : ((isObject(anything) === true) ? jsType.Object : ((isArray(anything) === true) ? jsType.Array : ((isFunction(anything) === true) ? jsType.Function : Object.prototype.toString.call(anything))))))));
-
-export const jsonStringify = (anything, { pretty = false, indent = " ".repeat(4), indentLevel = 0, argumentType = getType(anything) } = {}) => ((argumentType === jsType.Null) ? "null" : ((argumentType === jsType.String) ? `"${anything}"` : (((argumentType === jsType.Numeric) || (argumentType === jsType.Boolean)) ? `${anything}` : ((argumentType === jsType.Object) ? ((Object.keys(anything).length === 0) ? "{}" : (`${((pretty === true) ? (`{\n${indent.repeat(indentLevel + 1)}`) : "{ ")}${Object.entries(anything).reduce((currentResult, [objectKey, objectValue], objectEntryIndex) => (`${currentResult}${(((objectEntryIndex + 1) !== Object.keys(anything).length) ? `"${objectKey}": ${jsonStringify(objectValue, { pretty, indentLevel: (indentLevel + 1) })}${((pretty === true) ? (`,\n${indent.repeat(indentLevel + 1)}`) : ", ")}` : `"${objectKey}": ${jsonStringify(objectValue, { pretty, indentLevel: (indentLevel + 1) })}`)}`), "")}${((pretty === true) ? (`\n${indent.repeat(indentLevel)}}`) : " }")}`)) : ((argumentType === jsType.Array) ? ((anything.length === 0) ? "[]" : (`${((pretty === true) ? (`[\n${indent.repeat(indentLevel + 1)}`) : "[")}${anything.reduce((currentResult, arrayItem, arrayItemIndex) => ((((arrayItemIndex + 1) !== anything.length) ? `${currentResult}${jsonStringify(arrayItem, { pretty, indentLevel: (indentLevel + 1) })}${((pretty === true) ? (`,\n${indent.repeat(indentLevel + 1)}`) : ", ")}` : `${currentResult}${jsonStringify(arrayItem, { pretty, indentLevel: (indentLevel + 1) })}`)), "")}${((pretty === true) ? (`\n${indent.repeat(indentLevel)}]`) : "]")}`)) : ((argumentType === jsType.Function) ? "[object Function]" : argumentType)))))); // custom JSON.stringify() function jsonStringifyV4
-
-export const generateNumberSequence = (startNumber, stopNumber) => {
-    const numberSequenceArray = [];
-    if (stopNumber > startNumber) {
-        for (let anyNumber = startNumber; (anyNumber <= stopNumber); anyNumber += 1) {
-            numberSequenceArray.push(anyNumber);
-        }
-        return numberSequenceArray;
-    }
-    if (startNumber > stopNumber) {
-        for (let anyNumber = startNumber; (anyNumber >= stopNumber); anyNumber -= 1) {
-            numberSequenceArray.push(anyNumber);
-        }
-        return numberSequenceArray;
-    }
-    return numberSequenceArray;
-};
-
-export const isNan = (num) => Number.isNaN(parseFloat(num));
-
-export const stringToHexColor = (anyString) => {
+const stringToRgbHexColor = (theString) => {
     let theHash = 0;
-    let anIndex;
+    let i;
 
     /* eslint-disable no-bitwise */
-    for (anIndex = 0; anIndex < anyString.length; anIndex += 1) {
-        theHash = anyString.charCodeAt(anIndex) + ((theHash << 5) - theHash);
+    for (i = 0; (i < theString.length); i += 1) {
+        theHash = theString.charCodeAt(i) + ((theHash << 5) - theHash);
     }
 
-    let hexColorResult = '#';
+    let rgbHexColor = "#";
 
-    for (anIndex = 0; anIndex < 3; anIndex += 1) {
-        const value = (theHash >> (anIndex * 8)) & 0xff;
-        hexColorResult += `00${value.toString(16)}`.slice(-2);
+    for (i = 0; i < 3; i += 1) {
+        rgbHexColor += `00${((theHash >> (i * 8)) & 0xff).toString(16)}`.slice(-2);
     }
     /* eslint-enable no-bitwise */
 
-    return hexColorResult;
-};
-
-export const removeDuplicateStringFromArrayOfString = (anyArray) => {
-    const seen = {};
-    const uniqueArray = [];
-
-    anyArray.forEach((item) => {
-        if (seen?.[item] === undefined) {
-            seen[item] = true;
-            uniqueArray.push(item);
-        }
-    });
-
-    return uniqueArray;
+    return rgbHexColor;
 };

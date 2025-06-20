@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- start of Google tag (gtag.js) -->
+    <!-- tagmanager.google.com -->
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LECMLYN21B"></script>
     <script>
@@ -10,9 +12,19 @@
 
         gtag('config', 'G-LECMLYN21B');
     </script>
+<!-- end of Google tag (gtag.js) -->
+
+<!-- start of Google Search Console Ownership verification -->
+    <!-- search.google.com * search-console/ownership -->
     <meta name="google-site-verification" content="UqB5vtnZNIl-hvyiqwM0PDgX772rcbWWjt0g9onB_BQ" />
+<!-- end of Google Search Console Ownership verification -->
+
+<!-- start of Google AdSense -->
+    <!-- adsense.google.com/adsense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5944204031363480"
-     crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script>
+<!-- end of Google AdSense -->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Compare Tool by Willy Horizont">
@@ -28,6 +40,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png">
     <link rel="stylesheet" href="../../style.css">
     <title>Compare Tool | Portfolio | Willy Horizont</title>
+    <script src="../../utils.js"></script>
 </head>
 <body>
     <header>
@@ -161,56 +174,6 @@
             navbarElement.classList.toggle("responsive");
         };
 
-        const getDefaultValueIfNullOrUndefined = (anything, defaultValue) => (((anything === undefined) || (anything === null)) ? defaultValue : anything);
-        
-        const stringToHexColor = (anyString) => {
-            let theHash = 0;
-            let anIndex;
-
-            /* eslint-disable no-bitwise */
-            for (anIndex = 0; anIndex < anyString.length; anIndex += 1) {
-                theHash = anyString.charCodeAt(anIndex) + ((theHash << 5) - theHash);
-            }
-
-            let hexColorResult = '#';
-
-            for (anIndex = 0; anIndex < 3; anIndex += 1) {
-                const value = (theHash >> (anIndex * 8)) & 0xff;
-                hexColorResult += `00${value.toString(16)}`.slice(-2);
-            }
-            /* eslint-enable no-bitwise */
-
-            return hexColorResult;
-        };
-
-        const removeDuplicateStringFromArrayOfString = (anyArray) => {
-            const seen = {};
-            const uniqueArray = [];
-
-            anyArray.forEach((item) => {
-                if (seen?.[item] === undefined) {
-                    seen[item] = true;
-                    uniqueArray.push(item);
-                }
-            });
-
-            return uniqueArray;
-        };
-
-        const removeDuplicateKeyFromArrayOfObjects = (anyArray, anyObjectKeyName) => {
-            const seen = {};
-            const uniqueArray = [];
-
-            anyArray.forEach((anyObject) => {
-                if (seen?.[anyObject?.[anyObjectKeyName]] === undefined) {
-                    seen[anyObject[anyObjectKeyName]] = true;
-                    uniqueArray.push(anyObject);
-                }
-            });
-
-            return uniqueArray;
-        };
-
         const localStorageKey = "compare_tool_items";
 
         const updateTextAreaContentFromLocalStorage = (compareToolItemsData) => {
@@ -221,8 +184,8 @@
         const getCurrentDataCompareToolItems = () => {
             const elementContainerCompareToolItems = document.getElementById("compare-tool-items-container");
             let compareToolItemsData = Array.from(elementContainerCompareToolItems.children).map((elementCompareToolItem) => ({
-                "item_column_key": getDefaultValueIfNullOrUndefined(elementCompareToolItem?.dataset?.itemColumnKey, ""),
-                "item_column_values": getDefaultValueIfNullOrUndefined(elementCompareToolItem?.dataset?.currentItemColumnValues, ""),
+                "item_column_key": (elementCompareToolItem?.dataset?.itemColumnKey || ""),
+                "item_column_values": (elementCompareToolItem?.dataset?.currentItemColumnValues || ""),
             }));
             compareToolItemsData = ((compareToolItemsData.length === 0) ? null : compareToolItemsData);
             return compareToolItemsData;
@@ -324,7 +287,7 @@
             }
             elementHtmlCountainerSelectedColumn.dataset.selectedColumn = currentItemColumnKey;
             elementHtmlCountainerSelectedColumn.innerHTML = currentItemColumnKey;
-            elementHtmlCountainerSelectedColumn.parentElement.parentElement.style.backgroundColor = stringToHexColor(currentItemColumnKey);
+            elementHtmlCountainerSelectedColumn.parentElement.parentElement.style.backgroundColor = stringToRgbHexColor(currentItemColumnKey);
         };
 
         const moveSelectedColumnToLeft = () => {
@@ -392,7 +355,7 @@
                     return currentResult;
                 }, []);
                 elementContainerCompareToolItems.removeChild(elementContainerCompareToolItems.lastChild);
-                elementContainerCompareToolItems.innerHTML += newItemColumnKeys.map((itemColumnKey) => getHtmlStringItemRow(itemColumnKey, { columnColor: stringToHexColor(itemColumnKey), itemColumnKeyPlaceholder: itemColumnKey })).join("");
+                elementContainerCompareToolItems.innerHTML += newItemColumnKeys.map((itemColumnKey) => getHtmlStringItemRow(itemColumnKey, { columnColor: stringToRgbHexColor(itemColumnKey), itemColumnKeyPlaceholder: itemColumnKey })).join("");
                 inputElement.value = "";
                 saveToLocalStorage();
                 return;
@@ -403,7 +366,7 @@
                 return;
             }
             inputElement.parentElement.dataset.itemColumnKey = inputElement.value?.trim?.();
-            inputElement.parentElement.style.backgroundColor = stringToHexColor(inputElement.value?.trim?.());
+            inputElement.parentElement.style.backgroundColor = stringToRgbHexColor(inputElement.value?.trim?.());
             inputElement.placeholder = inputElement.value?.trim?.();
             inputElement.value = "";
             saveToLocalStorage();
@@ -448,7 +411,7 @@
             elementContainerCompareToolItems.innerHTML = compareToolItemsData.map((itemCompareTool) => {
                 const arrayItemColumnValues = itemCompareTool?.["item_column_values"]?.split?.(", ");
                 return getHtmlStringItemRow(itemCompareTool?.["item_column_key"], {
-                    columnColor: stringToHexColor(itemCompareTool?.["item_column_key"]),
+                    columnColor: stringToRgbHexColor(itemCompareTool?.["item_column_key"]),
                     itemColumnValues: itemCompareTool?.["item_column_values"],
                     plusButtonIndex: `${((arrayItemColumnValues?.length === undefined) ? 0 : (arrayItemColumnValues?.length - 1))}`,
                     siblings: arrayItemColumnValues?.map?.((currentItemColumnValue, currentItemRowPlusButtonIndex) => getHtmlStringInputItemRow(currentItemRowPlusButtonIndex, ((currentItemColumnValue?.trim?.() === "") ? "value" : currentItemColumnValue)))?.join?.(""),
@@ -468,7 +431,7 @@
             const elementImportExportTextareaElementCompareToolValue = elementImportExportTextareaElementCompareTool.value;
             try {
                 const compareToolItemsData = JSON.parse(elementImportExportTextareaElementCompareToolValue);
-                const compareToolItemsDataUniqueKey = removeDuplicateKeyFromArrayOfObjects(compareToolItemsData, "item_column_key");
+                const compareToolItemsDataUniqueKey = removeDuplicateItems(compareToolItemsData, (anyArrayItem) => anyArrayItem?.["item_column_key"]);
                 // console.log(elementImportExportTextareaElementCompareToolValue);
                 // console.log(JSON.stringify(compareToolItemsData));
                 // console.log(JSON.stringify(compareToolItemsDataUniqueKey));

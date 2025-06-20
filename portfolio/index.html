@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- start of Google tag (gtag.js) -->
+    <!-- tagmanager.google.com -->
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LECMLYN21B"></script>
     <script>
@@ -10,9 +12,13 @@
 
         gtag('config', 'G-LECMLYN21B');
     </script>
+<!-- end of Google tag (gtag.js) -->
+
+<!-- start of Google Search Console Ownership verification -->
+    <!-- search.google.com * search-console/ownership -->
     <meta name="google-site-verification" content="UqB5vtnZNIl-hvyiqwM0PDgX772rcbWWjt0g9onB_BQ" />
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5944204031363480"
-     crossorigin="anonymous"></script>
+<!-- end of Google Search Console Ownership verification -->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Willy Horizont's portfolio">
@@ -28,6 +34,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
     <link rel="stylesheet" href="../style.css">
     <title>Portfolio | Willy Horizont</title>
+    <script src="../../utils.js"></script>
 </head>
 <body>
     <header>
@@ -62,26 +69,6 @@
         const toggleMenu = () => {
             const navbarElement = document.getElementById("navbar");
             navbarElement.classList.toggle("responsive");
-        };
-
-        const stringToHexColor = (anyString) => {
-            let theHash = 0;
-            let anIndex;
-
-            /* eslint-disable no-bitwise */
-            for (anIndex = 0; anIndex < anyString.length; anIndex += 1) {
-                theHash = anyString.charCodeAt(anIndex) + ((theHash << 5) - theHash);
-            }
-
-            let hexColorResult = '#';
-
-            for (anIndex = 0; anIndex < 3; anIndex += 1) {
-                const value = (theHash >> (anIndex * 8)) & 0xff;
-                hexColorResult += `00${value.toString(16)}`.slice(-2);
-            }
-            /* eslint-enable no-bitwise */
-
-            return hexColorResult;
         };
 
         const myPortfolio = [
@@ -175,24 +162,22 @@ finished in only about 1 year (sep 2021 - sep 2022).
             },
         ];
 
-        (async () => {
-            const portfolioContainerElement = document.getElementById("portfolio-container");
-            myPortfolio.forEach((myPortfolioItem) => {
-                const portfolioItemCardElementNew = document.createElement("div");
-                portfolioItemCardElementNew.style = "width: 100%; border: 1px solid #ccc; border-radius: 8px; display: flex; flex-direction: column; overflow: hidden;";
+        const portfolioContainerElement = document.getElementById("portfolio-container");
+        myPortfolio.forEach((myPortfolioItem) => {
+            const portfolioItemCardElementNew = document.createElement("div");
+            portfolioItemCardElementNew.style = "width: 100%; border: 1px solid #ccc; border-radius: 8px; display: flex; flex-direction: column; overflow: hidden;";
 
-                portfolioItemCardElementNew.innerHTML = `
-                    <a href="${myPortfolioItem.href}" target="${myPortfolioItem.target}" aria-label="${myPortfolioItem.title}">
-                        <div style="padding: 8px; display: flex; flex-direction: row; align-items: center; gap: 8px; background-color: #091929;">
-                            <div style="min-width: 16px; min-height: 16px; border-radius: 0.5em; background-color: ${`${stringToHexColor(myPortfolioItem.title)}`};"></div>
-                            <p>${myPortfolioItem.title}</p>
-                        </div>
-                        <pre style="padding: 8px; text-wrap: auto;">${myPortfolioItem.body}</pre>
-                    </a>
-                `;
-                portfolioContainerElement.appendChild(portfolioItemCardElementNew);
-            });
-        })();
+            portfolioItemCardElementNew.innerHTML = `
+                <a href="${myPortfolioItem.href}" target="${myPortfolioItem.target}" aria-label="${myPortfolioItem.title}">
+                    <div style="padding: 8px; display: flex; flex-direction: row; align-items: center; gap: 8px; background-color: #091929;">
+                        <div style="min-width: 16px; min-height: 16px; border-radius: 0.5em; background-color: ${`${stringToRgbHexColor(myPortfolioItem.title)}`};"></div>
+                        <p>${myPortfolioItem.title}</p>
+                    </div>
+                    <pre style="padding: 8px; text-wrap: auto;">${myPortfolioItem.body}</pre>
+                </a>
+            `;
+            portfolioContainerElement.appendChild(portfolioItemCardElementNew);
+        });
     </script>
 </body>
 </html>
