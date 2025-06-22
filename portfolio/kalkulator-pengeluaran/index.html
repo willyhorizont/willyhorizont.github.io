@@ -17,6 +17,9 @@
 <!-- start of Google Search Console Ownership verification -->
     <!-- search.google.com * search-console/ownership -->
     <meta name="google-site-verification" content="UqB5vtnZNIl-hvyiqwM0PDgX772rcbWWjt0g9onB_BQ" />
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="notranslate">
+    <meta name="google" content="nopagereadaloud">
 <!-- end of Google Search Console Ownership verification -->
 
 <!-- start of Google AdSense -->
@@ -30,7 +33,6 @@
     <meta name="description" content="Kalkulator Pengeluaran by Willy Horizont">
     <meta name="keywords" content="Kalkulator Pengeluaran by Willy Horizont">
     <meta name="author" content="Willy Horizont">
-    <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#000000">
     <link rel="icon" type="image/x-icon" href="../../favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png">
@@ -207,9 +209,9 @@ ${children}
 
         const saveToLocalStorage = () => {
             let expensesData = Array.from(expensesCalculatorContainer.children).map((expensesItemElement) => ({
-                priceDisplay: expensesItemElement.dataset.priceDisplay ?? "",
-                priceValue: parseFloat((isNumeric(expensesItemElement.dataset.priceValue) === true) ? 0 : expensesItemElement.dataset.priceValue),
-                items: expensesItemElement.dataset.items ?? ""
+                priceDisplay: expensesItemElement.dataset["priceDisplay"] ?? "",
+                priceValue: parseFloat((isNumeric(expensesItemElement.dataset["priceValue"]) === true) ? 0 : expensesItemElement.dataset["priceValue"]),
+                items: expensesItemElement.dataset["items"] ?? ""
             }));
             expensesData = ((expensesData.length === 0) ? null : expensesData);
             localStorage.setItem(localStorageKey, JSON.stringify(expensesData));
@@ -218,7 +220,7 @@ ${children}
         };
 
         const updateTotalExpenses = () => {
-            const totalExpenses = Array.from(document.querySelectorAll("#expenses-calculator-container div")).reduce((currentResult, currentExpensesItemItem) => (currentResult + parseFloat((isNumeric(currentExpensesItemItem.dataset.priceValue) === true) ? 0 : currentExpensesItemItem.dataset.priceValue)), 0);
+            const totalExpenses = Array.from(document.querySelectorAll("#expenses-calculator-container div")).reduce((currentResult, currentExpensesItemItem) => (currentResult + parseFloat((isNumeric(currentExpensesItemItem.dataset["priceValue"]) === true) ? 0 : currentExpensesItemItem.dataset["priceValue"])), 0);
             if (isNumeric(totalExpenses) === true) {
                 totalExpensesElement.innerText = 0
                 return;
@@ -228,8 +230,8 @@ ${children}
 
         const changeCurrentExpensesItemPrice = (priceInputElement) => {
             const priceInputValue = priceInputElement.value.split("_").join("").split(".").join("");
-            priceInputElement.parentElement.parentElement.dataset.priceValue = priceInputValue;
-            priceInputElement.parentElement.parentElement.dataset.priceDisplay = priceInputElement.value;
+            priceInputElement.parentElement.parentElement.dataset["priceValue"] = priceInputValue;
+            priceInputElement.parentElement.parentElement.dataset["priceDisplay"] = priceInputElement.value;
             priceInputElement.parentElement.parentElement.insertAdjacentHTML("afterbegin", getPriceInputString(priceInputElement.value, priceInputValue, priceInputElement.value));
             priceInputElement.parentElement.remove();
             updateTotalExpenses();
@@ -237,8 +239,8 @@ ${children}
         };
 
         const removeCurrentChip = (closeButtonEl) => {
-            const newItems = closeButtonEl.parentElement.parentElement.parentElement.parentElement.dataset.items.split(",").filter((item) => (item.trim() !== closeButtonEl.parentElement.parentElement.dataset.item));
-            closeButtonEl.parentElement.parentElement.parentElement.parentElement.dataset.items = newItems.join(",");
+            const newItems = closeButtonEl.parentElement.parentElement.parentElement.parentElement.dataset["items"].split(",").filter((item) => (item.trim() !== closeButtonEl.parentElement.parentElement.dataset["item"]));
+            closeButtonEl.parentElement.parentElement.parentElement.parentElement.dataset["items"] = newItems.join(",");
             closeButtonEl.parentElement.parentElement.nextElementSibling.placeholder = ((newItems.length === 0) ? "untuk apa saja" : "");
             closeButtonEl.parentElement.parentElement.remove();
             saveToLocalStorage();
@@ -248,9 +250,9 @@ ${children}
             const inputElement = event.target;
             const expenseChipInputElement = inputElement.parentElement;
             const inputElementValue = inputElement.value.split(",").filter((item) => (item.trim() !== "")).join(",");
-            const inputElementValueNew = ((inputElement.parentElement.parentElement.dataset.items === "") ? inputElementValue : (inputElement.parentElement.parentElement.dataset.items + ", " + inputElementValue));
+            const inputElementValueNew = ((inputElement.parentElement.parentElement.dataset["items"] === "") ? inputElementValue : (inputElement.parentElement.parentElement.dataset["items"] + ", " + inputElementValue));
             const inputElementValueNoDuplicate = removeDuplicateItems(inputElementValueNew.split(",").map((item) => (item.trim()))).join(", ");
-            inputElement.parentElement.parentElement.dataset.items = inputElementValueNoDuplicate;
+            inputElement.parentElement.parentElement.dataset["items"] = inputElementValueNoDuplicate;
 
             const chips = inputElementValueNoDuplicate.split(",").map((value) => (getExpenseChipString(`${getExpenseChipValueContainerString(value.trim())}
 ${chipRemoveButtonString}`, value.trim()))).join("");
@@ -299,9 +301,9 @@ ${removeExpenseItemButtonString}`);
 
         const rerenderExpensesCalculator = (expensesData) => {
             expensesCalculatorContainer.innerHTML = expensesData.map(({ priceValue, priceDisplay, items }) => (getExpensesItemString(`${getPriceInputString(priceDisplay, priceValue, priceDisplay)}
-    ${getExpenseChipInputString(`${(items?.trim?.() === "") ? "" : items.split(", ").map((item) => (getExpenseChipString(`${getExpenseChipValueContainerString(item)}
+    ${getExpenseChipInputString(`${(items.trim() === "") ? "" : items.split(", ").map((item) => (getExpenseChipString(`${getExpenseChipValueContainerString(item)}
 ${chipRemoveButtonString}`, item))).join("")}
-    ${getHtmlStringChipInput((items?.trim?.() === "") ? "untuk apa saja" : "")}`)}
+    ${getHtmlStringChipInput((items.trim() === "") ? "untuk apa saja" : "")}`)}
     ${removeExpenseItemButtonString}`, priceValue, priceDisplay, items))).join("");
             updateTotalExpenses();
         };

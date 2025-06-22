@@ -17,6 +17,9 @@
 <!-- start of Google Search Console Ownership verification -->
     <!-- search.google.com * search-console/ownership -->
     <meta name="google-site-verification" content="UqB5vtnZNIl-hvyiqwM0PDgX772rcbWWjt0g9onB_BQ" />
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="notranslate">
+    <meta name="google" content="nopagereadaloud">
 <!-- end of Google Search Console Ownership verification -->
 
 <!-- start of Google AdSense -->
@@ -30,7 +33,6 @@
     <meta name="description" content="Compare Tool by Willy Horizont">
     <meta name="keywords" content="Compare Tool by Willy Horizont">
     <meta name="author" content="Willy Horizont">
-    <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#000000">
     <link rel="icon" type="image/x-icon" href="../../favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png">
@@ -184,8 +186,8 @@
         const getCurrentDataCompareToolItems = () => {
             const elementContainerCompareToolItems = document.getElementById("compare-tool-items-container");
             let compareToolItemsData = Array.from(elementContainerCompareToolItems.children).map((elementCompareToolItem) => ({
-                "item_column_key": (elementCompareToolItem?.dataset?.itemColumnKey || ""),
-                "item_column_values": (elementCompareToolItem?.dataset?.currentItemColumnValues || ""),
+                "item_column_key": (elementCompareToolItem.dataset["itemColumnKey"] || ""),
+                "item_column_values": (elementCompareToolItem.dataset["currentItemColumnValues"] || ""),
             }));
             compareToolItemsData = ((compareToolItemsData.length === 0) ? null : compareToolItemsData);
             return compareToolItemsData;
@@ -206,19 +208,19 @@
         const getHtmlStringInputItemRow = (currentItemRowPlusButtonIndex, itemColumnValue = "value") => `<input data-current-input-index="${currentItemRowPlusButtonIndex}" onkeydown="changeThisCurrentItemColumnValueOnKeyDown(event)" onfocusout="changeThisCurrentItemColumnValueOnBlur(event)" type="text" placeholder="${itemColumnValue}" style="text-align: center; width: 100%; border: 1px solid #ccc; outline: none; padding: 4px;">`;
 
         const addNewItemColumnValueForCurrentRow = (htmlElementPlusButton) => {
-            const currentItemRowPlusButtonIndex = ((!htmlElementPlusButton.parentElement.parentElement.dataset.currentItemRowPlusButtonIndex) ? 0 : parseInt(htmlElementPlusButton.parentElement.parentElement.dataset.currentItemRowPlusButtonIndex, 10) + 1);
-            htmlElementPlusButton.parentElement.parentElement.dataset.currentItemRowPlusButtonIndex = currentItemRowPlusButtonIndex;
+            const currentItemRowPlusButtonIndex = ((!htmlElementPlusButton.parentElement.parentElement.dataset["currentItemRowPlusButtonIndex"]) ? 0 : parseInt(htmlElementPlusButton.parentElement.parentElement.dataset["currentItemRowPlusButtonIndex"], 10) + 1);
+            htmlElementPlusButton.parentElement.parentElement.dataset["currentItemRowPlusButtonIndex"] = currentItemRowPlusButtonIndex;
             htmlElementPlusButton.parentElement.insertAdjacentHTML("beforebegin", getHtmlStringInputItemRow(currentItemRowPlusButtonIndex));
             htmlElementPlusButton.parentElement.previousElementSibling.focus();
-            // htmlElementPlusButton.parentElement.parentElement.dataset.currentItemColumnValues = ((htmlElementPlusButton.parentElement.parentElement.dataset.currentItemColumnValues?.trim?.() === "") ? "0" : `${htmlElementPlusButton.parentElement.parentElement.dataset.currentItemColumnValues}, 0`);
+            // htmlElementPlusButton.parentElement.parentElement.dataset["currentItemColumnValues"] = ((htmlElementPlusButton.parentElement.parentElement.dataset["currentItemColumnValues"].trim() === "") ? "0" : `${htmlElementPlusButton.parentElement.parentElement.dataset["currentItemColumnValues"]}, 0`);
         };
 
         const changeCurrentItemColumnValues = (event) => {
             const inputElement = event.target;
-            const currentInputIndex = parseInt(inputElement.dataset.currentInputIndex, 10);
+            const currentInputIndex = parseInt(inputElement.dataset["currentInputIndex"], 10);
             if (inputElement.value === "remove(this)") {
-                if (inputElement.parentElement.dataset.currentItemColumnValues?.split?.(", ")?.[currentInputIndex] !== undefined) {
-                    inputElement.parentElement.dataset.currentItemColumnValues = inputElement.parentElement.dataset.currentItemColumnValues?.split?.(", ")?.toSpliced?.(currentInputIndex, 1)?.join?.(", ");
+                if (inputElement.parentElement.dataset["currentItemColumnValues"].split(", ")[currentInputIndex] !== undefined) {
+                    inputElement.parentElement.dataset["currentItemColumnValues"] = inputElement.parentElement.dataset["currentItemColumnValues"].split(", ").toSpliced(currentInputIndex, 1).join(", ");
                 }
                 inputElement.value = "";
                 inputElement.remove();
@@ -226,12 +228,12 @@
                 saveToLocalStorage();
                 return;
             }
-            if (inputElement.parentElement.dataset.currentItemColumnValues?.trim?.() === "") {
-                inputElement.parentElement.dataset.currentItemColumnValues = inputElement.value;
-            } else if (inputElement.parentElement.dataset.currentItemColumnValues?.split?.(", ")?.[currentInputIndex] !== undefined) {
-                inputElement.parentElement.dataset.currentItemColumnValues = inputElement.parentElement.dataset.currentItemColumnValues?.split?.(", ")?.map?.((itemColumnValue, itemRowIndex) => ((itemRowIndex === currentInputIndex) ? inputElement.value : itemColumnValue))?.join?.(", ");
+            if (inputElement.parentElement.dataset["currentItemColumnValues"].trim() === "") {
+                inputElement.parentElement.dataset["currentItemColumnValues"] = inputElement.value;
+            } else if (inputElement.parentElement.dataset["currentItemColumnValues"].split(", ")[currentInputIndex] !== undefined) {
+                inputElement.parentElement.dataset["currentItemColumnValues"] = inputElement.parentElement.dataset["currentItemColumnValues"].split(", ").map((itemColumnValue, itemRowIndex) => ((itemRowIndex === currentInputIndex) ? inputElement.value : itemColumnValue)).join(", ");
             } else {
-                inputElement.parentElement.dataset.currentItemColumnValues += (", " + inputElement.value);
+                inputElement.parentElement.dataset["currentItemColumnValues"] += (", " + inputElement.value);
             }
             inputElement.placeholder = inputElement.value;
             inputElement.value = "";
@@ -241,7 +243,7 @@
 
         const changeThisCurrentItemColumnValueOnKeyDown = (event) => {
             if (event.key === "Enter") {
-                if (event.target.value?.trim?.() === "") {
+                if (event.target.value.trim() === "") {
                     event.preventDefault();
                     return;
                 }
@@ -251,7 +253,7 @@
         };
 
         const changeThisCurrentItemColumnValueOnBlur = (event) => {
-            if (event.target.value?.trim?.() === "") {
+            if (event.target.value.trim() === "") {
                 event.preventDefault();
                 return;
             }
@@ -277,26 +279,26 @@
 
         const setThisSelectedColumnAsSelectedColumn = (htmlElementCheckboxToggleButton) => {
             const currentColumn = htmlElementCheckboxToggleButton.parentElement.parentElement;
-            const currentItemColumnKey = currentColumn.dataset.itemColumnKey;
+            const currentItemColumnKey = currentColumn.dataset["itemColumnKey"];
             const elementHtmlCountainerSelectedColumn = document.getElementById("countainer-selected-column");
-            if (elementHtmlCountainerSelectedColumn.dataset.selectedColumn === currentItemColumnKey) {
+            if (elementHtmlCountainerSelectedColumn.dataset["selectedColumn"] === currentItemColumnKey) {
                 elementHtmlCountainerSelectedColumn.removeAttribute("data-selected-column");
                 elementHtmlCountainerSelectedColumn.innerHTML = "";
                 elementHtmlCountainerSelectedColumn.parentElement.parentElement.style.backgroundColor = "#fff";
                 return;
             }
-            elementHtmlCountainerSelectedColumn.dataset.selectedColumn = currentItemColumnKey;
+            elementHtmlCountainerSelectedColumn.dataset["selectedColumn"] = currentItemColumnKey;
             elementHtmlCountainerSelectedColumn.innerHTML = currentItemColumnKey;
             elementHtmlCountainerSelectedColumn.parentElement.parentElement.style.backgroundColor = stringToRgbHexColor(currentItemColumnKey);
         };
 
         const moveSelectedColumnToLeft = () => {
             const elementHtmlCountainerSelectedColumn = document.getElementById("countainer-selected-column");
-            const currentItemColumnKey = elementHtmlCountainerSelectedColumn.dataset.selectedColumn;
+            const currentItemColumnKey = elementHtmlCountainerSelectedColumn.dataset["selectedColumn"];
             if (!currentItemColumnKey) return;
             const elementContainerCompareToolItems = document.getElementById("compare-tool-items-container");
             const childrenArrayCompareToolItems = Array.from(elementContainerCompareToolItems.children);
-            const currentColumnIndex = childrenArrayCompareToolItems.findIndex((columnItem) => (columnItem.dataset.itemColumnKey === currentItemColumnKey));
+            const currentColumnIndex = childrenArrayCompareToolItems.findIndex((columnItem) => (columnItem.dataset["itemColumnKey"] === currentItemColumnKey));
             const currentColumn = elementContainerCompareToolItems.children[currentColumnIndex];
 
             if (currentColumnIndex === 0) return;
@@ -306,11 +308,11 @@
 
         const moveSelectedColumnToRight = () => {
             const elementHtmlCountainerSelectedColumn = document.getElementById("countainer-selected-column");
-            const currentItemColumnKey = elementHtmlCountainerSelectedColumn.dataset.selectedColumn;
+            const currentItemColumnKey = elementHtmlCountainerSelectedColumn.dataset["selectedColumn"];
             if (!currentItemColumnKey) return;
             const elementContainerCompareToolItems = document.getElementById("compare-tool-items-container");
             const childrenArrayCompareToolItems = Array.from(elementContainerCompareToolItems.children);
-            const currentColumnIndex = childrenArrayCompareToolItems.findIndex((columnItem) => (columnItem.dataset.itemColumnKey === currentItemColumnKey));
+            const currentColumnIndex = childrenArrayCompareToolItems.findIndex((columnItem) => (columnItem.dataset["itemColumnKey"] === currentItemColumnKey));
             const currentColumn = elementContainerCompareToolItems.children[currentColumnIndex];
 
             if (currentColumnIndex === (childrenArrayCompareToolItems.length - 1)) return;
@@ -321,10 +323,10 @@
         const moveThisSelectedColumnToLeft = (htmlElementMoveToLeftButton) => {
             const currentColumn = htmlElementMoveToLeftButton.parentElement.parentElement.parentElement;
             
-            const currentItemColumnKey = currentColumn.dataset.itemColumnKey;
+            const currentItemColumnKey = currentColumn.dataset["itemColumnKey"];
             const elementContainerCompareToolItems = currentColumn.parentElement;
             const childrenArrayCompareToolItems = Array.from(elementContainerCompareToolItems.children);
-            const currentColumnIndex = childrenArrayCompareToolItems.findIndex((columnItem) => (columnItem.dataset.itemColumnKey === currentItemColumnKey));
+            const currentColumnIndex = childrenArrayCompareToolItems.findIndex((columnItem) => (columnItem.dataset["itemColumnKey"] === currentItemColumnKey));
 
             if (currentColumnIndex === 0) return;
             elementContainerCompareToolItems.insertBefore(currentColumn, elementContainerCompareToolItems.children[currentColumnIndex - 1]);
@@ -334,10 +336,10 @@
         const moveThisSelectedColumnToRight = (htmlElementMoveToRightButton) => {
             const currentColumn = htmlElementMoveToRightButton.parentElement.parentElement.parentElement;
 
-            const currentItemColumnKey = currentColumn.dataset.itemColumnKey;
+            const currentItemColumnKey = currentColumn.dataset["itemColumnKey"];
             const elementContainerCompareToolItems = currentColumn.parentElement;
             const childrenArrayCompareToolItems = Array.from(elementContainerCompareToolItems.children);
-            const currentColumnIndex = childrenArrayCompareToolItems.findIndex((columnItem) => (columnItem.dataset.itemColumnKey === currentItemColumnKey));
+            const currentColumnIndex = childrenArrayCompareToolItems.findIndex((columnItem) => (columnItem.dataset["itemColumnKey"] === currentItemColumnKey));
 
             if (currentColumnIndex === (childrenArrayCompareToolItems.length - 1)) return;
             elementContainerCompareToolItems.insertBefore(currentColumn, elementContainerCompareToolItems.children[(currentColumnIndex + 2)]);
@@ -350,8 +352,8 @@
             if (inputElement.value.includes(",")) {
                 const elementContainerCompareToolItems = document.getElementById("compare-tool-items-container");
                 const newItemColumnKeys = inputElement.value.split(",").reduce((currentResult, itemColumnKey) => {
-                    if (compareToolItemsData.some((compareToolItem) => (compareToolItem?.["item_column_key"] === itemColumnKey?.trim?.())) === true) return currentResult;
-                    currentResult.push(itemColumnKey?.trim?.());
+                    if (compareToolItemsData.some((compareToolItem) => (compareToolItem["item_column_key"] === itemColumnKey.trim())) === true) return currentResult;
+                    currentResult.push(itemColumnKey.trim());
                     return currentResult;
                 }, []);
                 elementContainerCompareToolItems.removeChild(elementContainerCompareToolItems.lastChild);
@@ -360,21 +362,21 @@
                 saveToLocalStorage();
                 return;
             }
-            if (compareToolItemsData.some((compareToolItem) => (compareToolItem?.["item_column_key"] === inputElement.value?.trim?.())) === true) {
+            if (compareToolItemsData.some((compareToolItem) => (compareToolItem["item_column_key"] === inputElement.value.trim())) === true) {
                 inputElement.value = "";
                 inputElement.parentElement.remove();
                 return;
             }
-            inputElement.parentElement.dataset.itemColumnKey = inputElement.value?.trim?.();
-            inputElement.parentElement.style.backgroundColor = stringToRgbHexColor(inputElement.value?.trim?.());
-            inputElement.placeholder = inputElement.value?.trim?.();
+            inputElement.parentElement.dataset["itemColumnKey"] = inputElement.value.trim();
+            inputElement.parentElement.style.backgroundColor = stringToRgbHexColor(inputElement.value.trim());
+            inputElement.placeholder = inputElement.value.trim();
             inputElement.value = "";
             saveToLocalStorage();
         };
 
         const changeCurrentItemColumnKeyOnKeyDown = (event) => {
             if (event.key === "Enter") {
-                if (event.target.value?.trim?.() === "") {
+                if (event.target.value.trim() === "") {
                     event.preventDefault();
                     return;
                 }
@@ -388,7 +390,7 @@
         };
 
         const changeCurrentItemColumnKeyOnBlur = (event) => {
-            if (event.target.value?.trim?.() === "") {
+            if (event.target.value.trim() === "") {
                 event.preventDefault();
                 return;
             }
@@ -409,13 +411,13 @@
         const rerenderCompareTool = (compareToolItemsData) => {
             const elementContainerCompareToolItems = document.getElementById("compare-tool-items-container");
             elementContainerCompareToolItems.innerHTML = compareToolItemsData.map((itemCompareTool) => {
-                const arrayItemColumnValues = itemCompareTool?.["item_column_values"]?.split?.(", ");
-                return getHtmlStringItemRow(itemCompareTool?.["item_column_key"], {
-                    columnColor: stringToRgbHexColor(itemCompareTool?.["item_column_key"]),
-                    itemColumnValues: itemCompareTool?.["item_column_values"],
-                    plusButtonIndex: `${((arrayItemColumnValues?.length === undefined) ? 0 : (arrayItemColumnValues?.length - 1))}`,
-                    siblings: arrayItemColumnValues?.map?.((currentItemColumnValue, currentItemRowPlusButtonIndex) => getHtmlStringInputItemRow(currentItemRowPlusButtonIndex, ((currentItemColumnValue?.trim?.() === "") ? "value" : currentItemColumnValue)))?.join?.(""),
-                    itemColumnKeyPlaceholder: itemCompareTool?.["item_column_key"],
+                const arrayItemColumnValues = itemCompareTool["item_column_values"].split(", ");
+                return getHtmlStringItemRow(itemCompareTool["item_column_key"], {
+                    columnColor: stringToRgbHexColor(itemCompareTool["item_column_key"]),
+                    itemColumnValues: itemCompareTool["item_column_values"],
+                    plusButtonIndex: `${((arrayItemColumnValues.length === undefined) ? 0 : (arrayItemColumnValues.length - 1))}`,
+                    siblings: arrayItemColumnValues.map((currentItemColumnValue, currentItemRowPlusButtonIndex) => getHtmlStringInputItemRow(currentItemRowPlusButtonIndex, ((currentItemColumnValue.trim() === "") ? "value" : currentItemColumnValue))).join(""),
+                    itemColumnKeyPlaceholder: itemCompareTool["item_column_key"],
                 })}).join("");
         };
 
@@ -431,7 +433,7 @@
             const elementImportExportTextareaElementCompareToolValue = elementImportExportTextareaElementCompareTool.value;
             try {
                 const compareToolItemsData = JSON.parse(elementImportExportTextareaElementCompareToolValue);
-                const compareToolItemsDataUniqueKey = removeDuplicateItems(compareToolItemsData, (anyArrayItem) => anyArrayItem?.["item_column_key"]);
+                const compareToolItemsDataUniqueKey = removeDuplicateItems(compareToolItemsData, (anyArrayItem) => anyArrayItem["item_column_key"]);
                 // console.log(elementImportExportTextareaElementCompareToolValue);
                 // console.log(JSON.stringify(compareToolItemsData));
                 // console.log(JSON.stringify(compareToolItemsDataUniqueKey));
