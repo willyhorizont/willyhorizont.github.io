@@ -176,11 +176,11 @@
         const catchAnyError = (asyncFunction) => asyncFunction.then((anyResult) => ([null, anyResult])).catch((anyError) => ([anyError, null]));
 
         const getData = async (anyUrl) => {
-            const response = await fetch(anyUrl);
-            if (response.ok !== true) {
+            const anyResponse = await fetch(anyUrl);
+            if (anyResponse.ok !== true) {
                 throw new Error("not ok");
             }
-            const anyResult = await response.json();
+            const anyResult = await anyResponse.json();
             return anyResult;
         };
 
@@ -189,13 +189,9 @@
         const abcPassvvordCharacterSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
         const abcPassvvordStringSuffixLength = 33;
 
-        const getAbcPassvvordStringPrefix = (({ myFriendMomFavoriteNumberCombination, myFriendDadFavoriteNumberCombination }) => (myFriendMomFavoriteNumberCombination.split("").reduce((currentResult, currentCharacter, currentCharacterIndex) => (`${currentResult}${abcPassvvordCharacterSet[parseInt((`${myFriendMomFavoriteNumberCombination.charAt(currentCharacterIndex)}${myFriendDadFavoriteNumberCombination.charAt(currentCharacterIndex)}`), 10)]}`), ""))({ myFriendMomFavoriteNumberCombination: "005215", myFriendDadFavoriteNumberCombination: "081680" }));
-
-        const getAbcPassvvordStringSuffix = (abcPassvvordString) => Array.from({ length: abcPassvvordStringSuffixLength }, () => abcPassvvordCharacterSet[randomIntInclusive(0, abcPassvvordCharacterSet.length)]).join("");
+        const getAbcPassvvordStringPrefix = () => (({ myFriendMomFavoriteNumberCombination, myFriendDadFavoriteNumberCombination }) => myFriendMomFavoriteNumberCombination.split("").reduce((currentResult, currentCharacter, currentCharacterIndex) => (`${currentResult}${abcPassvvordCharacterSet[parseInt((`${myFriendMomFavoriteNumberCombination.charAt(currentCharacterIndex)}${myFriendDadFavoriteNumberCombination.charAt(currentCharacterIndex)}`), 10)]}`), ""))({ myFriendMomFavoriteNumberCombination: "005215", myFriendDadFavoriteNumberCombination: "081680" });
 
         const getAbcPassvvord = (abcPassvvordString) => `${getAbcPassvvordStringPrefix()}${pickStringChunkRandomly(abcPassvvordString, abcPassvvordStringSuffixLength)}`;
-
-        const generateAbcPassvvord = () => `${getAbcPassvvordStringPrefix()}${getAbcPassvvordStringSuffix()}`;
 
         const dayObject = {
             "en": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
