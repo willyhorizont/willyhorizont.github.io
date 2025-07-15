@@ -171,7 +171,7 @@
 
         const localStorageKey = "expenses";
 
-        const getHtmlStringChipInput = (placeholder = "") => `<input onkeydown="changeCurrentExpensesItemItemsOnKeyDown(event)" onfocusout="changeCurrentExpensesItemItemsOnBlur(event)" type="text" placeholder="${placeholder}" style="margin: 8px 4px 8px 4px; background-color: #000; color: #ccc; padding: 8px 4px; border: none; outline: none;">`;
+        const getHtmlStringChipInput = (placeholder = "") => `<input onkeydown="changeCurrentExpensesItemItemsOnKeyDown(event)" onfocusout="changeCurrentExpensesItemItemsOnBlur(event)" type="text" placeholder="${placeholder}" style="margin: 8px 4px 8px 4px; background-color: #000; color: #ccc; padding: 8px 4px; border: none; outline: none;" />`;
 
         const chipRemoveButtonString = `<div style="display: flex; align-items: center; justify-content: center; background-color: #000; color: #ccc; width: 1.2em; aspect-ratio: 1 / 1; border-radius: 50%;">
     <span onclick="removeCurrentChip(this)" style="cursor: pointer; font-weight: bold;">×</span>
@@ -182,7 +182,7 @@
 </div>`;
 
         const getPriceInputString = (value = "", priceValue = "", priceDisplay = "") => `<div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;">
-    <input value="${value}" data-price-value="${priceValue}" data-price-display="${priceDisplay}" onchange="changeCurrentExpensesItemPrice(this)" type="text" placeholder="jumlah uang" style="background-color: #000; color: #ccc; border: 1px solid #ccc; padding: 4px 8px; outline: none; max-width: 120px;">
+    <input value="${value}" data-price-value="${priceValue}" data-price-display="${priceDisplay}" onchange="changeCurrentExpensesItemPrice(this)" type="text" placeholder="jumlah uang" style="background-color: #000; color: #ccc; border: 1px solid #ccc; padding: 4px 8px; outline: none; max-width: 120px;" />
 </div>`;
 
         const getExpenseChipInputString = (children) => `<div style="margin-left: 8px; display: flex; flex-flow: wrap; background-color: #000; border: 1px solid #ccc; flex: 1; padding: 0px 4px; overflow-x: scroll;">
@@ -251,7 +251,7 @@ ${children}
             const expenseChipInputElement = inputElement.parentElement;
             const inputElementValue = inputElement.value.split(",").filter((item) => (item.trim() !== "")).join(",");
             const inputElementValueNew = ((inputElement.parentElement.parentElement.dataset["items"] === "") ? inputElementValue : (inputElement.parentElement.parentElement.dataset["items"] + ", " + inputElementValue));
-            const inputElementValueNoDuplicate = removeDuplicateItems(inputElementValueNew.split(",").map((item) => (item.trim()))).join(", ");
+            const inputElementValueNoDuplicate = removeDuplicateItem(inputElementValueNew.split(",").map((item) => (item.trim()))).join(", ");
             inputElement.parentElement.parentElement.dataset["items"] = inputElementValueNoDuplicate;
 
             const chips = inputElementValueNoDuplicate.split(",").map((value) => (getExpenseChipString(`${getExpenseChipValueContainerString(value.trim())}

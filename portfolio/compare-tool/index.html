@@ -205,7 +205,7 @@
             saveToLocalStorage();
         };
 
-        const getHtmlStringInputItemRow = (currentItemRowPlusButtonIndex, itemColumnValue = "value") => `<input data-current-input-index="${currentItemRowPlusButtonIndex}" onkeydown="changeThisCurrentItemColumnValueOnKeyDown(event)" onfocusout="changeThisCurrentItemColumnValueOnBlur(event)" type="text" placeholder="${itemColumnValue}" style="text-align: center; width: 100%; border: 1px solid #ccc; outline: none; padding: 4px;">`;
+        const getHtmlStringInputItemRow = (currentItemRowPlusButtonIndex, itemColumnValue = "value") => `<input data-current-input-index="${currentItemRowPlusButtonIndex}" onkeydown="changeThisCurrentItemColumnValueOnKeyDown(event)" onfocusout="changeThisCurrentItemColumnValueOnBlur(event)" type="text" placeholder="${itemColumnValue}" style="text-align: center; width: 100%; border: 1px solid #ccc; outline: none; padding: 4px;" />`;
 
         const addNewItemColumnValueForCurrentRow = (htmlElementPlusButton) => {
             const currentItemRowPlusButtonIndex = ((!htmlElementPlusButton.parentElement.parentElement.dataset["currentItemRowPlusButtonIndex"]) ? 0 : parseInt(htmlElementPlusButton.parentElement.parentElement.dataset["currentItemRowPlusButtonIndex"], 10) + 1);
@@ -270,7 +270,7 @@
         <button onclick="setThisSelectedColumnAsSelectedColumn(this)" style="background-color: #666; color: white; border: none; cursor: pointer; width: 2.1em; aspect-ratio: 1 / 1;">sel</button>
         <button onclick="removeCurrentColumn(this)" style="background-color: red; color: white; border: none; cursor: pointer; width: 2.1em; aspect-ratio: 1 / 1;">x</button>
     </div>
-    <input onkeydown="changeCurrentItemColumnKeyOnKeyDown(event)" onfocusout="changeCurrentItemColumnKeyOnBlur(event)" type="text" placeholder="${itemColumnKeyPlaceholder}" style="text-align: center; width: 100%; border: 1px solid #ccc; outline: none; padding: 4px; font-weight: bold;">
+    <input onkeydown="changeCurrentItemColumnKeyOnKeyDown(event)" onfocusout="changeCurrentItemColumnKeyOnBlur(event)" type="text" placeholder="${itemColumnKeyPlaceholder}" style="text-align: center; width: 100%; border: 1px solid #ccc; outline: none; padding: 4px; font-weight: bold;" />
     ${siblings}
     <div style="display: flex; flex-direction: column; flex: 1; justify-content: center; align-items: center; border: 1px solid #000;">
         <button onclick="addNewItemColumnValueForCurrentRow(this)" style="background-color: #007bff; color: white; border: none; cursor: pointer; width: 100%;">+ value</button>
@@ -433,7 +433,7 @@
             const elementImportExportTextareaElementCompareToolValue = elementImportExportTextareaElementCompareTool.value;
             try {
                 const compareToolItemsData = JSON.parse(elementImportExportTextareaElementCompareToolValue);
-                const compareToolItemsDataUniqueKey = removeDuplicateItems(compareToolItemsData, (anyArrayItem) => anyArrayItem["item_column_key"]);
+                const compareToolItemsDataUniqueKey = removeDuplicateItem(compareToolItemsData, (anyArrayItem) => anyArrayItem["item_column_key"]);
                 // console.log(elementImportExportTextareaElementCompareToolValue);
                 // console.log(JSON.stringify(compareToolItemsData));
                 // console.log(JSON.stringify(compareToolItemsDataUniqueKey));
