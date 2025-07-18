@@ -23,21 +23,28 @@ const randomIntInclusive = (lowerBound, upperBound) => (Math.floor(Math.random()
 const rangeInclusive = (startNumber, stopNumber) => Array.from({ length: (Math.abs(stopNumber - startNumber) + 1) }, (_, i) => ((startNumber < stopNumber) ? (startNumber + i) : ((startNumber > stopNumber) ? (startNumber - i) : (startNumber || stopNumber))));
 const removeDuplicateItem = (anyArray, callbackFunction = ((anyArrayItem) => anyArrayItem)) => (anyArray.reduce(([uniqueKeyMap, uniqueArray], anyArrayItem) => ((newUniqueKeyString) => ((uniqueKeyMap.get(newUniqueKeyString) !== undefined) ? [uniqueKeyMap, uniqueArray] : ([(uniqueKeyMap.set(newUniqueKeyString, anyArrayItem)), (uniqueArray.push(anyArrayItem)), ([uniqueKeyMap, uniqueArray])].at(-1))))(callbackFunction(anyArrayItem)), [new Map(), []]).at(-1)); /* removeDuplicateItemV2 */
 
-const stringToRgbHexColor = (theString) => {
-    let theHash = 0;
-    let i;
+const htmlTemplateStringToHtmlElement = (htmlTemplateString) => {
+    const templateElement = document.createElement("template");
+    templateElement.innerHTML = htmlTemplateString;
+    return templateElement.content.firstElementChild;
+};
+
+const stringToRgbHexColor = (anyString) => {
+    let numericHash = 0;
 
     /* eslint-disable no-bitwise */
-    for (i = 0; (i < theString.length); i += 1) {
-        theHash = theString.charCodeAt(i) + ((theHash << 5) - theHash);
+    for (let i = 0; (i < anyString.length); i += 1) {
+        numericHash = (anyString.charCodeAt(i) + ((numericHash << 5) - numericHash));
     }
 
     let rgbHexColor = "#";
 
-    for (i = 0; i < 3; i += 1) {
-        rgbHexColor += `00${((theHash >> (i * 8)) & 0xff).toString(16)}`.slice(-2);
+    for (let i = 0; (i < 3); i += 1) {
+        rgbHexColor += `00${((numericHash >> (i * 8)) & 0xff).toString(16)}`.slice(-2);
     }
     /* eslint-enable no-bitwise */
 
     return rgbHexColor;
 };
+
+const isStringContainHtml = (anyString) => (new DOMParser().parseFromString(anyString, "text/html").body.querySelector("*") !== null);

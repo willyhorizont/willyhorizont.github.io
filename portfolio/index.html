@@ -73,7 +73,7 @@
             navbarElement.classList.toggle("responsive");
         };
 
-        const myPortfolio = [
+        const myProjects = [
             {
                 "title": "Compare Tool (front-end web tool)",
                 "href": "/portfolio/compare-tool",
@@ -164,22 +164,15 @@ finished in only about 1 year (sep 2021 - sep 2022).
             },
         ];
 
-        const portfolioContainerElement = document.getElementById("portfolio-container");
-        myPortfolio.forEach((myPortfolioItem) => {
-            const portfolioItemCardElementNew = document.createElement("div");
-            portfolioItemCardElementNew.style = "width: 100%; border: 1px solid #ccc; border-radius: 8px; display: flex; flex-direction: column; overflow: hidden;";
-
-            portfolioItemCardElementNew.innerHTML = `
-                <a href="${myPortfolioItem.href}" target="${myPortfolioItem.target}" aria-label="${myPortfolioItem.title}">
-                    <div style="padding: 8px; display: flex; flex-direction: row; align-items: center; gap: 8px; background-color: #091929;">
-                        <div style="min-width: 16px; min-height: 16px; border-radius: 0.5em; background-color: ${`${stringToRgbHexColor(myPortfolioItem.title)}`};"></div>
-                        <p>${myPortfolioItem.title}</p>
-                    </div>
-                    <pre style="padding: 8px; text-wrap: auto;">${myPortfolioItem.body}</pre>
-                </a>
-            `;
-            portfolioContainerElement.appendChild(portfolioItemCardElementNew);
-        });
+        document.getElementById("portfolio-container").innerHTML = myProjects.map((myProjectsItem) => (`<div style="width: 100%; border: 1px solid #ccc; border-radius: 8px; display: flex; flex-direction: column; overflow: hidden;">
+    <a href="${myProjectsItem['href']}" target="${myProjectsItem['target']}" aria-label="${myProjectsItem['title']}">
+        <div style="padding: 8px; display: flex; flex-direction: row; align-items: center; gap: 8px; background-color: #091929;">
+            <div style="min-width: 16px; min-height: 16px; border-radius: 0.5em; background-color: ${`${stringToRgbHexColor(myProjectsItem['title'])}`};"></div>
+            <p>${myProjectsItem['title']}</p>
+        </div>
+        <pre style="padding: 8px; text-wrap: auto;">${myProjectsItem['body']}</pre>
+    </a>
+</div>`)).join("");
     </script>
 </body>
 </html>

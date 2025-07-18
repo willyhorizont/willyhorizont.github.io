@@ -171,7 +171,7 @@
 
         const localStorageKey = "expenses";
 
-        const getHtmlStringChipInput = (placeholder = "") => `<input onkeydown="changeCurrentExpensesItemItemsOnKeyDown(event)" onfocusout="changeCurrentExpensesItemItemsOnBlur(event)" type="text" placeholder="${placeholder}" style="margin: 8px 4px 8px 4px; background-color: #000; color: #ccc; padding: 8px 4px; border: none; outline: none;" />`;
+        const getHtmlStringChipInput = (placeholder = "") => (`<input onkeydown="changeCurrentExpensesItemItemsOnKeyDown(event)" onfocusout="changeCurrentExpensesItemItemsOnBlur(event)" type="text" placeholder="${placeholder}" style="margin: 8px 4px 8px 4px; background-color: #000; color: #ccc; padding: 8px 4px; border: none; outline: none;" />`);
 
         const chipRemoveButtonString = `<div style="display: flex; align-items: center; justify-content: center; background-color: #000; color: #ccc; width: 1.2em; aspect-ratio: 1 / 1; border-radius: 50%;">
     <span onclick="removeCurrentChip(this)" style="cursor: pointer; font-weight: bold;">×</span>
@@ -181,23 +181,28 @@
     <button onclick="removeCurrentExpensesItemItem(this)" style="margin-left: 8px; background-color: red; color: white; border: none; padding: 0.2em 0.4em; cursor: pointer; width: 1.6em; aspect-ratio: 1 / 1;">x</button>
 </div>`;
 
-        const getPriceInputString = (value = "", priceValue = "", priceDisplay = "") => `<div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;">
+        const getPriceInputString = (value = "", priceValue = "", priceDisplay = "") => (`<div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;">
     <input value="${value}" data-price-value="${priceValue}" data-price-display="${priceDisplay}" onchange="changeCurrentExpensesItemPrice(this)" type="text" placeholder="jumlah uang" style="background-color: #000; color: #ccc; border: 1px solid #ccc; padding: 4px 8px; outline: none; max-width: 120px;" />
-</div>`;
+</div>`);
 
-        const getExpenseChipInputString = (children) => `<div style="margin-left: 8px; display: flex; flex-flow: wrap; background-color: #000; border: 1px solid #ccc; flex: 1; padding: 0px 4px; overflow-x: scroll;">
+        const getExpenseChipInputString = (children) => (`<div onclick="handleClickExpenseItemBody(this)" style="cursor: text; margin-left: 8px; display: flex; flex-flow: wrap; background-color: #000; border: 1px solid #ccc; flex: 1; padding: 0px 4px; overflow-x: scroll;">
     ${children}
-</div>`;
+</div>`);
 
-        const getExpenseChipString = (children, item) => `<div data-item="${item}" style="margin: 8px 4px; background-color: #999; color: #222; padding: 0.2em 0.4em; border-radius: 0.2em; display: flex; align-items: center; gap: 8px;">
-${children}
-</div>`;
-
-        const getExpenseChipValueContainerString = (value) => `<span style="white-space: nowrap;">${value}</span>`;
-
-        const getExpensesItemString = (children, priceValue = "", priceDisplay = "", items = "") => `<div data-price-value="${priceValue}" data-price-display="${priceDisplay}" data-items="${items}" style="width: 100%; padding: 8px; display: flex; flex-direction: row; border: 1px solid #fff; background-color: #091929;">
+        const getExpenseChipString = (children, item) => (`<div data-item="${(isStringContainHtml(item) === true) ? "No-XSS!" : item}" style="margin: 8px 4px; background-color: #999; color: #222; padding: 0.2em 0.4em; border-radius: 0.2em; display: flex; align-items: center; gap: 8px;">
     ${children}
-</div>`;
+</div>`);
+
+        const getExpenseChipValueContainerString = (value) => (`<span style="white-space: nowrap;">${(isStringContainHtml(value) === true) ? "No-XSS!" : value}</span>`);
+
+        const getExpensesItemString = (children, priceValue = "", priceDisplay = "", items = "") => (`<div data-price-value="${priceValue}" data-price-display="${priceDisplay}" data-items="${items}" style="width: 100%; padding: 8px; display: flex; flex-direction: row; border: 1px solid #fff; background-color: #091929;">
+    ${children}
+</div>`);
+
+        const handleClickExpenseItemBody = (expenseItemElement) => {
+            const currentExpenseItem = expenseItemElement.querySelector("input");
+            currentExpenseItem.focus();
+        };
 
         const expensesCalculatorContainer = document.getElementById("expenses-calculator-container");
         const totalExpensesElement = document.getElementById("total-expenses");
@@ -220,8 +225,8 @@ ${children}
         };
 
         const updateTotalExpenses = () => {
-            const totalExpenses = Array.from(document.querySelectorAll("#expenses-calculator-container div")).reduce((currentResult, currentExpensesItemItem) => (currentResult + parseFloat((isNumeric(currentExpensesItemItem.dataset["priceValue"]) === true) ? 0 : currentExpensesItemItem.dataset["priceValue"])), 0);
-            if (isNumeric(totalExpenses) === true) {
+            const totalExpenses = Array.from(Array.from(document.getElementById("expenses-calculator-container").children)).reduce((currentResult, currentExpensesItemItem) => (currentResult + (parseFloat((isNumeric(currentExpensesItemItem.dataset["priceValue"]) === true) ? 0 : parseFloat(currentExpensesItemItem.dataset["priceValue"])))), 0);
+            if (isNumeric(totalExpenses) === false) {
                 totalExpensesElement.innerText = 0
                 return;
             }
@@ -238,11 +243,11 @@ ${children}
             saveToLocalStorage();
         };
 
-        const removeCurrentChip = (closeButtonEl) => {
-            const newItems = closeButtonEl.parentElement.parentElement.parentElement.parentElement.dataset["items"].split(",").filter((item) => (item.trim() !== closeButtonEl.parentElement.parentElement.dataset["item"]));
-            closeButtonEl.parentElement.parentElement.parentElement.parentElement.dataset["items"] = newItems.join(",");
-            closeButtonEl.parentElement.parentElement.nextElementSibling.placeholder = ((newItems.length === 0) ? "untuk apa saja" : "");
-            closeButtonEl.parentElement.parentElement.remove();
+        const removeCurrentChip = (closeButtonElement) => {
+            const newItems = closeButtonElement.parentElement.parentElement.parentElement.parentElement.dataset["items"].split(",").filter((item) => ((item.trim() !== closeButtonElement.parentElement.parentElement.dataset["item"]) && (isStringContainHtml(item.trim()) !== true)));
+            closeButtonElement.parentElement.parentElement.parentElement.parentElement.dataset["items"] = newItems.join(",");
+            closeButtonElement.parentElement.parentElement.nextElementSibling.placeholder = ((newItems.length === 0) ? "untuk apa saja" : "");
+            closeButtonElement.parentElement.parentElement.remove();
             saveToLocalStorage();
         };
 
@@ -250,15 +255,16 @@ ${children}
             const inputElement = event.target;
             const expenseChipInputElement = inputElement.parentElement;
             const inputElementValue = inputElement.value.split(",").filter((item) => (item.trim() !== "")).join(",");
-            const inputElementValueNew = ((inputElement.parentElement.parentElement.dataset["items"] === "") ? inputElementValue : (inputElement.parentElement.parentElement.dataset["items"] + ", " + inputElementValue));
+            const inputElementValueSanitized = ((isStringContainHtml(inputElementValue) === true) ? "No-XSS!" : inputElementValue);
+            const inputElementValueNew = ((inputElement.parentElement.parentElement.dataset["items"] === "") ? inputElementValueSanitized : (`${inputElement.parentElement.parentElement.dataset["items"]}, ${inputElementValueSanitized}`));
             const inputElementValueNoDuplicate = removeDuplicateItem(inputElementValueNew.split(",").map((item) => (item.trim()))).join(", ");
             inputElement.parentElement.parentElement.dataset["items"] = inputElementValueNoDuplicate;
 
-            const chips = inputElementValueNoDuplicate.split(",").map((value) => (getExpenseChipString(`${getExpenseChipValueContainerString(value.trim())}
-${chipRemoveButtonString}`, value.trim()))).join("");
+            const chips = inputElementValueNoDuplicate.split(",").map((value) => (getExpenseChipString((`${getExpenseChipValueContainerString(value.trim())}
+${chipRemoveButtonString}`), value.trim()))).join("");
 
-            inputElement.parentElement.innerHTML = `${chips}
-${getHtmlStringChipInput()}`;
+            inputElement.parentElement.innerHTML = (`${chips}
+${getHtmlStringChipInput()}`);
             inputElement.value = "";
             saveToLocalStorage();
             const newInput = expenseChipInputElement.querySelector("input");
