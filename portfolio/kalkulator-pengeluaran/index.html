@@ -43,6 +43,7 @@
     <link rel="stylesheet" href="../../style.css">
     <title>Kalkulator Pengeluaran | Portfolio | Willy Horizont</title>
     <script src="../../utils.js"></script>
+    <script src="../../utils-web.js"></script>
 </head>
 <body>
     <header>
@@ -74,11 +75,11 @@
                     <p style="text-align: center; font-size: 1em;">pada kolom kiri, agar angka mudah dibaca bisa pisahkan angka dengan underscore atau titik. contoh 10_000 atau 14.000</p>
                     <p style="text-align: center; font-size: 1em;">pada kolom tengah, bisa pisahkan dengan koma, lalu tekan "Enter" pada keyboard - atau langsung tekan tombol "Enter" setelah selesai mengetik satu.</p>
                 </div>
-                 -->
+                -->
                 <div id="expenses-calculator-container" style="padding: 4px; width: 100%; display: flex; flex-direction: column; row-gap: 8px;">
                 </div>
                 <div style="padding: 4px; width: 100%; display: flex; flex-direction: column;">
-                    <button onclick="createNewExpensesItem()" style="padding: 0.2em 0.4em; width: 1.9em; aspect-ratio: 1 / 1; background-color: #007bff; color: #ccc;">+</button>
+                    <button onclick="createNewExpense()" style="padding: 0.2em 0.4em; width: 1.9em; aspect-ratio: 1 / 1; background-color: #007bff; color: #ccc;">+</button>
                     <h2 style="margin-top: 8px;">Total Pengeluaran: <span id="total-expenses">0</span></h2>
                 </div>
                 <div style="padding: 4px; width: 100%; display: flex; flex-direction: column;">
@@ -164,188 +165,234 @@
         <p>Made with ❤️ by Willy Horizont</p>
     </footer>
     <script>
-        const toggleMenu = () => {
-            const navbarElement = document.getElementById("navbar");
-            navbarElement.classList.toggle("responsive");
-        };
+        function toggleMenu() {
+            document.getElementById("navbar").classList.toggle("responsive");
+        }
 
         const localStorageKey = "expenses";
 
-        const getHtmlStringChipInput = (placeholder = "") => (`<input onkeydown="changeCurrentExpensesItemItemsOnKeyDown(event)" onfocusout="changeCurrentExpensesItemItemsOnBlur(event)" type="text" placeholder="${placeholder}" style="margin: 8px 4px 8px 4px; background-color: #000; color: #ccc; padding: 8px 4px; border: none; outline: none;" />`);
+        function createHtmlElementExpenseContainer(arrayOfEntryDataset) {
+            return createHtmlElement((/*html*/`<div data-id="expense-container" style="width: 100%; padding: 8px; display: flex; flex-direction: row; border: 1px solid #fff; background-color: #091929;"></div>`), { arrayOfEntryDataset });
+        }
 
-        const chipRemoveButtonString = `<div style="display: flex; align-items: center; justify-content: center; background-color: #000; color: #ccc; width: 1.2em; aspect-ratio: 1 / 1; border-radius: 50%;">
-    <span onclick="removeCurrentChip(this)" style="cursor: pointer; font-weight: bold;">×</span>
-</div>`;
+        function createHtmlElementPriceInputContainer({ arrayOfEntryProperty, arrayOfEntryDataset } = {}) {
+            return appendChildReturnParent(createHtmlElement(/*html*/`<div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;"></div>`), createHtmlElement((/*html*/`<input data-id="price-input" name="price-input" placeholder="jumlah uang" type="text" style="background-color: #000; color: #ccc; border: 1px solid #ccc; padding: 4px 8px; outline: none; max-width: 120px;" />`), { arrayOfEntryDataset, arrayOfEntryProperty, arrayOfElementConfig: [{ handlerRefName: "refElementHandlerChange", eventType: "change", elementHandler: handleElementChangePriceInput }] }));
+        }
 
-        const removeExpenseItemButtonString = `<div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;">
-    <button onclick="removeCurrentExpensesItemItem(this)" style="margin-left: 8px; background-color: red; color: white; border: none; padding: 0.2em 0.4em; cursor: pointer; width: 1.6em; aspect-ratio: 1 / 1;">x</button>
-</div>`;
+        function createHtmlElementChipInputContainer() {
+            return createHtmlElement((/*html*/`<div data-id="chip-input-container" style="cursor: text; margin-left: 8px; display: flex; flex-wrap: wrap; background-color: #000; border: 1px solid #ccc; flex: 1; padding: 0px 4px; overflow-x: scroll;"></div>`), { arrayOfElementConfig: [{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleElementClickChipInputContainer }] });
+        }
 
-        const getPriceInputString = (value = "", priceValue = "", priceDisplay = "") => (`<div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;">
-    <input value="${value}" data-price-value="${priceValue}" data-price-display="${priceDisplay}" onchange="changeCurrentExpensesItemPrice(this)" type="text" placeholder="jumlah uang" style="background-color: #000; color: #ccc; border: 1px solid #ccc; padding: 4px 8px; outline: none; max-width: 120px;" />
-</div>`);
+        function createHtmlElementChipContainer(arrayOfEntryDataset) {
+            return createHtmlElement((/*html*/`<div data-id="chip-container" style="margin: 8px 4px; background-color: #999; color: #222; padding: 0.2em 0.4em; border-radius: 0.2em; display: flex; align-items: center; gap: 8px; flex: 0 0 auto;"></div>`), { arrayOfEntryDataset });
+        }
+        
+        function createHtmlElementChipTextContainer(arrayOfEntryProperty) {
+            return createHtmlElement((/*html*/`<span style="white-space: nowrap;"></span>`), { arrayOfEntryProperty });
+        }
 
-        const getExpenseChipInputString = (children) => (`<div onclick="handleClickExpenseItemBody(this)" style="cursor: text; margin-left: 8px; display: flex; flex-flow: wrap; background-color: #000; border: 1px solid #ccc; flex: 1; padding: 0px 4px; overflow-x: scroll;">
-    ${children}
-</div>`);
+        function createHtmlElementChipRemoveButton() {
+            return appendChildReturnParent(createHtmlElement(/*html*/`<div style="display: flex; align-items: center; justify-content: center; background-color: #000; color: #ccc; width: 1.2em; aspect-ratio: 1 / 1; border-radius: 50%;"></div>`), createHtmlElement((/*html*/`<span data-id="chip-remove-button" style="cursor: pointer; font-weight: bold;">×</span>`), { arrayOfElementConfig: [{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleEventClickChipRemoveButton }] }));
+        }
 
-        const getExpenseChipString = (children, item) => (`<div data-item="${(isStringContainHtml(item) === true) ? "No-XSS!" : item}" style="margin: 8px 4px; background-color: #999; color: #222; padding: 0.2em 0.4em; border-radius: 0.2em; display: flex; align-items: center; gap: 8px;">
-    ${children}
-</div>`);
+        function createHtmlElementChipInput(placeholderValue = "") {
+            return createHtmlElement((/*html*/`<input data-id="chip-input" name="chip-input" type="text" style="flex: 1 1 auto; margin: 8px 4px 8px 4px; background-color: #000; color: #ccc; padding: 8px 4px; border: none; outline: none;" />`), { arrayOfElementConfig: ([{ handlerRefName: "refEventHandlerKeyDown", eventType: "keydown", eventHandler: handleEventKeyDownChipInput }, { handlerRefName: "refEventHandlerBlur", eventType: "blur", eventHandler: handleEventBlurChipInput }]), arrayOfEntryAttribute: [["placeholder", placeholderValue]] });
+        }
 
-        const getExpenseChipValueContainerString = (value) => (`<span style="white-space: nowrap;">${(isStringContainHtml(value) === true) ? "No-XSS!" : value}</span>`);
+        function createHtmlElementExpenseRemoveButtonContainer() {
+            return appendChildReturnParent(createHtmlElement((/*html*/`<div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;"></div>`)), createHtmlElement((/*html*/`<button data-id="expense-remove-button" style="margin-left: 8px; background-color: red; color: white; border: none; padding: 0.2em 0.4em; cursor: pointer; width: 1.6em; aspect-ratio: 1 / 1;">x</button>`), { arrayOfElementConfig: [{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleElementClickExpenseRemoveButton }] }));
+        }
 
-        const getExpensesItemString = (children, priceValue = "", priceDisplay = "", items = "") => (`<div data-price-value="${priceValue}" data-price-display="${priceDisplay}" data-items="${items}" style="width: 100%; padding: 8px; display: flex; flex-direction: row; border: 1px solid #fff; background-color: #091929;">
-    ${children}
-</div>`);
+        function createHtmlElementExpenseChip(chipTextTrimmed) {
+            const htmlElementChipContainer = createHtmlElementChipContainer([["item", chipTextTrimmed]]);
+            htmlElementChipContainer.appendChild(createHtmlElementChipTextContainer([["textContent", chipTextTrimmed]]));
+            htmlElementChipContainer.appendChild(createHtmlElementChipRemoveButton());
+            return htmlElementChipContainer;
+        }
 
-        const handleClickExpenseItemBody = (expenseItemElement) => {
-            const currentExpenseItem = expenseItemElement.querySelector("input");
-            currentExpenseItem.focus();
-        };
+        function createHtmlElementExpense({ priceValue = "", priceDisplay = "", items = "" } = { priceValue: "", priceDisplay: "", items: "" }) {
+            const htmlElementExpenseContainer = createHtmlElementExpenseContainer([["price-value", priceValue], ["price-display", priceDisplay], ["items", items]]);
 
-        const expensesCalculatorContainer = document.getElementById("expenses-calculator-container");
-        const totalExpensesElement = document.getElementById("total-expenses");
+            htmlElementExpenseContainer.appendChild(createHtmlElementPriceInputContainer({ arrayOfEntryProperty: [["value", priceDisplay]], arrayOfEntryDataset: [["price-value", priceValue], ["price-display", priceDisplay]] }));
 
-        const updateTextAreaContentFromLocalStorage = (expensesData) => {
-            const elementImportExportExpensesCalculatorTextarea = document.getElementById("expenses-calculator-backup-restore-textarea");
-            elementImportExportExpensesCalculatorTextarea.value = ((expensesData === null) ? "" : JSON.stringify(expensesData));
-        };
+            htmlElementExpenseContainer.appendChild((() => {
+                const htmlElementChipInputContainer = createHtmlElementChipInputContainer();
 
-        const saveToLocalStorage = () => {
-            let expensesData = Array.from(expensesCalculatorContainer.children).map((expensesItemElement) => ({
-                priceDisplay: expensesItemElement.dataset["priceDisplay"] ?? "",
-                priceValue: parseFloat((isNumeric(expensesItemElement.dataset["priceValue"]) === true) ? 0 : expensesItemElement.dataset["priceValue"]),
-                items: expensesItemElement.dataset["items"] ?? ""
-            }));
-            expensesData = ((expensesData.length === 0) ? null : expensesData);
-            localStorage.setItem(localStorageKey, JSON.stringify(expensesData));
-            updateTextAreaContentFromLocalStorage(expensesData);
-            document.getElementById("error-message-container").innerHTML = "";
-        };
+                if (items.trim()) items.split(", ").forEach((chipText) => (htmlElementChipInputContainer.appendChild(createHtmlElementExpenseChip(chipText.trim()))));
 
-        const updateTotalExpenses = () => {
-            const totalExpenses = Array.from(Array.from(document.getElementById("expenses-calculator-container").children)).reduce((currentResult, currentExpensesItemItem) => (currentResult + (parseFloat((isNumeric(currentExpensesItemItem.dataset["priceValue"]) === true) ? 0 : parseFloat(currentExpensesItemItem.dataset["priceValue"])))), 0);
-            if (isNumeric(totalExpenses) === false) {
-                totalExpensesElement.innerText = 0
-                return;
-            }
-            totalExpensesElement.innerText = totalExpenses.toLocaleString("id-ID");
-        };
+                htmlElementChipInputContainer.appendChild(createHtmlElementChipInput((items.trim() === "") ? "untuk apa saja" : ""));
 
-        const changeCurrentExpensesItemPrice = (priceInputElement) => {
-            const priceInputValue = priceInputElement.value.split("_").join("").split(".").join("");
-            priceInputElement.parentElement.parentElement.dataset["priceValue"] = priceInputValue;
-            priceInputElement.parentElement.parentElement.dataset["priceDisplay"] = priceInputElement.value;
-            priceInputElement.parentElement.parentElement.insertAdjacentHTML("afterbegin", getPriceInputString(priceInputElement.value, priceInputValue, priceInputElement.value));
-            priceInputElement.parentElement.remove();
-            updateTotalExpenses();
+                return htmlElementChipInputContainer;
+            })());
+
+            htmlElementExpenseContainer.appendChild(createHtmlElementExpenseRemoveButtonContainer());
+
+            return htmlElementExpenseContainer;
+        }
+
+        function changeExpenseChipInputValue(event) {
+            const htmlElementChipInput = event.target;
+            const htmlElementExpenseContainer = htmlElementChipInput.parentElement.parentElement;
+            const htmlElementChipInputValue = htmlElementChipInput.value.split(",").filter((chipText) => (chipText.trim() !== "")).join(",");
+            const htmlElementChipInputValueNew = ((htmlElementExpenseContainer.dataset["items"] === "") ? htmlElementChipInputValue : (`${htmlElementExpenseContainer.dataset["items"]}, ${htmlElementChipInputValue}`));
+            const htmlElementChipInputValueNoDuplicate = removeDuplicateItem(htmlElementChipInputValueNew.split(",").map((chipText) => (chipText.trim()))).join(", ");
+
+            htmlElementExpenseContainer.dataset["items"] = htmlElementChipInputValueNoDuplicate;
+
+            const htmlElementChipInputContainer = htmlElementChipInput.parentElement;
+            htmlElementChipInputContainer.innerHTML = "";
+
+            htmlElementChipInputValueNoDuplicate.split(",").forEach((chipText) => (htmlElementChipInputContainer.appendChild(createHtmlElementExpenseChip(chipText.trim()))));
+
+            htmlElementChipInput.value = "";
+            htmlElementChipInput.removeEventListener("keydown", htmlElementChipInput.refEventHandlerKeyDown);
+            htmlElementChipInput.removeEventListener("blur", htmlElementChipInput.refEventHandlerBlur);
+            htmlElementChipInput.remove();
+
+            const htmlElementChipInputNew = createHtmlElementChipInput();
+
+            htmlElementChipInputContainer.appendChild(htmlElementChipInputNew);
+
             saveToLocalStorage();
-        };
 
-        const removeCurrentChip = (closeButtonElement) => {
-            const newItems = closeButtonElement.parentElement.parentElement.parentElement.parentElement.dataset["items"].split(",").filter((item) => ((item.trim() !== closeButtonElement.parentElement.parentElement.dataset["item"]) && (isStringContainHtml(item.trim()) !== true)));
-            closeButtonElement.parentElement.parentElement.parentElement.parentElement.dataset["items"] = newItems.join(",");
-            closeButtonElement.parentElement.parentElement.nextElementSibling.placeholder = ((newItems.length === 0) ? "untuk apa saja" : "");
-            closeButtonElement.parentElement.parentElement.remove();
-            saveToLocalStorage();
-        };
+            return htmlElementChipInputNew;
+        }
 
-        const changeCurrentExpensesItemItems = (event) => {
-            const inputElement = event.target;
-            const expenseChipInputElement = inputElement.parentElement;
-            const inputElementValue = inputElement.value.split(",").filter((item) => (item.trim() !== "")).join(",");
-            const inputElementValueSanitized = ((isStringContainHtml(inputElementValue) === true) ? "No-XSS!" : inputElementValue);
-            const inputElementValueNew = ((inputElement.parentElement.parentElement.dataset["items"] === "") ? inputElementValueSanitized : (`${inputElement.parentElement.parentElement.dataset["items"]}, ${inputElementValueSanitized}`));
-            const inputElementValueNoDuplicate = removeDuplicateItem(inputElementValueNew.split(",").map((item) => (item.trim()))).join(", ");
-            inputElement.parentElement.parentElement.dataset["items"] = inputElementValueNoDuplicate;
-
-            const chips = inputElementValueNoDuplicate.split(",").map((value) => (getExpenseChipString((`${getExpenseChipValueContainerString(value.trim())}
-${chipRemoveButtonString}`), value.trim()))).join("");
-
-            inputElement.parentElement.innerHTML = (`${chips}
-${getHtmlStringChipInput()}`);
-            inputElement.value = "";
-            saveToLocalStorage();
-            const newInput = expenseChipInputElement.querySelector("input");
-            return newInput;
-        };
-
-        const changeCurrentExpensesItemItemsOnKeyDown = (event) => {
+        function handleEventKeyDownChipInput(event) {
             if (event.key === "Enter") {
                 if (event.target.value.trim() === "") {
                     event.preventDefault();
                     return;
                 }
-                // changeCurrentExpensesItemItems(event);
-                const newInput = changeCurrentExpensesItemItems(event);
-                newInput.focus();
+                const htmlElementInputChipNew = changeExpenseChipInputValue(event);
+                htmlElementInputChipNew.focus();
                 event.preventDefault();
             }
-        };
+        }
 
-        const changeCurrentExpensesItemItemsOnBlur = (event) => {
+        function handleEventBlurChipInput(event) {
             if (event.target.value.trim() === "") {
                 event.preventDefault();
                 return;
             }
-            changeCurrentExpensesItemItems(event);
+            const htmlElementInputChipNew = changeExpenseChipInputValue(event);
+            htmlElementInputChipNew.focus();
             event.preventDefault();
-        };
+        }
 
-        const removeCurrentExpensesItemItem = (removeButtonEl) => {
-            removeButtonEl.parentElement.parentElement.remove();
+        function handleElementClickChipInputContainer(htmlElementChipInputContainer) {
+            return function (event) {
+                const htmlElementChipInput = htmlElementChipInputContainer.querySelector("input");
+                htmlElementChipInput.focus();
+            }
+        }
+
+        function handleEventClickChipRemoveButton(htmlElementChipRemoveButton) {
+            return function(event) {
+                const htmlElementExpenseContainer = htmlElementChipRemoveButton.parentElement.parentElement.parentElement.parentElement;
+                const htmlElementChipContainer = htmlElementChipRemoveButton.parentElement.parentElement;
+                const chipTextArrayNew = htmlElementExpenseContainer.dataset["items"].split(",").filter((chipText) => (chipText.trim() !== htmlElementChipContainer.dataset["item"]));
+                htmlElementExpenseContainer.dataset["items"] = chipTextArrayNew.join(",");
+                htmlElementChipContainer.nextElementSibling.placeholder = ((chipTextArrayNew.length === 0) ? "untuk apa saja" : "");
+                htmlElementChipRemoveButton.removeEventListener("click", htmlElementChipRemoveButton.refElementHandlerClick);
+                htmlElementChipContainer.remove();
+                saveToLocalStorage();
+            }
+        }
+
+        function handleElementChangePriceInput(htmlElementPriceInput) {
+            return function(event) {
+                const htmlElementPriceInputValue = htmlElementPriceInput.value.split("_").join("").split(".").join("");
+                const htmlElementExpenseContainer = htmlElementPriceInput.parentElement.parentElement;
+                htmlElementExpenseContainer.setAttribute("data-price-value", String(htmlElementPriceInputValue));
+                htmlElementExpenseContainer.setAttribute("data-price-display", String(htmlElementPriceInput.value));
+                updateTotalExpenses();
+                saveToLocalStorage();
+            }
+        }
+
+        function handleElementClickExpenseRemoveButton(htmlElementExpenseRemoveButton) {
+            return function(event) {
+                document.querySelectorAll('[data-id="price-input"]').forEach((htmlElementPriceInput) => (htmlElementPriceInput.removeEventListener("change", htmlElementPriceInput.refElementHandlerChange)));
+                document.querySelectorAll('[data-id="chip-input-container"]').forEach((htmlElementChipInputContainer) => (htmlElementChipInputContainer.removeEventListener("click", htmlElementChipInputContainer.refElementHandlerClick)));
+                document.querySelectorAll('[data-id="chip-remove-button"]').forEach((htmlElementChipRemoveButton) => (htmlElementChipRemoveButton.removeEventListener("click", htmlElementChipRemoveButton.refElementHandlerClick)));
+                document.querySelectorAll('[data-id="chip-input"]').forEach((htmlElementChipInput) => ([(htmlElementChipInput.removeEventListener("keydown", htmlElementChipInput.refEventHandlerKeyDown)), (htmlElementChipInput.removeEventListener("blur", htmlElementChipInput.refEventHandlerBlur)), undefined].at(-1)));
+                document.querySelectorAll('[data-id="expense-remove-button"]').forEach((htmlElementExpenseRemoveButton) => (htmlElementExpenseRemoveButton.removeEventListener("click", htmlElementExpenseRemoveButton.refElementHandlerClick)));
+                const htmlElementExpenseContainer = htmlElementExpenseRemoveButton.parentElement.parentElement;
+                htmlElementExpenseContainer.remove();
+                updateTotalExpenses();
+                saveToLocalStorage();
+            }
+        }
+
+        function updateTotalExpenses() {
+            const totalExpensesElement = document.getElementById("total-expenses");
+            const totalExpenses = Array.from(document.getElementById("expenses-calculator-container").children).reduce((currentResult, htmlElementExpense) => (currentResult + (parseFloat((isNumeric(htmlElementExpense.dataset["priceValue"]) === true) ? 0 : parseFloat(htmlElementExpense.dataset["priceValue"])))), 0);
+            if (isNumeric(totalExpenses) === false) {
+                totalExpensesElement.innerText = 0;
+                return;
+            }
+            totalExpensesElement.innerText = totalExpenses.toLocaleString("id-ID");
+        }
+
+        function createNewExpense() {
+            const htmlElementExpenseCalculatorContainer = document.getElementById("expenses-calculator-container").appendChild(createHtmlElementExpense());
+            const htmlElementPriceInput = htmlElementExpenseCalculatorContainer.querySelectorAll("input")[0];
+            if (htmlElementPriceInput) htmlElementPriceInput.focus();
+        }
+
+        function rerenderExpensesCalculator(expenseCalculatorData) {
+            const htmlElementExpenseCalculatorContainer = document.getElementById("expenses-calculator-container");
+            htmlElementExpenseCalculatorContainer.innerHTML = "";
+
+            expenseCalculatorData.forEach(({ priceValue, priceDisplay, items }) => htmlElementExpenseCalculatorContainer.appendChild(createHtmlElementExpense({ priceValue, priceDisplay, items })));
+
             updateTotalExpenses();
-            saveToLocalStorage();
-        };
+        }
 
-        const createNewExpensesItem = () => {
-            expensesCalculatorContainer.innerHTML += getExpensesItemString(`${getPriceInputString()}
-${getExpenseChipInputString(getHtmlStringChipInput("untuk apa saja"))}
-${removeExpenseItemButtonString}`);
-        };
+        function updateTextAreaContentToLocalStorage(event) {
+            const elementImportExportExpensesCalculatorTextarea = event.target;
+            const expensesCalculatorBackupRestoreTextareaElementValue = elementImportExportExpensesCalculatorTextarea.value;
+            try {
+                const expenseCalculatorData = JSON.parse(expensesCalculatorBackupRestoreTextareaElementValue);
+                localStorage.setItem(localStorageKey, JSON.stringify(expenseCalculatorData));
+                rerenderExpensesCalculator(expenseCalculatorData);
+            } catch (anyError) {
+                document.getElementById("error-message-container").innerHTML = (/*html*/`<p style="color: red;">Format backup-an yang di-restore tidak sesuai.</p>`);
+            }
+        }
 
-        const rerenderExpensesCalculator = (expensesData) => {
-            expensesCalculatorContainer.innerHTML = expensesData.map(({ priceValue, priceDisplay, items }) => (getExpensesItemString(`${getPriceInputString(priceDisplay, priceValue, priceDisplay)}
-    ${getExpenseChipInputString(`${(items.trim() === "") ? "" : items.split(", ").map((item) => (getExpenseChipString(`${getExpenseChipValueContainerString(item)}
-${chipRemoveButtonString}`, item))).join("")}
-    ${getHtmlStringChipInput((items.trim() === "") ? "untuk apa saja" : "")}`)}
-    ${removeExpenseItemButtonString}`, priceValue, priceDisplay, items))).join("");
-            updateTotalExpenses();
-        };
+        function updateTextAreaContentFromLocalStorage(expenseCalculatorData) {
+            document.getElementById("expenses-calculator-backup-restore-textarea").value = ((expenseCalculatorData === null) ? "" : JSON.stringify(expenseCalculatorData));
+        }
 
-        const loadFromLocalStorage = () => {
+        function saveToLocalStorage() {
+            let expenseCalculatorData = Array.from(document.getElementById("expenses-calculator-container").children).map((expensesItemElement) => ({
+                priceDisplay: expensesItemElement.dataset["priceDisplay"] ?? "",
+                priceValue: parseFloat((isNumeric(expensesItemElement.dataset["priceValue"]) === true) ? 0 : expensesItemElement.dataset["priceValue"]),
+                items: expensesItemElement.dataset["items"] ?? ""
+            }));
+            expenseCalculatorData = ((expenseCalculatorData.length === 0) ? null : expenseCalculatorData);
+            localStorage.setItem(localStorageKey, JSON.stringify(expenseCalculatorData));
+            updateTextAreaContentFromLocalStorage(expenseCalculatorData);
+            document.getElementById("error-message-container").innerHTML = "";
+        }
+
+        function loadFromLocalStorage() {
             const expensesCalculatorSavedData = JSON.parse(localStorage.getItem(localStorageKey));
             if (expensesCalculatorSavedData === null) return;
             updateTextAreaContentFromLocalStorage(expensesCalculatorSavedData);
             rerenderExpensesCalculator(expensesCalculatorSavedData);
-        };
+        }
 
-        const updateTextAreaContentToLocalStorage = (event) => {
-            const elementImportExportExpensesCalculatorTextarea = event.target;
-            const expensesCalculatorBackupRestoreTextareaElementValue = elementImportExportExpensesCalculatorTextarea.value;
-            try {
-                const expensesData = JSON.parse(expensesCalculatorBackupRestoreTextareaElementValue);
-                // console.log(expensesCalculatorBackupRestoreTextareaElementValue);
-                // console.log(JSON.stringify(expensesData));
-                localStorage.setItem(localStorageKey, JSON.stringify(expensesData));
-                rerenderExpensesCalculator(expensesData);
-            } catch (anyError) {
-                document.getElementById("error-message-container").innerHTML = `
-                    <p style="color: red;">Format backup-an yang di-restore tidak sesuai.</p>
-                `;
-            }
-        };
-
-        const updateTextAreaContentToLocalStorageOnBlur = (event) => {
+        function updateTextAreaContentToLocalStorageOnBlur(event) {
             if (event.target.value.trim() === "") {
                 event.preventDefault();
                 return;
             }
             updateTextAreaContentToLocalStorage(event);
-            // loadFromLocalStorage();
             event.preventDefault();
-        };
+        }
 
         loadFromLocalStorage();
     </script>

@@ -2,9 +2,11 @@ const runOnce = ((keySet) => (anyStringKey = "something", callbackFunction = (()
 const runNthTime = ((keyCountMap) => (({ keyString = "something", runTime = 1 } = {}, callbackFunction = (() => undefined)) => (((keyCountMap.get(keyString) ?? 0) >= runTime) ? undefined : ([(keyCountMap.set(keyString, ((keyCountMap.get(keyString) ?? 0) + 1))), (callbackFunction(runTime, keyCountMap.get(keyString)))].at(-1)))))(new Map()); /* runNthTimeV2 */
 const printOnce = ((keySet) => (anything, { key, title, formatter = ((anythingInner) => anythingInner) } = {}) => (((anyStringKey) => (keySet.has(anyStringKey) ? anything : ([(keySet.add(anyStringKey)), (console.log(`${title ? `${title}: ` : ""}${formatter(anything)}`)), anything].at(-1))))(key || title || "first")))(new Set()); /* printOnceV2 */
 const printAndReturn = (anything, { key, title, formatter = ((anythingInner) => anythingInner) } = {}) => ([(console.log(`${title ? `${title}: ` : ""}${formatter(anything)}`)), anything].at(-1));
-const formatDate = (currentTimestamp, ...restArguments) => (new Intl.DateTimeFormat(...restArguments).format(currentTimestamp)); /* formatDateV2 */
-const extractDate = (isoString8601) => ((timestamp) => ((([hhmm12, ampm]) => ({ yyyy: (timestamp.getFullYear()), mm: (String(timestamp.getMonth() + 1).padStart(2, "0")), mmm: (formatDate(timestamp, "en-US", { month: "short" })), dd: (String(timestamp.getDate()).padStart(2, "0")), ddd: (formatDate(timestamp, "en-US", { weekday: "short" })), hhmm12, ampm, hhmm24: (formatDate(timestamp, "en-GB", { hour: "2-digit", minute: "2-digit", hour12: false })), ss: (String(timestamp.getSeconds()).padStart(2, "0")), ms: (timestamp.getMilliseconds()) }))(formatDate(timestamp, "en-US", { hour: "2-digit", minute: "2-digit", hour12: true }).split(" "))))(new Date(isoString8601)); /* extractDateV3 */
-const generateTimestamp = (isoString8601 = new Date().toISOString()) => (({ yyyy, mm, mmm, dd, ddd, hhmm12, ampm, hhmm24, ss, ms }) => (`((${yyyy}//(${mm}|${mmm})//(${dd}|${ddd})||((${hhmm12}|${ampm})|${hhmm24}):${ss}.${ms}))`))(extractDate(new Date(isoString8601).toISOString())); /* generateTimestampV2 */
+const formatDate = (timestamp, ...restArguments) => (new Intl.DateTimeFormat(...restArguments).format(timestamp)); /* formatDateV2 */
+const extractDate = (anything) => (((anythingType) => (((anyDate) => ((anyDate === undefined) ? undefined : (((anyDate) => ((([hourMinuteTwentyFourHourClockAllZeroPaddedJoinByColon, amPm], [zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute]) => ((([zeroPaddedHourTwelveHourClock, _]) => ([(String(anyDate.getFullYear())), (String(anyDate.getMonth() + 1).padStart(2, "0")), (formatDate(anyDate, "en-US", { month: "short" })), (String(anyDate.getDate()).padStart(2, "0")), (formatDate(anyDate, "en-US", { weekday: "short" })), zeroPaddedHourTwelveHourClock, amPm, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, (String(anyDate.getSeconds()).padStart(2, "0")), (String(anyDate.getMilliseconds()).padStart(3, "0"))]))(hourMinuteTwentyFourHourClockAllZeroPaddedJoinByColon.split(":"))))((formatDate(anyDate, "en-US", { hour: "2-digit", minute: "2-digit", hour12: true }).split(" ")), (formatDate(anyDate, "en-GB", { hour: "2-digit", minute: "2-digit", hour12: false }).split(":")))))(new Date(anything)))))((anythingType === AnyType["String"]) ? new Date(anything) : ((anythingType === AnyType["Date"]) ? anything : undefined))))(getType(anything))); /* extractDateV3 */
+const prettyFormatDate = (precise, fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, amPm, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit) => (`((${fullYear}//(${zeroPaddedMonth}|${monthThreeFirstLetter})//(${zeroPaddedDay}|${dayThreeFirstLetter})||(${(precise === true) ? "(" : ""}${zeroPaddedHourTwelveHourClock}:${zeroPaddedMinute}${amPm}|${zeroPaddedHourTwentyFourHourClock}:${zeroPaddedMinute})${(precise === true) ? (`:${zeroPaddedSecond}.${zeroPaddedMiliSecondThreeDigit}`) : ("")}${(precise === true) ? ")" : ""}))`); /* prettyFormatDateV2 */
+const datePrettier = (anything = new Date(), precise) => (((anythingType) => ((([fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, amPm, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit]) => (prettyFormatDate(precise, fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, amPm, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit)))((anythingType === AnyType["String"]) ? extractDate(new Date(anything).toISOString()) : ((anythingType === AnyType["Date"]) ? extractDate(anything.toISOString()) : []))))(getType(anything))); /* datePrettierV2 */
+const generateTimestamp = ({ precise = false } = {}) => ((([fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, amPm, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit]) => (prettyFormatDate(precise, fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, amPm, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit)))(extractDate(new Date().toISOString()))); /* generateTimestampV2 */
 const AnyType = { "Null": "Null", "Undefined": "Undefined", "Boolean": "Boolean", "String": "String", "Numeric": "Numeric", "Object": "Object", "Array": "Array", "Function": "Function", "Error": "Error", "Date": "Date" };
 const isNull = (anything) => ((Object.prototype.toString.call(anything) === "[object Null]") && (anything === null));
 const isUndefined = (anything) => ((Object.prototype.toString.call(anything) === "[object Undefined]") && (anything === undefined));
@@ -20,31 +22,23 @@ const isDate = (anything) => (Object.prototype.toString.call(anything) === "[obj
 const getType = (anything) => ((isUndefined(anything) === true) ? AnyType["Undefined"] : ((isNull(anything) === true) ? AnyType["Null"] : ((isBoolean(anything) === true) ? AnyType["Boolean"] : ((isString(anything) === true) ? AnyType["String"] : ((isNumeric(anything) === true) ? AnyType["Numeric"] : ((isObject(anything) === true) ? AnyType["Object"] : ((isArray(anything) === true) ? AnyType["Array"] : ((isFunction(anything) === true) ? AnyType["Function"] : ((isDate(anything) === true) ? AnyType["Date"] : ((isError(anything) === true) ? AnyType["Error"] : Object.prototype.toString.call(anything)))))))))));
 const jsonStringify = (anything, { pretty = false } = {}) => ((temporaryMap) => ([(temporaryMap.set("f", ((anythingInner, { indent = " ".repeat(4), indentLevel = 0, argumentType = getType(anythingInner) } = {}) => ((isStringIso8601(anythingInner) === true) ? (temporaryMap.get("f")({ "pretty": generateTimestamp(anythingInner), "ISO8601": anythingInner }, { indentLevel })) : ((argumentType === AnyType["Undefined"]) ? ('"undefined"') : ((argumentType === AnyType["Null"]) ? ("null") : ((argumentType === AnyType["Error"]) ? (`"${anythingInner.toString()}"`) : ((argumentType === AnyType["Date"]) ? (temporaryMap.get("f")({ "pretty": generateTimestamp(anythingInner), "ISO8601": anythingInner.toISOString() }, { indentLevel })) : ((argumentType === AnyType["String"]) ? (`"${anythingInner}"`) : (((argumentType === AnyType["Numeric"]) || (argumentType === AnyType["Boolean"])) ? (`${anythingInner}`) : ((argumentType === AnyType["Object"]) ? ((Object.keys(anythingInner).length === 0) ? ("{}") : ((Object.keys(anythingInner).includes("ISO8601") === true) ? (`${((pretty === true) ? (`{\n${indent.repeat(indentLevel + 1)}`) : "{ ")}${(`"pretty": "${anythingInner["pretty"]}"${(pretty === true) ? (`,\n${indent.repeat(indentLevel + 1)}`) : ", "}"ISO8601": "${anythingInner["ISO8601"]}"${(pretty === true) ? "," : ""}`)}${((pretty === true) ? (`\n${indent.repeat(indentLevel)}}`) : " }")}`) : (`${((pretty === true) ? (`{\n${indent.repeat(indentLevel + 1)}`) : "{ ")}${Object.entries(anythingInner).reduce((currentResult, [objectKey, objectValue], objectEntryIndex) => (`${currentResult}"${objectKey}": ${temporaryMap.get("f")(objectValue, { indentLevel: (indentLevel + 1) })}${((objectEntryIndex + 1) !== Object.keys(anythingInner).length) ? ((pretty === true) ? (`,\n${indent.repeat(indentLevel + 1)}`) : ", ") : ""}`), "")}${((pretty === true) ? (`\n${indent.repeat(indentLevel)}}`) : " }")}`))) : ((argumentType === AnyType["Array"]) ? ((anythingInner.length === 0) ? ("[]") : (`${((pretty === true) ? (`[\n${indent.repeat(indentLevel + 1)}`) : "[")}${anythingInner.reduce((currentResult, arrayItem, arrayItemIndex) => (`${currentResult}${temporaryMap.get("f")(arrayItem, { indentLevel: (indentLevel + 1) })}${((arrayItemIndex + 1) !== anythingInner.length) ? ((pretty === true) ? (`,\n${indent.repeat(indentLevel + 1)}`) : ", ") : ""}`), "")}${((pretty === true) ? (`\n${indent.repeat(indentLevel)}]`) : "]")}`)) : ((argumentType === AnyType["Function"]) ? (`"${anythingInner.toString()}"`) : (`${anythingInner}`)))))))))))))), (temporaryMap.get("f")(anything))].at(-1)))(new Map()); /* custom JSON.stringify() function jsonStringifyV5 */
 const randomIntInclusive = (lowerBound, upperBound) => (Math.floor(Math.random() * (upperBound - lowerBound + 1)) + lowerBound);
-const rangeInclusive = (startNumber, stopNumber) => Array.from({ length: (Math.abs(stopNumber - startNumber) + 1) }, (_, i) => ((startNumber < stopNumber) ? (startNumber + i) : ((startNumber > stopNumber) ? (startNumber - i) : (startNumber || stopNumber))));
 const removeDuplicateItem = (anyArray, callbackFunction = ((anyArrayItem) => anyArrayItem)) => (anyArray.reduce(([uniqueKeyMap, uniqueArray], anyArrayItem) => ((newUniqueKeyString) => ((uniqueKeyMap.get(newUniqueKeyString) !== undefined) ? [uniqueKeyMap, uniqueArray] : ([(uniqueKeyMap.set(newUniqueKeyString, anyArrayItem)), (uniqueArray.push(anyArrayItem)), ([uniqueKeyMap, uniqueArray])].at(-1))))(callbackFunction(anyArrayItem)), [new Map(), []]).at(-1)); /* removeDuplicateItemV2 */
-
-const htmlTemplateStringToHtmlElement = (htmlTemplateString) => {
-    const templateElement = document.createElement("template");
-    templateElement.innerHTML = htmlTemplateString;
-    return templateElement.content.firstElementChild;
-};
-
-const stringToRgbHexColor = (anyString) => {
-    let numericHash = 0;
-
-    /* eslint-disable no-bitwise */
-    for (let i = 0; (i < anyString.length); i += 1) {
-        numericHash = (anyString.charCodeAt(i) + ((numericHash << 5) - numericHash));
+const rangeInclusive = function* (startNumber, stopNumber) {
+    const stepNumber = ((startNumber < stopNumber) ? 1 : (startNumber > stopNumber) ? -1 : 0);
+    if (stepNumber === 0) {
+        yield startNumber;
+        return;
     }
-
-    let rgbHexColor = "#";
-
-    for (let i = 0; (i < 3); i += 1) {
-        rgbHexColor += `00${((numericHash >> (i * 8)) & 0xff).toString(16)}`.slice(-2);
+    for (let i = startNumber; ((stepNumber > 0) ? (i <= stopNumber) : (i >= stopNumber)); i += stepNumber) {
+        yield i;
     }
-    /* eslint-enable no-bitwise */
-
-    return rgbHexColor;
 };
-
-const isStringContainHtml = (anyString) => (new DOMParser().parseFromString(anyString, "text/html").body.querySelector("*") !== null);
+const generatorExpression = function* (anyIterable, callbackFunction, filterConditionFunction = () => true) {
+    for (const anyRangeItem of anyIterable) {
+        if (filterConditionFunction(anyRangeItem) === true) {
+            yield callbackFunction(anyRangeItem);
+        }
+    }
+};
+const listComprehension = (anyIterable, callbackFunction, filterConditionFunction) => Array.from(generatorExpression(anyIterable, callbackFunction, filterConditionFunction));
+const stringToRgbHexColor = (anyString) => (Array.from(rangeInclusive(0, 2)).reduce((rgbHexColorCurrent, i) => ((`${rgbHexColorCurrent}00${(((Array.from(anyString).reduce((numericHashCurrent, characterCurrent) => (characterCurrent.charCodeAt(0) + ((numericHashCurrent << 5) - numericHashCurrent)), 0)) >> (i * 8)) & 0xff).toString(16)}`).slice(-2)), "#"));
