@@ -1,265 +1,344 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<!-- start of Google tag (gtag.js) -->
-    <!-- tagmanager.google.com -->
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LECMLYN21B"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+    <head>
+        <!-- start of Google tag (gtag.js) -->
+        <!-- tagmanager.google.com -->
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LECMLYN21B"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
 
-        gtag('config', 'G-LECMLYN21B');
-    </script>
-<!-- end of Google tag (gtag.js) -->
+            gtag('config', 'G-LECMLYN21B');
+        </script>
+        <!-- end of Google tag (gtag.js) -->
 
-<!-- start of Google Search Console Ownership verification -->
-    <!-- search.google.com * search-console/ownership -->
-    <meta name="google-site-verification" content="UqB5vtnZNIl-hvyiqwM0PDgX772rcbWWjt0g9onB_BQ" />
-    <meta name="robots" content="index, follow">
-    <meta name="googlebot" content="notranslate">
-    <meta name="google" content="nopagereadaloud">
-<!-- end of Google Search Console Ownership verification -->
+        <!-- start of Google Search Console Ownership verification -->
+        <!-- search.google.com * search-console/ownership -->
+        <meta name="google-site-verification" content="UqB5vtnZNIl-hvyiqwM0PDgX772rcbWWjt0g9onB_BQ" />
+        <meta name="robots" content="index, follow" />
+        <meta name="googlebot" content="notranslate" />
+        <meta name="google" content="nopagereadaloud" />
+        <!-- end of Google Search Console Ownership verification -->
 
-<!-- start of Google AdSense -->
-    <!-- adsense.google.com/adsense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5944204031363480"
-    crossorigin="anonymous"></script>
-<!-- end of Google AdSense -->
+        <!-- start of Google AdSense -->
+        <!-- adsense.google.com/adsense -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5944204031363480" crossorigin="anonymous"></script>
+        <!-- end of Google AdSense -->
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Kalkulator Pengeluaran by Willy Horizont">
-    <meta name="keywords" content="Kalkulator Pengeluaran by Willy Horizont">
-    <meta name="author" content="Willy Horizont">
-    <meta name="theme-color" content="#000000">
-    <link rel="icon" type="image/x-icon" href="../../favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="../../android-chrome-192x192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="../../android-chrome-512x512.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png">
-    <link rel="stylesheet" href="../../style.css">
-    <title>Kalkulator Pengeluaran | Portfolio | Willy Horizont</title>
-    <script src="../../utils.js"></script>
-    <script src="../../utils-web.js"></script>
-</head>
-<body>
-    <header>
-        <nav id="navbar" class="navbar">
-            <a href="/" class="app-logo"><img src="../../android-chrome-192x192.png" alt="Willy Horizont's logo" width="48px" height="48px">
-                <!-- <span>Willy Horizont</span> -->
-            </a>
-            <ul>
-                <li class="navbar-item"><a href="/">Home</a></li>
-                <li class="navbar-item-selected"><a href="/portfolio">Portfolio</a></li>
-                <li class="navbar-item"><a href="/cv">CV</a></li>
-                <li class="navbar-item"><a href="/links">Links</a></li>
-                <li class="navbar-item"><a href="/about">About</a></li>
-                <li class="navbar-item"><a href="/support">Support</a></li>
-                <li class="navbar-item"><a href="/contact">Contact</a></li>
-                <li class="navbar-item navbar-menu-close" onclick="toggleMenu()">✖</li>
-            </ul>
-            <span id="navbar-hamburger-menu" class="navbar-hamburger-menu" onclick="toggleMenu()">&#9776;</span>
-        </nav>
-    </header>
-    <main>
-        <div class="portfolio-expenses-calculator" style="padding: 8px;">
-            <div class="portfolio-expenses-calculator-container">
-                <h1 style="text-align: center;">Kalkulator Pengeluaran</h1>
-                <!-- <p style="text-align: center; font-size: 1em;">Type whatever you spent that money on, separate 'em with a comma, and then hit "Enter" key - or just hit "Enter" key after each one.</p> -->
-                <!-- <p style="text-align: center; font-size: 1em;">Ketik untuk apa saja uangnya dihabiskan, pisahkan dengan koma, lalu tekan "Enter" pada keyboard - atau langsung tekan tombol "Enter" setelah selesai mengetik satu.</p> -->
-                <!-- 
-                <div style="display: flex; flex-direction: column; padding: 4px 0px; row-gap: 8px;">
-                    <p style="text-align: center; font-size: 1em;">pada kolom kiri, agar angka mudah dibaca bisa pisahkan angka dengan underscore atau titik. contoh 10_000 atau 14.000</p>
-                    <p style="text-align: center; font-size: 1em;">pada kolom tengah, bisa pisahkan dengan koma, lalu tekan "Enter" pada keyboard - atau langsung tekan tombol "Enter" setelah selesai mengetik satu.</p>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Kalkulator Pengeluaran by Willy Horizont" />
+        <meta name="keywords" content="Kalkulator Pengeluaran by Willy Horizont" />
+        <meta name="author" content="Willy Horizont" />
+        <meta name="theme-color" content="#000000" />
+        <link rel="icon" type="image/x-icon" href="../../favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="192x192" href="../../android-chrome-192x192.png" />
+        <link rel="icon" type="image/png" sizes="512x512" href="../../android-chrome-512x512.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png" />
+        <link rel="stylesheet" href="../../style.css" />
+        <title>Kalkulator Pengeluaran | Portfolio | Willy Horizont</title>
+        <script src="../../utils.js"></script>
+        <script src="../../utils-web.js"></script>
+    </head>
+    <body>
+        <header>
+            <nav id="navbar" class="navbar">
+                <a href="/" class="app-logo"><img src="../../android-chrome-192x192.png" alt="Willy Horizont's logo" width="48px" height="48px" />
+                    <!-- <span>Willy Horizont</span> -->
+                </a>
+                <ul>
+                    <li class="navbar-item"><a href="/">Home</a></li>
+                    <li class="navbar-item-selected"><a href="/portfolio">Portfolio</a></li>
+                    <li class="navbar-item"><a href="/cv">CV</a></li>
+                    <li class="navbar-item"><a href="/links">Links</a></li>
+                    <li class="navbar-item"><a href="/about">About</a></li>
+                    <li class="navbar-item"><a href="/support">Support</a></li>
+                    <li class="navbar-item"><a href="/contact">Contact</a></li>
+                    <li class="navbar-item navbar-menu-close" onclick="toggleMenu()">✖</li>
+                </ul>
+                <span id="navbar-hamburger-menu" class="navbar-hamburger-menu" onclick="toggleMenu()">&#9776;</span>
+            </nav>
+        </header>
+        <main>
+            <div class="portfolio-expenses-calculator" style="padding: 8px;">
+                <div class="portfolio-expenses-calculator-container">
+                    <h1 style="text-align: center;">Kalkulator Pengeluaran</h1>
+                    <!-- <p style="text-align: center; font-size: 1em;">Type whatever you spent that money on, separate 'em with a comma, and then hit "Enter" key - or just hit "Enter" key after each one.</p> -->
+                    <!-- <p style="text-align: center; font-size: 1em;">Ketik untuk apa saja uangnya dihabiskan, pisahkan dengan koma, lalu tekan "Enter" pada keyboard - atau langsung tekan tombol "Enter" setelah selesai mengetik satu.</p> -->
+                    <!-- 
+                    <div style="display: flex; flex-direction: column; padding: 4px 0px; row-gap: 8px;">
+                        <p style="text-align: center; font-size: 1em;">pada kolom kiri, agar angka mudah dibaca bisa pisahkan angka dengan underscore atau titik. contoh 10_000 atau 14.000</p>
+                        <p style="text-align: center; font-size: 1em;">pada kolom tengah, bisa pisahkan dengan koma, lalu tekan "Enter" pada keyboard - atau langsung tekan tombol "Enter" setelah selesai mengetik satu.</p>
+                    </div>
+                    -->
+                    <div id="expenses-calculator-container" style="padding: 4px; width: 100%; display: flex; flex-direction: column; row-gap: 8px;"></div>
+                    <div style="padding: 4px; width: 100%; display: flex; flex-direction: column;">
+                        <button onclick="createNewExpense()" style="padding: 0.2em 0.4em; width: 1.9em; aspect-ratio: 1 / 1; background-color: #007bff; color: #ccc">+</button>
+                        <h2 style="margin-top: 8px;">Total Pengeluaran: <span id="total-expenses">0</span></h2>
+                    </div>
+                    <div style="padding: 4px; width: 100%; display: flex; flex-direction: column;">
+                        <h2 style="margin-top: 8px;">Import & Export:</h2>
+                        <textarea id="expenses-calculator-backup-restore-textarea" rows="4" cols="50" style="background-color: #000; color: #ccc; margin-top: 16px;" onblur="updateTextAreaContentToLocalStorageOnBlur(event)"></textarea>
+                        <div id="error-message-container" style="margin-top: 8px;"></div>
+                    </div>
                 </div>
-                -->
-                <div id="expenses-calculator-container" style="padding: 4px; width: 100%; display: flex; flex-direction: column; row-gap: 8px;">
-                </div>
-                <div style="padding: 4px; width: 100%; display: flex; flex-direction: column;">
-                    <button onclick="createNewExpense()" style="padding: 0.2em 0.4em; width: 1.9em; aspect-ratio: 1 / 1; background-color: #007bff; color: #ccc;">+</button>
-                    <h2 style="margin-top: 8px;">Total Pengeluaran: <span id="total-expenses">0</span></h2>
-                </div>
-                <div style="padding: 4px; width: 100%; display: flex; flex-direction: column;">
-                    <h2 style="margin-top: 8px;">Import & Export:</h2>
-                    <textarea id="expenses-calculator-backup-restore-textarea" rows="4" cols="50" style="background-color: #000; color: #ccc; margin-top: 16px;" onblur="updateTextAreaContentToLocalStorageOnBlur(event)"></textarea>
-                    <div id="error-message-container" style="margin-top: 8px;">
+                <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 16px;">
+                    <div style="max-width: 50%; display: flex; flex-direction: row; justify-content: center; align-items: center; flex-wrap: wrap; gap: 16px;">
+                        <div style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;">
+                            <a href="https://trakteer.id/p3thvx/link?open=true" target="_blank" aria-label="Trakteer">
+                                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; flex-wrap: wrap; column-gap: 8px;">
+                                    <p style="white-space: nowrap">Support me via</p>
+                                    <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                        <img src="https://trakteer.id/favicon/favicon-32x32.png" alt="Trakteer's logo" width="16px" height="16px" />
+                                        <p style="white-space: nowrap; margin-left: 4px">Trakteer</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;">
+                            <a href="https://saweria.co/p3thvx" target="_blank" aria-label="Saweria">
+                                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; flex-wrap: wrap; column-gap: 8px;">
+                                    <p style="white-space: nowrap">Support me via</p>
+                                    <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                        <img src="https://encrypted-tbn2.gstatic.com/faviconV2?url=https://saweria.co&client=VFE&size=64&type=FAVICON&fallback_opts=TYPE,SIZE,URL&nfrp=2" alt="Saweria's logo" width="16px" height="16px" />
+                                        <p style="white-space: nowrap; margin-left: 4px;">Saweria</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;">
+                            <a href="https://sociabuzz.com/p3thvx" target="_blank" aria-label="Sociabuzz">
+                                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; flex-wrap: wrap; column-gap: 8px;">
+                                    <p style="white-space: nowrap;">Support me via</p>
+                                    <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                        <img src="https://storage.sociabuzz.com/storage/img/tribe/logo.png" alt="Sociabuzz's logo" width="16px" height="16px" />
+                                        <p style="white-space: nowrap; margin-left: 4px;">Sociabuzz</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;">
+                            <a href="https://www.nihbuatjajan.com/p3thvx" target="_blank" aria-label="Nih Buat Jajan">
+                                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; flex-wrap: wrap; column-gap: 8px;">
+                                    <p style="white-space: nowrap;">Support me via</p>
+                                    <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxp6o2dSrvX4XsYqykH8l5-APqtOuniis61Q&s" alt="Nih Buat Jajan's logo" width="16px" height="16px" />
+                                        <p style="white-space: nowrap; margin-left: 4px;">Nih Buat Jajan</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;">
+                            <a href="https://nyawer.co/p3thvx" target="_blank" aria-label="Nyawer">
+                                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; flex-wrap: wrap; column-gap: 8px;">
+                                    <p style="white-space: nowrap;">Support me via</p>
+                                    <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                        <img src="https://nyawer.co/favicon_io/favicon.ico" alt="Nyawer's logo" width="16px" height="16px" />
+                                        <p style="white-space: nowrap; margin-left: 4px;">Nyawer</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;">
+                            <a href="https://karyakarsa.com/p3thvx/support" target="_blank" aria-label="Karyakarsa">
+                                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; flex-wrap: wrap; column-gap: 8px;">
+                                    <p style="white-space: nowrap;">Support me via</p>
+                                    <div style="display: flex; flex-direction: row; align-items: center; justify-content: center">
+                                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAABEklEQVR4Ae3WgQbCQBwG8CWlF5hQMECGnqAABQUphgqIAlYAAj1B1CPEAgoIgukZ9gIVgKBRJf27jwZSV9d1yD4+wza/3d2O04p2SWnVgiFItc6MdfJhZ1RppURB+rjVdo9K9agakIPJBM/Agvd+De6DkckC+Vi5EeNiEsAzH5MJ8qdRHsj5QeSC/XTmqmlaVg24XNF4NKJIPH5iaPJ3YLNLwOhyIQQoAz2gksFHLIht25jaKVCp4HG+eMAQ3/c5qAA4zBVos17Ts+CeZVkHBg5YE1+DhmG8BBHP8wK0owREXNcl0zR3DM1/DWIEWK9XxRo7jkN4HqgwiP2m6/r2nWKEuN63S0IIxNcKNvm/p7YQvAHhLWgqT/E0/AAAAABJRU5ErkJggg==" alt="Karyakarsa's logo" width="16px" height="16px" />
+                                        <p style="white-space: nowrap; margin-left: 4px;">Karyakarsa</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 16px;">
-                <div style="max-width: 50%; display: flex; flex-direction: row; justify-content: center; align-items: center; flex-wrap: wrap; gap: 16px;">
-                    <div style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;">
-                        <a href="https://trakteer.id/p3thvx/link?open=true" target="_blank" aria-label="Trakteer">
-                            <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; flex-wrap: wrap; column-gap: 8px;">
-                                <p style="white-space: nowrap;">Support me via</p>
-                                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
-                                    <img src="https://trakteer.id/favicon/favicon-32x32.png" alt="Trakteer's logo" width="16px" height="16px">
-                                    <p style="white-space: nowrap; margin-left: 4px;">Trakteer</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;">
-                        <a href="https://saweria.co/p3thvx" target="_blank" aria-label="Saweria">
-                            <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; flex-wrap: wrap; column-gap: 8px;">
-                                <p style="white-space: nowrap;">Support me via</p>
-                                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
-                                    <img src="https://encrypted-tbn2.gstatic.com/faviconV2?url=https://saweria.co&client=VFE&size=64&type=FAVICON&fallback_opts=TYPE,SIZE,URL&nfrp=2" alt="Saweria's logo" width="16px" height="16px">
-                                    <p style="white-space: nowrap; margin-left: 4px;">Saweria</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;">
-                        <a href="https://sociabuzz.com/p3thvx" target="_blank" aria-label="Sociabuzz">
-                            <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; flex-wrap: wrap; column-gap: 8px;">
-                                <p style="white-space: nowrap;">Support me via</p>
-                                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
-                                    <img src="https://storage.sociabuzz.com/storage/img/tribe/logo.png" alt="Sociabuzz's logo" width="16px" height="16px">
-                                    <p style="white-space: nowrap; margin-left: 4px;">Sociabuzz</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;">
-                        <a href="https://www.nihbuatjajan.com/p3thvx" target="_blank" aria-label="Nih Buat Jajan">
-                            <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; flex-wrap: wrap; column-gap: 8px;">
-                                <p style="white-space: nowrap;">Support me via</p>
-                                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxp6o2dSrvX4XsYqykH8l5-APqtOuniis61Q&s" alt="Nih Buat Jajan's logo" width="16px" height="16px">
-                                    <p style="white-space: nowrap; margin-left: 4px;">Nih Buat Jajan</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;">
-                        <a href="https://nyawer.co/p3thvx" target="_blank" aria-label="Nyawer">
-                            <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; flex-wrap: wrap; column-gap: 8px;">
-                                <p style="white-space: nowrap;">Support me via</p>
-                                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
-                                    <img src="https://nyawer.co/favicon_io/favicon.ico" alt="Nyawer's logo" width="16px" height="16px">
-                                    <p style="white-space: nowrap; margin-left: 4px;">Nyawer</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;">
-                        <a href="https://karyakarsa.com/p3thvx/support" target="_blank" aria-label="Karyakarsa">
-                            <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; flex-wrap: wrap; column-gap: 8px;">
-                                <p style="white-space: nowrap;">Support me via</p>
-                                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
-                                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAABEklEQVR4Ae3WgQbCQBwG8CWlF5hQMECGnqAABQUphgqIAlYAAj1B1CPEAgoIgukZ9gIVgKBRJf27jwZSV9d1yD4+wza/3d2O04p2SWnVgiFItc6MdfJhZ1RppURB+rjVdo9K9agakIPJBM/Agvd+De6DkckC+Vi5EeNiEsAzH5MJ8qdRHsj5QeSC/XTmqmlaVg24XNF4NKJIPH5iaPJ3YLNLwOhyIQQoAz2gksFHLIht25jaKVCp4HG+eMAQ3/c5qAA4zBVos17Ts+CeZVkHBg5YE1+DhmG8BBHP8wK0owREXNcl0zR3DM1/DWIEWK9XxRo7jkN4HqgwiP2m6/r2nWKEuN63S0IIxNcKNvm/p7YQvAHhLWgqT/E0/AAAAABJRU5ErkJggg==" alt="Karyakarsa's logo" width="16px" height="16px">
-                                    <p style="white-space: nowrap; margin-left: 4px;">Karyakarsa</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-    <footer>
-        <p>Made with ❤️ by Willy Horizont</p>
-    </footer>
-    <script>
-        function toggleMenu() {
-            document.getElementById("navbar").classList.toggle("responsive");
-        }
+        </main>
+        <footer>
+            <p>Made with ❤️ by Willy Horizont</p>
+        </footer>
+        <script>
+            function toggleMenu() {
+                document.getElementById("navbar").classList.toggle("responsive");
+            }
 
-        const localStorageKey = "expenses";
+            const localStorageKey = "expenses";
 
-        function createHtmlElementExpenseContainer(arrayOfEntryDataset) {
-            return createHtmlElement((/*html*/`<div data-id="expense-container" style="width: 100%; padding: 8px; display: flex; flex-direction: row; border: 1px solid #fff; background-color: #091929;"></div>`), { arrayOfEntryDataset });
-        }
+            function updateTotalExpenses() {
+                const totalExpensesElement = document.getElementById("total-expenses");
+                const totalExpenses = (Array.from(document.getElementById("expenses-calculator-container").children).reduce((currentResult, htmlElementExpense) => (currentResult + (parseFloat((utils.isNumeric(htmlElementExpense.dataset["priceValue"]) === true) ? 0 : parseFloat(htmlElementExpense.dataset["priceValue"])))), 0));
+                if (utils.isNumeric(totalExpenses) === false) {
+                    totalExpensesElement.innerText = 0;
+                    return;
+                }
+                totalExpensesElement.innerText = totalExpenses.toLocaleString("id-ID");
+            }
 
-        function createHtmlElementPriceInputContainer({ arrayOfEntryProperty, arrayOfEntryDataset } = {}) {
-            return appendChildReturnParent(createHtmlElement(/*html*/`<div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;"></div>`), createHtmlElement((/*html*/`<input data-id="price-input" name="price-input" placeholder="jumlah uang" type="text" style="background-color: #000; color: #ccc; border: 1px solid #ccc; padding: 4px 8px; outline: none; max-width: 120px;" />`), { arrayOfEntryDataset, arrayOfEntryProperty, arrayOfElementConfig: [{ handlerRefName: "refElementHandlerChange", eventType: "change", elementHandler: handleElementChangePriceInput }] }));
-        }
+            function rerenderExpensesCalculator(expenseCalculatorData) {
+                const htmlElementExpenseCalculatorContainer = document.getElementById("expenses-calculator-container");
+                htmlElementExpenseCalculatorContainer.innerHTML = "";
 
-        function createHtmlElementChipInputContainer() {
-            return createHtmlElement((/*html*/`<div data-id="chip-input-container" style="cursor: text; margin-left: 8px; display: flex; flex-wrap: wrap; background-color: #000; border: 1px solid #ccc; flex: 1; padding: 0px 4px; overflow-x: scroll;"></div>`), { arrayOfElementConfig: [{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleElementClickChipInputContainer }] });
-        }
+                expenseCalculatorData.forEach(({ priceValue, priceDisplay, items }) => htmlElementExpenseCalculatorContainer.appendChild(createHtmlElementExpense({ priceValue, priceDisplay, items })));
 
-        function createHtmlElementChipContainer(arrayOfEntryDataset) {
-            return createHtmlElement((/*html*/`<div data-id="chip-container" style="margin: 8px 4px; background-color: #999; color: #222; padding: 0.2em 0.4em; border-radius: 0.2em; display: flex; align-items: center; gap: 8px; flex: 0 0 auto;"></div>`), { arrayOfEntryDataset });
-        }
-        
-        function createHtmlElementChipTextContainer(arrayOfEntryProperty) {
-            return createHtmlElement((/*html*/`<span style="white-space: nowrap;"></span>`), { arrayOfEntryProperty });
-        }
+                updateTotalExpenses();
+            }
 
-        function createHtmlElementChipRemoveButton() {
-            return appendChildReturnParent(createHtmlElement(/*html*/`<div style="display: flex; align-items: center; justify-content: center; background-color: #000; color: #ccc; width: 1.2em; aspect-ratio: 1 / 1; border-radius: 50%;"></div>`), createHtmlElement((/*html*/`<span data-id="chip-remove-button" style="cursor: pointer; font-weight: bold;">×</span>`), { arrayOfElementConfig: [{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleEventClickChipRemoveButton }] }));
-        }
+            function updateTextAreaContentToLocalStorage(event) {
+                const elementImportExportExpensesCalculatorTextarea = event.target;
+                const expensesCalculatorBackupRestoreTextareaElementValue = elementImportExportExpensesCalculatorTextarea.value;
+                try {
+                    const expenseCalculatorData = JSON.parse(expensesCalculatorBackupRestoreTextareaElementValue);
+                    localStorage.setItem(localStorageKey, JSON.stringify(expenseCalculatorData));
+                    rerenderExpensesCalculator(expenseCalculatorData);
+                } catch (anyError) {
+                    document.getElementById("error-message-container").innerHTML = (/*html*/`<p style="color: red;">Format backup-an yang di-restore tidak sesuai.</p>`);
+                }
+            }
 
-        function createHtmlElementChipInput(placeholderValue = "") {
-            return createHtmlElement((/*html*/`<input data-id="chip-input" name="chip-input" type="text" style="flex: 1 1 auto; margin: 8px 4px 8px 4px; background-color: #000; color: #ccc; padding: 8px 4px; border: none; outline: none;" />`), { arrayOfElementConfig: ([{ handlerRefName: "refEventHandlerKeyDown", eventType: "keydown", eventHandler: handleEventKeyDownChipInput }, { handlerRefName: "refEventHandlerBlur", eventType: "blur", eventHandler: handleEventBlurChipInput }]), arrayOfEntryAttribute: [["placeholder", placeholderValue]] });
-        }
+            function updateTextAreaContentFromLocalStorage(expenseCalculatorData) {
+                document.getElementById("expenses-calculator-backup-restore-textarea").value = ((expenseCalculatorData === null) ? "" : JSON.stringify(expenseCalculatorData));
+            }
 
-        function createHtmlElementExpenseRemoveButtonContainer() {
-            return appendChildReturnParent(createHtmlElement((/*html*/`<div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;"></div>`)), createHtmlElement((/*html*/`<button data-id="expense-remove-button" style="margin-left: 8px; background-color: red; color: white; border: none; padding: 0.2em 0.4em; cursor: pointer; width: 1.6em; aspect-ratio: 1 / 1;">x</button>`), { arrayOfElementConfig: [{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleElementClickExpenseRemoveButton }] }));
-        }
+            function updateLocalStorage() {
+                let expenseCalculatorData = Array.from(document.getElementById("expenses-calculator-container").children).map((expensesItemElement) => ({
+                    priceDisplay: expensesItemElement.dataset["priceDisplay"] ?? "",
+                    priceValue: parseFloat((utils.isNumeric(expensesItemElement.dataset["priceValue"]) === true) ? 0 : expensesItemElement.dataset["priceValue"]),
+                    items: expensesItemElement.dataset["items"] ?? ""
+                }));
+                expenseCalculatorData = ((expenseCalculatorData.length === 0) ? null : expenseCalculatorData);
+                localStorage.setItem(localStorageKey, JSON.stringify(expenseCalculatorData));
+                updateTextAreaContentFromLocalStorage(expenseCalculatorData);
+                document.getElementById("error-message-container").innerHTML = "";
+            }
 
-        function createHtmlElementExpenseChip(chipTextTrimmed) {
-            const htmlElementChipContainer = createHtmlElementChipContainer([["item", chipTextTrimmed]]);
-            htmlElementChipContainer.appendChild(createHtmlElementChipTextContainer([["textContent", chipTextTrimmed]]));
-            htmlElementChipContainer.appendChild(createHtmlElementChipRemoveButton());
-            return htmlElementChipContainer;
-        }
+            function loadFromLocalStorage() {
+                const expensesCalculatorSavedData = JSON.parse(localStorage.getItem(localStorageKey));
+                if (expensesCalculatorSavedData === null) return;
+                updateTextAreaContentFromLocalStorage(expensesCalculatorSavedData);
+                rerenderExpensesCalculator(expensesCalculatorSavedData);
+            }
 
-        function createHtmlElementExpense({ priceValue = "", priceDisplay = "", items = "" } = { priceValue: "", priceDisplay: "", items: "" }) {
-            const htmlElementExpenseContainer = createHtmlElementExpenseContainer([["price-value", priceValue], ["price-display", priceDisplay], ["items", items]]);
+            function updateTextAreaContentToLocalStorageOnBlur(event) {
+                if (event.target.value.trim() === "") {
+                    event.preventDefault();
+                    return;
+                }
+                updateTextAreaContentToLocalStorage(event);
+                event.preventDefault();
+            }
 
-            htmlElementExpenseContainer.appendChild(createHtmlElementPriceInputContainer({ arrayOfEntryProperty: [["value", priceDisplay]], arrayOfEntryDataset: [["price-value", priceValue], ["price-display", priceDisplay]] }));
+            function createNewExpense() {
+                const htmlElementExpenseCalculatorContainer = document.getElementById("expenses-calculator-container").appendChild(createHtmlElementExpense());
+                const htmlElementPriceInput = htmlElementExpenseCalculatorContainer.querySelectorAll("input")[0];
+                if (htmlElementPriceInput) htmlElementPriceInput.focus();
+            }
 
-            htmlElementExpenseContainer.appendChild((() => {
-                const htmlElementChipInputContainer = createHtmlElementChipInputContainer();
+            function createHtmlElementExpenseContainer(arrayOfEntryDataset) {
+                return createHtmlElement((/*html*/`<div data-id="expense-container" style="width: 100%; padding: 8px; display: flex; flex-direction: row; border: 1px solid #fff; background-color: #091929;"></div>`), { arrayOfEntryDataset });
+            }
 
-                if (items.trim()) items.split(", ").forEach((chipText) => (htmlElementChipInputContainer.appendChild(createHtmlElementExpenseChip(chipText.trim()))));
+            function createHtmlElementPriceInputContainer({ arrayOfEntryProperty, arrayOfEntryDataset } = {}) {
+                return appendChildrenReturnParent(createHtmlElement(/*html*/`<div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;"></div>`), createHtmlElement((/*html*/`<input data-id="price-input" name="price-input" placeholder="jumlah uang" type="text" style="background-color: #000; color: #ccc; border: 1px solid #ccc; padding: 4px 8px; outline: none; max-width: 120px;" />`), { arrayOfEntryDataset, arrayOfEntryProperty, arrayOfElementConfig: [{ handlerRefName: "refElementHandlerChange", eventType: "change", elementHandler: handleElementChangePriceInput }] }));
+            }
 
-                htmlElementChipInputContainer.appendChild(createHtmlElementChipInput((items.trim() === "") ? "untuk apa saja" : ""));
+            function createHtmlElementChipInputContainer() {
+                return createHtmlElement((/*html*/`<div data-id="chip-input-container" style="cursor: text; margin-left: 8px; display: flex; flex-wrap: wrap; background-color: #000; border: 1px solid #ccc; flex: 1; padding: 0px 4px; overflow-x: scroll;"></div>`), { arrayOfElementConfig: [{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleElementClickChipInputContainer }] });
+            }
 
-                return htmlElementChipInputContainer;
-            })());
+            function createHtmlElementChipContainer(arrayOfEntryDataset) {
+                return createHtmlElement((/*html*/`<div data-id="chip-container" style="margin: 8px 4px; background-color: #999; color: #222; padding: 0.2em 0.4em; border-radius: 0.2em; display: flex; align-items: center; gap: 8px; flex: 0 0 auto;"></div>`), { arrayOfEntryDataset });
+            }
+            
+            function createHtmlElementChipTextContainer(arrayOfEntryProperty) {
+                return createHtmlElement((/*html*/`<span style="white-space: nowrap;"></span>`), { arrayOfEntryProperty });
+            }
 
-            htmlElementExpenseContainer.appendChild(createHtmlElementExpenseRemoveButtonContainer());
+            function createHtmlElementChipRemoveButton() {
+                return appendChildrenReturnParent(createHtmlElement(/*html*/`<div style="display: flex; align-items: center; justify-content: center; background-color: #000; color: #ccc; width: 1.2em; aspect-ratio: 1 / 1; border-radius: 50%;"></div>`), createHtmlElement((/*html*/`<span data-id="chip-remove-button" style="cursor: pointer; font-weight: bold;">×</span>`), { arrayOfElementConfig: [{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleEventClickChipRemoveButton }] }));
+            }
 
-            return htmlElementExpenseContainer;
-        }
+            function createHtmlElementChipInput(placeholderValue = "") {
+                return createHtmlElement((/*html*/`<input data-id="chip-input" name="chip-input" type="text" style="flex: 1 1 auto; margin: 8px 4px 8px 4px; background-color: #000; color: #ccc; padding: 8px 4px; border: none; outline: none;" />`), { arrayOfElementConfig: ([{ handlerRefName: "refEventHandlerKeyDown", eventType: "keydown", eventHandler: handleEventKeyDownChipInput }, { handlerRefName: "refEventHandlerBlur", eventType: "blur", eventHandler: handleEventBlurChipInput }]), arrayOfEntryAttribute: [["placeholder", placeholderValue]] });
+            }
 
-        function changeExpenseChipInputValue(event) {
-            const htmlElementChipInput = event.target;
-            const htmlElementExpenseContainer = htmlElementChipInput.parentElement.parentElement;
-            const htmlElementChipInputValue = htmlElementChipInput.value.split(",").filter((chipText) => (chipText.trim() !== "")).join(",");
-            const htmlElementChipInputValueNew = ((htmlElementExpenseContainer.dataset["items"] === "") ? htmlElementChipInputValue : (`${htmlElementExpenseContainer.dataset["items"]}, ${htmlElementChipInputValue}`));
-            const htmlElementChipInputValueNoDuplicate = removeDuplicateItem(htmlElementChipInputValueNew.split(",").map((chipText) => (chipText.trim()))).join(", ");
+            function createHtmlElementExpenseRemoveButtonContainer() {
+                return appendChildrenReturnParent(createHtmlElement((/*html*/`<div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;"></div>`)), createHtmlElement((/*html*/`<button data-id="expense-remove-button" style="margin-left: 8px; background-color: red; color: white; border: none; padding: 0.2em 0.4em; cursor: pointer; width: 1.6em; aspect-ratio: 1 / 1;">x</button>`), { arrayOfElementConfig: [{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleElementClickExpenseRemoveButton }] }));
+            }
 
-            htmlElementExpenseContainer.dataset["items"] = htmlElementChipInputValueNoDuplicate;
+            function createHtmlElementExpenseChip(chipTextTrimmed) {
+                const htmlElementChipContainer = createHtmlElementChipContainer([["item", chipTextTrimmed]]);
+                htmlElementChipContainer.appendChild(createHtmlElementChipTextContainer([["textContent", chipTextTrimmed]]));
+                htmlElementChipContainer.appendChild(createHtmlElementChipRemoveButton());
+                return htmlElementChipContainer;
+            }
 
-            const htmlElementChipInputContainer = htmlElementChipInput.parentElement;
-            htmlElementChipInputContainer.innerHTML = "";
+            function createHtmlElementExpense({ priceValue = "", priceDisplay = "", items = "" } = { priceValue: "", priceDisplay: "", items: "" }) {
+                const htmlElementExpenseContainer = createHtmlElementExpenseContainer([["price-value", priceValue], ["price-display", priceDisplay], ["items", items]]);
 
-            htmlElementChipInputValueNoDuplicate.split(",").forEach((chipText) => (htmlElementChipInputContainer.appendChild(createHtmlElementExpenseChip(chipText.trim()))));
+                htmlElementExpenseContainer.appendChild(createHtmlElementPriceInputContainer({ arrayOfEntryProperty: [["value", priceDisplay]], arrayOfEntryDataset: [["price-value", priceValue], ["price-display", priceDisplay]] }));
 
-            htmlElementChipInput.value = "";
-            htmlElementChipInput.removeEventListener("keydown", htmlElementChipInput.refEventHandlerKeyDown);
-            htmlElementChipInput.removeEventListener("blur", htmlElementChipInput.refEventHandlerBlur);
-            htmlElementChipInput.remove();
+                htmlElementExpenseContainer.appendChild((() => {
+                    const htmlElementChipInputContainer = createHtmlElementChipInputContainer();
 
-            const htmlElementChipInputNew = createHtmlElementChipInput();
+                    if (items.trim()) items.split(", ").forEach((chipText) => (htmlElementChipInputContainer.appendChild(createHtmlElementExpenseChip(chipText.trim()))));
 
-            htmlElementChipInputContainer.appendChild(htmlElementChipInputNew);
+                    htmlElementChipInputContainer.appendChild(createHtmlElementChipInput((items.trim() === "") ? "untuk apa saja" : ""));
 
-            saveToLocalStorage();
+                    return htmlElementChipInputContainer;
+                })());
 
-            return htmlElementChipInputNew;
-        }
+                htmlElementExpenseContainer.appendChild(createHtmlElementExpenseRemoveButtonContainer());
 
-        function handleEventKeyDownChipInput(event) {
-            if (event.key === "Enter") {
+                return htmlElementExpenseContainer;
+            }
+
+            function changeExpenseChipInputValue(event) {
+                const htmlElementChipInput = event.target;
+                const htmlElementExpenseContainer = htmlElementChipInput.parentElement.parentElement;
+                const htmlElementChipInputValue = htmlElementChipInput.value.split(",").filter((chipText) => (chipText.trim() !== "")).join(",");
+                const htmlElementChipInputValueNew = ((htmlElementExpenseContainer.dataset["items"] === "") ? htmlElementChipInputValue : (`${htmlElementExpenseContainer.dataset["items"]}, ${htmlElementChipInputValue}`));
+                const htmlElementChipInputValueNoDuplicate = utils.removeDuplicateItem(htmlElementChipInputValueNew.split(",").map((chipText) => (chipText.trim()))).join(", ");
+
+                htmlElementExpenseContainer.dataset["items"] = htmlElementChipInputValueNoDuplicate;
+
+                const htmlElementChipInputContainer = htmlElementChipInput.parentElement;
+                htmlElementChipInputContainer.innerHTML = "";
+
+                htmlElementChipInputValueNoDuplicate.split(",").forEach((chipText) => (htmlElementChipInputContainer.appendChild(createHtmlElementExpenseChip(chipText.trim()))));
+
+                htmlElementChipInput.value = "";
+                htmlElementChipInput.removeEventListener("keydown", htmlElementChipInput.refEventHandlerKeyDown);
+                htmlElementChipInput.removeEventListener("blur", htmlElementChipInput.refEventHandlerBlur);
+                htmlElementChipInput.remove();
+
+                const htmlElementChipInputNew = createHtmlElementChipInput();
+
+                htmlElementChipInputContainer.appendChild(htmlElementChipInputNew);
+
+                updateLocalStorage();
+
+                return htmlElementChipInputNew;
+            }
+
+            function handleEventKeyDownChipInput(event) {
+                if (event.key === "Enter") {
+                    if (event.target.value.trim() === "") {
+                        event.preventDefault();
+                        return;
+                    }
+                    const htmlElementInputChipNew = changeExpenseChipInputValue(event);
+                    htmlElementInputChipNew.focus();
+                    event.preventDefault();
+                }
+            }
+
+            function handleEventBlurChipInput(event) {
                 if (event.target.value.trim() === "") {
                     event.preventDefault();
                     return;
@@ -268,133 +347,53 @@
                 htmlElementInputChipNew.focus();
                 event.preventDefault();
             }
-        }
 
-        function handleEventBlurChipInput(event) {
-            if (event.target.value.trim() === "") {
-                event.preventDefault();
-                return;
+            function handleElementClickChipInputContainer(htmlElementChipInputContainer) {
+                return function(event) {
+                    const htmlElementChipInput = htmlElementChipInputContainer.querySelector("input");
+                    htmlElementChipInput.focus();
+                }
             }
-            const htmlElementInputChipNew = changeExpenseChipInputValue(event);
-            htmlElementInputChipNew.focus();
-            event.preventDefault();
-        }
 
-        function handleElementClickChipInputContainer(htmlElementChipInputContainer) {
-            return function (event) {
-                const htmlElementChipInput = htmlElementChipInputContainer.querySelector("input");
-                htmlElementChipInput.focus();
+            function handleEventClickChipRemoveButton(htmlElementChipRemoveButton) {
+                return function(event) {
+                    const htmlElementExpenseContainer = htmlElementChipRemoveButton.parentElement.parentElement.parentElement.parentElement;
+                    const htmlElementChipContainer = htmlElementChipRemoveButton.parentElement.parentElement;
+                    const chipTextNew = htmlElementExpenseContainer.dataset["items"].split(",").filter((chipText) => (chipText.trim() !== htmlElementChipContainer.dataset["item"])).join(",");
+                    htmlElementExpenseContainer.dataset["items"] = chipTextNew;
+                    htmlElementChipContainer.nextElementSibling.placeholder = ((chipTextNew) ? "untuk apa saja" : "");
+                    htmlElementChipRemoveButton.removeEventListener("click", htmlElementChipRemoveButton.refElementHandlerClick);
+                    htmlElementChipContainer.remove();
+                    updateLocalStorage();
+                }
             }
-        }
 
-        function handleEventClickChipRemoveButton(htmlElementChipRemoveButton) {
-            return function(event) {
-                const htmlElementExpenseContainer = htmlElementChipRemoveButton.parentElement.parentElement.parentElement.parentElement;
-                const htmlElementChipContainer = htmlElementChipRemoveButton.parentElement.parentElement;
-                const chipTextArrayNew = htmlElementExpenseContainer.dataset["items"].split(",").filter((chipText) => (chipText.trim() !== htmlElementChipContainer.dataset["item"]));
-                htmlElementExpenseContainer.dataset["items"] = chipTextArrayNew.join(",");
-                htmlElementChipContainer.nextElementSibling.placeholder = ((chipTextArrayNew.length === 0) ? "untuk apa saja" : "");
-                htmlElementChipRemoveButton.removeEventListener("click", htmlElementChipRemoveButton.refElementHandlerClick);
-                htmlElementChipContainer.remove();
-                saveToLocalStorage();
+            function handleElementChangePriceInput(htmlElementPriceInput) {
+                return function(event) {
+                    const htmlElementPriceInputValue = htmlElementPriceInput.value.split("_").join("").split(".").join("");
+                    const htmlElementExpenseContainer = htmlElementPriceInput.parentElement.parentElement;
+                    htmlElementExpenseContainer.setAttribute("data-price-value", String(htmlElementPriceInputValue));
+                    htmlElementExpenseContainer.setAttribute("data-price-display", String(htmlElementPriceInput.value));
+                    updateTotalExpenses();
+                    updateLocalStorage();
+                }
             }
-        }
 
-        function handleElementChangePriceInput(htmlElementPriceInput) {
-            return function(event) {
-                const htmlElementPriceInputValue = htmlElementPriceInput.value.split("_").join("").split(".").join("");
-                const htmlElementExpenseContainer = htmlElementPriceInput.parentElement.parentElement;
-                htmlElementExpenseContainer.setAttribute("data-price-value", String(htmlElementPriceInputValue));
-                htmlElementExpenseContainer.setAttribute("data-price-display", String(htmlElementPriceInput.value));
-                updateTotalExpenses();
-                saveToLocalStorage();
+            function handleElementClickExpenseRemoveButton(htmlElementExpenseRemoveButton) {
+                return function(event) {
+                    const htmlElementExpenseContainer = htmlElementExpenseRemoveButton.parentElement.parentElement;
+                    htmlElementExpenseContainer.querySelectorAll('[data-id="price-input"]').forEach((htmlElementPriceInput) => (htmlElementPriceInput.removeEventListener("change", htmlElementPriceInput.refElementHandlerChange)));
+                    htmlElementExpenseContainer.querySelectorAll('[data-id="chip-input-container"]').forEach((htmlElementChipInputContainer) => (htmlElementChipInputContainer.removeEventListener("click", htmlElementChipInputContainer.refElementHandlerClick)));
+                    htmlElementExpenseContainer.querySelectorAll('[data-id="chip-remove-button"]').forEach((htmlElementChipRemoveButton) => (htmlElementChipRemoveButton.removeEventListener("click", htmlElementChipRemoveButton.refElementHandlerClick)));
+                    htmlElementExpenseContainer.querySelectorAll('[data-id="chip-input"]').forEach((htmlElementChipInput) => ([(htmlElementChipInput.removeEventListener("keydown", htmlElementChipInput.refEventHandlerKeyDown)), (htmlElementChipInput.removeEventListener("blur", htmlElementChipInput.refEventHandlerBlur)), undefined].at(-1)));
+                    htmlElementExpenseContainer.querySelectorAll('[data-id="expense-remove-button"]').forEach((htmlElementExpenseRemoveButton) => (htmlElementExpenseRemoveButton.removeEventListener("click", htmlElementExpenseRemoveButton.refElementHandlerClick)));
+                    htmlElementExpenseContainer.remove();
+                    updateTotalExpenses();
+                    updateLocalStorage();
+                }
             }
-        }
 
-        function handleElementClickExpenseRemoveButton(htmlElementExpenseRemoveButton) {
-            return function(event) {
-                document.querySelectorAll('[data-id="price-input"]').forEach((htmlElementPriceInput) => (htmlElementPriceInput.removeEventListener("change", htmlElementPriceInput.refElementHandlerChange)));
-                document.querySelectorAll('[data-id="chip-input-container"]').forEach((htmlElementChipInputContainer) => (htmlElementChipInputContainer.removeEventListener("click", htmlElementChipInputContainer.refElementHandlerClick)));
-                document.querySelectorAll('[data-id="chip-remove-button"]').forEach((htmlElementChipRemoveButton) => (htmlElementChipRemoveButton.removeEventListener("click", htmlElementChipRemoveButton.refElementHandlerClick)));
-                document.querySelectorAll('[data-id="chip-input"]').forEach((htmlElementChipInput) => ([(htmlElementChipInput.removeEventListener("keydown", htmlElementChipInput.refEventHandlerKeyDown)), (htmlElementChipInput.removeEventListener("blur", htmlElementChipInput.refEventHandlerBlur)), undefined].at(-1)));
-                document.querySelectorAll('[data-id="expense-remove-button"]').forEach((htmlElementExpenseRemoveButton) => (htmlElementExpenseRemoveButton.removeEventListener("click", htmlElementExpenseRemoveButton.refElementHandlerClick)));
-                const htmlElementExpenseContainer = htmlElementExpenseRemoveButton.parentElement.parentElement;
-                htmlElementExpenseContainer.remove();
-                updateTotalExpenses();
-                saveToLocalStorage();
-            }
-        }
-
-        function updateTotalExpenses() {
-            const totalExpensesElement = document.getElementById("total-expenses");
-            const totalExpenses = Array.from(document.getElementById("expenses-calculator-container").children).reduce((currentResult, htmlElementExpense) => (currentResult + (parseFloat((isNumeric(htmlElementExpense.dataset["priceValue"]) === true) ? 0 : parseFloat(htmlElementExpense.dataset["priceValue"])))), 0);
-            if (isNumeric(totalExpenses) === false) {
-                totalExpensesElement.innerText = 0;
-                return;
-            }
-            totalExpensesElement.innerText = totalExpenses.toLocaleString("id-ID");
-        }
-
-        function createNewExpense() {
-            const htmlElementExpenseCalculatorContainer = document.getElementById("expenses-calculator-container").appendChild(createHtmlElementExpense());
-            const htmlElementPriceInput = htmlElementExpenseCalculatorContainer.querySelectorAll("input")[0];
-            if (htmlElementPriceInput) htmlElementPriceInput.focus();
-        }
-
-        function rerenderExpensesCalculator(expenseCalculatorData) {
-            const htmlElementExpenseCalculatorContainer = document.getElementById("expenses-calculator-container");
-            htmlElementExpenseCalculatorContainer.innerHTML = "";
-
-            expenseCalculatorData.forEach(({ priceValue, priceDisplay, items }) => htmlElementExpenseCalculatorContainer.appendChild(createHtmlElementExpense({ priceValue, priceDisplay, items })));
-
-            updateTotalExpenses();
-        }
-
-        function updateTextAreaContentToLocalStorage(event) {
-            const elementImportExportExpensesCalculatorTextarea = event.target;
-            const expensesCalculatorBackupRestoreTextareaElementValue = elementImportExportExpensesCalculatorTextarea.value;
-            try {
-                const expenseCalculatorData = JSON.parse(expensesCalculatorBackupRestoreTextareaElementValue);
-                localStorage.setItem(localStorageKey, JSON.stringify(expenseCalculatorData));
-                rerenderExpensesCalculator(expenseCalculatorData);
-            } catch (anyError) {
-                document.getElementById("error-message-container").innerHTML = (/*html*/`<p style="color: red;">Format backup-an yang di-restore tidak sesuai.</p>`);
-            }
-        }
-
-        function updateTextAreaContentFromLocalStorage(expenseCalculatorData) {
-            document.getElementById("expenses-calculator-backup-restore-textarea").value = ((expenseCalculatorData === null) ? "" : JSON.stringify(expenseCalculatorData));
-        }
-
-        function saveToLocalStorage() {
-            let expenseCalculatorData = Array.from(document.getElementById("expenses-calculator-container").children).map((expensesItemElement) => ({
-                priceDisplay: expensesItemElement.dataset["priceDisplay"] ?? "",
-                priceValue: parseFloat((isNumeric(expensesItemElement.dataset["priceValue"]) === true) ? 0 : expensesItemElement.dataset["priceValue"]),
-                items: expensesItemElement.dataset["items"] ?? ""
-            }));
-            expenseCalculatorData = ((expenseCalculatorData.length === 0) ? null : expenseCalculatorData);
-            localStorage.setItem(localStorageKey, JSON.stringify(expenseCalculatorData));
-            updateTextAreaContentFromLocalStorage(expenseCalculatorData);
-            document.getElementById("error-message-container").innerHTML = "";
-        }
-
-        function loadFromLocalStorage() {
-            const expensesCalculatorSavedData = JSON.parse(localStorage.getItem(localStorageKey));
-            if (expensesCalculatorSavedData === null) return;
-            updateTextAreaContentFromLocalStorage(expensesCalculatorSavedData);
-            rerenderExpensesCalculator(expensesCalculatorSavedData);
-        }
-
-        function updateTextAreaContentToLocalStorageOnBlur(event) {
-            if (event.target.value.trim() === "") {
-                event.preventDefault();
-                return;
-            }
-            updateTextAreaContentToLocalStorage(event);
-            event.preventDefault();
-        }
-
-        loadFromLocalStorage();
-    </script>
-</body>
+            loadFromLocalStorage();
+        </script>
+    </body>
 </html>

@@ -186,7 +186,7 @@
             return anyResult;
         };
 
-        const pickStringChunkRandomly = (anyEvenLengthString, stringChunkLength) => ((({ stringChunkIndex }) => (anyEvenLengthString.slice((stringChunkIndex * stringChunkLength), ((stringChunkIndex * stringChunkLength) + stringChunkLength))))({ stringChunkIndex: randomIntInclusive(0, ((anyEvenLengthString.length / stringChunkLength) - 1)) }));
+        const pickStringChunkRandomly = (anyEvenLengthString, stringChunkLength) => ((({ stringChunkIndex }) => (anyEvenLengthString.slice((stringChunkIndex * stringChunkLength), ((stringChunkIndex * stringChunkLength) + stringChunkLength))))({ stringChunkIndex: utils.randomIntInclusive(0, ((anyEvenLengthString.length / stringChunkLength) - 1)) }));
 
         const abcPassvvordCharacterSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
         const abcPassvvordStringSuffixLength = 33;

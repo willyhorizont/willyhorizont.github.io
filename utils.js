@@ -41,4 +41,35 @@ const generatorExpression = function* (anyIterable, callbackFunction, filterCond
     }
 };
 const listComprehension = (anyIterable, callbackFunction, filterConditionFunction) => Array.from(generatorExpression(anyIterable, callbackFunction, filterConditionFunction));
-const stringToRgbHexColor = (anyString) => (Array.from(rangeInclusive(0, 2)).reduce((rgbHexColorCurrent, i) => ((`${rgbHexColorCurrent}00${(((Array.from(anyString).reduce((numericHashCurrent, characterCurrent) => (characterCurrent.charCodeAt(0) + ((numericHashCurrent << 5) - numericHashCurrent)), 0)) >> (i * 8)) & 0xff).toString(16)}`).slice(-2)), "#"));
+const stringToRgbHexColor = (anyString) => (Array.from({ length: 3 }, (_, i) => (((Array.from(anyString).reduce((currentNumericHash, currentCharacter) => (currentCharacter.charCodeAt(0) + ((currentNumericHash << 5) - currentNumericHash)), 0)) >> (i * 8)) & 0xff).toString(16).padStart(2, "0")).reduce((rgbHexColorCurrent, rgbHexColorPartCurrent) => (`${rgbHexColorCurrent}${rgbHexColorPartCurrent}`), "#"));
+const utils = {
+    runOnce,
+    runNthTime,
+    printOnce,
+    printAndReturn,
+    formatDate,
+    extractDate,
+    prettyFormatDate,
+    datePrettier,
+    generateTimestamp,
+    AnyType,
+    isNull,
+    isUndefined,
+    isBoolean,
+    isString,
+    isNumeric,
+    isObject,
+    isArray,
+    isFunction,
+    isError,
+    isStringIso8601,
+    isDate,
+    getType,
+    jsonStringify,
+    randomIntInclusive,
+    removeDuplicateItem,
+    rangeInclusive,
+    generatorExpression,
+    listComprehension,
+    stringToRgbHexColor,
+};

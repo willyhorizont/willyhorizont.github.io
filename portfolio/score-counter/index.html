@@ -314,7 +314,7 @@
                     return currentResult;
                 }, []);
                 elementContainerScores.removeChild(elementContainerScores.lastChild);
-                elementContainerScores.innerHTML += newPlayerNames.map((playerName) => getHtmlStringPlayerScore(playerName, { playerColor: stringToRgbHexColor(playerName), playerNamePlaceholder: playerName })).join("");
+                elementContainerScores.innerHTML += newPlayerNames.map((playerName) => getHtmlStringPlayerScore(playerName, { playerColor: utils.stringToRgbHexColor(playerName), playerNamePlaceholder: playerName })).join("");
                 inputElement.value = "";
                 saveToLocalStorage();
                 return;
@@ -325,7 +325,7 @@
                 return;
             }
             inputElement.parentElement.dataset["playerName"] = inputElement.value.trim();
-            inputElement.parentElement.style.backgroundColor = stringToRgbHexColor(inputElement.value.trim());
+            inputElement.parentElement.style.backgroundColor = utils.stringToRgbHexColor(inputElement.value.trim());
             inputElement.placeholder = inputElement.value.trim();
             inputElement.value = "";
             saveToLocalStorage();
@@ -368,11 +368,11 @@
         const rerenderScoreCounter = (scoresData) => {
             const elementContainerScores = document.getElementById("scores-container");
             elementContainerScores.innerHTML = scoresData.map((playerScore) => ((arrayPlayerScores) => (getHtmlStringPlayerScore(playerScore["player_name"], {
-                playerColor: stringToRgbHexColor(playerScore["player_name"]),
+                playerColor: utils.stringToRgbHexColor(playerScore["player_name"]),
                 playerScores: playerScore["player_scores"],
                 plusButtonIndex: `${((arrayPlayerScores.length === undefined) ? 0 : (arrayPlayerScores.length - 1))}`,
                 siblings: arrayPlayerScores.map((currentPlayerScore, currentScorePlusButtonIndex) => getHtmlStringScoreInput(currentScorePlusButtonIndex, ((currentPlayerScore.trim() === "") ? "0" : currentPlayerScore))).join(""),
-                totalScores: arrayPlayerScores.reduce((currentResult, currentPlayerScore) => ((currentPlayerScoreParsed) => (currentResult + ((isNumeric(currentPlayerScoreParsed) === false) ? 0 : currentPlayerScoreParsed)))(parseInt(currentPlayerScore, 10)), 0),
+                totalScores: arrayPlayerScores.reduce((currentResult, currentPlayerScore) => ((currentPlayerScoreParsed) => (currentResult + ((utils.isNumeric(currentPlayerScoreParsed) === false) ? 0 : currentPlayerScoreParsed)))(parseInt(currentPlayerScore, 10)), 0),
                 playerNamePlaceholder: playerScore["player_name"],
             })))(playerScore["player_scores"].split(", "))).join("");
         };
@@ -389,7 +389,7 @@
             const backupRestoreScoreCounterTextareaElementValue = backupRestoreScoreCounterTextareaElement.value;
             try {
                 const scoresData = JSON.parse(backupRestoreScoreCounterTextareaElementValue);
-                const scoresDataUniquePlayerNames = removeDuplicateItem(scoresData, (anyArrayItem) => anyArrayItem["player_name"]);
+                const scoresDataUniquePlayerNames = utils.removeDuplicateItem(scoresData, (anyArrayItem) => anyArrayItem["player_name"]);
                 // console.log(backupRestoreScoreCounterTextareaElementValue);
                 // console.log(JSON.stringify(scoresData));
                 // console.log(JSON.stringify(scoresDataUniquePlayerNames));

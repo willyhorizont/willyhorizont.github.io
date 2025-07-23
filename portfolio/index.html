@@ -36,7 +36,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
     <link rel="stylesheet" href="../style.css">
     <title>Portfolio | Willy Horizont</title>
-    <script src="../../utils.js"></script>
+    <script src="../utils.js"></script>
 </head>
 <body>
     <header>
@@ -167,7 +167,7 @@ finished in only about 1 year (sep 2021 - sep 2022).
         document.getElementById("portfolio-container").innerHTML = myProjects.map((myProjectsItem) => (`<div style="width: 100%; border: 1px solid #ccc; border-radius: 8px; display: flex; flex-direction: column; overflow: hidden;">
     <a href="${myProjectsItem['href']}" target="${myProjectsItem['target']}" aria-label="${myProjectsItem['title']}">
         <div style="padding: 8px; display: flex; flex-direction: row; align-items: center; gap: 8px; background-color: #091929;">
-            <div style="min-width: 16px; min-height: 16px; border-radius: 0.5em; background-color: ${`${stringToRgbHexColor(myProjectsItem['title'])}`};"></div>
+            <div style="min-width: 16px; min-height: 16px; border-radius: 0.5em; background-color: ${`${utils.stringToRgbHexColor(myProjectsItem['title'])}`};"></div>
             <p>${myProjectsItem['title']}</p>
         </div>
         <pre style="padding: 8px; text-wrap: auto;">${myProjectsItem['body']}</pre>

@@ -289,7 +289,7 @@
             }
             elementHtmlCountainerSelectedColumn.dataset["selectedColumn"] = currentItemColumnKey;
             elementHtmlCountainerSelectedColumn.innerHTML = currentItemColumnKey;
-            elementHtmlCountainerSelectedColumn.parentElement.parentElement.style.backgroundColor = stringToRgbHexColor(currentItemColumnKey);
+            elementHtmlCountainerSelectedColumn.parentElement.parentElement.style.backgroundColor = utils.stringToRgbHexColor(currentItemColumnKey);
         };
 
         const moveSelectedColumnToLeft = () => {
@@ -357,7 +357,7 @@
                     return currentResult;
                 }, []);
                 elementContainerCompareToolItems.removeChild(elementContainerCompareToolItems.lastChild);
-                elementContainerCompareToolItems.innerHTML += newItemColumnKeys.map((itemColumnKey) => getHtmlStringItemRow(itemColumnKey, { columnColor: stringToRgbHexColor(itemColumnKey), itemColumnKeyPlaceholder: itemColumnKey })).join("");
+                elementContainerCompareToolItems.innerHTML += newItemColumnKeys.map((itemColumnKey) => getHtmlStringItemRow(itemColumnKey, { columnColor: utils.stringToRgbHexColor(itemColumnKey), itemColumnKeyPlaceholder: itemColumnKey })).join("");
                 inputElement.value = "";
                 saveToLocalStorage();
                 return;
@@ -368,7 +368,7 @@
                 return;
             }
             inputElement.parentElement.dataset["itemColumnKey"] = inputElement.value.trim();
-            inputElement.parentElement.style.backgroundColor = stringToRgbHexColor(inputElement.value.trim());
+            inputElement.parentElement.style.backgroundColor = utils.stringToRgbHexColor(inputElement.value.trim());
             inputElement.placeholder = inputElement.value.trim();
             inputElement.value = "";
             saveToLocalStorage();
@@ -413,7 +413,7 @@
             elementContainerCompareToolItems.innerHTML = compareToolItemsData.map((itemCompareTool) => {
                 const arrayItemColumnValues = itemCompareTool["item_column_values"].split(", ");
                 return getHtmlStringItemRow(itemCompareTool["item_column_key"], {
-                    columnColor: stringToRgbHexColor(itemCompareTool["item_column_key"]),
+                    columnColor: utils.stringToRgbHexColor(itemCompareTool["item_column_key"]),
                     itemColumnValues: itemCompareTool["item_column_values"],
                     plusButtonIndex: `${((arrayItemColumnValues.length === undefined) ? 0 : (arrayItemColumnValues.length - 1))}`,
                     siblings: arrayItemColumnValues.map((currentItemColumnValue, currentItemRowPlusButtonIndex) => getHtmlStringInputItemRow(currentItemRowPlusButtonIndex, ((currentItemColumnValue.trim() === "") ? "value" : currentItemColumnValue))).join(""),
@@ -433,7 +433,7 @@
             const elementImportExportTextareaElementCompareToolValue = elementImportExportTextareaElementCompareTool.value;
             try {
                 const compareToolItemsData = JSON.parse(elementImportExportTextareaElementCompareToolValue);
-                const compareToolItemsDataUniqueKey = removeDuplicateItem(compareToolItemsData, (anyArrayItem) => anyArrayItem["item_column_key"]);
+                const compareToolItemsDataUniqueKey = utils.removeDuplicateItem(compareToolItemsData, (anyArrayItem) => anyArrayItem["item_column_key"]);
                 // console.log(elementImportExportTextareaElementCompareToolValue);
                 // console.log(JSON.stringify(compareToolItemsData));
                 // console.log(JSON.stringify(compareToolItemsDataUniqueKey));
