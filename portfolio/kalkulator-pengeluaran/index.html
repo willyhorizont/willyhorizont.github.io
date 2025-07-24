@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" spellcheck="false">
     <head>
         <!-- start of Google tag (gtag.js) -->
         <!-- tagmanager.google.com -->
@@ -44,6 +44,7 @@
         <title>Kalkulator Pengeluaran | Portfolio | Willy Horizont</title>
         <script src="../../utils.js"></script>
         <script src="../../utils-web.js"></script>
+        <script src="../../component-import-export.js"></script>
     </head>
     <body>
         <header>
@@ -59,9 +60,9 @@
                     <li class="navbar-item"><a href="/about">About</a></li>
                     <li class="navbar-item"><a href="/support">Support</a></li>
                     <li class="navbar-item"><a href="/contact">Contact</a></li>
-                    <li class="navbar-item navbar-hamburger-menu-close-button" onclick="toggleMenu()">✖</li>
+                    <li class="navbar-item navbar-hamburger-menu-close-button" onclick="(() => document.getElementById('navbar').classList.toggle('responsive'))()">✖</li>
                 </ul>
-                <span id="navbar-hamburger-menu-button" class="navbar-hamburger-menu-button" onclick="toggleMenu()">&#9776;</span>
+                <span class="navbar-hamburger-menu-button" onclick="(() => document.getElementById('navbar').classList.toggle('responsive'))()">&#9776;</span>
             </nav>
         </header>
         <main>
@@ -79,13 +80,9 @@
                     <div id="expenses-calculator-container" style="padding: 4px; width: 100%; display: flex; flex-direction: column; row-gap: 8px;"></div>
                     <div style="padding: 4px; width: 100%; display: flex; flex-direction: column;">
                         <button onclick="createNewExpense()" style="padding: 0.2em 0.4em; width: 1.9em; aspect-ratio: 1 / 1; background-color: #007bff; color: #ccc">+</button>
-                        <h2 style="margin-top: 8px;">Total Pengeluaran: <span id="total-expenses">0</span></h2>
+                        <h2 style="margin-top: 8px;">Total Pengeluaran: <span id="total-expense-container">0</span></h2>
                     </div>
-                    <div style="padding: 4px; width: 100%; display: flex; flex-direction: column;">
-                        <h2 style="margin-top: 8px;">Import & Export:</h2>
-                        <textarea id="expenses-calculator-backup-restore-textarea" rows="4" cols="50" style="background-color: #000; color: #ccc; margin-top: 16px;" onblur="updateTextAreaContentToLocalStorageOnBlur(event)"></textarea>
-                        <div id="error-message-container" style="margin-top: 8px;"></div>
-                    </div>
+                    <div id="import-export"></div>
                 </div>
                 <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 16px;">
                     <div style="max-width: 50%; display: flex; flex-direction: row; justify-content: center; align-items: center; flex-wrap: wrap; gap: 16px;">
@@ -163,91 +160,32 @@
             <p>Made with ❤️ by Willy Horizont</p>
         </footer>
         <script>
-            function toggleMenu() {
-                document.getElementById("navbar").classList.toggle("responsive");
-            }
+            // start of import export
 
-            const localStorageKey = "expenses";
+            const { syncLocalStorageDataImportExportTextAreaContentWithMainContent, syncImportExportTextAreaContentMainContentWithLocalStorageData } = componentImportExport.createComponentImportExport({ localStorageKey: "expenses", rerenderMainContent, getDataFromMainContent });
 
-            function updateTotalExpenses() {
-                const totalExpensesElement = document.getElementById("total-expenses");
-                const totalExpenses = (Array.from(document.getElementById("expenses-calculator-container").children).reduce((currentResult, htmlElementExpense) => (currentResult + (parseFloat((utils.isNumeric(htmlElementExpense.dataset["priceValue"]) === true) ? 0 : parseFloat(htmlElementExpense.dataset["priceValue"])))), 0));
-                if (utils.isNumeric(totalExpenses) === false) {
-                    totalExpensesElement.textContent = 0;
-                    return;
-                }
-                totalExpensesElement.textContent = totalExpenses.toLocaleString("id-ID");
-            }
-
-            function rerenderExpensesCalculator(expenseCalculatorData) {
-                const htmlElementExpenseCalculatorContainer = document.getElementById("expenses-calculator-container");
-                htmlElementExpenseCalculatorContainer.innerHTML = "";
-
-                expenseCalculatorData.forEach(({ priceValue, priceDisplay, items }) => htmlElementExpenseCalculatorContainer.appendChild(createHtmlElementExpense({ priceValue, priceDisplay, items })));
-
-                updateTotalExpenses();
-            }
-
-            function updateTextAreaContentToLocalStorage(event) {
-                const elementImportExportExpensesCalculatorTextarea = event.target;
-                const expensesCalculatorBackupRestoreTextareaElementValue = elementImportExportExpensesCalculatorTextarea.value;
-                try {
-                    const expenseCalculatorData = JSON.parse(expensesCalculatorBackupRestoreTextareaElementValue);
-                    localStorage.setItem(localStorageKey, JSON.stringify(expenseCalculatorData));
-                    rerenderExpensesCalculator(expenseCalculatorData);
-                } catch (anyError) {
-                    document.getElementById("error-message-container").innerHTML = (/*html*/`<p style="color: red;">Format backup-an yang di-restore tidak sesuai.</p>`);
-                }
-            }
-
-            function updateTextAreaContentFromLocalStorage(expenseCalculatorData) {
-                document.getElementById("expenses-calculator-backup-restore-textarea").value = ((expenseCalculatorData === null) ? "" : JSON.stringify(expenseCalculatorData));
-            }
-
-            function updateLocalStorage() {
-                let expenseCalculatorData = Array.from(document.getElementById("expenses-calculator-container").children).map((expensesItemElement) => ({
-                    priceDisplay: expensesItemElement.dataset["priceDisplay"] ?? "",
-                    priceValue: parseFloat((utils.isNumeric(expensesItemElement.dataset["priceValue"]) === true) ? 0 : expensesItemElement.dataset["priceValue"]),
-                    items: expensesItemElement.dataset["items"] ?? ""
+            function getDataFromMainContent() {
+                let dataFromImportExportTextAreaContent = Array.from(document.getElementById("expenses-calculator-container").children).map((htmlElementExpense) => ({
+                    priceDisplay: (htmlElementExpense.dataset["priceDisplay"] ?? ""),
+                    priceValue: parseFloat((utils.isNumeric(htmlElementExpense.dataset["priceValue"]) === true) ? 0 : htmlElementExpense.dataset["priceValue"]),
+                    items: (htmlElementExpense.dataset["items"] ?? "")
                 }));
-                expenseCalculatorData = ((expenseCalculatorData.length === 0) ? null : expenseCalculatorData);
-                localStorage.setItem(localStorageKey, JSON.stringify(expenseCalculatorData));
-                updateTextAreaContentFromLocalStorage(expenseCalculatorData);
-                document.getElementById("error-message-container").innerHTML = "";
+                dataFromImportExportTextAreaContent = ((dataFromImportExportTextAreaContent.length === 0) ? null : dataFromImportExportTextAreaContent);
+                return dataFromImportExportTextAreaContent;
             }
 
-            function loadFromLocalStorage() {
-                const expensesCalculatorSavedData = JSON.parse(localStorage.getItem(localStorageKey));
-                if (expensesCalculatorSavedData === null) return;
-                updateTextAreaContentFromLocalStorage(expensesCalculatorSavedData);
-                rerenderExpensesCalculator(expensesCalculatorSavedData);
-            }
+            // end of import export
 
-            function updateTextAreaContentToLocalStorageOnBlur(event) {
-                if (event.target.value.trim() === "") {
-                    event.preventDefault();
-                    return;
-                }
-                updateTextAreaContentToLocalStorage(event);
-                event.preventDefault();
-            }
 
-            function createNewExpense() {
-                const htmlElementExpenseCalculatorContainer = document.getElementById("expenses-calculator-container").appendChild(createHtmlElementExpense());
-                const htmlElementPriceInput = htmlElementExpenseCalculatorContainer.querySelectorAll("input")[0];
-                if (htmlElementPriceInput) htmlElementPriceInput.focus();
-            }
+
+            // start of main
 
             function createHtmlElementExpenseContainer(arrayOfEntryDataset) {
                 return utilsWeb.createHtmlElement((/*html*/`<div data-id="expense-container" style="width: 100%; padding: 8px; display: flex; flex-direction: row; border: 1px solid #fff; background-color: #091929;"></div>`), { arrayOfEntryDataset });
             }
 
             function createHtmlElementPriceInputContainer({ arrayOfEntryProperty, arrayOfEntryDataset } = {}) {
-                return utilsWeb.appendChildrenReturnParent(utilsWeb.createHtmlElement(/*html*/`<div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;"></div>`), utilsWeb.createHtmlElement((/*html*/`<input data-id="price-input" name="price-input" placeholder="jumlah uang" type="text" style="background-color: #000; color: #ccc; border: 1px solid #ccc; padding: 4px 8px; outline: none; max-width: 120px;" />`), { arrayOfEntryDataset, arrayOfEntryProperty, arrayOfElementConfig: [{ handlerRefName: "refElementHandlerChange", eventType: "change", elementHandler: handleElementChangePriceInput }] }));
-            }
-
-            function createHtmlElementChipInputContainer() {
-                return utilsWeb.createHtmlElement((/*html*/`<div data-id="chip-input-container" style="cursor: text; margin-left: 8px; display: flex; flex-wrap: wrap; background-color: #000; border: 1px solid #ccc; flex: 1; padding: 0px 4px; overflow-x: scroll;"></div>`), { arrayOfElementConfig: [{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleElementClickChipInputContainer }] });
+                return utilsWeb.appendChildrenReturnParent(utilsWeb.createHtmlElement(/*html*/`<div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;"></div>`), utilsWeb.createHtmlElement((/*html*/`<input data-id="price-input" name="price-input" placeholder="jumlah uang" type="text" style="background-color: #000; color: #ccc; border: 1px solid #ccc; padding: 4px 8px; outline: none; max-width: 120px;" />`), { arrayOfEntryDataset, arrayOfEntryProperty, arrayOfElementConfig: ([{ handlerRefName: "refElementHandlerChange", eventType: "change", elementHandler: handleElementChangePriceInput }]) }));
             }
 
             function createHtmlElementChipContainer(arrayOfEntryDataset) {
@@ -259,15 +197,15 @@
             }
 
             function createHtmlElementChipRemoveButton() {
-                return utilsWeb.appendChildrenReturnParent(utilsWeb.createHtmlElement(/*html*/`<div style="display: flex; align-items: center; justify-content: center; background-color: #000; color: #ccc; width: 1.2em; aspect-ratio: 1 / 1; border-radius: 50%;"></div>`), utilsWeb.createHtmlElement((/*html*/`<span data-id="chip-remove-button" style="cursor: pointer; font-weight: bold;">×</span>`), { arrayOfElementConfig: [{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleEventClickChipRemoveButton }] }));
+                return utilsWeb.appendChildrenReturnParent(utilsWeb.createHtmlElement(/*html*/`<div style="display: flex; align-items: center; justify-content: center; background-color: #000; color: #ccc; width: 1.2em; aspect-ratio: 1 / 1; border-radius: 50%;"></div>`), utilsWeb.createHtmlElement((/*html*/`<span data-id="chip-remove-button" style="cursor: pointer; font-weight: bold;">×</span>`), { arrayOfElementConfig: ([{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleEventClickChipRemoveButton }]) }));
             }
 
             function createHtmlElementChipInput(placeholderValue = "") {
-                return utilsWeb.createHtmlElement((/*html*/`<input data-id="chip-input" name="chip-input" type="text" style="flex: 1 1 auto; margin: 8px 4px 8px 4px; background-color: #000; color: #ccc; padding: 8px 4px; border: none; outline: none;" />`), { arrayOfElementConfig: ([{ handlerRefName: "refEventHandlerKeyDown", eventType: "keydown", eventHandler: handleEventKeyDownChipInput }, { handlerRefName: "refEventHandlerBlur", eventType: "blur", eventHandler: handleEventBlurChipInput }]), arrayOfEntryAttribute: [["placeholder", placeholderValue]] });
+                return utilsWeb.createHtmlElement((/*html*/`<input data-id="chip-input" name="chip-input" type="text" style="flex: 1 1 auto; margin: 8px 4px 8px 4px; background-color: #000; color: #ccc; padding: 8px 4px; border: none; outline: none;" />`), { arrayOfElementConfig: ([{ handlerRefName: "refEventHandlerKeyDown", eventType: "keydown", eventHandler: handleEventKeyDownChipInput }, { handlerRefName: "refEventHandlerBlur", eventType: "blur", eventHandler: handleEventBlurChipInput }]), arrayOfEntryAttribute: ([["placeholder", placeholderValue]]) });
             }
 
             function createHtmlElementExpenseRemoveButtonContainer() {
-                return utilsWeb.appendChildrenReturnParent(utilsWeb.createHtmlElement((/*html*/`<div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;"></div>`)), utilsWeb.createHtmlElement((/*html*/`<button data-id="expense-remove-button" style="margin-left: 8px; background-color: red; color: white; border: none; padding: 0.2em 0.4em; cursor: pointer; width: 1.6em; aspect-ratio: 1 / 1;">x</button>`), { arrayOfElementConfig: [{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleElementClickExpenseRemoveButton }] }));
+                return utilsWeb.appendChildrenReturnParent(utilsWeb.createHtmlElement((/*html*/`<div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;"></div>`)), utilsWeb.createHtmlElement((/*html*/`<button data-id="expense-remove-button" style="margin-left: 8px; background-color: red; color: white; border: none; padding: 0.2em 0.4em; cursor: pointer; width: 1.6em; aspect-ratio: 1 / 1;">x</button>`), { arrayOfElementConfig: ([{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleElementClickExpenseRemoveButton }]) }));
             }
 
             function createHtmlElementExpenseChip(chipTextTrimmed) {
@@ -277,23 +215,18 @@
                 return htmlElementChipContainer;
             }
 
+            function createHtmlElementChipInputContainer(items) {
+                const htmlElementChipInputContainer = utilsWeb.createHtmlElement((/*html*/`<div data-id="chip-input-container" style="cursor: text; margin-left: 8px; display: flex; flex-wrap: wrap; background-color: #000; border: 1px solid #ccc; flex: 1; padding: 0px 4px; overflow-x: scroll;"></div>`), { arrayOfElementConfig: ([{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleElementClickChipInputContainer }]) });
+                if (items.trim()) items.split(", ").forEach((chipText) => (htmlElementChipInputContainer.appendChild(createHtmlElementExpenseChip(chipText.trim()))));
+                htmlElementChipInputContainer.appendChild(createHtmlElementChipInput((items.trim() === "") ? "untuk apa saja" : ""));
+                return htmlElementChipInputContainer;
+            }
+
             function createHtmlElementExpense({ priceValue = "", priceDisplay = "", items = "" } = { priceValue: "", priceDisplay: "", items: "" }) {
                 const htmlElementExpenseContainer = createHtmlElementExpenseContainer([["price-value", priceValue], ["price-display", priceDisplay], ["items", items]]);
-
-                htmlElementExpenseContainer.appendChild(createHtmlElementPriceInputContainer({ arrayOfEntryProperty: [["value", priceDisplay]], arrayOfEntryDataset: [["price-value", priceValue], ["price-display", priceDisplay]] }));
-
-                htmlElementExpenseContainer.appendChild((() => {
-                    const htmlElementChipInputContainer = createHtmlElementChipInputContainer();
-
-                    if (items.trim()) items.split(", ").forEach((chipText) => (htmlElementChipInputContainer.appendChild(createHtmlElementExpenseChip(chipText.trim()))));
-
-                    htmlElementChipInputContainer.appendChild(createHtmlElementChipInput((items.trim() === "") ? "untuk apa saja" : ""));
-
-                    return htmlElementChipInputContainer;
-                })());
-
+                htmlElementExpenseContainer.appendChild(createHtmlElementPriceInputContainer({ arrayOfEntryProperty: ([["value", priceDisplay]]), arrayOfEntryDataset: ([["price-value", priceValue], ["price-display", priceDisplay]]) }));
+                htmlElementExpenseContainer.appendChild(createHtmlElementChipInputContainer(items));
                 htmlElementExpenseContainer.appendChild(createHtmlElementExpenseRemoveButtonContainer());
-
                 return htmlElementExpenseContainer;
             }
 
@@ -320,9 +253,34 @@
 
                 htmlElementChipInputContainer.appendChild(htmlElementChipInputNew);
 
-                updateLocalStorage();
+                syncLocalStorageDataImportExportTextAreaContentWithMainContent();
 
                 return htmlElementChipInputNew;
+            }
+
+            function updateTotalExpenses() {
+                const htmlElementTotalExpenseContainer = document.getElementById("total-expense-container");
+                const totalExpenses = (Array.from(document.getElementById("expenses-calculator-container").children).reduce((currentResult, htmlElementExpense) => (currentResult + (parseFloat((utils.isNumeric(htmlElementExpense.dataset["priceValue"]) === true) ? 0 : parseFloat(htmlElementExpense.dataset["priceValue"])))), 0));
+                if (utils.isNumeric(totalExpenses) === false) {
+                    htmlElementTotalExpenseContainer.textContent = 0;
+                    return;
+                }
+                htmlElementTotalExpenseContainer.textContent = totalExpenses.toLocaleString("id-ID");
+            }
+
+            function rerenderMainContent(dataFromImportExportTextAreaContent) {
+                const htmlElementExpenseCalculatorContainer = document.getElementById("expenses-calculator-container");
+                htmlElementExpenseCalculatorContainer.innerHTML = "";
+
+                dataFromImportExportTextAreaContent.forEach(({ priceValue, priceDisplay, items }) => htmlElementExpenseCalculatorContainer.appendChild(createHtmlElementExpense({ priceValue, priceDisplay, items })));
+
+                updateTotalExpenses();
+            }
+
+            function createNewExpense() {
+                const htmlElementExpenseCalculatorContainer = document.getElementById("expenses-calculator-container").appendChild(createHtmlElementExpense());
+                const htmlElementPriceInput = htmlElementExpenseCalculatorContainer.querySelectorAll("input")[0];
+                if (htmlElementPriceInput) htmlElementPriceInput.focus();
             }
 
             function handleEventKeyDownChipInput(event) {
@@ -363,7 +321,7 @@
                     htmlElementChipContainer.nextElementSibling.placeholder = ((chipTextNew) ? "untuk apa saja" : "");
                     htmlElementChipRemoveButton.removeEventListener("click", htmlElementChipRemoveButton.refElementHandlerClick);
                     htmlElementChipContainer.remove();
-                    updateLocalStorage();
+                    syncLocalStorageDataImportExportTextAreaContentWithMainContent();
                 }
             }
 
@@ -374,7 +332,7 @@
                     htmlElementExpenseContainer.setAttribute("data-price-value", String(htmlElementPriceInputValue));
                     htmlElementExpenseContainer.setAttribute("data-price-display", String(htmlElementPriceInput.value));
                     updateTotalExpenses();
-                    updateLocalStorage();
+                    syncLocalStorageDataImportExportTextAreaContentWithMainContent();
                 }
             }
 
@@ -388,11 +346,13 @@
                     htmlElementExpenseContainer.querySelectorAll('[data-id="expense-remove-button"]').forEach((htmlElementExpenseRemoveButton) => (htmlElementExpenseRemoveButton.removeEventListener("click", htmlElementExpenseRemoveButton.refElementHandlerClick)));
                     htmlElementExpenseContainer.remove();
                     updateTotalExpenses();
-                    updateLocalStorage();
+                    syncLocalStorageDataImportExportTextAreaContentWithMainContent();
                 }
             }
 
-            loadFromLocalStorage();
+            syncImportExportTextAreaContentMainContentWithLocalStorageData();
+
+            // end of main
         </script>
     </body>
 </html>
