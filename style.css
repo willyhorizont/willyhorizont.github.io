@@ -114,7 +114,7 @@ footer {
     text-align: center;
 }
 
-.navbar-hamburger-menu {
+.navbar-hamburger-menu-button {
     min-width: 30px;
     text-align: center;
 
@@ -123,12 +123,12 @@ footer {
     cursor: pointer;
 }
 
-.navbar-item.navbar-menu-close {
+.navbar-item.navbar-hamburger-menu-close-button {
     display: none;
     cursor: pointer;
 }
 
-.navbar-item.navbar-menu-close:hover {
+.navbar-item.navbar-hamburger-menu-close-button:hover {
     opacity: 0.6;
 }
 
@@ -156,11 +156,11 @@ footer {
         row-gap: 8px;
     }
 
-    .navbar-hamburger-menu {
+    .navbar-hamburger-menu-button {
         display: inline-block;
     }
 
-    .navbar-item.navbar-menu-close {
+    .navbar-item.navbar-hamburger-menu-close-button {
         display: block;
         position: absolute;
         top: 13px;

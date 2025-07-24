@@ -10,9 +10,8 @@
             function gtag() {
                 dataLayer.push(arguments);
             }
-            gtag('js', new Date());
-
-            gtag('config', 'G-LECMLYN21B');
+            gtag("js", new Date());
+            gtag("config", "G-LECMLYN21B");
         </script>
         <!-- end of Google tag (gtag.js) -->
 
@@ -60,9 +59,9 @@
                     <li class="navbar-item"><a href="/about">About</a></li>
                     <li class="navbar-item"><a href="/support">Support</a></li>
                     <li class="navbar-item"><a href="/contact">Contact</a></li>
-                    <li class="navbar-item navbar-menu-close" onclick="toggleMenu()">✖</li>
+                    <li class="navbar-item navbar-hamburger-menu-close-button" onclick="toggleMenu()">✖</li>
                 </ul>
-                <span id="navbar-hamburger-menu" class="navbar-hamburger-menu" onclick="toggleMenu()">&#9776;</span>
+                <span id="navbar-hamburger-menu-button" class="navbar-hamburger-menu-button" onclick="toggleMenu()">&#9776;</span>
             </nav>
         </header>
         <main>
@@ -93,10 +92,10 @@
                         <div style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;">
                             <a href="https://trakteer.id/p3thvx/link?open=true" target="_blank" aria-label="Trakteer">
                                 <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; flex-wrap: wrap; column-gap: 8px;">
-                                    <p style="white-space: nowrap">Support me via</p>
+                                    <p style="white-space: nowrap;">Support me via</p>
                                     <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
                                         <img src="https://trakteer.id/favicon/favicon-32x32.png" alt="Trakteer's logo" width="16px" height="16px" />
-                                        <p style="white-space: nowrap; margin-left: 4px">Trakteer</p>
+                                        <p style="white-space: nowrap; margin-left: 4px;">Trakteer</p>
                                     </div>
                                 </div>
                             </a>
@@ -104,7 +103,7 @@
                         <div style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;">
                             <a href="https://saweria.co/p3thvx" target="_blank" aria-label="Saweria">
                                 <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; flex-wrap: wrap; column-gap: 8px;">
-                                    <p style="white-space: nowrap">Support me via</p>
+                                    <p style="white-space: nowrap;">Support me via</p>
                                     <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
                                         <img src="https://encrypted-tbn2.gstatic.com/faviconV2?url=https://saweria.co&client=VFE&size=64&type=FAVICON&fallback_opts=TYPE,SIZE,URL&nfrp=2" alt="Saweria's logo" width="16px" height="16px" />
                                         <p style="white-space: nowrap; margin-left: 4px;">Saweria</p>
@@ -149,7 +148,7 @@
                             <a href="https://karyakarsa.com/p3thvx/support" target="_blank" aria-label="Karyakarsa">
                                 <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; flex-wrap: wrap; column-gap: 8px;">
                                     <p style="white-space: nowrap;">Support me via</p>
-                                    <div style="display: flex; flex-direction: row; align-items: center; justify-content: center">
+                                    <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
                                         <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAABEklEQVR4Ae3WgQbCQBwG8CWlF5hQMECGnqAABQUphgqIAlYAAj1B1CPEAgoIgukZ9gIVgKBRJf27jwZSV9d1yD4+wza/3d2O04p2SWnVgiFItc6MdfJhZ1RppURB+rjVdo9K9agakIPJBM/Agvd+De6DkckC+Vi5EeNiEsAzH5MJ8qdRHsj5QeSC/XTmqmlaVg24XNF4NKJIPH5iaPJ3YLNLwOhyIQQoAz2gksFHLIht25jaKVCp4HG+eMAQ3/c5qAA4zBVos17Ts+CeZVkHBg5YE1+DhmG8BBHP8wK0owREXNcl0zR3DM1/DWIEWK9XxRo7jkN4HqgwiP2m6/r2nWKEuN63S0IIxNcKNvm/p7YQvAHhLWgqT/E0/AAAAABJRU5ErkJggg==" alt="Karyakarsa's logo" width="16px" height="16px" />
                                         <p style="white-space: nowrap; margin-left: 4px;">Karyakarsa</p>
                                     </div>
@@ -174,10 +173,10 @@
                 const totalExpensesElement = document.getElementById("total-expenses");
                 const totalExpenses = (Array.from(document.getElementById("expenses-calculator-container").children).reduce((currentResult, htmlElementExpense) => (currentResult + (parseFloat((utils.isNumeric(htmlElementExpense.dataset["priceValue"]) === true) ? 0 : parseFloat(htmlElementExpense.dataset["priceValue"])))), 0));
                 if (utils.isNumeric(totalExpenses) === false) {
-                    totalExpensesElement.innerText = 0;
+                    totalExpensesElement.textContent = 0;
                     return;
                 }
-                totalExpensesElement.innerText = totalExpenses.toLocaleString("id-ID");
+                totalExpensesElement.textContent = totalExpenses.toLocaleString("id-ID");
             }
 
             function rerenderExpensesCalculator(expenseCalculatorData) {
@@ -240,35 +239,35 @@
             }
 
             function createHtmlElementExpenseContainer(arrayOfEntryDataset) {
-                return createHtmlElement((/*html*/`<div data-id="expense-container" style="width: 100%; padding: 8px; display: flex; flex-direction: row; border: 1px solid #fff; background-color: #091929;"></div>`), { arrayOfEntryDataset });
+                return utilsWeb.createHtmlElement((/*html*/`<div data-id="expense-container" style="width: 100%; padding: 8px; display: flex; flex-direction: row; border: 1px solid #fff; background-color: #091929;"></div>`), { arrayOfEntryDataset });
             }
 
             function createHtmlElementPriceInputContainer({ arrayOfEntryProperty, arrayOfEntryDataset } = {}) {
-                return appendChildrenReturnParent(createHtmlElement(/*html*/`<div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;"></div>`), createHtmlElement((/*html*/`<input data-id="price-input" name="price-input" placeholder="jumlah uang" type="text" style="background-color: #000; color: #ccc; border: 1px solid #ccc; padding: 4px 8px; outline: none; max-width: 120px;" />`), { arrayOfEntryDataset, arrayOfEntryProperty, arrayOfElementConfig: [{ handlerRefName: "refElementHandlerChange", eventType: "change", elementHandler: handleElementChangePriceInput }] }));
+                return utilsWeb.appendChildrenReturnParent(utilsWeb.createHtmlElement(/*html*/`<div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;"></div>`), utilsWeb.createHtmlElement((/*html*/`<input data-id="price-input" name="price-input" placeholder="jumlah uang" type="text" style="background-color: #000; color: #ccc; border: 1px solid #ccc; padding: 4px 8px; outline: none; max-width: 120px;" />`), { arrayOfEntryDataset, arrayOfEntryProperty, arrayOfElementConfig: [{ handlerRefName: "refElementHandlerChange", eventType: "change", elementHandler: handleElementChangePriceInput }] }));
             }
 
             function createHtmlElementChipInputContainer() {
-                return createHtmlElement((/*html*/`<div data-id="chip-input-container" style="cursor: text; margin-left: 8px; display: flex; flex-wrap: wrap; background-color: #000; border: 1px solid #ccc; flex: 1; padding: 0px 4px; overflow-x: scroll;"></div>`), { arrayOfElementConfig: [{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleElementClickChipInputContainer }] });
+                return utilsWeb.createHtmlElement((/*html*/`<div data-id="chip-input-container" style="cursor: text; margin-left: 8px; display: flex; flex-wrap: wrap; background-color: #000; border: 1px solid #ccc; flex: 1; padding: 0px 4px; overflow-x: scroll;"></div>`), { arrayOfElementConfig: [{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleElementClickChipInputContainer }] });
             }
 
             function createHtmlElementChipContainer(arrayOfEntryDataset) {
-                return createHtmlElement((/*html*/`<div data-id="chip-container" style="margin: 8px 4px; background-color: #999; color: #222; padding: 0.2em 0.4em; border-radius: 0.2em; display: flex; align-items: center; gap: 8px; flex: 0 0 auto;"></div>`), { arrayOfEntryDataset });
+                return utilsWeb.createHtmlElement((/*html*/`<div data-id="chip-container" style="margin: 8px 4px; background-color: #999; color: #222; padding: 0.2em 0.4em; border-radius: 0.2em; display: flex; align-items: center; gap: 8px; flex: 0 0 auto;"></div>`), { arrayOfEntryDataset });
             }
             
             function createHtmlElementChipTextContainer(arrayOfEntryProperty) {
-                return createHtmlElement((/*html*/`<span style="white-space: nowrap;"></span>`), { arrayOfEntryProperty });
+                return utilsWeb.createHtmlElement((/*html*/`<span style="white-space: nowrap;"></span>`), { arrayOfEntryProperty });
             }
 
             function createHtmlElementChipRemoveButton() {
-                return appendChildrenReturnParent(createHtmlElement(/*html*/`<div style="display: flex; align-items: center; justify-content: center; background-color: #000; color: #ccc; width: 1.2em; aspect-ratio: 1 / 1; border-radius: 50%;"></div>`), createHtmlElement((/*html*/`<span data-id="chip-remove-button" style="cursor: pointer; font-weight: bold;">×</span>`), { arrayOfElementConfig: [{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleEventClickChipRemoveButton }] }));
+                return utilsWeb.appendChildrenReturnParent(utilsWeb.createHtmlElement(/*html*/`<div style="display: flex; align-items: center; justify-content: center; background-color: #000; color: #ccc; width: 1.2em; aspect-ratio: 1 / 1; border-radius: 50%;"></div>`), utilsWeb.createHtmlElement((/*html*/`<span data-id="chip-remove-button" style="cursor: pointer; font-weight: bold;">×</span>`), { arrayOfElementConfig: [{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleEventClickChipRemoveButton }] }));
             }
 
             function createHtmlElementChipInput(placeholderValue = "") {
-                return createHtmlElement((/*html*/`<input data-id="chip-input" name="chip-input" type="text" style="flex: 1 1 auto; margin: 8px 4px 8px 4px; background-color: #000; color: #ccc; padding: 8px 4px; border: none; outline: none;" />`), { arrayOfElementConfig: ([{ handlerRefName: "refEventHandlerKeyDown", eventType: "keydown", eventHandler: handleEventKeyDownChipInput }, { handlerRefName: "refEventHandlerBlur", eventType: "blur", eventHandler: handleEventBlurChipInput }]), arrayOfEntryAttribute: [["placeholder", placeholderValue]] });
+                return utilsWeb.createHtmlElement((/*html*/`<input data-id="chip-input" name="chip-input" type="text" style="flex: 1 1 auto; margin: 8px 4px 8px 4px; background-color: #000; color: #ccc; padding: 8px 4px; border: none; outline: none;" />`), { arrayOfElementConfig: ([{ handlerRefName: "refEventHandlerKeyDown", eventType: "keydown", eventHandler: handleEventKeyDownChipInput }, { handlerRefName: "refEventHandlerBlur", eventType: "blur", eventHandler: handleEventBlurChipInput }]), arrayOfEntryAttribute: [["placeholder", placeholderValue]] });
             }
 
             function createHtmlElementExpenseRemoveButtonContainer() {
-                return appendChildrenReturnParent(createHtmlElement((/*html*/`<div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;"></div>`)), createHtmlElement((/*html*/`<button data-id="expense-remove-button" style="margin-left: 8px; background-color: red; color: white; border: none; padding: 0.2em 0.4em; cursor: pointer; width: 1.6em; aspect-ratio: 1 / 1;">x</button>`), { arrayOfElementConfig: [{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleElementClickExpenseRemoveButton }] }));
+                return utilsWeb.appendChildrenReturnParent(utilsWeb.createHtmlElement((/*html*/`<div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;"></div>`)), utilsWeb.createHtmlElement((/*html*/`<button data-id="expense-remove-button" style="margin-left: 8px; background-color: red; color: white; border: none; padding: 0.2em 0.4em; cursor: pointer; width: 1.6em; aspect-ratio: 1 / 1;">x</button>`), { arrayOfElementConfig: [{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleElementClickExpenseRemoveButton }] }));
             }
 
             function createHtmlElementExpenseChip(chipTextTrimmed) {
