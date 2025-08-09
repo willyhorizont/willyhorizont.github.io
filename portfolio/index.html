@@ -1,17 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" spellcheck="false">
     <head>
         <!-- start of Google tag (gtag.js) -->
         <!-- tagmanager.google.com -->
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-LECMLYN21B"></script>
         <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag() {
-                dataLayer.push(arguments);
-            }
-            gtag("js", new Date());
-            gtag("config", "G-LECMLYN21B");
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-LECMLYN21B');
         </script>
         <!-- end of Google tag (gtag.js) -->
 
@@ -25,10 +24,7 @@
 
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="Willy Horizont's portfolio" />
-        <meta name="keywords" content="Willy Horizont's portfolio" />
         <meta name="author" content="Willy Horizont" />
-        <meta name="theme-color" content="#000000" />
         <link rel="icon" type="image/x-icon" href="../favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png" />
@@ -36,27 +32,30 @@
         <link rel="icon" type="image/png" sizes="512x512" href="../android-chrome-512x512.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png" />
         <link rel="stylesheet" href="../style.css" />
-        <title>Portfolio | Willy Horizont</title>
         <script src="../utils.js"></script>
+        <script src="../utils-web.js"></script>
+        <script src="../component/component-user-browser-checker.js"></script>
+
+        <meta name="description" content="Willy Horizont's portfolio" />
+        <meta name="keywords" content="Willy Horizont's portfolio" />
+        <title>Portfolio | Willy Horizont</title>
+
+        <!-- google-adsense-placeholder -->
+
+        <style>
+            .project-body {
+                color: var(--light-text-color);
+                background-color: var(--light-background-color);
+            }
+
+            html[data-theme="dark"] .project-body {
+                color: var(--dark-text-color);
+                background-color: var(--dark-background-color);
+            }
+        </style>
     </head>
     <body>
         <header>
-            <nav id="navbar" class="navbar">
-                <a href="/" class="app-logo"><img src="../android-chrome-192x192.png" alt="Willy Horizont's logo" width="48px" height="48px" />
-                    <!-- <span>Willy Horizont</span> -->
-                </a>
-                <ul>
-                    <li class="navbar-item"><a href="/">Home</a></li>
-                    <li class="navbar-item-selected"><a href="/portfolio">Portfolio</a></li>
-                    <li class="navbar-item"><a href="/cv">CV</a></li>
-                    <li class="navbar-item"><a href="/links">Links</a></li>
-                    <li class="navbar-item"><a href="/about">About</a></li>
-                    <li class="navbar-item"><a href="/support">Support</a></li>
-                    <li class="navbar-item"><a href="/contact">Contact</a></li>
-                    <li class="navbar-item navbar-hamburger-menu-close-button" onclick="toggleMenu()">✖</li>
-                </ul>
-                <span id="navbar-hamburger-menu-button" class="navbar-hamburger-menu-button" onclick="toggleMenu()">&#9776;</span>
-            </nav>
         </header>
         <main>
             <div class="my-portfolio" style="padding: 8px;">
@@ -68,16 +67,14 @@
         <footer>
             <p>Made with ❤️ by Willy Horizont</p>
         </footer>
+        <script src="../component/component-navbar.js"></script>
         <script>
-            function toggleMenu() {
-                document.getElementById("navbar").classList.toggle("responsive");
-            }
-
             const myProjects = [
                 {
                     "title": "Compare Tool (front-end web tool)",
                     "href": "/portfolio/compare-tool",
                     "target": "_self",
+                    "rel": null,
                     "body": (
 `Compare Tool (front-end web tool).
 finished at (2025/05[May]/12[Mon]|04:18[AM]/04:18) in just a couple hours.`),
@@ -86,22 +83,25 @@ finished at (2025/05[May]/12[Mon]|04:18[AM]/04:18) in just a couple hours.`),
                     "title": "Score Counter (front-end web tool)",
                     "href": "/portfolio/score-counter",
                     "target": "_self",
+                    "rel": null,
                     "body": (
 `Score Counter (front-end web tool).
 finished at (2025/05[May]/11[Sun]|10:14[PM]/22:14) in just a couple hours.`),
                 },
                 {
-                    "title": "Kalkulator Pengeluaran (front-end web tool)",
-                    "href": "/portfolio/kalkulator-pengeluaran",
+                    "title": "Expense Tracker (front-end web tool)",
+                    "href": "/portfolio/expense-tracker",
                     "target": "_self",
+                    "rel": null,
                     "body": (
-`Kalkulator Pengeluaran (front-end web tool).
+`Expense Tracker (front-end web tool).
 finished at (2025/03[Mar]/19[Wed]|11:53[PM]/23:53) in just a couple hours.`),
                 },
                 {
                     "title": "Kalender Libur Generator (front-end web tool)",
                     "href": "/portfolio/kalender-libur-generator",
                     "target": "_self",
+                    "rel": null,
                     "body": (
 `Kalender Libur Generator (front-end web tool).
 finished at (2025/01[Jan]/27[Mon]|04:20[AM]/04:20) in just a couple days.`),
@@ -110,6 +110,7 @@ finished at (2025/01[Jan]/27[Mon]|04:20[AM]/04:20) in just a couple days.`),
                     "title": "api.ludido.id (back-end RESTful API of an e-ccommerce that sells cosmetic products)",
                     "href": "https://www.api.ludido.id",
                     "target": "_blank",
+                    "rel": "noopener noreferrer",
                     "body": (
 `api.ludido.id (back-end RESTful API of an e-ccommerce that sells cosmetic products).
 working in progress (2023 - present).
@@ -123,6 +124,7 @@ working in progress (2023 - present).
                     "title": "ludido.id (front-end web app of an e-ccommerce that sells cosmetic products)",
                     "href": "https://www.ludido.id",
                     "target": "_blank",
+                    "rel": "noopener noreferrer",
                     "body": (
 `ludido.id (front-end web app of an e-ccommerce that sells cosmetic products).
 working in progress (2023 - present).
@@ -136,6 +138,7 @@ working in progress (2023 - present).
                     "title": "ATS-Mart (front-end hybrid mobile app of an e-commerce that sells herbal products)",
                     "href": "/portfolio",
                     "target": "_self",
+                    "rel": null,
                     "body": (
 `ATS-Mart (front-end hybrid mobile app of an e-commerce that sells herbal products).
 finished in only about 1 week (sep 2022 - oct 2022).
@@ -149,6 +152,7 @@ finished in only about 1 week (sep 2022 - oct 2022).
                     "title": "api.ats-mart.com (back-end RESTful API of an e-commerce that sells herbal products)",
                     "href": "https://www.api.ats-mart.com",
                     "target": "_blank",
+                    "rel": "noopener noreferrer",
                     "body": (
 `api.ats-mart.com (back-end RESTful API of an e-commerce that sells herbal products).
 finished in only about 1 year (sep 2021 - sep 2022).
@@ -162,6 +166,7 @@ finished in only about 1 year (sep 2021 - sep 2022).
                     "title": "ats-mart.com (front-end web app of an e-commerce that sells herbal products)",
                     "href": "https://www.ats-mart.com",
                     "target": "_blank",
+                    "rel": "noopener noreferrer",
                     "body": (
 `ats-mart.com (front-end web app of an e-commerce that sells herbal products).
 finished in only about 1 year (sep 2021 - sep 2022).
@@ -174,15 +179,16 @@ finished in only about 1 year (sep 2021 - sep 2022).
             ];
 
             document.getElementById("portfolio-container").innerHTML = (myProjects.map((myProjectsItem) => (/*html*/
-                    `<div style="width: 100%; border: 1px solid #ccc; border-radius: 8px; display: flex; flex-direction: column; overflow: hidden;">
-                        <a href="${myProjectsItem['href']}" target="${myProjectsItem['target']}" aria-label="${myProjectsItem['title']}">
+                    `<div style="width: 100%; border: 1px solid var(--light-border-color); border-radius: 8px; display: flex; flex-direction: column; overflow: hidden;">
+                        <a href="${myProjectsItem['href']}" target="${myProjectsItem['target']}"${myProjectsItem['rel'] ? ' rel="noopener noreferrer"' : ''} aria-label="${myProjectsItem['title']}">
                             <div style="padding: 8px; display: flex; flex-direction: row; align-items: center; gap: 8px; background-color: #091929;">
                                 <div style="min-width: 16px; min-height: 16px; border-radius: 0.5em; background-color: ${`${utils.stringToRgbHexColor(myProjectsItem['title'])}`};"></div>
-                                <p>${myProjectsItem['title']}</p>
+                                <p style="color: var(--dark-text-color);">${myProjectsItem['title']}</p>
                             </div>
-                            <pre style="padding: 8px; text-wrap: auto;">${myProjectsItem['body']}</pre>
+                            <pre class="project-body" style="padding: 8px; text-wrap: auto;">${myProjectsItem['body']}</pre>
                         </a>
-                    </div>`)).join(""));
+                    </div>`
+                    )).join(""));
         </script>
     </body>
 </html>

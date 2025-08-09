@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" spellcheck="false">
+    <head>
+        <!-- start of Google tag (gtag.js) -->
+        <!-- tagmanager.google.com -->
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LECMLYN21B"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-LECMLYN21B');
+        </script>
+        <!-- end of Google tag (gtag.js) -->
+
+        <!-- start of Google Search Console Ownership verification -->
+        <!-- search.google.com * search-console/ownership -->
+        <meta name="google-site-verification" content="UqB5vtnZNIl-hvyiqwM0PDgX772rcbWWjt0g9onB_BQ" />
+        <meta name="robots" content="index, follow" />
+        <meta name="googlebot" content="notranslate" />
+        <meta name="google" content="nopagereadaloud" />
+        <!-- end of Google Search Console Ownership verification -->
+
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="author" content="Willy Horizont" />
+        <link rel="icon" type="image/x-icon" href="../../favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="192x192" href="../../android-chrome-192x192.png" />
+        <link rel="icon" type="image/png" sizes="512x512" href="../../android-chrome-512x512.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png" />
+        <link rel="stylesheet" href="../../style.css" />
+        <script src="../../utils.js"></script>
+        <script src="../../utils-web.js"></script>
+        <script src="../../component/component-user-browser-checker.js"></script>
+
+        <meta name="description" content="Expense Tracker by Willy Horizont" />
+        <meta name="keywords" content="Expense Tracker by Willy Horizont" />
+        <title>Expense Tracker | Portfolio | Willy Horizont</title>
+
+        <!-- start of Google AdSense -->
+        <!-- adsense.google.com/adsense -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5944204031363480" crossorigin="anonymous"></script>
+        <!-- end of Google AdSense -->
+
+        <link rel="stylesheet" href="../../component/component-import-export.css" />
+        <link rel="stylesheet" href="../../component/component-link-support.css" />
+    </head>
+    <body>
+        <header>
+        </header>
+        <main>
+            <div style="padding: 8px;">
+                <h1 style="text-align: center;">Expense Tracker</h1>
+                <div id="expense-tracker-container" style="padding: 4px; width: 100%; display: flex; flex-direction: column; row-gap: 8px;"></div>
+                <div style="padding: 4px; width: 100%; display: flex; flex-direction: column;">
+                    <button onclick="createNewExpense()" style="padding: 0.2em 0.4em; width: 1.9em; aspect-ratio: 1 / 1; background-color: var(--accent-color-3); color: var(--light-border-color);">+</button>
+                    <h2>Total Expense: <span id="total-expense-container">0</span></h2>
+                </div>
+                <div id="placeholder-import-export"></div>
+                <div id="placeholder-link-support"></div>
+            </div>
+        </main>
+        <footer>
+            <p>Made with ❤️ by Willy Horizont</p>
+        </footer>
+        <script src="../../component/component-navbar.js"></script>
+
+        <script src="../../component/component-chip-input.js"></script>
+
+        <script>
+            const localStorageKey = "expenses";
+
+            function rerenderMainContent(dataFromImportExportTextAreaContent) {
+                const htmlElementExpenseTrackerContainer = document.getElementById("expense-tracker-container");
+                htmlElementExpenseTrackerContainer.innerHTML = "";
+
+                dataFromImportExportTextAreaContent.forEach(({ priceValue, priceDisplay, items }) => {
+                    htmlElementExpenseTrackerContainer.appendChild(createHtmlElementExpense({ priceValue, priceDisplay, items }));
+                });
+
+                updateTotalExpenses();
+            }
+
+            function getDataFromMainContent() {
+                const dataFromImportExportTextAreaContent = Array.from(document.getElementById("expense-tracker-container").children).map((htmlElementExpense) => ({
+                    priceDisplay: (htmlElementExpense.dataset["priceDisplay"] ?? ""),
+                    priceValue: (parseFloat((utils.isNumeric(htmlElementExpense.dataset["priceValue"]) === true) ? 0 : htmlElementExpense.dataset["priceValue"])),
+                    items: (htmlElementExpense.children[1].dataset["items"] ?? ""),
+                }));
+                return ((dataFromImportExportTextAreaContent.length === 0) ? null : dataFromImportExportTextAreaContent);
+            }
+        </script>
+        <script src="../../component/component-import-export.js"></script>
+
+        <script>
+            function createHtmlElementExpenseContainer(arrayOfEntryDataset) {
+                return utilsWeb.createHtmlElement((/*html*/`<div data-id="expense-container" style="width: 100%; padding: 8px; display: flex; flex-direction: row; border: 1px solid var(--light-border-color);"></div>`), { arrayOfEntryDataset });
+            }
+
+            function createHtmlElementPriceInputContainer({ arrayOfEntryProperty, arrayOfEntryDataset } = {}) {
+                return utilsWeb.appendChildrenReturnParent(utilsWeb.createHtmlElement(/*html*/`<div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;"></div>`),
+                    utilsWeb.createHtmlElement((/*html*/`<input data-id="price-input" class="price-input" name="price-input" placeholder="jumlah uang" type="text" />`), { arrayOfEntryDataset, arrayOfEntryProperty, arrayOfElementConfig: ([{ handlerRefName: "refElementHandlerChange", eventType: "change", elementHandler: handleElementChangePriceInput }]) }));
+            }
+
+            function createHtmlElementExpenseRemoveButtonContainer() {
+                return utilsWeb.appendChildrenReturnParent(utilsWeb.createHtmlElement((/*html*/`<div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;"></div>`)),
+                    utilsWeb.createHtmlElement((/*html*/`<button data-id="expense-remove-button" style="margin-left: 8px; background-color: var(--accent-color-4); color: white; border: none; padding: 0.2em 0.4em; cursor: pointer; width: 1.6em; aspect-ratio: 1 / 1;">x</button>`), { arrayOfElementConfig: ([{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleElementClickExpenseRemoveButton }]) }));
+            }
+
+            function createHtmlElementExpense({ priceValue = "", priceDisplay = "", items = "" } = { priceValue: "", priceDisplay: "", items: "" }) {
+                const htmlElementExpenseContainer = createHtmlElementExpenseContainer([["price-value", priceValue], ["price-display", priceDisplay]]);
+                htmlElementExpenseContainer.appendChild(createHtmlElementPriceInputContainer({ arrayOfEntryProperty: ([["value", priceDisplay]]), arrayOfEntryDataset: ([["price-value", priceValue], ["price-display", priceDisplay]]) }));
+                htmlElementExpenseContainer.appendChild(componentChipInput.createHtmlElementChipInputContainer(items));
+                htmlElementExpenseContainer.appendChild(createHtmlElementExpenseRemoveButtonContainer());
+                return htmlElementExpenseContainer;
+            }
+
+            function updateTotalExpenses() {
+                const htmlElementTotalExpenseContainer = document.getElementById("total-expense-container");
+                const totalExpenses = (Array.from(document.getElementById("expense-tracker-container").children).reduce((currentResult, htmlElementExpense) => (currentResult + (parseFloat((utils.isNumeric(htmlElementExpense.dataset["priceValue"]) === true) ? 0 : parseFloat(htmlElementExpense.dataset["priceValue"])))), 0));
+                if (utils.isNumeric(totalExpenses) === false) {
+                    htmlElementTotalExpenseContainer.textContent = "0";
+                    return;
+                }
+                htmlElementTotalExpenseContainer.textContent = totalExpenses.toLocaleString("id-ID");
+            }
+
+            function createNewExpense() {
+                const htmlElementExpenseNew = createHtmlElementExpense();
+                const htmlElementExpenseTrackerContainer = document.getElementById("expense-tracker-container");
+                htmlElementExpenseTrackerContainer.appendChild(htmlElementExpenseNew);
+                const htmlElementPriceInputNew = htmlElementExpenseNew.querySelector('[data-id="price-input"]');
+                if (htmlElementPriceInputNew) htmlElementPriceInputNew.focus();
+            }
+
+            function handleElementChangePriceInput(htmlElementPriceInput) {
+                return function(event) {
+                    const htmlElementPriceInputValue = htmlElementPriceInput.value.split("_").join("").split(".").join("");
+                    const htmlElementExpenseContainer = htmlElementPriceInput.parentElement.parentElement;
+                    htmlElementExpenseContainer.setAttribute("data-price-value", String(htmlElementPriceInputValue));
+                    htmlElementExpenseContainer.setAttribute("data-price-display", String(htmlElementPriceInput.value));
+                    updateTotalExpenses();
+                    syncLocalStorageDataImportExportTextAreaContentWithMainContent();
+                }
+            }
+
+            function handleElementClickExpenseRemoveButton(htmlElementExpenseRemoveButton) {
+                return function(event) {
+                    const htmlElementExpenseContainer = htmlElementExpenseRemoveButton.parentElement.parentElement;
+                    htmlElementExpenseContainer.querySelectorAll('[data-id="price-input"]').forEach((htmlElementPriceInput) => {
+                        htmlElementPriceInput.removeEventListener("change", htmlElementPriceInput.refElementHandlerChange);
+                    });
+                    htmlElementExpenseContainer.querySelectorAll('[data-id="chip-input-container"]').forEach((htmlElementChipInputContainer) => {
+                        htmlElementChipInputContainer.removeEventListener("click", htmlElementChipInputContainer.refElementHandlerClick);
+                    });
+                    htmlElementExpenseContainer.querySelectorAll('[data-id="chip-remove-button"]').forEach((htmlElementChipRemoveButton) => {
+                        htmlElementChipRemoveButton.removeEventListener("click", htmlElementChipRemoveButton.refElementHandlerClick);
+                    });
+                    htmlElementExpenseContainer.querySelectorAll('[data-id="chip-input"]').forEach((htmlElementChipInput) => {
+                        htmlElementChipInput.removeEventListener("keydown", htmlElementChipInput.refEventHandlerKeyDown);
+                        htmlElementChipInput.removeEventListener("blur", htmlElementChipInput.refEventHandlerBlur);
+                    });
+                    htmlElementExpenseContainer.querySelectorAll('[data-id="expense-remove-button"]').forEach((htmlElementExpenseRemoveButton) => {
+                        htmlElementExpenseRemoveButton.removeEventListener("click", htmlElementExpenseRemoveButton.refElementHandlerClick);
+                    });
+                    htmlElementExpenseContainer.remove();
+                    updateTotalExpenses();
+                    syncLocalStorageDataImportExportTextAreaContentWithMainContent();
+                }
+            }
+
+            syncImportExportTextAreaContentMainContentWithLocalStorageData();
+        </script>
+
+        <script src="../../component/component-link-support.js"></script>
+    </body>
+</html>

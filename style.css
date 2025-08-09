@@ -1,63 +1,138 @@
-* {
+/* start of setup */
+
+.test-color {
+    background-color: #552c00;
+}
+
+:root {
+    --light-border-color: #cccccc;
+    --dark-border-color: #222222;
+
+    --light-background-color: #ffffff;
+    --light-text-color: #000000;
+
+    --dark-background-color: #000000;
+    --dark-text-color: #ffffff;
+
+    --safe-background-color-1: #8a8a00;
+    --safe-text-color-1: #cccccc;
+
+    --accent-color-1: #0F7A71;
+    --accent-color-2: #091929; /* material-ui */
+    --accent-color-3: #2196f3; /* material-ui */
+    --accent-color-4: #d60000;
+    --accent-color-5: #ff6f6f;
+
+    --light-accent-color-1: #e7ffae;
+    --light-accent-color-2: #fae4ff;
+
+    --dark-accent-color-1: #213000;
+    --dark-accent-color-2: #2a0033;
+    --dark-accent-color-3: 	#2B0B0B;
+    --dark-accent-color-4: 	#1C2B1F;
+    --dark-accent-color-5: 	#191970;
+    --dark-accent-color-6: 	#2A003F;
+    --dark-accent-color-7: 	#102820;
+    --dark-accent-color-8: 	#2C1A24;
+    --dark-accent-color-9: 	#12343B;
+    --dark-accent-color-10: #643843;
+    --dark-accent-color-11: #583C42;
+    --dark-accent-color-12: #6D3B47;
+    --dark-accent-color-13: #452B3C;
+    --dark-accent-color-14: #4A2E3A;
+    --dark-accent-color-15: #0F4C5C;
+    --dark-accent-color-16: #1B1C31;
+    --dark-accent-color-17: #500000;
+}
+
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
-html,
+html[data-theme="light"] {
+    background-color: var(--light-background-color);
+    color: var(--light-text-color);
+}
+
+html[data-theme="dark"] {
+    background-color: var(--dark-background-color);
+    color: var(--dark-text-color);
+}
+
 body {
-    background: #000;
-    display: flex;
-    flex-direction: column;
-    color: #9f9f9f;
-    min-height: 100vh;
-    font-family: Arial, Helvetica, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    display: flex; flex-direction: column; min-height: 100vh; line-height: 1.6; font-family: Arial, Helvetica, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
 }
 
 a {
-    color: #999;
-    text-decoration: none;
+    text-decoration: none; transition: opacity 0.2s ease;
+    color: var(--light-text-color);
 }
 
-header,
-/* main, */
-footer {
-    padding: 8px 8px;
+html[data-theme="dark"] a {
+    color: var(--dark-text-color);
 }
+
+/*
+a:hover {
+    opacity: 0.7;
+}
+*/
+
+input,
+button,
+textarea,
+select {
+    /* font: inherit; color: inherit; background-color: transparent; */
+    border: none; outline: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* end of setup */
+
+
+
+/* start of app style */
 
 header {
-    background: #091929;
-    position: sticky;
-    top: 0px;
-    left: 0px;
-}
-
-.test-color {
-    background: #552c00;
+    padding: 8px; background-color: var(--accent-color-2); position: sticky; top: 0px; left: 0px;
 }
 
 .app-logo {
-  display: flex;
-  align-items: center;
+    display: flex; align-items: center;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .app-logo img {
-  vertical-align: middle;
+    vertical-align: middle;
 }
 
 .navbar {
-  display: flex;
-  align-items: center; /* vertically center children */
-  justify-content: space-between; /* optional: separate logo and menu */
+    display: flex; align-items: center; justify-content: space-between;
+}
+
+.navbar a {
+    color: var(--dark-text-color); text-decoration: none;
 }
 
 .navbar ul {
-    display: flex;
-    align-items: center;
     list-style: none;
-    transition: right 0.3s ease;
+    display: flex; align-items: center;
 }
 
 .navbar ul li {
@@ -65,9 +140,7 @@ header {
 }
 
 .navbar ul li a img {
-    height: 48px;
-    vertical-align: middle;
-    margin-right: 8px;
+    height: 48px; vertical-align: middle; margin-right: 8px;
 }
 
 .navbar ul li a span {
@@ -79,57 +152,165 @@ header {
     transition: opacity 0.3s ease;
 }
 
-.navbar-item {
-    margin-right: 32px;
+.navbar-hamburger-menu-button {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    min-width: 30px; text-align: center;
+
+    display: none; font-size: 32px; cursor: pointer;
 }
 
-.navbar-item a {
+.navbar-hamburger-menu-button:hover {
+    opacity: 0.7;
+}
+
+.navbar-menu-item {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    margin-right: 32px;
+    width: 100%;
+    text-align: left;
+}
+
+.navbar-menu-item a {
     transition: opacity 0.3s ease;
 }
 
-.navbar-item-selected a:hover {
-    opacity: 0.6;
+.navbar-menu-item a:hover {
+    color: var(--light-accent-color-1);
 }
 
-.navbar-item a:hover {
-    opacity: 0.6;
+.navbar-menu-item.navbar-hamburger-menu-close-button {
+    display: none;
 }
 
-.navbar-item-selected {
-    margin-right: 32px;
+.navbar-menu-item.navbar-menu-item-selected a {
+    color: var(--accent-color-1);
 }
 
-.navbar-item-selected a {
-    color: #0F7A71;
+.navbar-menu-item.navbar-menu-item-selected a:hover {
+    color: var(--light-accent-color-1);
+}
+
+.toggle-theme-button-container {
+    cursor: pointer;
+}
+
+.toggle-theme-button-container:hover {
+    opacity: 0.7;
+}
+
+.toggle-theme-button {
+    background: none; border: 1px solid #fff; border-radius: 50%; font-size: 0.75em; cursor: pointer; padding-left: 0.02em; aspect-ratio: 1/1;
+}
+
+.toggle-theme-button:hover {
+    opacity: 0.7;
 }
 
 main {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    /* row-gap: 16px; */
+}
+
+h1 {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.chip-input {
+    flex: 1 1 auto; margin: 8px 4px 8px 4px; padding: 8px 4px; border: none; outline: none;
+    background-color: var(--light-background-color); color: var(--light-text-color);
+}
+
+html[data-theme="dark"] .chip-input {
+    background-color: var(--dark-background-color); color: var(--dark-text-color);
+}
+
+.chip-container {
+    margin: 8px 4px; padding: 0.2em 0.4em; border-radius: 0.2em; display: flex; align-items: center; gap: 8px; flex: 0 0 auto;
+    border: 1px solid var(--light-border-color); color: var(--light-text-color); background-color: #ffdddd;
+}
+
+.chip-remove-button-container {
+    cursor: text; margin-left: 8px; display: flex; flex-wrap: wrap; flex: 1; padding: 0px 4px; overflow-x: auto; border: 1px solid var(--light-border-color);
+    background-color: var(--light-background-color);
+}
+
+html[data-theme="dark"] .chip-remove-button-container {
+    background-color: var(--dark-background-color);
+}
+
+.price-input {
+    border: 1px solid var(--light-border-color); padding: 4px 8px; outline: none; max-width: 120px;
+    background-color: var(--light-background-color); color: var(--light-text-color);
+}
+
+html[data-theme="dark"] .price-input {
+    background-color: var(--dark-background-color); color: var(--dark-text-color);
 }
 
 footer {
-    text-align: center;
-}
-
-.navbar-hamburger-menu-button {
-    min-width: 30px;
+    padding: 8px;
     text-align: center;
 
-    display: none;
-    font-size: 32px;
-    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
-.navbar-item.navbar-hamburger-menu-close-button {
-    display: none;
-    cursor: pointer;
-}
+@media screen and (max-width: 768px) {
+    .navbar ul {
+        box-shadow: -2px 0 4px rgba(0, 0, 0, 0.5); text-align: right; background-color: var(--accent-color-2); width: 60%; padding-top: 64px; max-width: 200px; position: fixed; top: 0; right: -100%; z-index: 1000; flex-direction: column; align-items: flex-start;
+    }
 
-.navbar-item.navbar-hamburger-menu-close-button:hover {
-    opacity: 0.6;
+    .navbar.navbar-menu-small-screen {
+        align-items: center;
+    }
+
+    .navbar.navbar-menu-small-screen ul {
+        display: flex;
+        right: 0;
+    }
+
+    .navbar-hamburger-menu-button {
+        display: inline-block; color: var(--dark-text-color);
+    }
+
+    .navbar-menu-item {
+        margin-right: 0px;
+    }
+
+    .navbar-menu-item a {
+        display: block; padding: 16px;
+    }
+
+    .navbar-menu-item:hover {
+        background-color: var(--dark-background-color);
+    }
+
+    .navbar-menu-item.navbar-hamburger-menu-close-button {
+        width: auto;
+        display: block; color: var(--dark-text-color); position: absolute; top: 10px; right: 10px; font-size: 32px; cursor: pointer;
+        text-align: right;
+    }
+
+    .navbar-menu-item.navbar-hamburger-menu-close-button:hover {
+        opacity: 0.7;
+        background-color: initial;
+    }
+
+    .toggle-theme-button-container {
+        padding: 16px; text-align: left;
+    }
 }
 
 @keyframes loading-spinner {
@@ -141,75 +322,4 @@ footer {
     }
 }
 
-.home-body {
-    display: flex;
-    flex-direction: row;
-    column-gap: 8px;
-    row-gap: 0px;
-}
-
-@media screen and (max-width: 768px) {
-    .home-body {
-        display: flex;
-        flex-direction: column;
-        column-gap: 0px;
-        row-gap: 8px;
-    }
-
-    .navbar-hamburger-menu-button {
-        display: inline-block;
-    }
-
-    .navbar-item.navbar-hamburger-menu-close-button {
-        display: block;
-        position: absolute;
-        top: 13px;
-        right: 10px;
-        font-size: 32px;
-        cursor: pointer;
-    }
-
-    .navbar ul {
-        display: none;
-        text-align: right;
-
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 60%;
-        max-width: 200px;
-        background: #091929;
-        flex-direction: column;
-        align-items: flex-start;
-        padding-top: 64px;
-        z-index: 1000;
-        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-    }
-
-    .navbar-item a {
-        display: block;
-        padding: 16px;
-    }
-
-    .navbar-item-selected a {
-        display: block;
-        padding: 16px;
-    }
-
-    .navbar.responsive ul {
-        display: flex;
-        right: 0;
-    }
-
-    .navbar.responsive {
-        align-items: center;
-    }
-
-    .navbar-item {
-        margin-right: 0px;
-    }
-
-    .navbar-item-selected {
-        margin-right: 0px;
-    }
-}
+/* end of app style */

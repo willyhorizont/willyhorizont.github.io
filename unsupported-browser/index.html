@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="../style.css" />
+        <title>Unsupported Browser | Willy Horizont</title>
+
+        <script src="../utils-web.js"></script>
+    </head>
+    <body>
+        <main>
+            <div id="main-content" data-display="flex" style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; row-gap: 8px; background-color: var(--safe-background-color-1); color: var(--safe-text-color-1);">
+                <h1 style="text-align: center;">Unsupported Browser</h1>
+                <h2>⛔ Access Denied ⛔</h2>
+                <p>Please use <strong id="google-chrome-stable-version-placeholder">latest Google Chrome</strong> to have access.</p>
+                <a href="https://www.google.com/chrome/" target="_blank" rel="noopener noreferrer" style="color:blue;">Download Chrome</a>
+            </div>
+            <div id="loading-spinner"></div>
+        </main>
+        <script src="../../component/component-loading-spinner.js"></script>
+        <script>
+            (async () => {
+                try {
+                    componentLoadingSpinner.toggleLoadingSpinner(true, [document.getElementById("main-content")]);
+                    const chromiumBasedBrowserMinimumStableVersion = await utilsWeb.getChromiumBasedBrowserMinimumStableVersion();
+                    document.getElementById("google-chrome-stable-version-placeholder").textContent = (`Google Chrome version >= ${chromiumBasedBrowserMinimumStableVersion}.x.xxxx.xx`);
+                } catch (anyError) {
+                    // do nothing :p
+                } finally {
+                    componentLoadingSpinner.toggleLoadingSpinner(false, [document.getElementById("main-content")]);
+                }
+            })();
+        </script>
+    </body>
+</html>

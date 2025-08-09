@@ -1,9 +1,9 @@
+const pythonLikeSleep = (anySeconds) => new Promise((anyResolveFunction) => setTimeout(anyResolveFunction, (anySeconds * 1 * (({ secondInMiliseconds }) => secondInMiliseconds)({ secondInMiliseconds: 1_000 }))));
 const runOnce = ((keySet) => (anyStringKey = "something", callbackFunction = (() => undefined)) => (keySet.has(anyStringKey) ? undefined : ([(keySet.add(anyStringKey)), (callbackFunction())].at(-1))))(new Set()); /* runOnceV2 */
 const runNthTime = ((keyCountMap) => (({ keyString = "something", runTime = 1 } = {}, callbackFunction = (() => undefined)) => (((keyCountMap.get(keyString) ?? 0) >= runTime) ? undefined : ([(keyCountMap.set(keyString, ((keyCountMap.get(keyString) ?? 0) + 1))), (callbackFunction(runTime, keyCountMap.get(keyString)))].at(-1)))))(new Map()); /* runNthTimeV2 */
 const printOnce = ((keySet) => (anything, { key, title, formatter = ((anythingInner) => anythingInner) } = {}) => (((anyStringKey) => (keySet.has(anyStringKey) ? anything : ([(keySet.add(anyStringKey)), (console.log(`${title ? `${title}: ` : ""}${formatter(anything)}`)), anything].at(-1))))(key || title || "first")))(new Set()); /* printOnceV2 */
 const printAndReturn = (anything, { key, title, formatter = ((anythingInner) => anythingInner) } = {}) => ([(console.log(`${title ? `${title}: ` : ""}${formatter(anything)}`)), anything].at(-1));
-const formatDate = (timestamp, ...restArguments) => (new Intl.DateTimeFormat(...restArguments).format(timestamp)); /* formatDateV2 */
-const extractDate = (anything) => (((anythingType) => (((anyDate) => ((anyDate === undefined) ? undefined : (((anyDate) => ((([hourMinuteTwentyFourHourClockAllZeroPaddedJoinByColon, amPm], [zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute]) => ((([zeroPaddedHourTwelveHourClock, _]) => ([(String(anyDate.getFullYear())), (String(anyDate.getMonth() + 1).padStart(2, "0")), (formatDate(anyDate, "en-US", { month: "short" })), (String(anyDate.getDate()).padStart(2, "0")), (formatDate(anyDate, "en-US", { weekday: "short" })), zeroPaddedHourTwelveHourClock, amPm, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, (String(anyDate.getSeconds()).padStart(2, "0")), (String(anyDate.getMilliseconds()).padStart(3, "0"))]))(hourMinuteTwentyFourHourClockAllZeroPaddedJoinByColon.split(":"))))((formatDate(anyDate, "en-US", { hour: "2-digit", minute: "2-digit", hour12: true }).split(" ")), (formatDate(anyDate, "en-GB", { hour: "2-digit", minute: "2-digit", hour12: false }).split(":")))))(new Date(anything)))))((anythingType === AnyType["String"]) ? new Date(anything) : ((anythingType === AnyType["Date"]) ? anything : undefined))))(getType(anything))); /* extractDateV3 */
+const extractDate = (anything) => (((anythingType) => (((anyDate) => ((anyDate === undefined) ? undefined : (((anyDate) => ((([hourMinuteTwentyFourHourClockAllZeroPaddedJoinByColon, amPm], [zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute]) => ((([zeroPaddedHourTwelveHourClock, _]) => ([(String(anyDate.getFullYear())), (String(anyDate.getMonth() + 1).padStart(2, "0")), (new Intl.DateTimeFormat("en-US", { month: "short" }).format(anyDate)), (String(anyDate.getDate()).padStart(2, "0")), (new Intl.DateTimeFormat("en-US", { weekday: "short" }).format(anyDate)), zeroPaddedHourTwelveHourClock, amPm, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, (String(anyDate.getSeconds()).padStart(2, "0")), (String(anyDate.getMilliseconds()).padStart(3, "0"))]))(hourMinuteTwentyFourHourClockAllZeroPaddedJoinByColon.split(":"))))((new Intl.DateTimeFormat("en-US", { hour: "2-digit", minute: "2-digit", hour12: true }).format(anyDate).split(" ")), (new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false }).format(anyDate).split(":")))))(new Date(anything)))))((anythingType === AnyType["String"]) ? new Date(anything) : ((anythingType === AnyType["Date"]) ? anything : undefined))))(getType(anything))); /* extractDateV3 */
 const prettyFormatDate = (precise, fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, amPm, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit) => (`((${fullYear}//(${zeroPaddedMonth}|${monthThreeFirstLetter})//(${zeroPaddedDay}|${dayThreeFirstLetter})||(${(precise === true) ? "(" : ""}${zeroPaddedHourTwelveHourClock}:${zeroPaddedMinute}${amPm}|${zeroPaddedHourTwentyFourHourClock}:${zeroPaddedMinute})${(precise === true) ? (`:${zeroPaddedSecond}.${zeroPaddedMiliSecondThreeDigit}`) : ("")}${(precise === true) ? ")" : ""}))`); /* prettyFormatDateV2 */
 const datePrettier = (anything = new Date(), precise) => (((anythingType) => ((([fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, amPm, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit]) => (prettyFormatDate(precise, fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, amPm, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit)))((anythingType === AnyType["String"]) ? extractDate(new Date(anything).toISOString()) : ((anythingType === AnyType["Date"]) ? extractDate(anything.toISOString()) : []))))(getType(anything))); /* datePrettierV2 */
 const generateTimestamp = ({ precise = false } = {}) => ((([fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, amPm, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit]) => (prettyFormatDate(precise, fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, amPm, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit)))(extractDate(new Date().toISOString()))); /* generateTimestampV2 */
@@ -42,12 +42,23 @@ const generatorExpression = function* (anyIterable, callbackFunction, filterCond
 };
 const listComprehension = (anyIterable, callbackFunction, filterConditionFunction) => Array.from(generatorExpression(anyIterable, callbackFunction, filterConditionFunction));
 const stringToRgbHexColor = (anyString) => (Array.from({ length: 3 }, (_, i) => (((Array.from(anyString).reduce((currentNumericHash, currentCharacter) => (currentCharacter.charCodeAt(0) + ((currentNumericHash << 5) - currentNumericHash)), 0)) >> (i * 8)) & 0xff).toString(16).padStart(2, "0")).reduce((rgbHexColorCurrent, rgbHexColorPartCurrent) => (`${rgbHexColorCurrent}${rgbHexColorPartCurrent}`), "#"));
+const forItemInEnumerate = (anyIterable, callbackFunction) => {
+    let i = 0;
+    for (const anyItem of anyIterable) {
+        callbackFunction(anyItem, i, anyIterable);
+        i += 1;
+    }
+};
+const catchAnyError = (asyncFunction) => (asyncFunction.then((anyResult) => ([null, anyResult])).catch((anyError) => ([anyError, null])));
+const throwError = (anyErrorMessage) => {
+    throw new Error(anyErrorMessage);
+};
 const utils = {
+    pythonLikeSleep,
     runOnce,
     runNthTime,
     printOnce,
     printAndReturn,
-    formatDate,
     extractDate,
     prettyFormatDate,
     datePrettier,
@@ -72,4 +83,7 @@ const utils = {
     generatorExpression,
     listComprehension,
     stringToRgbHexColor,
+    forItemInEnumerate,
+    catchAnyError,
+    throwError,
 };
