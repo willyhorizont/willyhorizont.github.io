@@ -3,6 +3,8 @@ req:
     syncLocalStorageDataImportExportTextAreaContentWithMainContent
 */
 
+const chipInputPlaceholder = ("item a 2, item b 1, item c 4, ...");
+
 function createHtmlElementChipTextContainer(arrayOfEntryProperty) {
     return utilsWeb.createHtmlElement((/*html*/`<span style="white-space: nowrap;"></span>`), { arrayOfEntryProperty });
 }
@@ -26,7 +28,9 @@ function createHtmlElementChipInput(placeholderValue = "") {
 function createHtmlElementChipInputContainer(itemList) {
     const htmlElementChipInputContainer = utilsWeb.createHtmlElement((/*html*/`<div data-id="chip-input-container" class="chip-remove-button-container" style="cursor: text; margin-left: 8px; display: flex; flex-wrap: wrap; flex: 1; padding: 0px 4px; overflow-x: auto; border: 1px solid var(--light-border-color);"></div>`), { arrayOfElementConfig: ([{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleElementClickChipInputContainer }]), arrayOfEntryDataset: [["items", JSON.stringify(itemList)]] });
     if (itemList.length) itemList.forEach((chipText) => (htmlElementChipInputContainer.appendChild(createHtmlElementChip(chipText))));
-    htmlElementChipInputContainer.appendChild(createHtmlElementChipInput((!itemList.length) ? "item a 2, item b 1, item c 4, ..." : ""));
+    const dataFromLocalStorage = JSON.parse(localStorage.getItem(localStorageKey));
+    const isNeedPlaceholder = ((dataFromLocalStorage === null) || ((dataFromLocalStorage?.length === 1) && !dataFromLocalStorage?.[0]?.items?.length));
+    htmlElementChipInputContainer.appendChild(createHtmlElementChipInput(isNeedPlaceholder ? chipInputPlaceholder : ""));
     return htmlElementChipInputContainer;
 }
 
@@ -37,6 +41,7 @@ function handleEventKeyDownChipInput(event) {
             return;
         }
         const htmlElementInputChipNew = manageChipInputValue(event);
+        htmlElementInputChipNew.setAttribute("placeholder", chipInputPlaceholder);
         htmlElementInputChipNew.focus();
         event.preventDefault();
     }
@@ -44,17 +49,20 @@ function handleEventKeyDownChipInput(event) {
 
 function handleEventBlurChipInput(event) {
     if (event.target.value.trim() === "") {
+        event.target.setAttribute("placeholder", "");
         event.preventDefault();
         return;
     }
     const htmlElementInputChipNew = manageChipInputValue(event);
-    htmlElementInputChipNew.focus();
+    htmlElementInputChipNew.setAttribute("placeholder", "");
+    // htmlElementInputChipNew.focus();
     event.preventDefault();
 }
 
 function handleElementClickChipInputContainer(htmlElementChipInputContainer) {
     return function (event) {
         const htmlElementChipInput = htmlElementChipInputContainer.querySelector("input");
+        htmlElementChipInput.setAttribute("placeholder", chipInputPlaceholder);
         htmlElementChipInput.focus();
     }
 }
@@ -66,6 +74,7 @@ function handleElementClickChipRemoveButton(htmlElementChipRemoveButton) {
         htmlElementChipInputContainer.dataset["items"] = JSON.stringify(JSON.parse(htmlElementChipInputContainer.dataset["items"]).filter((chipText) => (chipText !== htmlElementChipContainer.dataset["item"])));
         htmlElementChipRemoveButton.removeEventListener("click", htmlElementChipRemoveButton.refElementHandlerClick);
         htmlElementChipContainer.remove();
+        htmlElementChipInputContainer.querySelector("input").setAttribute("placeholder", chipInputPlaceholder);
         syncLocalStorageDataImportExportTextAreaContentWithMainContent();
     }
 }
