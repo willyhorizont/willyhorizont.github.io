@@ -1,0 +1,15 @@
+.chip-input {
+    background-color: var(--light-background-color); color: var(--light-text-color);
+}
+
+html[data-theme="dark"] .chip-input {
+    background-color: var(--dark-background-color); color: var(--dark-text-color);
+}
+
+.chip-remove-button-container {
+    background-color: var(--light-background-color);
+}
+
+html[data-theme="dark"] .chip-remove-button-container {
+    background-color: var(--dark-background-color);
+}

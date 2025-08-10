@@ -1,6 +1,6 @@
 .link-support-container {
     display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 16px;
-    max-width: max-content; flex-wrap: wrap; gap: 16px;
+    width: 100%; flex-wrap: wrap; gap: 16px;
 }
 
 .link-support {

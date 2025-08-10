@@ -26,7 +26,7 @@ function syncImportExportTextAreaContentMainContentWithLocalStorageData() {
 document.getElementById("placeholder-import-export").innerHTML = (/*html*/
 `                   <div id="import-export-container" style="padding: 4px; width: 100%; display: flex; flex-direction: column;">
                         <h2 style="margin-top: 8px;">Import & Export:</h2>
-                        <textarea id="import-export-textarea" class="import-export-textarea" rows="4" cols="50"></textarea>
+                        <textarea id="import-export-textarea" style="margin-top: 16px;" rows="4" cols="50"></textarea>
                         <div id="placeholder-error" style="margin-top: 8px;"></div>
                     </div>`);
 

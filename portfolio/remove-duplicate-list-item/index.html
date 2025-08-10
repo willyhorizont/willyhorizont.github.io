@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" spellcheck="false">
+    <head>
+        <!-- start of Google tag (gtag.js) -->
+        <!-- tagmanager.google.com -->
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LECMLYN21B"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-LECMLYN21B');
+        </script>
+        <!-- end of Google tag (gtag.js) -->
+
+        <!-- start of Google Search Console Ownership verification -->
+        <!-- search.google.com * search-console/ownership -->
+        <meta name="google-site-verification" content="UqB5vtnZNIl-hvyiqwM0PDgX772rcbWWjt0g9onB_BQ" />
+        <meta name="robots" content="index, follow" />
+        <meta name="googlebot" content="notranslate" />
+        <meta name="google" content="nopagereadaloud" />
+        <!-- end of Google Search Console Ownership verification -->
+
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="author" content="Willy Horizont" />
+        <link rel="icon" type="image/x-icon" href="../../favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="192x192" href="../../android-chrome-192x192.png" />
+        <link rel="icon" type="image/png" sizes="512x512" href="../../android-chrome-512x512.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png" />
+        <link rel="stylesheet" href="../../style.css" />
+        <script src="../../utils.js"></script>
+        <script src="../../utils-web.js"></script>
+        <script src="../../component/component-user-browser-checker.js"></script>
+
+        <meta name="description" content="Remove Duplicate List Item by Willy Horizont, get unique list" />
+        <meta name="keywords" content="Remove Duplicate List Item by Willy Horizont, get unique list" />
+        <title>Remove Duplicate List Item | Portfolio | Willy Horizont</title>
+
+        <!-- start of Google AdSense -->
+        <!-- adsense.google.com/adsense -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5944204031363480" crossorigin="anonymous"></script>
+        <!-- end of Google AdSense -->
+
+        <link rel="stylesheet" href="../../component/component-link-support.css" />
+
+        <style>
+            .separator-input {
+                border: 1px solid var(--light-border-color); padding: 16px 8px; outline: none; max-width: 120px;
+                background-color: var(--light-background-color); color: var(--light-text-color);
+            }
+
+            html[data-theme="dark"] .separator-input {
+                background-color: var(--dark-background-color); color: var(--dark-text-color);
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+        </header>
+        <main>
+            <div style="padding: 8px;">
+                <h1 style="text-align: center;">Remove Duplicate List Item</h1>
+                <div style="padding: 4px; width: 100%; display: flex; flex-direction: column; row-gap: 8px;">
+                    <div style="padding: 4px; width: 100%; display: flex; flex-direction: column;">
+                        <h2>Separator:</h2>
+                        <input id="separator-input" class="separator-input" name="separator-input" placeholder="\n\n" type="text" />
+                    </div>
+                    <div style="padding: 4px; width: 100%; display: flex; flex-direction: column;">
+                        <h2>Input:</h2>
+                        <textarea id="input-of-remove-duplicate-list-item-textarea" style="width: 70%;" rows="12" cols="50"></textarea>
+                        <p id="input-of-remove-duplicate-list-item-list-length-container"></p>
+                    </div>
+                    <div style="padding: 4px; width: 100%; display: flex; flex-direction: column;">
+                        <h2>Output:</h2>
+                        <textarea id="output-of-remove-duplicate-list-item-textarea" style="width: 70%;" rows="12" cols="50"></textarea>
+                        <p id="output-of-remove-duplicate-list-item-list-length-container"></p>
+                    </div>
+                </div>
+                <div id="placeholder-link-support"></div>
+            </div>
+        </main>
+        <footer>
+            <p>Made with ❤️ by Willy Horizont</p>
+        </footer>
+        <script src="../../component/component-navbar.js"></script>
+
+        <script>
+            function handleEventBlurRawTextTextArea(event) {
+                if (event.target.value.trim() === "") {
+                    event.preventDefault();
+                    return;
+                }
+
+                const separatorValue = JSON.parse(`"${document.getElementById("separator-input").value || "\\n\\n"}"`);
+                const listFromRawText = event.target.value.trim().split(separatorValue);
+                const listFromRawTextNoDuplicateItem = utils.removeDuplicateListItem(listFromRawText);
+                document.getElementById("output-of-remove-duplicate-list-item-textarea").value = listFromRawTextNoDuplicateItem.join(separatorValue);
+                document.getElementById("input-of-remove-duplicate-list-item-list-length-container").textContent = (`listed: ${listFromRawText.length} items.`);
+                document.getElementById("output-of-remove-duplicate-list-item-list-length-container").textContent = (`listed: ${listFromRawTextNoDuplicateItem.length} items.`);
+
+                event.preventDefault();
+            }
+
+            document.getElementById("input-of-remove-duplicate-list-item-textarea").addEventListener("blur", handleEventBlurRawTextTextArea);
+        </script>
+
+        <script src="../../component/component-link-support.js"></script>
+    </body>
+</html>

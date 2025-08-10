@@ -10,16 +10,16 @@ req:
 
     try {
         userChromiumBasedBrowserVersion = await utilsWeb.getUserChromiumBasedBrowserVersion();
-        console.log({ userChromiumBasedBrowserVersion });
+        // console.log({ userChromiumBasedBrowserVersion });
         
         chromiumBasedBrowserMinimumStableVersion = await utilsWeb.getChromiumBasedBrowserMinimumStableVersion();
-        console.log({ chromiumBasedBrowserMinimumStableVersion });
+        // console.log({ chromiumBasedBrowserMinimumStableVersion });
     } catch (anyError) {
         // fallback to default value
     }
 
     const isUserUsingChromiumBasedBrowserMinimumStableVersion = (userChromiumBasedBrowserVersion >= chromiumBasedBrowserMinimumStableVersion);
-    console.log({ isUserUsingChromiumBasedBrowserMinimumStableVersion });
+    // console.log({ isUserUsingChromiumBasedBrowserMinimumStableVersion });
 
     if (isUserUsingChromiumBasedBrowserMinimumStableVersion) return;
     window.location.href = "/unsupported-browser";

@@ -13,20 +13,20 @@ function createHtmlElementChipRemoveButton() {
 }
 
 function createHtmlElementChip(chipTextTrimmed) {
-    const htmlElementChipContainer = utilsWeb.createHtmlElement((/*html*/`<div data-id="chip-container" class="chip-container"></div>`), { arrayOfEntryDataset: [["item", chipTextTrimmed]] });
+    const htmlElementChipContainer = utilsWeb.createHtmlElement((/*html*/`<div data-id="chip-container" style="margin: 8px 4px; padding: 0.2em 0.4em; border-radius: 0.2em; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; border: 1px solid var(--light-border-color); color: var(--light-text-color); background-color: #ffdddd;"></div>`), { arrayOfEntryDataset: [["item", chipTextTrimmed]] });
     htmlElementChipContainer.appendChild(createHtmlElementChipTextContainer([["textContent", chipTextTrimmed]]));
     htmlElementChipContainer.appendChild(createHtmlElementChipRemoveButton());
     return htmlElementChipContainer;
 }
 
 function createHtmlElementChipInput(placeholderValue = "") {
-    return utilsWeb.createHtmlElement((/*html*/`<input data-id="chip-input" class="chip-input" name="chip-input" type="text" />`), { arrayOfElementConfig: ([{ handlerRefName: "refEventHandlerKeyDown", eventType: "keydown", eventHandler: handleEventKeyDownChipInput }, { handlerRefName: "refEventHandlerBlur", eventType: "blur", eventHandler: handleEventBlurChipInput }]), arrayOfEntryAttribute: ([["placeholder", placeholderValue]]) });
+    return utilsWeb.createHtmlElement((/*html*/`<input data-id="chip-input" class="chip-input" style="flex: 1 1 auto; margin: 8px 4px 8px 4px; padding: 8px 4px; border: none; outline: none;" name="chip-input" type="text" />`), { arrayOfElementConfig: ([{ handlerRefName: "refEventHandlerKeyDown", eventType: "keydown", eventHandler: handleEventKeyDownChipInput }, { handlerRefName: "refEventHandlerBlur", eventType: "blur", eventHandler: handleEventBlurChipInput }]), arrayOfEntryAttribute: ([["placeholder", placeholderValue]]) });
 }
 
 function createHtmlElementChipInputContainer(items) {
-    const htmlElementChipInputContainer = utilsWeb.createHtmlElement((/*html*/`<div data-id="chip-input-container" class="chip-remove-button-container"></div>`), { arrayOfElementConfig: ([{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleElementClickChipInputContainer }]), arrayOfEntryDataset: [["items", items]] });
+    const htmlElementChipInputContainer = utilsWeb.createHtmlElement((/*html*/`<div data-id="chip-input-container" class="chip-remove-button-container" style="cursor: text; margin-left: 8px; display: flex; flex-wrap: wrap; flex: 1; padding: 0px 4px; overflow-x: auto; border: 1px solid var(--light-border-color);"></div>`), { arrayOfElementConfig: ([{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleElementClickChipInputContainer }]), arrayOfEntryDataset: [["items", items]] });
     if (items.trim()) items.split(", ").forEach((chipText) => (htmlElementChipInputContainer.appendChild(createHtmlElementChip(chipText.trim()))));
-    htmlElementChipInputContainer.appendChild(createHtmlElementChipInput((items.trim() === "") ? "untuk apa saja" : ""));
+    htmlElementChipInputContainer.appendChild(createHtmlElementChipInput((items.trim() === "") ? "item1, item2, item3, ..." : ""));
     return htmlElementChipInputContainer;
 }
 
@@ -75,7 +75,7 @@ function manageChipInputValue(event) {
     const htmlElementChipInputContainer = htmlElementChipInput.parentElement;
     const chipInputValue = htmlElementChipInput.value.split(",").filter((chipText) => (chipText.trim() !== "")).join(",");
     const chipInputValueNew = ((htmlElementChipInputContainer.dataset["items"] === "") ? chipInputValue : (`${htmlElementChipInputContainer.dataset["items"]}, ${chipInputValue}`));
-    const chipInputValueNoDuplicate = utils.removeDuplicateItem(chipInputValueNew.split(",").map((chipText) => (chipText.trim()))).join(", ");
+    const chipInputValueNoDuplicate = utils.removeDuplicateListItem(chipInputValueNew.split(",").map((chipText) => (chipText.trim()))).join(", ");
 
     htmlElementChipInputContainer.dataset["items"] = chipInputValueNoDuplicate;
 

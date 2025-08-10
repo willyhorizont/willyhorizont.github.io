@@ -45,8 +45,19 @@
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5944204031363480" crossorigin="anonymous"></script>
         <!-- end of Google AdSense -->
 
-        <link rel="stylesheet" href="../../component/component-import-export.css" />
+        <link rel="stylesheet" href="../../component/component-chip-input.css" />
         <link rel="stylesheet" href="../../component/component-link-support.css" />
+
+        <style>
+            .price-input {
+                border: 1px solid var(--light-border-color); padding: 16px 8px; outline: none; max-width: 120px;
+                background-color: var(--light-background-color); color: var(--light-text-color);
+            }
+
+            html[data-theme="dark"] .price-input {
+                background-color: var(--dark-background-color); color: var(--dark-text-color);
+            }
+        </style>
     </head>
     <body>
         <header>
@@ -77,8 +88,8 @@
                 const htmlElementExpenseTrackerContainer = document.getElementById("expense-tracker-container");
                 htmlElementExpenseTrackerContainer.innerHTML = "";
 
-                dataFromImportExportTextAreaContent.forEach(({ priceValue, priceDisplay, items }) => {
-                    htmlElementExpenseTrackerContainer.appendChild(createHtmlElementExpense({ priceValue, priceDisplay, items }));
+                dataFromImportExportTextAreaContent.forEach(({ price, items }) => {
+                    htmlElementExpenseTrackerContainer.appendChild(createHtmlElementExpense({ price, items }));
                 });
 
                 updateTotalExpenses();
@@ -86,8 +97,7 @@
 
             function getDataFromMainContent() {
                 const dataFromImportExportTextAreaContent = Array.from(document.getElementById("expense-tracker-container").children).map((htmlElementExpense) => ({
-                    priceDisplay: (htmlElementExpense.dataset["priceDisplay"] ?? ""),
-                    priceValue: (parseFloat((utils.isNumeric(htmlElementExpense.dataset["priceValue"]) === true) ? 0 : htmlElementExpense.dataset["priceValue"])),
+                    price: (htmlElementExpense.dataset["price"] ?? ""),
                     items: (htmlElementExpense.children[1].dataset["items"] ?? ""),
                 }));
                 return ((dataFromImportExportTextAreaContent.length === 0) ? null : dataFromImportExportTextAreaContent);
@@ -102,7 +112,7 @@
 
             function createHtmlElementPriceInputContainer({ arrayOfEntryProperty, arrayOfEntryDataset } = {}) {
                 return utilsWeb.appendChildrenReturnParent(utilsWeb.createHtmlElement(/*html*/`<div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;"></div>`),
-                    utilsWeb.createHtmlElement((/*html*/`<input data-id="price-input" class="price-input" name="price-input" placeholder="jumlah uang" type="text" />`), { arrayOfEntryDataset, arrayOfEntryProperty, arrayOfElementConfig: ([{ handlerRefName: "refElementHandlerChange", eventType: "change", elementHandler: handleElementChangePriceInput }]) }));
+                    utilsWeb.createHtmlElement((/*html*/`<input data-id="price-input" class="price-input" name="price-input" placeholder="1_234_500" type="text" />`), { arrayOfEntryDataset, arrayOfEntryProperty, arrayOfElementConfig: ([{ handlerRefName: "refElementHandlerChange", eventType: "change", elementHandler: handleElementChangePriceInput }, { handlerRefName: "refElementHandlerInput", eventType: "input", elementHandler: handleElementInputPriceInput }, { handlerRefName: "refElementHandlerBlur", eventType: "blur", elementHandler: handleElementBlurPriceInput }]) }));
             }
 
             function createHtmlElementExpenseRemoveButtonContainer() {
@@ -110,22 +120,24 @@
                     utilsWeb.createHtmlElement((/*html*/`<button data-id="expense-remove-button" style="margin-left: 8px; background-color: var(--accent-color-4); color: white; border: none; padding: 0.2em 0.4em; cursor: pointer; width: 1.6em; aspect-ratio: 1 / 1;">x</button>`), { arrayOfElementConfig: ([{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleElementClickExpenseRemoveButton }]) }));
             }
 
-            function createHtmlElementExpense({ priceValue = "", priceDisplay = "", items = "" } = { priceValue: "", priceDisplay: "", items: "" }) {
-                const htmlElementExpenseContainer = createHtmlElementExpenseContainer([["price-value", priceValue], ["price-display", priceDisplay]]);
-                htmlElementExpenseContainer.appendChild(createHtmlElementPriceInputContainer({ arrayOfEntryProperty: ([["value", priceDisplay]]), arrayOfEntryDataset: ([["price-value", priceValue], ["price-display", priceDisplay]]) }));
+            function createHtmlElementExpense({ price = "", items = "" } = { price: "", items: "" }) {
+                const htmlElementExpenseContainer = createHtmlElementExpenseContainer([["price", price]]);
+                htmlElementExpenseContainer.appendChild(createHtmlElementPriceInputContainer({ arrayOfEntryProperty: ([["value", price]]), arrayOfEntryDataset: ([["price", price]]) }));
                 htmlElementExpenseContainer.appendChild(componentChipInput.createHtmlElementChipInputContainer(items));
                 htmlElementExpenseContainer.appendChild(createHtmlElementExpenseRemoveButtonContainer());
                 return htmlElementExpenseContainer;
             }
 
+            const regexPatternThreeDigitGrouping = (/\B(?=(\d{3})+(?!\d))/g);
+
             function updateTotalExpenses() {
                 const htmlElementTotalExpenseContainer = document.getElementById("total-expense-container");
-                const totalExpenses = (Array.from(document.getElementById("expense-tracker-container").children).reduce((currentResult, htmlElementExpense) => (currentResult + (parseFloat((utils.isNumeric(htmlElementExpense.dataset["priceValue"]) === true) ? 0 : parseFloat(htmlElementExpense.dataset["priceValue"])))), 0));
-                if (utils.isNumeric(totalExpenses) === false) {
-                    htmlElementTotalExpenseContainer.textContent = "0";
-                    return;
-                }
-                htmlElementTotalExpenseContainer.textContent = totalExpenses.toLocaleString("id-ID");
+                const totalExpensesInNumeric = (Array.from(document.getElementById("expense-tracker-container").children).reduce(((currentResult, htmlElementExpense) => {
+                    const priceInString = htmlElementExpense.dataset["price"].replace((/_/g), "");
+                    if (!priceInString) return (currentResult + 0);
+                    return (currentResult + parseFloat(priceInString));
+                }), 0));
+                htmlElementTotalExpenseContainer.textContent = totalExpensesInNumeric.toString().replace(regexPatternThreeDigitGrouping, "_");
             }
 
             function createNewExpense() {
@@ -136,14 +148,27 @@
                 if (htmlElementPriceInputNew) htmlElementPriceInputNew.focus();
             }
 
+            function handleElementInputPriceInput(htmlElementPriceInput) {
+                return function(event) {
+                    if ((/^[0-9_]+$/).test(htmlElementPriceInput.value) === true) return;
+                    htmlElementPriceInput.value = htmlElementPriceInput.value.replace((/[^0-9_]/g), "");
+                }
+            }
+
             function handleElementChangePriceInput(htmlElementPriceInput) {
                 return function(event) {
-                    const htmlElementPriceInputValue = htmlElementPriceInput.value.split("_").join("").split(".").join("");
                     const htmlElementExpenseContainer = htmlElementPriceInput.parentElement.parentElement;
-                    htmlElementExpenseContainer.setAttribute("data-price-value", String(htmlElementPriceInputValue));
-                    htmlElementExpenseContainer.setAttribute("data-price-display", String(htmlElementPriceInput.value));
+                    htmlElementExpenseContainer.setAttribute("data-price", event.target.value.replace((/_/g), "").replace(regexPatternThreeDigitGrouping, "_"));
                     updateTotalExpenses();
                     syncLocalStorageDataImportExportTextAreaContentWithMainContent();
+                }
+            }
+
+            function handleElementBlurPriceInput(htmlElementPriceInput) {
+                return function(event) {
+                    let htmlElementPriceInputNewValue = htmlElementPriceInput.value.replace((/[^0-9_]/g), "");
+                    htmlElementPriceInputNewValue = ((!htmlElementPriceInputNewValue) ? (htmlElementPriceInput.dataset["price"].replace((/_/g), "") ?? "") : htmlElementPriceInputNewValue);
+                    htmlElementPriceInput.value = htmlElementPriceInputNewValue.replace((/_/g), "").replace(regexPatternThreeDigitGrouping, "_");
                 }
             }
 
@@ -152,6 +177,8 @@
                     const htmlElementExpenseContainer = htmlElementExpenseRemoveButton.parentElement.parentElement;
                     htmlElementExpenseContainer.querySelectorAll('[data-id="price-input"]').forEach((htmlElementPriceInput) => {
                         htmlElementPriceInput.removeEventListener("change", htmlElementPriceInput.refElementHandlerChange);
+                        htmlElementPriceInput.removeEventListener("input", htmlElementPriceInput.refElementHandlerInput);
+                        htmlElementPriceInput.removeEventListener("blur", htmlElementPriceInput.refElementHandlerBlur);
                     });
                     htmlElementExpenseContainer.querySelectorAll('[data-id="chip-input-container"]').forEach((htmlElementChipInputContainer) => {
                         htmlElementChipInputContainer.removeEventListener("click", htmlElementChipInputContainer.refElementHandlerClick);

@@ -99,6 +99,15 @@ button {
     cursor: pointer;
 }
 
+textarea {
+    padding: 8px; border: 1px solid var(--light-border-color);
+    background-color: var(--light-background-color); color: var(--light-text-color);
+}
+
+html[data-theme="dark"] textarea {
+    background-color: var(--dark-background-color); color: var(--dark-text-color);
+}
+
 /* end of setup */
 
 
@@ -223,38 +232,6 @@ h1 {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-}
-
-.chip-input {
-    flex: 1 1 auto; margin: 8px 4px 8px 4px; padding: 8px 4px; border: none; outline: none;
-    background-color: var(--light-background-color); color: var(--light-text-color);
-}
-
-html[data-theme="dark"] .chip-input {
-    background-color: var(--dark-background-color); color: var(--dark-text-color);
-}
-
-.chip-container {
-    margin: 8px 4px; padding: 0.2em 0.4em; border-radius: 0.2em; display: flex; align-items: center; gap: 8px; flex: 0 0 auto;
-    border: 1px solid var(--light-border-color); color: var(--light-text-color); background-color: #ffdddd;
-}
-
-.chip-remove-button-container {
-    cursor: text; margin-left: 8px; display: flex; flex-wrap: wrap; flex: 1; padding: 0px 4px; overflow-x: auto; border: 1px solid var(--light-border-color);
-    background-color: var(--light-background-color);
-}
-
-html[data-theme="dark"] .chip-remove-button-container {
-    background-color: var(--dark-background-color);
-}
-
-.price-input {
-    border: 1px solid var(--light-border-color); padding: 4px 8px; outline: none; max-width: 120px;
-    background-color: var(--light-background-color); color: var(--light-text-color);
-}
-
-html[data-theme="dark"] .price-input {
-    background-color: var(--dark-background-color); color: var(--dark-text-color);
 }
 
 footer {

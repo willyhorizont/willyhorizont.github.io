@@ -1,8 +1,0 @@
-.import-export-textarea {
-    border: 1px solid var(--light-border-color); margin-top: 16px;
-    background-color: var(--light-background-color); color: var(--light-text-color);
-}
-
-html[data-theme="dark"] .import-export-textarea {
-    background-color: var(--dark-background-color); color: var(--dark-text-color);
-}
