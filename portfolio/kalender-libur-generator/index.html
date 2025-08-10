@@ -141,7 +141,7 @@
                     const abcCalendarEventHolidayIndonesiaEventDayName = new Intl.DateTimeFormat("id-ID", { weekday: "short" }).format(new Date(abcCalendarEventHolidayIndonesiaEventDate));
 
                     const addDayOffRecomendation = (startNumber, stopNumber) => {
-                        Array.from(utils.rangeInclusive(startNumber, stopNumber)).forEach((rangeItemDay) => {
+                        utils.iterateList(utils.rangeInclusive(startNumber, stopNumber), ((rangeItemDay) => {
                             if (rangeItemDay === 0) return;
                             const abcCalendarEventHolidayIndonesiaEventDateNew = utilsDate.updateDateStringYyyyMinusMmMinusDdByNumericVariable(abcCalendarEventHolidayIndonesiaEventDate, rangeItemDay);
                             if (abcCalendarEventHolidayIndonesiaDataNewMap.get(abcCalendarEventHolidayIndonesiaEventDateNew) !== undefined) return;
@@ -155,7 +155,7 @@
                                 "event_day": abcCalendarEventHolidayIndonesiaEventDayNameNew,
                                 "event_month": abcCalendarEventHolidayIndonesiaEventMonthNameNew,
                             }));
-                        });
+                        }));
                     };
 
                     if (abcCalendarEventHolidayIndonesiaEventDayName === utilsDate.dictionaryDay["short"]["Sen"]) addDayOffRecomendation(-2, 0);

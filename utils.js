@@ -42,10 +42,10 @@ const generatorExpression = function* (anyIterable, callbackFunction, filterCond
 };
 const listComprehension = (anyIterable, callbackFunction, filterConditionFunction) => Array.from(generatorExpression(anyIterable, callbackFunction, filterConditionFunction));
 const stringToRgbHexColor = (anyString) => (Array.from({ length: 3 }, (_, i) => (((Array.from(anyString).reduce((currentNumericHash, currentCharacter) => (currentCharacter.charCodeAt(0) + ((currentNumericHash << 5) - currentNumericHash)), 0)) >> (i * 8)) & 0xff).toString(16).padStart(2, "0")).reduce((rgbHexColorCurrent, rgbHexColorPartCurrent) => (`${rgbHexColorCurrent}${rgbHexColorPartCurrent}`), "#"));
-const forItemInEnumerate = (anyIterable, callbackFunction) => {
+const iterateList = (anyList, callbackFunction) => {
     let i = 0;
-    for (const anyItem of anyIterable) {
-        callbackFunction(anyItem, i, anyIterable);
+    for (const listItem of anyList) {
+        callbackFunction(listItem, i, anyList);
         i += 1;
     }
 };
@@ -83,7 +83,7 @@ const utils = {
     generatorExpression,
     listComprehension,
     stringToRgbHexColor,
-    forItemInEnumerate,
+    iterateList,
     catchAnyError,
     throwError,
 };
