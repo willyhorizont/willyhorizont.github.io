@@ -89,23 +89,38 @@
         <script src="../../component/component-navbar.js"></script>
 
         <script>
+            function processInputData(inputData) {
+                const separatorValue = JSON.parse(`"${document.getElementById("separator-input").value || "\\n\\n"}"`);
+                const listFromRawText = inputData.split(separatorValue);
+                const listFromRawTextNoDuplicateItem = utils.removeDuplicateListItem(listFromRawText);
+                return ({ separatorValue, listFromRawText, listFromRawTextNoDuplicateItem });
+            }
+
+            function renderOutputData({ separatorValue, listFromRawText, listFromRawTextNoDuplicateItem }) {
+                document.getElementById("output-of-remove-duplicate-list-item-textarea").value = listFromRawTextNoDuplicateItem.join(separatorValue);
+                document.getElementById("input-of-remove-duplicate-list-item-list-length-container").textContent = (`listed: ${listFromRawText.length} items.`);
+                document.getElementById("output-of-remove-duplicate-list-item-list-length-container").textContent = (`listed: ${listFromRawTextNoDuplicateItem.length} items.`);
+            }
+
             function handleEventBlurRawTextTextArea(event) {
-                if (event.target.value.trim() === "") {
+                const htmlElementInputOfRemoveDuplicateListItemTextareaValueTrimmed = event.target.value.trim();
+                if (htmlElementInputOfRemoveDuplicateListItemTextareaValueTrimmed === "") {
                     event.preventDefault();
                     return;
                 }
 
-                const separatorValue = JSON.parse(`"${document.getElementById("separator-input").value || "\\n\\n"}"`);
-                const listFromRawText = event.target.value.trim().split(separatorValue);
-                const listFromRawTextNoDuplicateItem = utils.removeDuplicateListItem(listFromRawText);
-                document.getElementById("output-of-remove-duplicate-list-item-textarea").value = listFromRawTextNoDuplicateItem.join(separatorValue);
-                document.getElementById("input-of-remove-duplicate-list-item-list-length-container").textContent = (`listed: ${listFromRawText.length} items.`);
-                document.getElementById("output-of-remove-duplicate-list-item-list-length-container").textContent = (`listed: ${listFromRawTextNoDuplicateItem.length} items.`);
+                renderOutputData(processInputData(htmlElementInputOfRemoveDuplicateListItemTextareaValueTrimmed))
 
                 event.preventDefault();
             }
 
-            document.getElementById("input-of-remove-duplicate-list-item-textarea").addEventListener("blur", handleEventBlurRawTextTextArea);
+            const htmlElementInputOfRemoveDuplicateListItemTextarea = document.getElementById("input-of-remove-duplicate-list-item-textarea");
+
+            htmlElementInputOfRemoveDuplicateListItemTextarea.addEventListener("blur", handleEventBlurRawTextTextArea);
+
+            const initialData = (("abba").split("").join("\n\n"));
+            htmlElementInputOfRemoveDuplicateListItemTextarea.value = initialData;
+            renderOutputData(processInputData(initialData));
         </script>
 
         <script src="../../component/component-link-support.js"></script>

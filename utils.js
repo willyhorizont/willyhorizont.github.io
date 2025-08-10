@@ -1,3 +1,6 @@
+const regexPattern = {
+    "three_digit_grouping": (/\B(?=(\d{3})+(?!\d))/g),
+};
 const pythonLikeSleep = (anySeconds) => new Promise((anyResolveFunction) => setTimeout(anyResolveFunction, (anySeconds * 1 * (({ secondInMiliseconds }) => secondInMiliseconds)({ secondInMiliseconds: 1_000 }))));
 const runOnce = ((keySet) => (anyStringKey = "something", callbackFunction = (() => undefined)) => (keySet.has(anyStringKey) ? undefined : ([(keySet.add(anyStringKey)), (callbackFunction())].at(-1))))(new Set()); /* runOnceV2 */
 const runNthTime = ((keyCountMap) => (({ keyString = "something", runTime = 1 } = {}, callbackFunction = (() => undefined)) => (((keyCountMap.get(keyString) ?? 0) >= runTime) ? undefined : ([(keyCountMap.set(keyString, ((keyCountMap.get(keyString) ?? 0) + 1))), (callbackFunction(runTime, keyCountMap.get(keyString)))].at(-1)))))(new Map()); /* runNthTimeV2 */
@@ -49,11 +52,22 @@ const iterateList = (anyList, callbackFunction) => {
         i += 1;
     }
 };
+const loop = (startNumber, stopNumber) => {
+    const anyList = rangeInclusive(startNumber, stopNumber);
+    return (callbackFunction) => {
+        let i = 0;
+        for (const listItem of anyList) {
+            callbackFunction(listItem, i, anyList);
+            i += 1;
+        }
+    };
+};
 const catchAnyError = (asyncFunction) => (asyncFunction.then((anyResult) => ([null, anyResult])).catch((anyError) => ([anyError, null])));
 const throwError = (anyErrorMessage) => {
     throw new Error(anyErrorMessage);
 };
 const utils = {
+    regexPattern,
     pythonLikeSleep,
     runOnce,
     runNthTime,
@@ -84,6 +98,7 @@ const utils = {
     listComprehension,
     stringToRgbHexColor,
     iterateList,
+    loop,
     catchAnyError,
     throwError,
 };

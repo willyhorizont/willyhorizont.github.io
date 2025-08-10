@@ -5,21 +5,21 @@ req:
     getDataFromMainContent
 */
 
-function updateImportExportTextAreaContentFromLocalStorage(dataFromImportExportTextAreaContent) {
-    document.getElementById("import-export-textarea").value = ((dataFromImportExportTextAreaContent === null) ? "" : JSON.stringify(dataFromImportExportTextAreaContent));
+function updateImportExportTextAreaValue(importExportTextAreaNewValue) {
+    document.getElementById("import-export-textarea").value = ((importExportTextAreaNewValue === null) ? "" : JSON.stringify(importExportTextAreaNewValue));
 }
 
 function syncLocalStorageDataImportExportTextAreaContentWithMainContent() {
     const dataFromMainContent = getDataFromMainContent();
     localStorage.setItem(localStorageKey, JSON.stringify(dataFromMainContent));
-    updateImportExportTextAreaContentFromLocalStorage(dataFromMainContent);
+    updateImportExportTextAreaValue(dataFromMainContent);
     document.getElementById("placeholder-error").innerHTML = "";
 }
 
 function syncImportExportTextAreaContentMainContentWithLocalStorageData() {
     const dataFromLocalStorage = JSON.parse(localStorage.getItem(localStorageKey));
     if (dataFromLocalStorage === null) return;
-    updateImportExportTextAreaContentFromLocalStorage(dataFromLocalStorage);
+    updateImportExportTextAreaValue(dataFromLocalStorage);
     rerenderMainContent(dataFromLocalStorage);
 }
 
@@ -40,11 +40,12 @@ function handleEventBlurImportExportTextArea(event) {
     try {
         let dataFromImportExportTextAreaContent = JSON.parse(event.target.value);
         dataFromImportExportTextAreaContent = dataFromImportExportTextAreaContent?.map?.((anyListItem) => {
+            if (anyListItem?.["uuid"]) return anyListItem;
             anyListItem["uuid"] = crypto.randomUUID();
             return anyListItem;
         });
         localStorage.setItem(localStorageKey, JSON.stringify(dataFromImportExportTextAreaContent));
-        updateImportExportTextAreaContentFromLocalStorage(dataFromImportExportTextAreaContent);
+        updateImportExportTextAreaValue(dataFromImportExportTextAreaContent);
         rerenderMainContent(dataFromImportExportTextAreaContent);
     } catch (anyError) {
         document.getElementById("placeholder-error").innerHTML = (/*html*/`<p style="color: red;">Format export-an yang di-import tidak sesuai.</p>`);

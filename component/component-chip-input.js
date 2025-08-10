@@ -8,7 +8,7 @@ function createHtmlElementChipTextContainer(arrayOfEntryProperty) {
 }
 
 function createHtmlElementChipRemoveButton() {
-    return utilsWeb.appendChildrenReturnParent(utilsWeb.createHtmlElement(/*html*/`<div data-id="chip-remove-button-container" style="display: flex; align-items: center; justify-content: center; line-height: 1.2em; background-color: var(--accent-color-4); color: var(--light-border-color); width: 1.6em; aspect-ratio: 1 / 1; border-radius: 50%;"></div>`),
+    return utilsWeb.appendChildrenReturnParent(utilsWeb.createHtmlElement(/*html*/`<div data-id="chip-remove-button-container" style="display: flex; align-items: center; justify-content: center; line-height: 1.2em; background-color: var(--accent-color-4); color: var(--dark-text-color); width: 1.6em; aspect-ratio: 1 / 1; border-radius: 50%;"></div>`),
         utilsWeb.createHtmlElement((/*html*/`<span data-id="chip-remove-button" style="cursor: pointer; font-weight: bold;">×</span>`), { arrayOfElementConfig: ([{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleElementClickChipRemoveButton }]) }));
 }
 
@@ -23,10 +23,10 @@ function createHtmlElementChipInput(placeholderValue = "") {
     return utilsWeb.createHtmlElement((/*html*/`<input data-id="chip-input" class="chip-input" style="flex: 1 1 auto; margin: 8px 4px 8px 4px; padding: 8px 4px; border: none; outline: none;" name="chip-input" type="text" />`), { arrayOfElementConfig: ([{ handlerRefName: "refEventHandlerKeyDown", eventType: "keydown", eventHandler: handleEventKeyDownChipInput }, { handlerRefName: "refEventHandlerBlur", eventType: "blur", eventHandler: handleEventBlurChipInput }]), arrayOfEntryAttribute: ([["placeholder", placeholderValue]]) });
 }
 
-function createHtmlElementChipInputContainer(items) {
-    const htmlElementChipInputContainer = utilsWeb.createHtmlElement((/*html*/`<div data-id="chip-input-container" class="chip-remove-button-container" style="cursor: text; margin-left: 8px; display: flex; flex-wrap: wrap; flex: 1; padding: 0px 4px; overflow-x: auto; border: 1px solid var(--light-border-color);"></div>`), { arrayOfElementConfig: ([{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleElementClickChipInputContainer }]), arrayOfEntryDataset: [["items", items]] });
-    if (items.trim()) items.split(", ").forEach((chipText) => (htmlElementChipInputContainer.appendChild(createHtmlElementChip(chipText.trim()))));
-    htmlElementChipInputContainer.appendChild(createHtmlElementChipInput((items.trim() === "") ? "item1, item2, item3, ..." : ""));
+function createHtmlElementChipInputContainer(itemList) {
+    const htmlElementChipInputContainer = utilsWeb.createHtmlElement((/*html*/`<div data-id="chip-input-container" class="chip-remove-button-container" style="cursor: text; margin-left: 8px; display: flex; flex-wrap: wrap; flex: 1; padding: 0px 4px; overflow-x: auto; border: 1px solid var(--light-border-color);"></div>`), { arrayOfElementConfig: ([{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleElementClickChipInputContainer }]), arrayOfEntryDataset: [["items", JSON.stringify(itemList)]] });
+    if (itemList.length) itemList.forEach((chipText) => (htmlElementChipInputContainer.appendChild(createHtmlElementChip(chipText))));
+    htmlElementChipInputContainer.appendChild(createHtmlElementChipInput((!itemList.length) ? "item a 2, item b 1, item c 4, ..." : ""));
     return htmlElementChipInputContainer;
 }
 
@@ -63,7 +63,7 @@ function handleElementClickChipRemoveButton(htmlElementChipRemoveButton) {
     return function(event) {
         const htmlElementChipInputContainer = htmlElementChipRemoveButton.parentElement.parentElement.parentElement;
         const htmlElementChipContainer = htmlElementChipRemoveButton.parentElement.parentElement;
-        htmlElementChipInputContainer.dataset["items"] = htmlElementChipInputContainer.dataset["items"].split(",").filter((chipText) => (chipText.trim() !== htmlElementChipContainer.dataset["item"])).join(",");
+        htmlElementChipInputContainer.dataset["items"] = JSON.stringify(JSON.parse(htmlElementChipInputContainer.dataset["items"]).filter((chipText) => (chipText !== htmlElementChipContainer.dataset["item"])));
         htmlElementChipRemoveButton.removeEventListener("click", htmlElementChipRemoveButton.refElementHandlerClick);
         htmlElementChipContainer.remove();
         syncLocalStorageDataImportExportTextAreaContentWithMainContent();
@@ -73,16 +73,22 @@ function handleElementClickChipRemoveButton(htmlElementChipRemoveButton) {
 function manageChipInputValue(event) {
     const htmlElementChipInput = event.target;
     const htmlElementChipInputContainer = htmlElementChipInput.parentElement;
-    const chipInputValue = htmlElementChipInput.value.split(",").filter((chipText) => (chipText.trim() !== "")).join(",");
-    const chipInputValueNew = ((htmlElementChipInputContainer.dataset["items"] === "") ? chipInputValue : (`${htmlElementChipInputContainer.dataset["items"]}, ${chipInputValue}`));
-    const chipInputValueNoDuplicate = utils.removeDuplicateListItem(chipInputValueNew.split(",").map((chipText) => (chipText.trim()))).join(", ");
+    const chipInputValueAsList = htmlElementChipInput.value.split(",").filter((chipText) => (chipText.trim() !== ""));
+    const chipInputValueAsListMergedWithDataset = ((htmlElementChipInputContainer.dataset["items"] === "") ? chipInputValueAsList : ((() => {
+        const datasetItemsJsonParsed = JSON.parse(htmlElementChipInputContainer.dataset["items"]);
+        chipInputValueAsList.forEach((chipText) => {
+            datasetItemsJsonParsed.push(chipText);
+        })
+        return datasetItemsJsonParsed;
+    })()));
+    const chipInputValueAsListNoDuplicate = utils.removeDuplicateListItem(chipInputValueAsListMergedWithDataset);
 
-    htmlElementChipInputContainer.dataset["items"] = chipInputValueNoDuplicate;
+    htmlElementChipInputContainer.dataset["items"] = JSON.stringify(chipInputValueAsListNoDuplicate);
 
     htmlElementChipInputContainer.innerHTML = "";
 
-    chipInputValueNoDuplicate.split(",").forEach((chipText) => {
-        htmlElementChipInputContainer.appendChild(createHtmlElementChip(chipText.trim()));
+    chipInputValueAsListNoDuplicate.forEach((chipText) => {
+        htmlElementChipInputContainer.appendChild(createHtmlElementChip(chipText));
     });
 
     htmlElementChipInput.value = "";
