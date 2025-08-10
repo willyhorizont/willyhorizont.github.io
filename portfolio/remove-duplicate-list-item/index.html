@@ -89,17 +89,19 @@
         <script src="../../component/component-navbar.js"></script>
 
         <script>
+            const defaultListItemSeparator = "\\n\\n";
+
             function processInputData(inputData) {
-                const separatorValue = JSON.parse(`"${document.getElementById("separator-input").value || "\\n\\n"}"`);
+                const separatorValue = utils.parseEscapeSequence(document.getElementById("separator-input").value.trim() || defaultListItemSeparator);
                 const listFromRawText = inputData.split(separatorValue);
-                const listFromRawTextNoDuplicateItem = utils.removeDuplicateListItem(listFromRawText);
-                return ({ separatorValue, listFromRawText, listFromRawTextNoDuplicateItem });
+                const listFromRawTextNoDuplicateListItem = utils.removeDuplicateListItem(listFromRawText);
+                return ({ separatorValue, listFromRawText, listFromRawTextNoDuplicateListItem });
             }
 
-            function renderOutputData({ separatorValue, listFromRawText, listFromRawTextNoDuplicateItem }) {
-                document.getElementById("output-of-remove-duplicate-list-item-textarea").value = listFromRawTextNoDuplicateItem.join(separatorValue);
+            function renderOutputData({ separatorValue, listFromRawText, listFromRawTextNoDuplicateListItem }) {
+                document.getElementById("output-of-remove-duplicate-list-item-textarea").value = listFromRawTextNoDuplicateListItem.join(separatorValue);
                 document.getElementById("input-of-remove-duplicate-list-item-list-length-container").textContent = (`listed: ${listFromRawText.length} items.`);
-                document.getElementById("output-of-remove-duplicate-list-item-list-length-container").textContent = (`listed: ${listFromRawTextNoDuplicateItem.length} items.`);
+                document.getElementById("output-of-remove-duplicate-list-item-list-length-container").textContent = (`listed: ${listFromRawTextNoDuplicateListItem.length} items.`);
             }
 
             function handleEventBlurRawTextTextArea(event) {
@@ -118,7 +120,8 @@
 
             htmlElementInputOfRemoveDuplicateListItemTextarea.addEventListener("blur", handleEventBlurRawTextTextArea);
 
-            const initialData = (("abba").split("").join("\n\n"));
+            document.getElementById("separator-input").value = defaultListItemSeparator;
+            const initialData = (("abba").split("").join(utils.parseEscapeSequence(defaultListItemSeparator)));
             htmlElementInputOfRemoveDuplicateListItemTextarea.value = initialData;
             renderOutputData(processInputData(initialData));
         </script>
