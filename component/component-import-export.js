@@ -38,9 +38,14 @@ function handleEventBlurImportExportTextArea(event) {
     }
 
     try {
-        const htmlElementImportExportTextareaValueJsonParsed = JSON.parse(event.target.value);
-        localStorage.setItem(localStorageKey, JSON.stringify(htmlElementImportExportTextareaValueJsonParsed));
-        rerenderMainContent(htmlElementImportExportTextareaValueJsonParsed);
+        let dataFromImportExportTextAreaContent = JSON.parse(event.target.value);
+        dataFromImportExportTextAreaContent = dataFromImportExportTextAreaContent?.map?.((anyListItem) => {
+            anyListItem["uuid"] = crypto.randomUUID();
+            return anyListItem;
+        });
+        localStorage.setItem(localStorageKey, JSON.stringify(dataFromImportExportTextAreaContent));
+        updateImportExportTextAreaContentFromLocalStorage(dataFromImportExportTextAreaContent);
+        rerenderMainContent(dataFromImportExportTextAreaContent);
     } catch (anyError) {
         document.getElementById("placeholder-error").innerHTML = (/*html*/`<p style="color: red;">Format export-an yang di-import tidak sesuai.</p>`);
     }
