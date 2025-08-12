@@ -100,8 +100,8 @@
 
             function renderOutputData({ separatorValue, listFromRawText, listFromRawTextNoDuplicateListItem }) {
                 document.getElementById("output-of-remove-duplicate-list-item-textarea").value = listFromRawTextNoDuplicateListItem.join(separatorValue);
-                document.getElementById("input-of-remove-duplicate-list-item-list-length-container").textContent = (`listed: ${listFromRawText.length} items.`);
-                document.getElementById("output-of-remove-duplicate-list-item-list-length-container").textContent = (`listed: ${listFromRawTextNoDuplicateListItem.length} items.`);
+                document.getElementById("input-of-remove-duplicate-list-item-list-length-container").textContent = (`listed ${listFromRawText.length} items.`);
+                document.getElementById("output-of-remove-duplicate-list-item-list-length-container").textContent = (`listed ${listFromRawTextNoDuplicateListItem.length} items.`);
             }
 
             function handleEventBlurRawTextTextArea(event) {

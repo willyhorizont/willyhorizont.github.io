@@ -75,18 +75,18 @@ const dictionaryZodiacOrShioElements = [
     { "name_ENG": "Earth", "name_IDN": "Tanah", icon: "🌍" },
     { "name_ENG": "Earth", "name_IDN": "Tanah", icon: "🌍" },
 ];
-const getDateOfDateStringYyyyMinusMmMinusDd = (dateStringYyyyMinusMmMinusDd) => new Date(`${dateStringYyyyMinusMmMinusDd}T00:00:00`);
-const getDayInNumericOfDateStringYyyyMinusMmMinusDd = (dateStringYyyyMinusMmMinusDd) => (getDateOfDateStringYyyyMinusMmMinusDd(dateStringYyyyMinusMmMinusDd).getDate());
-const getMonthInNumericOfDateStringYyyyMinusMmMinusDd = (dateStringYyyyMinusMmMinusDd) => ((getDateOfDateStringYyyyMinusMmMinusDd(dateStringYyyyMinusMmMinusDd).getMonth() + 1));
-const getYearInNumericOfDateStringYyyyMinusMmMinusDd = (dateStringYyyyMinusMmMinusDd) => (getDateOfDateStringYyyyMinusMmMinusDd(dateStringYyyyMinusMmMinusDd).getFullYear());
-const getMonthLengthInNumericOfDateStringYyyyMinusMmMinusDd = (dateStringYyyyMinusMmMinusDd) => ((({ anyDate }) => (new Date(anyDate.getFullYear(), (anyDate.getMonth() + 1), 0).getDate()))({ anyDate: new Date(dateStringYyyyMinusMmMinusDd) }));
-const updateDateStringYyyyMinusMmMinusDdByNumericVariable = (dateStringYyyyMinusMmMinusDd, numericVariable) => (((dateStringYyyyMinusMmMinusDdParsedToDate) => (((dateStringYyyyMinusMmMinusDdParsedToDateClone) => ([(dateStringYyyyMinusMmMinusDdParsedToDateClone.setDate(dateStringYyyyMinusMmMinusDdParsedToDateClone.getDate() + numericVariable)), (`${dateStringYyyyMinusMmMinusDdParsedToDateClone.getFullYear()}-${String(dateStringYyyyMinusMmMinusDdParsedToDateClone.getMonth() + 1).padStart(2, "0")}-${String(dateStringYyyyMinusMmMinusDdParsedToDateClone.getDate()).padStart(2, "0")}`)].at(-1)))(new Date(dateStringYyyyMinusMmMinusDdParsedToDate))))(new Date(dateStringYyyyMinusMmMinusDd)));
+const getDateOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen) => new Date(`${dateDotToIsoStringDotSliceZeroCommaTen}T00:00:00`);
+const getDayInNumericOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen) => (getDateOfDateDotToIsoStringDotSliceZeroCommaTen(dateDotToIsoStringDotSliceZeroCommaTen).getDate());
+const getMonthInNumericOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen) => ((getDateOfDateDotToIsoStringDotSliceZeroCommaTen(dateDotToIsoStringDotSliceZeroCommaTen).getMonth() + 1));
+const getYearInNumericOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen) => (getDateOfDateDotToIsoStringDotSliceZeroCommaTen(dateDotToIsoStringDotSliceZeroCommaTen).getFullYear());
+const getMonthLengthInNumericOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen) => ((({ anyDate }) => (new Date(anyDate.getFullYear(), (anyDate.getMonth() + 1), 0).getDate()))({ anyDate: new Date(dateDotToIsoStringDotSliceZeroCommaTen) }));
+const updateDateDotToIsoStringDotSliceZeroCommaTenByNumericVariable = (dateDotToIsoStringDotSliceZeroCommaTen, numericVariable) => (((dateDotToIsoStringDotSliceZeroCommaTenParsedToDate) => (((dateDotToIsoStringDotSliceZeroCommaTenParsedToDateClone) => ([(dateDotToIsoStringDotSliceZeroCommaTenParsedToDateClone.setDate(dateDotToIsoStringDotSliceZeroCommaTenParsedToDateClone.getDate() + numericVariable)), (`${dateDotToIsoStringDotSliceZeroCommaTenParsedToDateClone.getFullYear()}-${String(dateDotToIsoStringDotSliceZeroCommaTenParsedToDateClone.getMonth() + 1).padStart(2, "0")}-${String(dateDotToIsoStringDotSliceZeroCommaTenParsedToDateClone.getDate()).padStart(2, "0")}`)].at(-1)))(new Date(dateDotToIsoStringDotSliceZeroCommaTenParsedToDate))))(new Date(dateDotToIsoStringDotSliceZeroCommaTen)));
 const YEAR_ANNO_DOMINI_GREGORIAN_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN = 2025; // Tahun Baru Masehi 2025
-const YEAR_HIJRIAH_NUMERIC_2024_ANNO_DOMINI_GREGORIAN = 1446; // Idul Fitri 1 Syawal 1446 Hijriah
+const YEAR_EID_AL_FITR_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN = 1446; // Idul Fitri 1 Syawal 1446 Hijriah
 const YEAR_HIJRIAH_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN = 1447; // Satu Muharam / Tahun Baru Hijriah 1 Muharam 1447 Hijriah
 const YEAR_SAKA_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN = 1947; // Hari Suci Nyepi (Tahun Baru Saka 1947)
 const YEAR_CHINESE_LUNAR_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN = 2576; // Tahun Baru Imlek 2576 Kongzili
-const YEAR_BUDDHIST_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN = 2569; // Waisak 2569 Buddhist Era
+const YEAR_BUDDHIST_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN = 2569; // Hari Raya Waisak 2569 Buddhist Era
 const YEAR_INDONESIA_INDEPENDENCE_PROCLAMATION_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN = 80; // Hari Proklamasi Kemerdekaan R.I. ke - 80
 const convertYearAnnoDominiGregorianToHijriah = (yearAnnoDominiGregorianNumeric) => (Math.round(YEAR_HIJRIAH_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN + ((yearAnnoDominiGregorianNumeric - YEAR_ANNO_DOMINI_GREGORIAN_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN) * (33 / 32))));
 const convertYearAnnoDominiGregorianToSaka = (yearAnnoDominiGregorianNumeric) => (YEAR_SAKA_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN + (yearAnnoDominiGregorianNumeric - YEAR_ANNO_DOMINI_GREGORIAN_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN));
@@ -101,13 +101,13 @@ const utilsDate = {
     dictionaryMonth,
     dictionaryZodiacsOrShios,
     dictionaryZodiacOrShioElements,
-    getDayInNumericOfDateStringYyyyMinusMmMinusDd,
-    getMonthInNumericOfDateStringYyyyMinusMmMinusDd,
-    getYearInNumericOfDateStringYyyyMinusMmMinusDd,
-    getMonthLengthInNumericOfDateStringYyyyMinusMmMinusDd,
-    updateDateStringYyyyMinusMmMinusDdByNumericVariable,
+    getDayInNumericOfDateDotToIsoStringDotSliceZeroCommaTen,
+    getMonthInNumericOfDateDotToIsoStringDotSliceZeroCommaTen,
+    getYearInNumericOfDateDotToIsoStringDotSliceZeroCommaTen,
+    getMonthLengthInNumericOfDateDotToIsoStringDotSliceZeroCommaTen,
+    updateDateDotToIsoStringDotSliceZeroCommaTenByNumericVariable,
     YEAR_ANNO_DOMINI_GREGORIAN_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN,
-    YEAR_HIJRIAH_NUMERIC_2024_ANNO_DOMINI_GREGORIAN,
+    YEAR_EID_AL_FITR_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN,
     YEAR_HIJRIAH_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN,
     YEAR_SAKA_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN,
     YEAR_CHINESE_LUNAR_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN,
