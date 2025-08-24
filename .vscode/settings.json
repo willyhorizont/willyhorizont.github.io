@@ -1,5 +1,5 @@
 {
-    "workbench.preferredDarkColorTheme": "GitHub Dark High Contrast",
+    "workbench.preferredDarkColorTheme": "Visual Studio 2017 Dark - C++",
     "workbench.colorTheme": "Visual Studio 2017 Dark - C++",
     // "workbench.colorTheme": "Visual Studio Dark - C++",
     // "workbench.colorTheme": "GitHub Dark",
@@ -51,9 +51,11 @@
         "panel.background": "#29161d",
     },
 
+    "workbench.editor.tabSizing": "fixed",
+    "workbench.editor.tabSizingFixedMinWidth": 38,
+    "workbench.editor.pinnedTabSizing": "compact",
     "workbench.sideBar.location": "right",
     "workbench.editor.pinnedTabsOnSeparateRow": true,
-    "workbench.editor.tabSizing": "fit",
     "workbench.editor.titleScrollbarSizing": "large",
     "workbench.editor.wrapTabs": true,
     "workbench.iconTheme": "vscode-icons",

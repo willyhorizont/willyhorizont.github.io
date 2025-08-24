@@ -54,8 +54,10 @@
                 background-color: var(--light-background-color); color: var(--light-text-color);
             }
 
-            html[data-theme="dark"] .price-input {
-                background-color: var(--dark-background-color); color: var(--dark-text-color);
+            html[data-theme="dark"] {
+                .price-input {
+                    background-color: var(--dark-background-color); color: var(--dark-text-color);
+                }
             }
         </style>
     </head>
@@ -79,6 +81,9 @@
         </footer>
         <script src="../../component/component-navbar.js"></script>
 
+        <script>
+            const chipInputPlaceholder = ("item a 2, item b 1, item c 4, ...");
+        </script>
         <script src="../../component/component-chip-input.js"></script>
 
         <script>
@@ -96,11 +101,15 @@
             }
 
             function getDataFromMainContent() {
-                const dataFromImportExportTextAreaContent = Array.from(document.getElementById("expense-tracker-container").children).map((htmlElementExpense) => ({
-                    "uuid": (htmlElementExpense.dataset["uuid"] || ""),
-                    "price": (htmlElementExpense.dataset["price"] || ""),
-                    "items": (JSON.parse(htmlElementExpense.children[1].dataset["items"]) || []),
-                }));
+                const dataFromImportExportTextAreaContent = (Array.from(document.getElementById("expense-tracker-container").children).reduce(((dataFromImportExportTextAreaContentCurrentResult, htmlElementExpense) => {
+                    const newExpenseContainerContent = ({
+                        "uuid": (htmlElementExpense.dataset["uuid"] || ""),
+                        "price": (htmlElementExpense.dataset["price"] || ""),
+                        "items": (JSON.parse(htmlElementExpense.children[1].dataset["items"]) || []),
+                    });
+                    if (((newExpenseContainerContent?.price === "") && (utils.checkIsArray(newExpenseContainerContent?.items) && (newExpenseContainerContent?.items?.length === 0))) === false) dataFromImportExportTextAreaContentCurrentResult.push(newExpenseContainerContent);
+                    return dataFromImportExportTextAreaContentCurrentResult;
+                }), []));
                 return ((dataFromImportExportTextAreaContent.length === 0) ? null : dataFromImportExportTextAreaContent);
             }
         </script>
@@ -131,10 +140,9 @@
 
             function updateTotalExpenses() {
                 const htmlElementTotalExpenseContainer = document.getElementById("total-expense-container");
-                const totalExpensesInNumeric = (Array.from(document.getElementById("expense-tracker-container").children).reduce(((currentResult, htmlElementExpense) => {
-                    const priceInString = htmlElementExpense.dataset["price"].replace((/_/g), "");
-                    if (!priceInString) return (currentResult + 0);
-                    return (currentResult + parseFloat(priceInString));
+                const totalExpensesInNumeric = (Array.from(document.getElementById("expense-tracker-container").children).reduce(((totalExpensesInNumericCurrentResult, htmlElementExpense) => {
+                    const priceInString = (htmlElementExpense.dataset["price"].replace((/_/g), "") || 0);
+                    return (totalExpensesInNumericCurrentResult + parseFloat(priceInString));
                 }), 0));
                 htmlElementTotalExpenseContainer.textContent = totalExpensesInNumeric.toString().replace(utils.regexPattern["three_digit_grouping"], "_");
             }
@@ -143,6 +151,8 @@
                 const htmlElementExpenseNew = createHtmlElementExpense();
                 const htmlElementExpenseTrackerContainer = document.getElementById("expense-tracker-container");
                 htmlElementExpenseTrackerContainer.appendChild(htmlElementExpenseNew);
+                const htmlElementChipInputNew = htmlElementExpenseNew.querySelector('[data-id="chip-input"]');
+                htmlElementChipInputNew.placeholder = chipInputPlaceholder;
                 const htmlElementPriceInputNew = htmlElementExpenseNew.querySelector('[data-id="price-input"]');
                 if (htmlElementPriceInputNew) htmlElementPriceInputNew.focus();
             }

@@ -14,15 +14,12 @@
     user-select: none;
 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); border: 1px solid var(--light-border-color); border-radius: 8px; display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;
+
+    &:hover {
+        background-color: var(--light-accent-color-1);
+    }
 }
 
-.link-support-item-container:hover {
-    background-color: var(--light-accent-color-1);
-}
-
-html[data-theme="dark"] .link-support-item-container:hover {
-    background-color: var(--dark-accent-color-10);
-}
 
 .link-support-item {
     display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; flex-wrap: wrap; column-gap: 8px;
@@ -30,15 +27,12 @@ html[data-theme="dark"] .link-support-item-container:hover {
 
 .link-support-item-provider {
     display: flex; flex-direction: row; align-items: center; justify-content: center;
+
+    p {
+        color: var(--light-text-color);
+    }
 }
 
-.link-support-item-provider p {
-    color: var(--light-text-color);
-}
-
-html[data-theme="dark"] .link-support-item-provider p {
-    color: var(--dark-text-color);
-}
 
 .link-support-item-prefix {
     white-space: nowrap;
@@ -50,4 +44,17 @@ html[data-theme="dark"] .link-support-item-provider p {
 
 .link-support-item-provider-name {
     white-space: nowrap; margin-left: 4px;
+}
+
+html[data-theme="dark"] {
+    .link-support-item-container {
+        &:hover {
+            background-color: var(--dark-accent-color-10);
+        }
+    }
+    .link-support-item-provider {
+        p {
+            color: var(--dark-text-color);
+        }
+    }
 }

@@ -53,8 +53,10 @@
                 background-color: var(--light-background-color); color: var(--light-text-color);
             }
 
-            html[data-theme="dark"] .separator-input {
-                background-color: var(--dark-background-color); color: var(--dark-text-color);
+            html[data-theme="dark"] {
+                .separator-input {
+                    background-color: var(--dark-background-color); color: var(--dark-text-color);
+                }
             }
         </style>
     </head>
@@ -111,7 +113,7 @@
                     return;
                 }
 
-                renderOutputData(processInputData(htmlElementInputOfRemoveDuplicateListItemTextareaValueTrimmed))
+                renderOutputData(processInputData(htmlElementInputOfRemoveDuplicateListItemTextareaValueTrimmed));
 
                 event.preventDefault();
             }

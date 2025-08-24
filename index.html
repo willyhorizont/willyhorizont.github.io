@@ -53,20 +53,21 @@
                 }
             }
 
-            .bar-chart-container {
+            .programming-languages-bar-chart-container {
                 background-color: var(--light-background-color);
-            }
-
-            html[data-theme="dark"] .bar-chart-container {
-                background-color: var(--dark-background-color);
             }
 
             .programming-languages-card {
                 border: 1px solid var(--light-border-color);;
             }
 
-            html[data-theme="dark"] .programming-languages-card {
-                border: 1px solid var(--dark-border-color);
+            html[data-theme="dark"] {
+                .programming-languages-bar-chart-container {
+                    background-color: var(--dark-background-color);
+                }
+                .programming-languages-card {
+                    border: 1px solid var(--dark-border-color);
+                }
             }
         </style>
     </head>
@@ -80,8 +81,8 @@
                         <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: left; flex: 1;">
                             <div style="text-align: center;">
                                 <h1 style="font-size: 3em;">Hello, I'm Willy Horizont!</h1>
-                                <p style="font-size: 2em;">I'm a <span style="color: #0F7A71;">Polyglot Programmer</span> that <span style="color: #0F7A71;">"touch grass"</span> 😎</p>
-                                <p style="font-size: 2em;">I love to code!</p>
+                                <p style="font-size: 2em;">I'm a <span style="color: #0F7A71;">Polyglot</span> AND/OR <span style="color: #0F7A71;">Programmer</span> that <span style="color: #0F7A71;">"touch grass"</span> :)</p>
+                                <p style="font-size: 2em;">I loves <span style="color: #0F7A71;">Programming</span> AND/OR <span style="color: #0F7A71;">Languages</span> !</p>
                             </div>
                         </div>
                     </div>
@@ -91,9 +92,9 @@
                         <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
                             <div style="display: flex; flex-direction: column;">
                                 <p style="margin-bottom: 16px;">Programming Languages</p>
-                                <div id="bar-chart-container" class="bar-chart-container" style="display: flex; width: 100%; height: 8px; border-radius: 6px; column-gap: 2px; overflow: hidden;">
+                                <div id="programming-languages-bar-chart-container" class="programming-languages-bar-chart-container" style="display: flex; width: 100%; height: 8px; border-radius: 6px; column-gap: 2px; overflow: hidden;">
                                 </div>
-                                <div id="languages-container" style="display: flex; flex-direction: row; margin-top: 8px; flex-wrap: wrap; row-gap: 8px; padding: 4px;">
+                                <div id="programming-languages-text-container" style="display: flex; flex-direction: row; margin-top: 8px; flex-wrap: wrap; row-gap: 8px; padding: 4px;">
                                 </div>
                             </div>
                         </div>
@@ -106,7 +107,7 @@
         </footer>
         <script src="component/component-navbar.js"></script>
         <script>
-            const languages = [
+            const programmingLanguages = [
                 {
                     "language_name": "JavaScript",
                     "language_url": "https://github.com/willyhorizont/learn_programming_languages_with_javascript/tree/main/codes/javascript/src",
@@ -309,13 +310,21 @@
                 },
             ];
 
-            const [barChartContainerInnerHtml, languagesContainerInnerHtml] = languages.reduce(([barChartContainerInnerHtmlCurrent, languagesContainerInnerHtmlCurrent], language) => ([(/*html*/`${barChartContainerInnerHtmlCurrent}<div style="width: ${(100 / languages.length)}%; height: 100%; background-color: ${language["color_hex"]};"></div>`), (/*html*/`${languagesContainerInnerHtmlCurrent}<a href="${language.language_url}" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit; display: flex; flex-direction: row; align-items: center; margin-right: 16px;">
-    <div style="width: 0.5em; height: 0.5em; border-radius: 50%; margin-right: 8px; background-color: ${language["color_hex"]};"></div>
-    <p style="font-size: 0.75em; margin-right: 8px;">${language["language_name"]}</p>
-    <p style="font-size: 0.75em;">${(100 / languages.length).toFixed(2)}%</p>
-</a>`)]), ["", ""]);
-            document.getElementById("bar-chart-container").innerHTML = barChartContainerInnerHtml;
-            document.getElementById("languages-container").innerHTML = languagesContainerInnerHtml;
+            const [programmingLanguageBarChartContainerInnerHtml, programmingLanguagesTextContainerInnerHtml] = programmingLanguages.reduce((([programmingLanguageBarChartContainerInnerHtmlCurrent, programmingLanguagesTextContainerInnerHtmlCurrent], programmingLanguage) => ([
+                (/*html*/`
+                    ${programmingLanguageBarChartContainerInnerHtmlCurrent}
+                    <div data-id="programming-language-percentage" style="width: ${(100 / programmingLanguages.length)}%; height: 100%; background-color: ${programmingLanguage["color_hex"]};">
+                    </div>`),
+                (/*html*/`
+                    ${programmingLanguagesTextContainerInnerHtmlCurrent}
+                    <a data-id="programming-language-text" href="${programmingLanguage.language_url}" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit; display: flex; flex-direction: row; align-items: center; margin-right: 16px;">
+                        <div style="width: 0.5em; height: 0.5em; border-radius: 50%; margin-right: 8px; background-color: ${programmingLanguage["color_hex"]};"></div>
+                        <p style="font-size: 0.75em; margin-right: 8px;">${programmingLanguage["language_name"]}</p>
+                        <p style="font-size: 0.75em;">${(100 / programmingLanguages.length).toFixed(2)}%</p>
+                    </a>`),
+            ])), ["", ""]);
+            document.getElementById("programming-languages-bar-chart-container").innerHTML = programmingLanguageBarChartContainerInnerHtml;
+            document.getElementById("programming-languages-text-container").innerHTML = programmingLanguagesTextContainerInnerHtml;
         </script>
     </body>
 </html>

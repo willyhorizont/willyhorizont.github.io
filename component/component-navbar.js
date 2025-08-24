@@ -13,8 +13,8 @@ function toggleNavbarMenu() {
     const isNavbarMenuSmallScreen = htmlElementNavbar.classList.toggle("navbar-menu-small-screen");
 
     function handleEventClickOutsideHtmlElementNavbarMenuSmallScreen(event) {
-        if (htmlElementHamburgerMenuButton.contains(event.target)) return;
         if (htmlElementNavbarMenuList.contains(event.target)) return;
+        if (htmlElementHamburgerMenuButton.contains(event.target)) return;
 
         htmlElementNavbar.classList.remove("navbar-menu-small-screen");
         document.removeEventListener("click", handleEventClickOutsideHtmlElementNavbarMenuSmallScreen);

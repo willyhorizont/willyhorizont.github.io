@@ -1,21 +1,20 @@
 /*
 req:
+    chipInputPlaceholder
     syncLocalStorageDataImportExportTextAreaContentWithMainContent
 */
 
-const chipInputPlaceholder = ("item a 2, item b 1, item c 4, ...");
-
 function createHtmlElementChipTextContainer(arrayOfEntryProperty) {
-    return utilsWeb.createHtmlElement((/*html*/`<span style="white-space: nowrap;"></span>`), { arrayOfEntryProperty });
+    return utilsWeb.createHtmlElement((/*html*/`<span data-id="chip-text" style="white-space: nowrap;"></span>`), { arrayOfEntryProperty, arrayOfElementConfig: ([{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleElementClickChipText }]) });
 }
 
 function createHtmlElementChipRemoveButton() {
-    return utilsWeb.appendChildrenReturnParent(utilsWeb.createHtmlElement(/*html*/`<div data-id="chip-remove-button-container" style="display: flex; align-items: center; justify-content: center; line-height: 1.2em; background-color: var(--accent-color-4); color: var(--dark-text-color); width: 1.6em; aspect-ratio: 1 / 1; border-radius: 50%;"></div>`),
-        utilsWeb.createHtmlElement((/*html*/`<span data-id="chip-remove-button" style="cursor: pointer; font-weight: bold;">×</span>`), { arrayOfElementConfig: ([{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleElementClickChipRemoveButton }]) }));
+    return utilsWeb.appendChildrenReturnParent(utilsWeb.createHtmlElement((/*html*/`<div data-id="chip-remove-button-container" style="display: flex; align-items: center; justify-content: center; line-height: 1.2em; background-color: var(--accent-color-4); color: var(--dark-text-color); width: 1.6em; aspect-ratio: 1 / 1; border-radius: 50%;"></div>`), { arrayOfElementConfig: ([{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleElementClickChipRemoveButtonContainer }]) }),
+        utilsWeb.createHtmlElement((/*html*/`<span data-id="chip-remove-button" style="cursor: pointer; font-weight: bold;">×</span>`)));
 }
 
 function createHtmlElementChip(chipTextTrimmed) {
-    const htmlElementChipContainer = utilsWeb.createHtmlElement((/*html*/`<div data-id="chip-container" style="margin: 8px 4px; padding: 0.2em 0.4em; border-radius: 0.2em; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; border: 1px solid var(--light-border-color); color: var(--light-text-color); background-color: #ffdddd;"></div>`), { arrayOfEntryDataset: [["item", chipTextTrimmed]] });
+    const htmlElementChipContainer = utilsWeb.createHtmlElement((/*html*/`<div data-id="chip-container" style="cursor: pointer; margin: 8px 4px; padding: 0.2em 0.4em; border-radius: 0.2em; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; border: 1px solid var(--light-border-color); color: var(--light-text-color); background-color: #ffdddd;"></div>`), { arrayOfEntryDataset: [["item", chipTextTrimmed]] });
     htmlElementChipContainer.appendChild(createHtmlElementChipTextContainer([["textContent", chipTextTrimmed]]));
     htmlElementChipContainer.appendChild(createHtmlElementChipRemoveButton());
     return htmlElementChipContainer;
@@ -23,6 +22,10 @@ function createHtmlElementChip(chipTextTrimmed) {
 
 function createHtmlElementChipInput(placeholderValue = "") {
     return utilsWeb.createHtmlElement((/*html*/`<input data-id="chip-input" class="chip-input" style="flex: 1 1 auto; margin: 8px 4px 8px 4px; padding: 8px 4px; border: none; outline: none;" name="chip-input" type="text" />`), { arrayOfElementConfig: ([{ handlerRefName: "refEventHandlerKeyDown", eventType: "keydown", eventHandler: handleEventKeyDownChipInput }, { handlerRefName: "refEventHandlerBlur", eventType: "blur", eventHandler: handleEventBlurChipInput }]), arrayOfEntryAttribute: ([["placeholder", placeholderValue]]) });
+}
+
+function createHtmlElementChipUpdateInput(chipTextTrimmed = "") {
+    return utilsWeb.createHtmlElement((/*html*/`<input data-id="chip-update-input" class="chip-input" style="flex: 1 1 auto; margin: 8px 4px 8px 4px; padding: 8px 4px; border: none; outline: none;" name="chip-update-input" type="text" />`), { arrayOfElementConfig: ([{ handlerRefName: "refEventHandlerKeyDown", eventType: "keydown", eventHandler: handleEventKeyDownChipUpdateInput }, { handlerRefName: "refEventHandlerBlur", eventType: "blur", eventHandler: handleEventBlurChipUpdateInput }]), arrayOfEntryAttribute: ([["placeholder", chipTextTrimmed]]), arrayOfEntryDataset: [["item", chipTextTrimmed]] });
 }
 
 function createHtmlElementChipInputContainer(itemList) {
@@ -59,10 +62,63 @@ function handleEventBlurChipInput(event) {
     event.preventDefault();
 }
 
+function handleEventKeyDownChipUpdateInput(event) {
+    if (event.key === "Enter") {
+        if (event.target.value.trim() === "") {
+            event.preventDefault();
+            return;
+        }
+
+        manageChipUpdateInputValue(event);
+        // const htmlElementInputChipNew = manageChipUpdateInputValue(event);
+        // htmlElementInputChipNew.setAttribute("placeholder", chipInputPlaceholder);
+        // htmlElementInputChipNew.focus();
+        event.preventDefault();
+    }
+}
+
+function handleEventBlurChipUpdateInput(event) {
+    if (event.target.value.trim() === "") {
+        event.target.setAttribute("placeholder", event.target.dataset["item"]);
+        event.target.value = (event.target.dataset["item"] || "");
+        event.target.focus();
+        event.preventDefault();
+        return;
+    }
+    const htmlElementInputChipNew = manageChipUpdateInputValue(event);
+    htmlElementInputChipNew.setAttribute("placeholder", "");
+    // htmlElementInputChipNew.focus();
+    event.preventDefault();
+}
+
+function handleElementClickChipText(htmlElementChipText) {
+    return function (event) {
+        const htmlElementChipUpdateInput = createHtmlElementChipUpdateInput(htmlElementChipText.parentElement.dataset["item"]);
+        htmlElementChipText.parentElement.replaceWith(htmlElementChipUpdateInput);
+        htmlElementChipUpdateInput.setAttribute("placeholder", chipInputPlaceholder);
+        htmlElementChipUpdateInput.value = (event.target.parentElement.dataset["item"] || "");
+        htmlElementChipUpdateInput.focus();
+    }
+}
+
 function handleElementClickChipInputContainer(htmlElementChipInputContainer) {
     return function (event) {
-        const htmlElementChipInput = htmlElementChipInputContainer.querySelector("input");
+        let isNotAsExpected = false;
+        htmlElementChipInputContainer.querySelectorAll('[data-id="chip-container"]').forEach((htmlElementChipContainer) => {
+            if ((event?.target?.parentElement?.dataset?.["item"] === undefined) || (event?.target?.parentElement?.parentElement?.dataset?.["item"] === undefined)) {
+                isNotAsExpected = true;
+                return;
+            }
+            if ((htmlElementChipInputContainer.contains(event.target.parentElement)) || htmlElementChipInputContainer.contains(event.target.parentElement.parentElement)) {
+                isNotAsExpected = true;
+                return;
+            }
+        });
+        if (isNotAsExpected) return;
+
+        const htmlElementChipInput = htmlElementChipInputContainer.querySelector('[data-id="chip-input"]');
         htmlElementChipInput.setAttribute("placeholder", chipInputPlaceholder);
+        htmlElementChipInput.value = (event.target.parentElement.dataset["item"] || "");
         htmlElementChipInput.focus();
     }
 }
@@ -71,10 +127,24 @@ function handleElementClickChipRemoveButton(htmlElementChipRemoveButton) {
     return function(event) {
         const htmlElementChipInputContainer = htmlElementChipRemoveButton.parentElement.parentElement.parentElement;
         const htmlElementChipContainer = htmlElementChipRemoveButton.parentElement.parentElement;
-        htmlElementChipInputContainer.dataset["items"] = JSON.stringify(JSON.parse(htmlElementChipInputContainer.dataset["items"]).filter((chipText) => (chipText !== htmlElementChipContainer.dataset["item"])));
+        htmlElementChipInputContainer.dataset["items"] = JSON.stringify(JSON.parse(htmlElementChipInputContainer.dataset["items"] || []).filter((chipText) => (chipText !== htmlElementChipContainer.dataset["item"])));
         htmlElementChipRemoveButton.removeEventListener("click", htmlElementChipRemoveButton.refElementHandlerClick);
+        htmlElementChipContainer.removeEventListener("click", htmlElementChipContainer.refElementHandlerClick);
         htmlElementChipContainer.remove();
-        htmlElementChipInputContainer.querySelector("input").setAttribute("placeholder", chipInputPlaceholder);
+        htmlElementChipInputContainer.querySelector('[data-id="chip-input"]').setAttribute("placeholder", chipInputPlaceholder);
+        syncLocalStorageDataImportExportTextAreaContentWithMainContent();
+    }
+}
+
+function handleElementClickChipRemoveButtonContainer(htmlElementChipRemoveButtonContainer) {
+    return function(event) {
+        const htmlElementChipInputContainer = htmlElementChipRemoveButtonContainer.parentElement.parentElement;
+        const htmlElementChipContainer = htmlElementChipRemoveButtonContainer.parentElement;
+        htmlElementChipInputContainer.dataset["items"] = JSON.stringify(JSON.parse(htmlElementChipInputContainer.dataset["items"] || []).filter((chipText) => (chipText !== htmlElementChipContainer.dataset["item"])));
+        htmlElementChipRemoveButtonContainer.removeEventListener("click", htmlElementChipRemoveButtonContainer.refElementHandlerClick);
+        htmlElementChipContainer.removeEventListener("click", htmlElementChipContainer.refElementHandlerClick);
+        htmlElementChipContainer.remove();
+        htmlElementChipInputContainer.querySelector('[data-id="chip-input"]').setAttribute("placeholder", chipInputPlaceholder);
         syncLocalStorageDataImportExportTextAreaContentWithMainContent();
     }
 }
@@ -84,7 +154,7 @@ function manageChipInputValue(event) {
     const htmlElementChipInputContainer = htmlElementChipInput.parentElement;
     const chipInputValueAsList = htmlElementChipInput.value.split(",").filter((chipText) => (chipText.trim() !== ""));
     const chipInputValueAsListMergedWithDataset = ((htmlElementChipInputContainer.dataset["items"] === "") ? chipInputValueAsList : ((() => {
-        const datasetItemsJsonParsed = JSON.parse(htmlElementChipInputContainer.dataset["items"]);
+        const datasetItemsJsonParsed = JSON.parse(htmlElementChipInputContainer.dataset["items"] || []);
         chipInputValueAsList.forEach((chipText) => {
             datasetItemsJsonParsed.push(chipText);
         })
@@ -104,6 +174,38 @@ function manageChipInputValue(event) {
     htmlElementChipInput.removeEventListener("keydown", htmlElementChipInput.refEventHandlerKeyDown);
     htmlElementChipInput.removeEventListener("blur", htmlElementChipInput.refEventHandlerBlur);
     htmlElementChipInput.remove();
+
+    const htmlElementChipInputNew = createHtmlElementChipInput();
+
+    htmlElementChipInputContainer.appendChild(htmlElementChipInputNew);
+
+    syncLocalStorageDataImportExportTextAreaContentWithMainContent();
+
+    return htmlElementChipInputNew;
+}
+
+function manageChipUpdateInputValue(event) {
+    const htmlElementChipUpdateInputIndex = Array.from(event.target.parentElement.children).indexOf(event.target);
+    const htmlElementChipUpdateInput = event.target;
+    const htmlElementChipInputContainer = htmlElementChipUpdateInput.parentElement;
+    const datasetItemsNewValue = JSON.parse(htmlElementChipInputContainer.dataset["items"] || []).filter((chipTextInsideDataset, chipTextInsideDatasetIndex) => ((htmlElementChipUpdateInput.value.includes(chipTextInsideDataset) === false) && (chipTextInsideDatasetIndex !== htmlElementChipUpdateInputIndex)));
+    const chipUpdateInputValueAsList = htmlElementChipUpdateInput.value.split(",").filter((chipText) => (chipText.trim() !== ""));
+    chipUpdateInputValueAsList.forEach((chipText, chipTextIndex) => {
+        datasetItemsNewValue.splice((htmlElementChipUpdateInputIndex + chipTextIndex), 0, chipText);
+    })
+
+    htmlElementChipInputContainer.dataset["items"] = JSON.stringify(datasetItemsNewValue);
+
+    htmlElementChipInputContainer.innerHTML = "";
+
+    datasetItemsNewValue.forEach((chipText) => {
+        htmlElementChipInputContainer.appendChild(createHtmlElementChip(chipText));
+    });
+
+    htmlElementChipUpdateInput.value = "";
+    htmlElementChipUpdateInput.removeEventListener("keydown", htmlElementChipUpdateInput.refEventHandlerKeyDown);
+    htmlElementChipUpdateInput.removeEventListener("blur", htmlElementChipUpdateInput.refEventHandlerBlur);
+    htmlElementChipUpdateInput.remove();
 
     const htmlElementChipInputNew = createHtmlElementChipInput();
 

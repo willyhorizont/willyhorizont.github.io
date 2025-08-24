@@ -50,49 +50,44 @@
         <link rel="stylesheet" href="../../component/component-link-support.css" />
 
         <style>
-            .group-card {
+            .event-group-card {
                 color: var(--light-text-color);
                 background-color: var(--light-background-color);
                 border: 1px solid var(--light-border-color);
             }
-
-            html[data-theme="dark"] .group-card {
-                color: var(--dark-text-color);
-                background-color: var(--dark-background-color);
-            }
-
             .event-detail-text-day-off-recommendation {
                 color: var(--accent-color-4);
-                background-color: var(--light-background-color);
+                background-color: var(--light-accent-color-3);
                 border: 1px solid var(--accent-color-4);
                 font-weight: 900;
             }
-
-            html[data-theme="dark"] .event-detail-text-day-off-recommendation {
-                color: var(--dark-text-color);
-                background-color: var(--dark-accent-color-17);
-                border: 1px solid var(--dark-border-color);
-            }
-
             .event-detail-text-vacation {
                 color: var(--accent-color-4);
-                background-color: var(--light-background-color);
+                background-color: var(--light-accent-color-3);
                 border: 1px solid var(--accent-color-4);
                 font-weight: 900;
             }
-
-            html[data-theme="dark"] .event-detail-text-vacation {
-                color: var(--dark-text-color);
-                background-color: var(--dark-accent-color-17);
-                border: 1px solid var(--dark-border-color);
-            }
-
-            .card-footer {
+            .event-card-footer {
                 border-top: 1px solid var(--light-border-color); 
             }
-
-            html[data-theme="dark"] .card-footer {
-                border-top: 1px solid var(--light-border-color); 
+            html[data-theme="dark"] {
+                .event-group-card {
+                    color: var(--dark-text-color);
+                    background-color: var(--dark-background-color);
+                }
+                .event-detail-text-day-off-recommendation {
+                    color: var(--dark-text-color);
+                    background-color: var(--dark-accent-color-17);
+                    border: 1px solid var(--dark-border-color);
+                }
+                .event-detail-text-vacation {
+                    color: var(--dark-text-color);
+                    background-color: var(--dark-accent-color-17);
+                    border: 1px solid var(--dark-border-color);
+                }
+                .event-card-footer {
+                    border-top: 1px solid var(--light-border-color); 
+                }
             }
         </style>
     </head>
@@ -116,6 +111,7 @@
         <script src="../../component/component-navbar.js"></script>
         <script src="../../component/component-loading-spinner.js"></script>
         <script>
+            const htmlTemplateStringIndentationPrefix = (" ".repeat(2));
             const getPrefixSuffixOfText = (anyString, textToFind) => (((indexOfTextToFind) => ([(anyString.substring(0, indexOfTextToFind)), (anyString.substring((indexOfTextToFind + textToFind.length), anyString.length))]))(anyString.indexOf(textToFind)));
             const getYearFromUrl = () => ((({ yearStringNew }) => ((({ yearNumericNew }) => ([yearNumericNew.toString(), yearNumericNew]))({ yearNumericNew: ((yearStringNew === null) ? new Date().getFullYear() : parseInt(yearStringNew, 10)) })))({ yearStringNew: new URLSearchParams(window.location.search).get("year") }));
             const getShortDayNameOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen) => (new Intl.DateTimeFormat("id-ID", { weekday: "short" }).format(new Date(dateDotToIsoStringDotSliceZeroCommaTen)));
@@ -269,7 +265,9 @@
                     "event_month": getShortMonthNameOfDateDotToIsoStringDotSliceZeroCommaTen(yearPlusOneNewYearDateDotToIsoStringDotSliceZeroCommaTen),
                 }));
 
-                return Array.from(abcCalendarEventHolidayIndonesiaDataNewMap.values()).sort((a, b) => (new Date(a["event_date"]) - new Date(b["event_date"])));
+                const modifyAbcCalendarEventHolidayIndonesiaDataResult = Array.from(abcCalendarEventHolidayIndonesiaDataNewMap.values());
+                modifyAbcCalendarEventHolidayIndonesiaDataResult.sort((a, b) => (new Date(a["event_date"]) - new Date(b["event_date"])));
+                return modifyAbcCalendarEventHolidayIndonesiaDataResult;
             };
 
             const groupAbcCalendarEventHolidayIndonesiaData = (abcCalendarEventHolidayIndonesiaData) => (abcCalendarEventHolidayIndonesiaData.reduce((currentResult, abcCalendarEventHolidayIndonesia) => {
@@ -300,26 +298,31 @@
 
                     const [amountVacation, amountDayOffRecomendation] = abcCalendarEventHolidayIndonesiaDataGrouped.reduce((totalHolidayCurrentResult, currentEvent, currentItemIndex) => ((currentEvent["event_name"] === eventNameDefault) ? ([totalHolidayCurrentResult.at(0), (totalHolidayCurrentResult.at(1) + 1)]) : ([(totalHolidayCurrentResult.at(0) + 1), totalHolidayCurrentResult.at(1)])), [0, 0]);
 
-                    const abcCalendarEventHolidayIndonesiaDataGroupedRowsString = abcCalendarEventHolidayIndonesiaDataGrouped.map((currentEvent, currentItemIndex) => {
+                    const abcCalendarEventHolidayIndonesiaDataGroupedRowsString = (abcCalendarEventHolidayIndonesiaDataGrouped.map((currentEvent, currentItemIndex) => {
                         const abcCalendarEventHolidayIndonesiaDataGroupedEventDate = (utilsDate.getDayInNumericOfDateDotToIsoStringDotSliceZeroCommaTen(currentEvent["event_date"])).toString().padStart(2, "0");
                         const abcCalendarEventHolidayIndonesiaDataGroupedEventShortDayName = getShortDayNameOfDateDotToIsoStringDotSliceZeroCommaTen(currentEvent["event_date"]);
                         const abcCalendarEventHolidayIndonesiaDataGroupedEventShortMonthName = getShortMonthNameOfDateDotToIsoStringDotSliceZeroCommaTen(currentEvent["event_date"]);
                         const abcCalendarEventHolidayIndonesiaDataGroupedEvent = (`${abcCalendarEventHolidayIndonesiaDataGroupedEventShortDayName} ${abcCalendarEventHolidayIndonesiaDataGroupedEventDate} ${abcCalendarEventHolidayIndonesiaDataGroupedEventShortMonthName} : ${currentEvent["event_name"]}`);
-                        return (/*html*/`<p class="${(currentEvent["event_name"] === eventNameDefault) ? ("event-detail-text-day-off-recommendation") : ("event-detail-text-vacation")}" style="font-family: monospace; white-space: pre; padding: 4px 8px; margin-left: 4px; margin-right: 4px; margin-top: 4px; margin-bottom: ${(currentItemIndex === (abcCalendarEventHolidayIndonesiaDataGrouped.length - 1)) ? 4 : 1}px; text-wrap: wrap;">${abcCalendarEventHolidayIndonesiaDataGroupedEvent}</p>`)
-                    }).join("");
+                        return (/*html*/`
+                            <p class="${(currentEvent["event_name"] === eventNameDefault) ? ("event-detail-text-day-off-recommendation") : ("event-detail-text-vacation")}" style="font-family: monospace; white-space: pre; padding: 4px 8px; margin-left: 4px; margin-right: 4px; margin-top: 4px; margin-bottom: ${(currentItemIndex === (abcCalendarEventHolidayIndonesiaDataGrouped.length - 1)) ? 4 : 1}px; text-wrap: wrap;">
+                                ${abcCalendarEventHolidayIndonesiaDataGroupedEvent}
+                            </p>`);
+                    }).join(""));
 
                     const abcCalendarEventHolidayIndonesiaDataGroupedSummaryDetailString = ((amountDayOffRecomendation > 0) ? (` (Tanggal Merah ${amountVacation} Hari + Ambil Izin Libur ${amountDayOffRecomendation} Hari)`) : (" Tanpa Ambil Izin Libur"));
                     const abcCalendarEventHolidayIndonesiaDataGroupedSummaryString = ((abcCalendarEventHolidayIndonesiaDataGrouped.length == 2) ? ("Tanggal Merah Di Hari Sabtu / Minggu :v") : (`Bisa Liburan ${abcCalendarEventHolidayIndonesiaDataGrouped.length} Hari${abcCalendarEventHolidayIndonesiaDataGroupedSummaryDetailString}`));
 
-                    return (/*html*/`${currentResult}<div class="group-card" style="border-radius: 8px; padding: 0px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden;">
-    <p style="font-size: 1.5em; text-align: center; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; background-color: var(--accent-color-2); color: var(--dark-text-color);">${abcCalendarEventHolidayIndonesiaDataGroupedTitle}</p>
-    <div style="display: flex; flex-direction: column; flex: 1;">
-        ${abcCalendarEventHolidayIndonesiaDataGroupedRowsString}
-    </div>
-    <p class="card-footer" style="text-align: center; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; background-color: var(--accent-color-2); color: var(--dark-text-color); font-weight: bold;">
-        ${abcCalendarEventHolidayIndonesiaDataGroupedSummaryString}
-    </p>
-</div>`);
+                    return (/*html*/`
+                        ${currentResult}
+                        <div class="event-group-card" style="border-radius: 8px; padding: 0px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden;">
+                            <p style="font-size: 1.5em; text-align: center; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; background-color: var(--accent-color-2); color: var(--dark-text-color);">${abcCalendarEventHolidayIndonesiaDataGroupedTitle}</p>
+                            <div style="display: flex; flex-direction: column; flex: 1;">
+                                ${abcCalendarEventHolidayIndonesiaDataGroupedRowsString}
+                            </div>
+                            <p class="event-card-footer" style="text-align: center; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; background-color: var(--accent-color-2); color: var(--dark-text-color); font-weight: bold;">
+                                ${abcCalendarEventHolidayIndonesiaDataGroupedSummaryString}
+                            </p>
+                        </div>`);
                 }, ""));
                 localStorage.setItem(localStorageKeyKalenderLiburGeneratorTimestamp, JSON.stringify(dataTimestamp));
             };

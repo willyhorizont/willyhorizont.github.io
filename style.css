@@ -25,6 +25,7 @@
 
     --light-accent-color-1: #e7ffae;
     --light-accent-color-2: #fae4ff;
+    --light-accent-color-3: #faf0f0;
 
     --dark-accent-color-1: #213000;
     --dark-accent-color-2: #2a0033;
@@ -58,16 +59,6 @@
     user-select: none;
 }
 
-html[data-theme="light"] {
-    background-color: var(--light-background-color);
-    color: var(--light-text-color);
-}
-
-html[data-theme="dark"] {
-    background-color: var(--dark-background-color);
-    color: var(--dark-text-color);
-}
-
 body {
     display: flex; flex-direction: column; min-height: 100vh; line-height: 1.6; font-family: Arial, Helvetica, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
 }
@@ -75,17 +66,13 @@ body {
 a {
     text-decoration: none; transition: opacity 0.2s ease;
     color: var(--light-text-color);
+    /*
+    &:hover {
+        opacity: 0.7;
+    }
+    */
 }
 
-html[data-theme="dark"] a {
-    color: var(--dark-text-color);
-}
-
-/*
-a:hover {
-    opacity: 0.7;
-}
-*/
 
 input,
 button,
@@ -104,8 +91,21 @@ textarea {
     background-color: var(--light-background-color); color: var(--light-text-color);
 }
 
-html[data-theme="dark"] textarea {
-    background-color: var(--dark-background-color); color: var(--dark-text-color);
+html[data-theme="light"] {
+    background-color: var(--light-background-color);
+    color: var(--light-text-color);
+}
+
+html[data-theme="dark"] {
+    background-color: var(--dark-background-color);
+    color: var(--dark-text-color);
+
+    a {
+        color: var(--dark-text-color);
+    }
+    textarea {
+        background-color: var(--dark-background-color); color: var(--dark-text-color);
+    }
 }
 
 /* end of setup */
@@ -125,40 +125,39 @@ header {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+
+    img {
+        vertical-align: middle;
+    }
 }
 
-.app-logo img {
-    vertical-align: middle;
-}
 
 .navbar {
     display: flex; align-items: center; justify-content: space-between;
-}
 
-.navbar a {
-    color: var(--dark-text-color); text-decoration: none;
-}
+    a {
+        color: var(--dark-text-color); text-decoration: none;
+    }
+    ul {
+        list-style: none;
+        display: flex; align-items: center;
 
-.navbar ul {
-    list-style: none;
-    display: flex; align-items: center;
-}
+        li {
+            display: inline-block;
 
-.navbar ul li {
-    display: inline-block;
-}
-
-.navbar ul li a img {
-    height: 48px; vertical-align: middle; margin-right: 8px;
-}
-
-.navbar ul li a span {
-    display: inline-block;
-}
-
-.navbar ul li a img,
-.navbar ul li a span {
-    transition: opacity 0.3s ease;
+            a {
+                img {
+                    height: 48px; vertical-align: middle; margin-right: 8px;
+                    transition: opacity 0.3s ease;
+                }
+                span {
+                    display: inline-block;
+                    transition: opacity 0.3s ease;
+                }
+            }
+        }
+    
+    }
 }
 
 .navbar-hamburger-menu-button {
@@ -170,11 +169,12 @@ header {
     min-width: 30px; text-align: center;
 
     display: none; font-size: 32px; cursor: pointer;
+
+    &:hover {
+        opacity: 0.7;
+    }
 }
 
-.navbar-hamburger-menu-button:hover {
-    opacity: 0.7;
-}
 
 .navbar-menu-item {
     -webkit-user-select: none;
@@ -185,43 +185,47 @@ header {
     margin-right: 32px;
     width: 100%;
     text-align: left;
-}
 
-.navbar-menu-item a {
-    transition: opacity 0.3s ease;
-}
+    a {
+        transition: opacity 0.3s ease;
 
-.navbar-menu-item a:hover {
-    color: var(--light-accent-color-1);
-}
+        &:hover {
+            color: var(--light-accent-color-1);
+        }
+    }
 
-.navbar-menu-item.navbar-hamburger-menu-close-button {
-    display: none;
-}
+    &.navbar-hamburger-menu-close-button {
+        display: none;
+    }
 
-.navbar-menu-item.navbar-menu-item-selected a {
-    color: var(--accent-color-1);
-}
+    &.navbar-menu-item-selected {
+        a {
+            color: var(--accent-color-1);
 
-.navbar-menu-item.navbar-menu-item-selected a:hover {
-    color: var(--light-accent-color-1);
+            &:hover {
+                color: var(--light-accent-color-1);
+            }
+        }
+    }
 }
 
 .toggle-theme-button-container {
     cursor: pointer;
+
+    &:hover {
+        opacity: 0.7;
+    }
 }
 
-.toggle-theme-button-container:hover {
-    opacity: 0.7;
-}
 
 .toggle-theme-button {
     background: none; border: 1px solid #fff; border-radius: 50%; font-size: 0.75em; cursor: pointer; padding-left: 0.02em; aspect-ratio: 1/1;
+
+    &:hover {
+        opacity: 0.7;
+    }
 }
 
-.toggle-theme-button:hover {
-    opacity: 0.7;
-}
 
 main {
     flex: 1;
@@ -245,17 +249,17 @@ footer {
 }
 
 @media screen and (max-width: 768px) {
-    .navbar ul {
-        box-shadow: -2px 0 4px rgba(0, 0, 0, 0.5); text-align: right; background-color: var(--accent-color-2); width: 60%; padding-top: 64px; max-width: 200px; position: fixed; top: 0; right: -100%; z-index: 1000; flex-direction: column; align-items: flex-start;
-    }
-
-    .navbar.navbar-menu-small-screen {
-        align-items: center;
-    }
-
-    .navbar.navbar-menu-small-screen ul {
-        display: flex;
-        right: 0;
+    .navbar {
+        ul {
+            box-shadow: -2px 0 4px rgba(0, 0, 0, 0.5); text-align: right; background-color: var(--accent-color-2); width: 60%; padding-top: 64px; max-width: 200px; position: fixed; top: 0; right: -100%; z-index: 1000; flex-direction: column; align-items: flex-start;
+        }
+        &.navbar-menu-small-screen {
+            align-items: center;
+        }
+        &.navbar-menu-small-screen ul {
+            display: flex;
+            right: 0;
+        }
     }
 
     .navbar-hamburger-menu-button {
@@ -264,25 +268,23 @@ footer {
 
     .navbar-menu-item {
         margin-right: 0px;
-    }
 
-    .navbar-menu-item a {
-        display: block; padding: 16px;
-    }
+        a {
+            display: block; padding: 16px;
+        }
+        &:hover {
+            background-color: var(--dark-background-color);
+        }
+        &.navbar-hamburger-menu-close-button {
+            width: auto;
+            display: block; color: var(--dark-text-color); position: absolute; top: 10px; right: 10px; font-size: 32px; cursor: pointer;
+            text-align: right;
 
-    .navbar-menu-item:hover {
-        background-color: var(--dark-background-color);
-    }
-
-    .navbar-menu-item.navbar-hamburger-menu-close-button {
-        width: auto;
-        display: block; color: var(--dark-text-color); position: absolute; top: 10px; right: 10px; font-size: 32px; cursor: pointer;
-        text-align: right;
-    }
-
-    .navbar-menu-item.navbar-hamburger-menu-close-button:hover {
-        opacity: 0.7;
-        background-color: initial;
+            &:hover {
+                opacity: 0.7;
+                background-color: initial;
+            }
+        }
     }
 
     .toggle-theme-button-container {
