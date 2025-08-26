@@ -47,7 +47,7 @@
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5944204031363480" crossorigin="anonymous"></script>
         <!-- end of Google AdSense -->
 
-        <link rel="stylesheet" href="../../component/component-link-support.css" />
+        <link rel="stylesheet" href="../../component/component-link.css" />
 
         <style>
             .event-group-card {
@@ -102,7 +102,7 @@
                 <div id="loading-spinner"></div>
                 <div id="placeholder-error"></div>
                 <div id="kalender-libur-generator-container" data-display="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 8px; margin-top: 8px;"></div>
-                <div id="placeholder-link-support"></div>
+                <div id="placeholder-link"></div>
             </div>
         </main>
         <footer>
@@ -111,7 +111,6 @@
         <script src="../../component/component-navbar.js"></script>
         <script src="../../component/component-loading-spinner.js"></script>
         <script>
-            const htmlTemplateStringIndentationPrefix = (" ".repeat(2));
             const getPrefixSuffixOfText = (anyString, textToFind) => (((indexOfTextToFind) => ([(anyString.substring(0, indexOfTextToFind)), (anyString.substring((indexOfTextToFind + textToFind.length), anyString.length))]))(anyString.indexOf(textToFind)));
             const getYearFromUrl = () => ((({ yearStringNew }) => ((({ yearNumericNew }) => ([yearNumericNew.toString(), yearNumericNew]))({ yearNumericNew: ((yearStringNew === null) ? new Date().getFullYear() : parseInt(yearStringNew, 10)) })))({ yearStringNew: new URLSearchParams(window.location.search).get("year") }));
             const getShortDayNameOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen) => (new Intl.DateTimeFormat("id-ID", { weekday: "short" }).format(new Date(dateDotToIsoStringDotSliceZeroCommaTen)));
@@ -303,16 +302,13 @@
                         const abcCalendarEventHolidayIndonesiaDataGroupedEventShortDayName = getShortDayNameOfDateDotToIsoStringDotSliceZeroCommaTen(currentEvent["event_date"]);
                         const abcCalendarEventHolidayIndonesiaDataGroupedEventShortMonthName = getShortMonthNameOfDateDotToIsoStringDotSliceZeroCommaTen(currentEvent["event_date"]);
                         const abcCalendarEventHolidayIndonesiaDataGroupedEvent = (`${abcCalendarEventHolidayIndonesiaDataGroupedEventShortDayName} ${abcCalendarEventHolidayIndonesiaDataGroupedEventDate} ${abcCalendarEventHolidayIndonesiaDataGroupedEventShortMonthName} : ${currentEvent["event_name"]}`);
-                        return (/*html*/`
-                            <p class="${(currentEvent["event_name"] === eventNameDefault) ? ("event-detail-text-day-off-recommendation") : ("event-detail-text-vacation")}" style="font-family: monospace; white-space: pre; padding: 4px 8px; margin-left: 4px; margin-right: 4px; margin-top: 4px; margin-bottom: ${(currentItemIndex === (abcCalendarEventHolidayIndonesiaDataGrouped.length - 1)) ? 4 : 1}px; text-wrap: wrap;">
-                                ${abcCalendarEventHolidayIndonesiaDataGroupedEvent}
-                            </p>`);
+                        return (/*html*/`<p class="${(currentEvent["event_name"] === eventNameDefault) ? ("event-detail-text-day-off-recommendation") : ("event-detail-text-vacation")}" style="font-family: monospace; white-space: pre; padding: 4px 8px; margin-left: 4px; margin-right: 4px; margin-top: 4px; margin-bottom: ${(currentItemIndex === (abcCalendarEventHolidayIndonesiaDataGrouped.length - 1)) ? 4 : 1}px; text-wrap: wrap;">${abcCalendarEventHolidayIndonesiaDataGroupedEvent}</p>`);
                     }).join(""));
 
                     const abcCalendarEventHolidayIndonesiaDataGroupedSummaryDetailString = ((amountDayOffRecomendation > 0) ? (` (Tanggal Merah ${amountVacation} Hari + Ambil Izin Libur ${amountDayOffRecomendation} Hari)`) : (" Tanpa Ambil Izin Libur"));
                     const abcCalendarEventHolidayIndonesiaDataGroupedSummaryString = ((abcCalendarEventHolidayIndonesiaDataGrouped.length == 2) ? ("Tanggal Merah Di Hari Sabtu / Minggu :v") : (`Bisa Liburan ${abcCalendarEventHolidayIndonesiaDataGrouped.length} Hari${abcCalendarEventHolidayIndonesiaDataGroupedSummaryDetailString}`));
 
-                    return (/*html*/`
+                    return ((/*html*/`
                         ${currentResult}
                         <div class="event-group-card" style="border-radius: 8px; padding: 0px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden;">
                             <p style="font-size: 1.5em; text-align: center; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; background-color: var(--accent-color-2); color: var(--dark-text-color);">${abcCalendarEventHolidayIndonesiaDataGroupedTitle}</p>
@@ -322,7 +318,7 @@
                             <p class="event-card-footer" style="text-align: center; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; background-color: var(--accent-color-2); color: var(--dark-text-color); font-weight: bold;">
                                 ${abcCalendarEventHolidayIndonesiaDataGroupedSummaryString}
                             </p>
-                        </div>`);
+                        </div>`).trim());
                 }, ""));
                 localStorage.setItem(localStorageKeyKalenderLiburGeneratorTimestamp, JSON.stringify(dataTimestamp));
             };
@@ -379,6 +375,6 @@
                 }
             })();
         </script>
-        <script src="../../component/component-link-support.js"></script>
+        <script src="../../component/component-link.js"></script>
     </body>
 </html>

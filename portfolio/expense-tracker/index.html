@@ -46,7 +46,7 @@
         <!-- end of Google AdSense -->
 
         <link rel="stylesheet" href="../../component/component-chip-input.css" />
-        <link rel="stylesheet" href="../../component/component-link-support.css" />
+        <link rel="stylesheet" href="../../component/component-link.css" />
 
         <style>
             .price-input {
@@ -73,7 +73,7 @@
                     <h2>Total Expense: <span id="total-expense-container">0</span></h2>
                 </div>
                 <div id="placeholder-import-export"></div>
-                <div id="placeholder-link-support"></div>
+                <div id="placeholder-link"></div>
             </div>
         </main>
         <footer>
@@ -117,7 +117,7 @@
 
         <script>
             function createHtmlElementExpenseContainer(arrayOfEntryDataset) {
-                return utilsWeb.createHtmlElement((/*html*/`<div data-id="expense-container" style="width: 100%; padding: 8px; display: flex; flex-direction: row; border: 1px solid var(--light-border-color);"></div>`), { arrayOfEntryDataset });
+                return utilsWeb.createHtmlElement((/*html*/`<div data-id="expense-container" style="width: 100%; column-gap: 12px; padding: 8px; display: flex; flex-direction: row; border: 1px solid var(--light-border-color);"></div>`), { arrayOfEntryDataset });
             }
 
             function createHtmlElementPriceInputContainer({ arrayOfEntryProperty, arrayOfEntryDataset } = {}) {
@@ -229,6 +229,6 @@
             syncImportExportTextAreaContentMainContentWithLocalStorageData();
         </script>
 
-        <script src="../../component/component-link-support.js"></script>
+        <script src="../../component/component-link.js"></script>
     </body>
 </html>
