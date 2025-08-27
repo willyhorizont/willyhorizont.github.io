@@ -112,6 +112,63 @@
         <script src="../../component/component-navbar.js"></script>
         <script src="../../component/component-loading-spinner.js"></script>
         <script>
+            const currentYear = new Date().getFullYear();
+            const getAbcCalendarEventHolidayIndonesiaDataInitial = () => ([
+                {
+                    "summary": "Hari Tahun Baru",
+                    "start": {
+                        "date": `${currentYear}-01-01`
+                    },
+                    "end": {
+                        "date": `${currentYear}-01-02`
+                    }
+                },
+                {
+                    "summary": "Hari Buruh Internasional / Pekerja",
+                    "start": {
+                        "date": `${currentYear}-05-01`
+                    },
+                    "end": {
+                        "date": `${currentYear}-05-02`
+                    }
+                },
+                {
+                    "summary": "Hari Lahir Pancasila",
+                    "start": {
+                        "date": `${currentYear}-06-01`
+                    },
+                    "end": {
+                        "date": `${currentYear}-06-02`
+                    }
+                },
+                {
+                    "summary": "Hari Proklamasi Kemerdekaan R.I.",
+                    "start": {
+                        "date": `${currentYear}-08-17`
+                    },
+                    "end": {
+                        "date": `${currentYear}-08-18`
+                    }
+                },
+                {
+                    "summary": "Malam Natal",
+                    "start": {
+                        "date": `${currentYear}-12-24`
+                    },
+                    "end": {
+                        "date": `${currentYear}-12-25`
+                    }
+                },
+                {
+                    "summary": "Malam Tahun Baru",
+                    "start": {
+                        "date": `${currentYear}-12-31`
+                    },
+                    "end": {
+                        "date": `${currentYear}-01-01`
+                    }
+                }
+            ]);
             const getPrefixSuffixOfText = (anyString, textToFind) => (((indexOfTextToFind) => ([(anyString.substring(0, indexOfTextToFind)), (anyString.substring((indexOfTextToFind + textToFind.length), anyString.length))]))(anyString.indexOf(textToFind)));
             const getYearFromUrl = () => ((({ yearStringNew }) => ((({ yearNumericNew }) => ([yearNumericNew.toString(), yearNumericNew]))({ yearNumericNew: ((yearStringNew === null) ? new Date().getFullYear() : parseInt(yearStringNew, 10)) })))({ yearStringNew: new URLSearchParams(window.location.search).get("year") }));
             const getShortDayNameOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen) => (new Intl.DateTimeFormat("id-ID", { weekday: "short" }).format(new Date(dateDotToIsoStringDotSliceZeroCommaTen)));
@@ -330,7 +387,7 @@
                 const isDemoFinished = (JSON.parse(localStorage.getItem(localStorageKeyKalenderLiburGeneratorDemoFinished)) || false);
                 if (isDemoFinished) return;
 
-                const abcCalendarEventHolidayIndonesiaDataInitial = kalenderLiburGeneratorDataInitial.getAbcCalendarEventHolidayIndonesiaDataInitial();
+                const abcCalendarEventHolidayIndonesiaDataInitial = getAbcCalendarEventHolidayIndonesiaDataInitial();
                 const abcCalendarEventHolidayIndonesiaDataInitialModified = modifyAbcCalendarEventHolidayIndonesiaData(abcCalendarEventHolidayIndonesiaDataInitial);
                 const abcCalendarEventHolidayIndonesiaDataInitialGrouped = groupAbcCalendarEventHolidayIndonesiaData(abcCalendarEventHolidayIndonesiaDataInitialModified);
 
