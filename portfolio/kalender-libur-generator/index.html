@@ -126,8 +126,8 @@
             const yearPlusOneNewYearEveDateDotToIsoStringDotSliceZeroCommaTen = (`${yearString}-12-31`);
             const yearPlusOneNewYearDateDotToIsoStringDotSliceZeroCommaTen = (`${yearPlusOneString}-01-01`);
 
-            const dataTimestamp = "((2025//(08|Aug)//(27|Wed)||(04:13AM|04:13)))";
-            console.log(utils.generateTimestamp());
+            const dataTimestamp = "((2025//(08|Aug)//(28|Thu)||(02:22AM|02:22)))";
+            // console.log(utils.generateTimestamp());
             const localStorageKeyKalenderLiburGeneratorTimestamp = ("kalender-libur-generator-timestamp");
             const localStorageKeyKalenderLiburGeneratorDemoFinished = ("kalender-libur-generator-demo-finished");
             const localStorageKeyAbcCalendarEventHolidayIndonesiaDataRaw = (`abc-calendar-event-holiday-indonesia-${yearString}-data-raw`);
@@ -340,8 +340,6 @@
 
             (async () => {
                 try {
-                    document.getElementById("kalender-libur-generator-container").innerHTML = "";
-
                     componentLoadingSpinner.toggleLoadingSpinner(true, [document.getElementById("kalender-libur-generator-container")]);
 
                     document.getElementById("placeholder-error").innerHTML = "";
@@ -365,7 +363,7 @@
 
                     while (dataFromLocalStorageAbcCalendarEventHolidayIndonesiaRaw === null) {
                         dataFromLocalStorageAbcCalendarEventHolidayIndonesiaRaw = await utilsAbc.getAbcCalendarEventHolidayIndonesia();
-                        await utils.pythonLikeSleep((dataFromLocalStorageAbcCalendarEventHolidayIndonesiaRaw === null) ? 30 : 1);
+                        await utils.pythonLikeSleep((dataFromLocalStorageAbcCalendarEventHolidayIndonesiaRaw === null) ? 10 : 1);
                     }
                     // console.log({ dataFromLocalStorageAbcCalendarEventHolidayIndonesiaRaw });
                     localStorage.setItem(localStorageKeyAbcCalendarEventHolidayIndonesiaDataRaw, JSON.stringify(dataFromLocalStorageAbcCalendarEventHolidayIndonesiaRaw));

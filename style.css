@@ -251,7 +251,7 @@ footer {
 @media screen and (max-width: 768px) {
     .navbar {
         ul {
-            box-shadow: -2px 0 4px rgba(0, 0, 0, 0.5); text-align: right; background-color: var(--accent-color-2); width: 60%; padding-top: 64px; max-width: 200px; position: fixed; top: 0; right: -100%; z-index: 1000; flex-direction: column; align-items: flex-start;
+            box-shadow: -2px 0 4px rgba(0, 0, 0, 0.5); text-align: right; background-color: var(--accent-color-2); width: 60%; padding-top: 64px; max-width: 200px; position: fixed; top: 0; right: -100%; flex-direction: column; align-items: flex-start;
         }
         &.navbar-menu-small-screen {
             align-items: center;

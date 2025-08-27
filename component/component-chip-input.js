@@ -21,11 +21,11 @@ function createHtmlElementChip(chipTextTrimmed) {
 }
 
 function createHtmlElementChipInput(placeholderValue = "") {
-    return utilsWeb.createHtmlElement((/*html*/`<input data-id="chip-input" class="chip-input" style="flex: 1 1 auto; border: none; outline: none;" name="chip-input" type="text" />`), { arrayOfElementConfig: ([{ handlerRefName: "refEventHandlerKeyDown", eventType: "keydown", eventHandler: handleEventKeyDownChipInput }, { handlerRefName: "refEventHandlerBlur", eventType: "blur", eventHandler: handleEventBlurChipInput }]), arrayOfEntryAttribute: ([["placeholder", placeholderValue]]) });
+    return utilsWeb.createHtmlElement((/*html*/`<input data-id="chip-input" class="chip-input" style="flex: 1 1 auto; padding: 8px 8px 8px 0px; border: none; outline: none;" name="chip-input" type="text" />`), { arrayOfElementConfig: ([{ handlerRefName: "refEventHandlerKeyDown", eventType: "keydown", eventHandler: handleEventKeyDownChipInput }, { handlerRefName: "refEventHandlerBlur", eventType: "blur", eventHandler: handleEventBlurChipInput }]), arrayOfEntryAttribute: ([["placeholder", placeholderValue]]) });
 }
 
 function createHtmlElementChipUpdateInput(chipTextTrimmed = "") {
-    return utilsWeb.createHtmlElement((/*html*/`<input data-id="chip-update-input" class="chip-input" style="flex: 1 1 auto; margin: 8px 4px 8px 4px; padding: 8px 4px; border: none; outline: none;" name="chip-update-input" type="text" />`), { arrayOfElementConfig: ([{ handlerRefName: "refEventHandlerKeyDown", eventType: "keydown", eventHandler: handleEventKeyDownChipUpdateInput }, { handlerRefName: "refEventHandlerBlur", eventType: "blur", eventHandler: handleEventBlurChipUpdateInput }]), arrayOfEntryAttribute: ([["placeholder", chipTextTrimmed]]), arrayOfEntryDataset: [["item", chipTextTrimmed]] });
+    return utilsWeb.createHtmlElement((/*html*/`<input data-id="chip-update-input" class="chip-input" style="flex: 1 1 auto; padding: 8px; border: 1px solid var(--light-border-color); outline: none;" name="chip-update-input" type="text" />`), { arrayOfElementConfig: ([{ handlerRefName: "refEventHandlerKeyDown", eventType: "keydown", eventHandler: handleEventKeyDownChipUpdateInput }, { handlerRefName: "refEventHandlerBlur", eventType: "blur", eventHandler: handleEventBlurChipUpdateInput }]), arrayOfEntryAttribute: ([["placeholder", chipTextTrimmed]]), arrayOfEntryDataset: [["item", chipTextTrimmed]] });
 }
 
 function createHtmlElementChipInputContainer(itemList) {
@@ -38,7 +38,7 @@ function createHtmlElementChipInputContainer(itemList) {
 }
 
 function handleEventKeyDownChipInput(event) {
-    if (event.key === "Enter") {
+    if ((event.key === "Enter") || (event.keyCode === 13)) {
         if (event.target.value.trim() === "") {
             event.preventDefault();
             return;
@@ -47,6 +47,7 @@ function handleEventKeyDownChipInput(event) {
         htmlElementInputChipNew.setAttribute("placeholder", chipInputPlaceholder);
         htmlElementInputChipNew.focus();
         event.preventDefault();
+        return;
     }
 }
 
@@ -62,7 +63,7 @@ function handleEventBlurChipInput(event) {
 }
 
 function handleEventKeyDownChipUpdateInput(event) {
-    if (event.key === "Enter") {
+    if ((event.key === "Enter") || (event.keyCode === 13)) {
         if (event.target.value.trim() === "") {
             event.preventDefault();
             return;
@@ -70,6 +71,7 @@ function handleEventKeyDownChipUpdateInput(event) {
 
         manageChipUpdateInputValue(event);
         event.preventDefault();
+        return;
     }
 }
 
@@ -91,13 +93,15 @@ function handleEventBlurChipUpdateInput(event) {
 
 function handleElementClickChipText(htmlElementChipText) {
     return function (event) {
+        htmlElementChipText.removeEventListener("click", htmlElementChipText.refElementHandlerClick);
         const htmlElementChipInputContainer = htmlElementChipText.parentElement.parentElement;
         htmlElementChipInputContainer.removeEventListener("click", htmlElementChipInputContainer.refElementHandlerClick);
         const htmlElementChipUpdateInput = createHtmlElementChipUpdateInput(htmlElementChipText.parentElement.dataset?.["item"]);
-        htmlElementChipText.parentElement.replaceWith(htmlElementChipUpdateInput);
         htmlElementChipUpdateInput.setAttribute("placeholder", chipInputPlaceholder);
         htmlElementChipUpdateInput.value = (event.target.parentElement.dataset?.["item"] || "");
+        htmlElementChipText.parentElement.replaceWith(htmlElementChipUpdateInput);
         htmlElementChipUpdateInput.focus();
+        htmlElementChipInputContainer.scrollLeft = 0;
     }
 }
 
