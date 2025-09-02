@@ -111,6 +111,8 @@
         <script src="../../component/component-navbar.js"></script>
         <script src="../../component/component-loading-spinner.js"></script>
         <script>
+            utilsWeb.localDatabase.initiate({ databaseNameInString: "kalender-libur-generator", collectionOrStoreNameInString: "data" });
+
             const currentYear = new Date().getFullYear();
             const getAbcCalendarEventHolidayIndonesiaDataInitial = () => ([
                 {
@@ -182,8 +184,8 @@
             const yearPlusOneNewYearEveDateDotToIsoStringDotSliceZeroCommaTen = (`${yearString}-12-31`);
             const yearPlusOneNewYearDateDotToIsoStringDotSliceZeroCommaTen = (`${yearPlusOneString}-01-01`);
 
-            const dataTimestamp = "((2025//(08|Aug)//(28|Thu)||(02:22AM|02:22)))";
-            // console.log(utils.generateTimestamp());
+            const dataTimestamp = "((2025//(09|Sep)//(03|Wed)||(01:50AM|01:50)))";
+            console.log(utils.generateTimestamp());
             const localStorageKeyKalenderLiburGeneratorTimestamp = ("kalender-libur-generator-timestamp");
             const localStorageKeyKalenderLiburGeneratorDemoFinished = ("kalender-libur-generator-demo-finished");
             const localStorageKeyAbcCalendarEventHolidayIndonesiaDataRaw = (`abc-calendar-event-holiday-indonesia-${yearString}-data-raw`);
@@ -406,36 +408,41 @@
                         localStorage.removeItem(localStorageKeyAbcCalendarEventHolidayIndonesiaDataRaw);
                         localStorage.removeItem(localStorageKeyAbcCalendarEventHolidayIndonesiaData);
                         localStorage.removeItem(localStorageKeyKalenderLiburGeneratorData);
+
+                        localStorage.setItem(localStorageKeyKalenderLiburGeneratorDemoFinished, JSON.stringify(false));
+                        await utilsWeb.localDatabase.removeItem(localStorageKeyAbcCalendarEventHolidayIndonesiaDataRaw);
+                        await utilsWeb.localDatabase.removeItem(localStorageKeyAbcCalendarEventHolidayIndonesiaData);
+                        await utilsWeb.localDatabase.removeItem(localStorageKeyKalenderLiburGeneratorData);
                     }
 
-                    const dataFromLocalStorageKalenderLiburGenerator = JSON.parse(localStorage.getItem(localStorageKeyKalenderLiburGeneratorData));
+                    const dataFromLocalStorageKalenderLiburGenerator = await utilsWeb.localDatabase.getItem(localStorageKeyKalenderLiburGeneratorData);
 
                     if (dataFromLocalStorageKalenderLiburGenerator !== null) {
                         rerenderMainContent(dataFromLocalStorageKalenderLiburGenerator);
                         return;
                     }
 
-                    let dataFromLocalStorageAbcCalendarEventHolidayIndonesiaRaw = JSON.parse(localStorage.getItem(localStorageKeyAbcCalendarEventHolidayIndonesiaDataRaw));
+                    let dataFromLocalStorageAbcCalendarEventHolidayIndonesiaRaw = await utilsWeb.localDatabase.getItem(localStorageKeyAbcCalendarEventHolidayIndonesiaDataRaw);
 
                     while (dataFromLocalStorageAbcCalendarEventHolidayIndonesiaRaw === null) {
                         dataFromLocalStorageAbcCalendarEventHolidayIndonesiaRaw = await utilsAbc.getAbcCalendarEventHolidayIndonesia();
                         await utils.pythonLikeSleep((dataFromLocalStorageAbcCalendarEventHolidayIndonesiaRaw === null) ? 10 : 1);
                     }
                     // console.log({ dataFromLocalStorageAbcCalendarEventHolidayIndonesiaRaw });
-                    localStorage.setItem(localStorageKeyAbcCalendarEventHolidayIndonesiaDataRaw, JSON.stringify(dataFromLocalStorageAbcCalendarEventHolidayIndonesiaRaw));
+                    await utilsWeb.localDatabase.setItem(localStorageKeyAbcCalendarEventHolidayIndonesiaDataRaw, dataFromLocalStorageAbcCalendarEventHolidayIndonesiaRaw);
 
-                    let dataFromLocalStorageAbcCalendarEventHolidayIndonesiaData = JSON.parse(localStorage.getItem(localStorageKeyAbcCalendarEventHolidayIndonesiaData));
+                    let dataFromLocalStorageAbcCalendarEventHolidayIndonesiaData = await utilsWeb.localDatabase.getItem(localStorageKeyAbcCalendarEventHolidayIndonesiaData);
 
                     if (dataFromLocalStorageAbcCalendarEventHolidayIndonesiaData === null) {
                         const abcCalendarEventHolidayIndonesiaRawDataModified = modifyAbcCalendarEventHolidayIndonesiaData(dataFromLocalStorageAbcCalendarEventHolidayIndonesiaRaw);
-                        localStorage.setItem(localStorageKeyAbcCalendarEventHolidayIndonesiaData, JSON.stringify(abcCalendarEventHolidayIndonesiaRawDataModified));
+                        await utilsWeb.localDatabase.setItem(localStorageKeyAbcCalendarEventHolidayIndonesiaData, abcCalendarEventHolidayIndonesiaRawDataModified);
                         dataFromLocalStorageAbcCalendarEventHolidayIndonesiaData = abcCalendarEventHolidayIndonesiaRawDataModified;
                     }
                     // console.log({ dataFromLocalStorageAbcCalendarEventHolidayIndonesiaData });
 
                     const abcCalendarEventHolidayIndonesiaDataGrouped = groupAbcCalendarEventHolidayIndonesiaData(dataFromLocalStorageAbcCalendarEventHolidayIndonesiaData);
                     // console.log({ abcCalendarEventHolidayIndonesiaDataGrouped });
-                    localStorage.setItem(localStorageKeyKalenderLiburGeneratorData, JSON.stringify(abcCalendarEventHolidayIndonesiaDataGrouped));
+                    await utilsWeb.localDatabase.setItem(localStorageKeyKalenderLiburGeneratorData, abcCalendarEventHolidayIndonesiaDataGrouped);
 
                     rerenderMainContent(abcCalendarEventHolidayIndonesiaDataGrouped);
                 } catch (anyError) {
