@@ -10,7 +10,7 @@ const getAbcCalendarEventHolidayIndonesia = async () => {
         const abcPassvvordCalendar = getAbcPassvvordString(abcPassvvordSuffixString);
         // console.log({ abcPassvvordCalendar });
         const getAbcCalendarEventHolidayIndonesiaUrl = (`https://www.googleapis.com/calendar/v3/calendars/${calendarIdIndonesiaHoliday}/events?key=${abcPassvvordCalendar}&timeMin=${yearString}-01-01T00:00:00Z&timeMax=${yearPlusOneString}-01-01T00:00:00Z&singleEvents=true&orderBy=startTime`);
-        const getAbcCalendarEventHolidayIndonesiaResponse = await utils.fetchThrowErrorIfNotOk(getAbcCalendarEventHolidayIndonesiaUrl);
+        const getAbcCalendarEventHolidayIndonesiaResponse = await utilsWeb.fetchThrowErrorIfNotOk(getAbcCalendarEventHolidayIndonesiaUrl);
         const getAbcCalendarEventHolidayIndonesiaResult = await getAbcCalendarEventHolidayIndonesiaResponse.json();
         // console.log({ getAbcCalendarEventHolidayIndonesiaResult });
         return (getAbcCalendarEventHolidayIndonesiaResult?.["items"] || null);
