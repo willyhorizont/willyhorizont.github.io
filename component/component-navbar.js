@@ -22,8 +22,10 @@ req:
         }
 
         if (isNavbarMenuSmallScreen) {
+            htmlElementHamburgerMenuButton.style.display = "none";
             document.addEventListener("click", handleEventClickOutsideHtmlElementNavbarMenuSmallScreen);
         } else {
+            htmlElementHamburgerMenuButton.style.display = "inline-block";
             document.removeEventListener("click", handleEventClickOutsideHtmlElementNavbarMenuSmallScreen);
         }
     }
