@@ -25,7 +25,7 @@ req:
             htmlElementHamburgerMenuButton.style.display = "none";
             document.addEventListener("click", handleEventClickOutsideHtmlElementNavbarMenuSmallScreen);
         } else {
-            htmlElementHamburgerMenuButton.style.display = "inline-block";
+            htmlElementHamburgerMenuButton.style.display = "block";
             document.removeEventListener("click", handleEventClickOutsideHtmlElementNavbarMenuSmallScreen);
         }
     }
