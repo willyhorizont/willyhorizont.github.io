@@ -1,6 +1,6 @@
 /*
 req:
-    utilsWeb
+    UtilsWeb
 */
 
 (async () => {
@@ -9,10 +9,10 @@ req:
     let userChromiumBasedBrowserVersion = 0;
 
     try {
-        userChromiumBasedBrowserVersion = await utilsWeb.getUserChromiumBasedBrowserVersion();
+        userChromiumBasedBrowserVersion = await UtilsWeb.getUserChromiumBasedBrowserVersion();
         // console.log({ userChromiumBasedBrowserVersion });
         
-        chromiumBasedBrowserMinimumStableVersion = await utilsWeb.getChromiumBasedBrowserMinimumStableVersion();
+        chromiumBasedBrowserMinimumStableVersion = await UtilsWeb.getChromiumBasedBrowserMinimumStableVersion();
         // console.log({ chromiumBasedBrowserMinimumStableVersion });
     } catch (anyError) {
         // fallback to default value

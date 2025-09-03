@@ -22,13 +22,13 @@
         <script>
             (async () => {
                 try {
-                    componentLoadingSpinner.toggleLoadingSpinner(true, [document.getElementById("main-content")]);
-                    const chromiumBasedBrowserMinimumStableVersion = await utilsWeb.getChromiumBasedBrowserMinimumStableVersion();
+                    ComponentLoadingSpinner.toggleLoadingSpinner(true, [document.getElementById("main-content")]);
+                    const chromiumBasedBrowserMinimumStableVersion = await UtilsWeb.getChromiumBasedBrowserMinimumStableVersion();
                     document.getElementById("google-chrome-stable-version-placeholder").textContent = (`Google Chrome version >= ${chromiumBasedBrowserMinimumStableVersion}.x.xxxx.xx`);
                 } catch (anyError) {
                     // do nothing :p
                 } finally {
-                    componentLoadingSpinner.toggleLoadingSpinner(false, [document.getElementById("main-content")]);
+                    ComponentLoadingSpinner.toggleLoadingSpinner(false, [document.getElementById("main-content")]);
                 }
             })();
         </script>

@@ -94,9 +94,9 @@
             const defaultListItemSeparator = "\\n\\n";
 
             function processInputData(inputData) {
-                const separatorValue = utils.parseEscapeSequence(document.getElementById("separator-input").value.trim() || defaultListItemSeparator);
+                const separatorValue = Utils.parseEscapeSequence(document.getElementById("separator-input").value.trim() || defaultListItemSeparator);
                 const listFromRawText = inputData.split(separatorValue);
-                const listFromRawTextNoDuplicateListItem = utils.removeDuplicateListItem(listFromRawText);
+                const listFromRawTextNoDuplicateListItem = Utils.removeDuplicateListItem(listFromRawText);
                 return ({ separatorValue, listFromRawText, listFromRawTextNoDuplicateListItem });
             }
 
@@ -123,7 +123,7 @@
             htmlElementInputOfRemoveDuplicateListItemTextarea.addEventListener("blur", handleEventBlurRawTextTextArea);
 
             document.getElementById("separator-input").value = defaultListItemSeparator;
-            const initialData = (("abba").split("").join(utils.parseEscapeSequence(defaultListItemSeparator)));
+            const initialData = (("abba").split("").join(Utils.parseEscapeSequence(defaultListItemSeparator)));
             htmlElementInputOfRemoveDuplicateListItemTextarea.value = initialData;
             renderOutputData(processInputData(initialData));
         </script>
