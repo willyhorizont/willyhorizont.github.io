@@ -63,13 +63,13 @@ window.Utils = ((() => {
     };
     const loop = (startNumber, stopNumber) => {
         const anyList = rangeInclusive(startNumber, stopNumber);
-        return (callbackFunction) => {
+        return ((callbackFunction) => {
             let i = 0;
             for (const listItem of anyList) {
                 callbackFunction(listItem, i, anyList);
                 i += 1;
             }
-        };
+        });
     };
     const loopAsync = (startNumber, stopNumber) => {
         const anyList = rangeInclusive(startNumber, stopNumber);

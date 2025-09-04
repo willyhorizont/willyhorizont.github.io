@@ -3,6 +3,7 @@
     <head>
         <!-- start of Google tag (gtag.js) -->
         <!-- tagmanager.google.com -->
+        <!-- analytics.google.com/analytics/web -->
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-LECMLYN21B"></script>
         <script>
@@ -51,7 +52,7 @@
 
         <style>
             .price-input {
-                border: 1px solid var(--light-border-color); padding: 16px 8px; outline: none; max-width: 120px;
+                border: 1px solid var(--light-border-color); padding: 20px 8px; outline: none; max-width: 120px;
                 background-color: var(--light-background-color); color: var(--light-text-color);
             }
 
@@ -109,23 +110,50 @@
 
             const componentChipInput = new ComponentChipInput({ chipInputPlaceholder, collectionOrStoreKey, localDatabase, syncLocalStorageDataImportExportTextAreaContentWithMainContent: componentImportExport.syncLocalStorageDataImportExportTextAreaContentWithMainContent });
 
-            function createHtmlElementExpenseContainer(arrayOfEntryDataset) {
-                return UtilsWeb.createHtmlElement((/*html*/`<div data-id="expense-container" style="width: 100%; column-gap: 8px; padding: 8px; display: flex; flex-direction: row; border: 1px solid var(--light-border-color);"></div>`), { arrayOfEntryDataset });
+            function createHtmlElementExpenseContainer(arrayOfEntryAttribute) {
+                const htmlElementExpenseContainer = UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+                    <div data-id="expense-container" style="width: 100%; column-gap: 8px; padding: 8px; display: flex; flex-direction: row; border: 1px solid var(--light-border-color);">
+                    </div>`
+                );
+                htmlElementExpenseContainer.setAttributes(arrayOfEntryAttribute);
+                return htmlElementExpenseContainer;
             }
 
-            function createHtmlElementPriceInputContainer({ arrayOfEntryProperty, arrayOfEntryDataset } = {}) {
-                return UtilsWeb.appendChildrenReturnParent(UtilsWeb.createHtmlElement(/*html*/`<div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;"></div>`),
-                    UtilsWeb.createHtmlElement((/*html*/`<input data-id="price-input" class="price-input" name="price-input" placeholder="1_234_500" type="text" />`), { arrayOfEntryDataset, arrayOfEntryProperty, arrayOfElementConfig: ([{ handlerRefName: "refElementHandlerChange", eventType: "change", elementHandler: handleElementChangePriceInput }, { handlerRefName: "refEventHandlerKeydown", eventType: "keydown", eventHandler: handleEventKeyDownPriceInput }, { handlerRefName: "refElementHandlerInput", eventType: "input", elementHandler: handleElementInputPriceInput }, { handlerRefName: "refElementHandlerBlur", eventType: "blur", elementHandler: handleElementBlurPriceInput }]) }));
+            function createHtmlElementPriceInputContainer({ arrayOfEntryProperty, arrayOfEntryAttribute }) {
+                const htmlElementPriceInputContainer = UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+                    <div data-id="price-input-container" style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;">
+                        <input data-id="price-input" class="price-input" name="price-input" placeholder="1_234_500" type="text" />
+                    </div>`
+                );
+                const htmlElementPriceInput = htmlElementPriceInputContainer.querySelector('[data-id="price-input"]');
+                htmlElementPriceInput.setPropertyValues(arrayOfEntryProperty);
+                htmlElementPriceInput.setAttributes(arrayOfEntryAttribute);
+                htmlElementPriceInput.setEventStuffs([
+                    ({ handlerRefName: "refElementHandlerChange", eventType: "change", elementHandler: handleElementChangePriceInput }),
+                    ({ handlerRefName: "refEventHandlerKeydown", eventType: "keydown", eventHandler: handleEventKeyDownPriceInput }),
+                    ({ handlerRefName: "refElementHandlerInput", eventType: "input", elementHandler: handleElementInputPriceInput }),
+                    ({ handlerRefName: "refElementHandlerBlur", eventType: "blur", elementHandler: handleElementBlurPriceInput }),
+                ]);
+                return htmlElementPriceInputContainer;
             }
 
             function createHtmlElementExpenseRemoveButtonContainer() {
-                return UtilsWeb.appendChildrenReturnParent(UtilsWeb.createHtmlElement((/*html*/`<div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;"></div>`)),
-                    UtilsWeb.createHtmlElement((/*html*/`<button data-id="expense-remove-button" style="background-color: var(--accent-color-4); color: white; border: none; padding: 0.2em 0.4em; cursor: pointer; width: 1.6em; aspect-ratio: 1 / 1;">x</button>`), { arrayOfElementConfig: ([{ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleElementClickExpenseRemoveButton }]) }));
+                const htmlElementExpenseRemoveButtonContainer = UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+                    <div data-id="expense-remove-button-container" style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;">
+                        <button data-id="expense-remove-button" style="background-color: var(--accent-color-4); color: white; border: none; padding: 0.2em 0.4em; cursor: pointer; width: 1.6em; aspect-ratio: 1 / 1;">x</button>
+                    </div>`
+                );
+                const htmlElementExpenseRemoveButton = htmlElementExpenseRemoveButtonContainer.querySelector('[data-id="expense-remove-button"]');
+                htmlElementExpenseRemoveButton.setEventStuffs([
+                    ({ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: handleElementClickExpenseRemoveButton })
+                ]);
+                htmlElementExpenseRemoveButtonContainer.appendChild(htmlElementExpenseRemoveButton);
+                return htmlElementExpenseRemoveButtonContainer;
             }
 
             async function createHtmlElementExpense({ uuid = crypto.randomUUID(), price = "", items = [] } = {}) {
-                const htmlElementExpenseContainer = createHtmlElementExpenseContainer([["uuid", uuid], ["price", price]]);
-                htmlElementExpenseContainer.appendChild(createHtmlElementPriceInputContainer({ arrayOfEntryProperty: ([["value", price]]), arrayOfEntryDataset: ([["price", price]]) }));
+                const htmlElementExpenseContainer = createHtmlElementExpenseContainer([["data-uuid", uuid], ["data-price", price]]);
+                htmlElementExpenseContainer.appendChild(createHtmlElementPriceInputContainer({ arrayOfEntryProperty: [["value", price]], arrayOfEntryAttribute: [["data-price", price]] }));
                 const htmlElementChipInputContainer = await componentChipInput.createHtmlElementChipInputContainer(items);
                 htmlElementExpenseContainer.appendChild(htmlElementChipInputContainer);
                 htmlElementExpenseContainer.appendChild(createHtmlElementExpenseRemoveButtonContainer());
@@ -135,8 +163,8 @@
             function updateTotalExpenses() {
                 const htmlElementTotalExpenseContainer = document.getElementById("total-expense-container");
                 const totalExpensesInNumeric = (Array.from(document.getElementById("expense-tracker-container").children).reduce(((totalExpensesInNumericCurrentResult, htmlElementExpense) => {
-                    const priceInString = (htmlElementExpense.getAttribute("data-price").replace((/_/g), "") || 0);
-                    return (totalExpensesInNumericCurrentResult + parseFloat(priceInString));
+                    const priceInNumeric = (parseFloat(htmlElementExpense.getAttribute("data-price").replace((/_/g), "") || "0"));
+                    return (totalExpensesInNumericCurrentResult + priceInNumeric);
                 }), 0));
                 htmlElementTotalExpenseContainer.textContent = totalExpensesInNumeric.toString().replace(Utils.regexPattern["three_digit_grouping"], "_");
             }

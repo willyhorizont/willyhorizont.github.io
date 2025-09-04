@@ -3,6 +3,7 @@
     <head>
         <!-- start of Google tag (gtag.js) -->
         <!-- tagmanager.google.com -->
+        <!-- analytics.google.com/analytics/web -->
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-LECMLYN21B"></script>
         <script>
@@ -364,23 +365,26 @@
                         const abcCalendarEventHolidayIndonesiaDataGroupedEventShortDayName = getShortDayNameOfDateDotToIsoStringDotSliceZeroCommaTen(currentEvent["event_date"]);
                         const abcCalendarEventHolidayIndonesiaDataGroupedEventShortMonthName = getShortMonthNameOfDateDotToIsoStringDotSliceZeroCommaTen(currentEvent["event_date"]);
                         const abcCalendarEventHolidayIndonesiaDataGroupedEvent = (`${abcCalendarEventHolidayIndonesiaDataGroupedEventShortDayName} ${abcCalendarEventHolidayIndonesiaDataGroupedEventDate} ${abcCalendarEventHolidayIndonesiaDataGroupedEventShortMonthName} : ${currentEvent["event_name"]}`);
-                        return (/*html*/`<p class="${(currentEvent["event_name"] === eventNameDefault) ? ("event-detail-text-day-off-recommendation") : ("event-detail-text-vacation")}" style="font-family: monospace; white-space: pre; padding: 4px 8px; margin-left: 4px; margin-right: 4px; margin-top: 4px; margin-bottom: ${(currentItemIndex === (abcCalendarEventHolidayIndonesiaDataGrouped.length - 1)) ? 4 : 1}px; text-wrap: wrap;">${abcCalendarEventHolidayIndonesiaDataGroupedEvent}</p>`);
+                        return (/*html*/`<p class="${((currentEvent["event_name"] === eventNameDefault) ? ("event-detail-text-day-off-recommendation") : ("event-detail-text-vacation"))}" style="font-family: monospace; white-space: pre; padding: 4px 8px; margin-left: 4px; margin-right: 4px; margin-top: 4px; margin-bottom: ${(currentItemIndex === (abcCalendarEventHolidayIndonesiaDataGrouped.length - 1)) ? 4 : 1}px; text-wrap: wrap;">${abcCalendarEventHolidayIndonesiaDataGroupedEvent}</p>`);
                     }).join(""));
 
                     const abcCalendarEventHolidayIndonesiaDataGroupedSummaryDetailString = ((amountDayOffRecomendation > 0) ? (` (Tanggal Merah ${amountVacation} Hari + Ambil Izin Libur ${amountDayOffRecomendation} Hari)`) : (" Tanpa Ambil Izin Libur"));
                     const abcCalendarEventHolidayIndonesiaDataGroupedSummaryString = ((abcCalendarEventHolidayIndonesiaDataGrouped.length == 2) ? ("Tanggal Merah Di Hari Sabtu / Minggu :v") : (`Bisa Liburan ${abcCalendarEventHolidayIndonesiaDataGrouped.length} Hari${abcCalendarEventHolidayIndonesiaDataGroupedSummaryDetailString}`));
 
-                    return ((/*html*/`
-                        ${currentResult}
-                        <div class="event-group-card" style="border-radius: 8px; padding: 0px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden;">
-                            <p style="font-size: 1.5em; text-align: center; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; background-color: var(--accent-color-2); color: var(--dark-text-color);">${abcCalendarEventHolidayIndonesiaDataGroupedTitle}</p>
-                            <div style="display: flex; flex-direction: column; flex: 1;">
-                                ${abcCalendarEventHolidayIndonesiaDataGroupedRowsString}
-                            </div>
-                            <p class="event-card-footer" style="text-align: center; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; background-color: var(--accent-color-2); color: var(--dark-text-color); font-weight: bold;">
-                                ${abcCalendarEventHolidayIndonesiaDataGroupedSummaryString}
-                            </p>
-                        </div>`).trim());
+                    return (
+                        (/*html*/`
+                            ${currentResult}
+                            <div class="event-group-card" style="border-radius: 8px; padding: 0px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden;">
+                                <p style="font-size: 1.5em; text-align: center; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; background-color: var(--accent-color-2); color: var(--dark-text-color);">${abcCalendarEventHolidayIndonesiaDataGroupedTitle}</p>
+                                <div style="display: flex; flex-direction: column; flex: 1;">
+                                    ${abcCalendarEventHolidayIndonesiaDataGroupedRowsString}
+                                </div>
+                                <p class="event-card-footer" style="text-align: center; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; background-color: var(--accent-color-2); color: var(--dark-text-color); font-weight: bold;">
+                                    ${abcCalendarEventHolidayIndonesiaDataGroupedSummaryString}
+                                </p>
+                            </div>`
+                        ).trim()
+                    );
                 }, ""));
                 localStorage.setItem(localStorageKeyKalenderLiburGeneratorTimestamp, JSON.stringify(dataTimestamp));
             };

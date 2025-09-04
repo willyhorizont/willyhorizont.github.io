@@ -3,6 +3,7 @@
     <head>
         <!-- start of Google tag (gtag.js) -->
         <!-- tagmanager.google.com -->
+        <!-- analytics.google.com/analytics/web -->
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-LECMLYN21B"></script>
         <script>
@@ -310,19 +311,21 @@
                 },
             ];
 
-            const [programmingLanguageBarChartContainerInnerHtml, programmingLanguagesTextContainerInnerHtml] = programmingLanguages.reduce((([programmingLanguageBarChartContainerInnerHtmlCurrent, programmingLanguagesTextContainerInnerHtmlCurrent], programmingLanguage) => ([
+            const [programmingLanguageBarChartContainerInnerHtml, programmingLanguagesTextContainerInnerHtml] = (programmingLanguages.reduce((([programmingLanguageBarChartContainerInnerHtmlCurrent, programmingLanguagesTextContainerInnerHtmlCurrent], programmingLanguage) => ([
                 (/*html*/`
                     ${programmingLanguageBarChartContainerInnerHtmlCurrent}
                     <div data-id="programming-language-percentage" style="width: ${(100 / programmingLanguages.length)}%; height: 100%; background-color: ${programmingLanguage["color_hex"]};">
-                    </div>`),
+                    </div>`
+                ),
                 (/*html*/`
                     ${programmingLanguagesTextContainerInnerHtmlCurrent}
                     <a data-id="programming-language-text" href="${programmingLanguage.language_url}" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit; display: flex; flex-direction: row; align-items: center; margin-right: 16px;">
                         <div style="width: 0.5em; height: 0.5em; border-radius: 50%; margin-right: 8px; background-color: ${programmingLanguage["color_hex"]};"></div>
                         <p style="font-size: 0.75em; margin-right: 8px;">${programmingLanguage["language_name"]}</p>
                         <p style="font-size: 0.75em;">${(100 / programmingLanguages.length).toFixed(2)}%</p>
-                    </a>`),
-            ])), ["", ""]);
+                    </a>`
+                ),
+            ])), ["", ""]));
             document.getElementById("programming-languages-bar-chart-container").innerHTML = programmingLanguageBarChartContainerInnerHtml;
             document.getElementById("programming-languages-text-container").innerHTML = programmingLanguagesTextContainerInnerHtml;
         </script>

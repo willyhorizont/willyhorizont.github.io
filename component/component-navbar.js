@@ -46,7 +46,7 @@ req:
 
     const htmlElementHeader = document.body.querySelector("header");
 
-    const htmlElementNavbar = UtilsWeb.createHtmlElement(/*html*/`
+    const htmlElementNavbar = UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
         <nav id="navbar" class="navbar">
             <a href="/" class="app-logo">
                 <img src="${relativePath}android-chrome-192x192.png" alt="Willy Horizont's logo" width="48px" height="48px" />

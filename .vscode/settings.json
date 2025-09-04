@@ -53,7 +53,7 @@
 
     "workbench.editor.tabSizing": "fixed",
     "workbench.editor.tabSizingFixedMinWidth": 38,
-    "workbench.editor.pinnedTabSizing": "compact",
+    "workbench.editor.pinnedTabSizing": "normal",
     "workbench.sideBar.location": "right",
     "workbench.editor.pinnedTabsOnSeparateRow": true,
     "workbench.editor.titleScrollbarSizing": "large",
