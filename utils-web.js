@@ -8,9 +8,9 @@ window.UtilsWeb = ((() => {
     const createSetHtmlElementEventStuffs = (htmlElement) => ((arrayOfElementEventStuff) => ([(arrayOfElementEventStuff.forEach(({ handlerRefName, eventType, elementHandler, eventHandler }) => (((handlerFunction) => ([Reflect.set(htmlElement, handlerRefName, handlerFunction), htmlElement.addEventListener(eventType, handlerFunction), undefined].at(-1)))(eventHandler || elementHandler(htmlElement))))), htmlElement].at(-1)));
     const createSetHtmlElementAttributes = (htmlElement) => ((arrayOfEntryAttribute) => ([(arrayOfEntryAttribute.forEach(([htmlElementAttribute, htmlElementAttributeValue]) => (htmlElement.setAttribute(htmlElementAttribute, String(htmlElementAttributeValue))))), htmlElement].at(-1)));
     const attachMethodToHtmlElementRecursively = (htmlElement) => {
-        htmlElement.setPropertyValues = createSetHtmlElementPropertyValues(htmlElement);
-        htmlElement.setEventStuffs = createSetHtmlElementEventStuffs(htmlElement);
-        htmlElement.setAttributes = createSetHtmlElementAttributes(htmlElement);
+        if (!Reflect.has(htmlElement, "setPropertyValues")) Reflect.set(htmlElement, "setPropertyValues", createSetHtmlElementPropertyValues(htmlElement));
+        if (!Reflect.has(htmlElement, "setEventStuffs")) Reflect.set(htmlElement, "setEventStuffs", createSetHtmlElementEventStuffs(htmlElement));
+        if (!Reflect.has(htmlElement, "setAttributes")) Reflect.set(htmlElement, "setAttributes", createSetHtmlElementAttributes(htmlElement));
         if (!htmlElement.children.length) return;
         Utils.iterateList(htmlElement.children, (htmlElementInnerChild) => {
             attachMethodToHtmlElementRecursively(htmlElementInnerChild);
