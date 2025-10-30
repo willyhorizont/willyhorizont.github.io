@@ -9,10 +9,16 @@ req:
 
     function toggleNavbarMenu() {
         const htmlElementNavbar = document.getElementById("navbar");
+        const htmlElementNavbarMenuList = htmlElementNavbar.querySelector("ul");
+        const htmlElementHamburgerMenuButton = htmlElementNavbar.querySelector('[id="open-hamburger-menu-button"]');
+        const htmlElementHamburgerMenuCloseButton = htmlElementNavbar.querySelector('[id="close-hamburger-menu-button"]');
         const isNavbarMenuSmallScreen = htmlElementNavbar.classList.toggle("navbar-menu-small-screen");
 
         function handleEventClickOutsideHtmlElementNavbarMenuSmallScreen(event) {
-            if (htmlElementNavbar.contains(event.target)) return;
+            if (htmlElementNavbarMenuList.contains(event.target)) return;
+            if (htmlElementHamburgerMenuButton.contains(event.target)) return;
+            if (htmlElementHamburgerMenuCloseButton.contains(event.target)) return;
+
             htmlElementNavbar.classList.remove("navbar-menu-small-screen");
             document.removeEventListener("click", handleEventClickOutsideHtmlElementNavbarMenuSmallScreen);
         }
