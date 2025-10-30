@@ -5,7 +5,7 @@ req:
 
 window.UtilsWeb = ((() => {
     const createSetHtmlElementPropertyValues = (htmlElement) => ((arrayOfEntryProperty) => ([(arrayOfEntryProperty.forEach(([htmlElementProperty, htmlElementPropertyValue]) => (Reflect.set(htmlElement, htmlElementProperty, htmlElementPropertyValue)))), htmlElement].at(-1)));
-    const createSetHtmlElementEventStuffs = (htmlElement) => ((arrayOfElementEventStuff) => ([(arrayOfElementEventStuff.forEach(({ handlerRefName, eventType, elementHandler, eventHandler }) => (((handlerFunction) => ([Reflect.set(htmlElement, handlerRefName, handlerFunction), htmlElement.addEventListener(eventType, handlerFunction), undefined].at(-1)))(eventHandler || elementHandler(htmlElement))))), htmlElement].at(-1)));
+    const createSetHtmlElementEventStuffs = (htmlElement) => ((arrayOfElementEventStuff) => ([(arrayOfElementEventStuff.forEach(({ handlerRefName, eventType, elementHandler, eventHandler }) => (((handlerFunction) => ([(Reflect.set(htmlElement, handlerRefName, handlerFunction)), (htmlElement.addEventListener(eventType, handlerFunction)), undefined].at(-1)))(eventHandler || elementHandler(htmlElement))))), htmlElement].at(-1)));
     const createSetHtmlElementAttributes = (htmlElement) => ((arrayOfEntryAttribute) => ([(arrayOfEntryAttribute.forEach(([htmlElementAttribute, htmlElementAttributeValue]) => (htmlElement.setAttribute(htmlElementAttribute, String(htmlElementAttributeValue))))), htmlElement].at(-1)));
     const attachMethodToHtmlElementRecursively = (htmlElement) => {
         if (!Reflect.has(htmlElement, "setPropertyValues")) Reflect.set(htmlElement, "setPropertyValues", createSetHtmlElementPropertyValues(htmlElement));
@@ -17,7 +17,7 @@ window.UtilsWeb = ((() => {
         });
     };
     const htmlTemplateStringToHtmlElement = (htmlTemplateString) => {
-        const htmlElementNew = (((htmlElementTemplate) => ([Reflect.set(htmlElementTemplate, "innerHTML", htmlTemplateString), htmlElementTemplate.content.firstElementChild].at(-1)))(document.createElement("template")));
+        const htmlElementNew = (((htmlElementTemplate) => ([(Reflect.set(htmlElementTemplate, "innerHTML", htmlTemplateString)), (htmlElementTemplate.content.firstElementChild)].at(-1)))(document.createElement("template")));
         attachMethodToHtmlElementRecursively(htmlElementNew);
         return htmlElementNew;
     };
