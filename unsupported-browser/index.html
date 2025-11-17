@@ -13,6 +13,7 @@
             <div id="main-content" data-display="flex" style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; row-gap: 8px; background-color: var(--safe-background-color-1); color: var(--safe-text-color-1);">
                 <h1 style="text-align: center;">Unsupported Browser</h1>
                 <h2>⛔ Access Denied ⛔</h2>
+                <p style="text-align: center;">Your <strong id="user-web-browser-placeholder">web browser</strong> is not supported.</p>
                 <p style="text-align: center;">Please use <strong id="google-chrome-stable-version-placeholder">latest Google Chrome</strong> to have access.</p>
                 <a href="https://www.google.com/chrome/" target="_blank" rel="noopener noreferrer" style="color:blue;">Download Chrome</a>
             </div>
@@ -23,7 +24,34 @@
             (async () => {
                 try {
                     ComponentLoadingSpinner.toggleLoadingSpinner(true, [document.getElementById("main-content")]);
-                    const chromiumBasedBrowserMinimumStableVersion = await UtilsWeb.getChromiumBasedBrowserMinimumStableVersion();
+                    const CHROMIUM_BASED_BROWSER_MINIMUM_STABLE_VERSION_PER_2025 = 134;
+                    let chromiumBasedBrowserMinimumStableVersion = CHROMIUM_BASED_BROWSER_MINIMUM_STABLE_VERSION_PER_2025;
+                    let userChromiumBasedBrowserVersion = 0;
+
+                    if (UtilsWeb.checkUserUsingChromiumBasedBrowser() === false) {
+                        document.getElementById("google-chrome-stable-version-placeholder").textContent = (`Google Chrome version >= ${chromiumBasedBrowserMinimumStableVersion}.x.xxxx.xx`);
+                        return;
+                    }
+
+                    try {
+                        userChromiumBasedBrowserVersion = await UtilsWeb.getUserChromiumBasedBrowserVersion();
+                        console.log({ userChromiumBasedBrowserVersion });
+
+                        chromiumBasedBrowserMinimumStableVersion = await UtilsWeb.getChromiumBasedBrowserMinimumStableVersion();
+                        console.log({ chromiumBasedBrowserMinimumStableVersion });
+                    } catch (anyError) {
+                        // fallback to default value
+                    }
+
+                    const isUserUsingChromiumBasedBrowserMinimumStableVersion = (userChromiumBasedBrowserVersion >= chromiumBasedBrowserMinimumStableVersion);
+                    console.log({ isUserUsingChromiumBasedBrowserMinimumStableVersion });
+
+                    if (isUserUsingChromiumBasedBrowserMinimumStableVersion) {
+                        window.location.href = "/";
+                        return;
+                    }
+
+                    document.getElementById("user-web-browser-placeholder").textContent = (`Google Chrome ${userChromiumBasedBrowserVersion}.x.xxxx.xx`);
                     document.getElementById("google-chrome-stable-version-placeholder").textContent = (`Google Chrome version >= ${chromiumBasedBrowserMinimumStableVersion}.x.xxxx.xx`);
                 } catch (anyError) {
                     // do nothing :p

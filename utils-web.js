@@ -36,9 +36,9 @@ window.UtilsWeb = ((() => {
             return Infinity;
         }
     };
+    const checkUserUsingChromiumBasedBrowser = async () => (!navigator.userAgentData || !navigator.userAgentData.getHighEntropyValues);
     const getUserChromiumBasedBrowserVersion = async () => {
         try {
-            if (!navigator.userAgentData || !navigator.userAgentData.getHighEntropyValues) return 0;
             const getHighEntropyValuesResult = await navigator.userAgentData.getHighEntropyValues(["fullVersionList"]);
             return (getHighEntropyValuesResult?.fullVersionList?.reduce?.((currentUserBiggestChromiumBasedBrowserVersion, anyBrowser) => {
                 const currentChromiumBasedBrowserMajorVersion = parseInt(anyBrowser?.["version"]?.split?.(".")?.at?.(0), 10);
@@ -56,5 +56,6 @@ window.UtilsWeb = ((() => {
         fetchThrowErrorIfNotOk,
         getChromiumBasedBrowserMinimumStableVersion,
         getUserChromiumBasedBrowserVersion,
+        checkUserUsingChromiumBasedBrowser,
     };
 })());
