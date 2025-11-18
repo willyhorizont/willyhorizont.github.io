@@ -33,6 +33,7 @@
                     console.log(isUserUsingChromiumBasedBrowser);
                     if (isUserUsingChromiumBasedBrowser === false) {
                         document.getElementById("google-chrome-stable-version-placeholder").textContent = (`Google Chrome version >= ${chromiumBasedBrowserMinimumStableVersion}.x.xxxx.xx`);
+                        console.log("masuk 1");
                         return;
                     }
 
@@ -46,6 +47,7 @@
                         console.log({ chromiumBasedBrowserMinimumStableVersion });
                     } catch (anyError) {
                         // fallback to default value
+                        console.log("masuk 2");
                     }
 
                     const isUserUsingChromiumBasedBrowserMinimumStableVersion = (userChromiumBasedBrowserVersionCurrent >= chromiumBasedBrowserMinimumStableVersion);
@@ -53,13 +55,16 @@
 
                     if (isUserUsingChromiumBasedBrowserMinimumStableVersion) {
                         window.location.href = "/";
+                        console.log("masuk 3");
                         return;
                     }
 
                     document.getElementById("user-web-browser-placeholder").textContent = ((userWebBrowserCurrent === null) ? (`Google Chrome ${userChromiumBasedBrowserVersionCurrent}.x.xxxx.xx`) : Utils.jsonStringify(userWebBrowserCurrent));
                     document.getElementById("google-chrome-stable-version-placeholder").textContent = (`Google Chrome version >= ${chromiumBasedBrowserMinimumStableVersion}.x.xxxx.xx`);
+                    console.log("masuk 4");
                 } catch (anyError) {
                     // do nothing :p
+                    console.log("masuk 5");
                 } finally {
                     ComponentLoadingSpinner.toggleLoadingSpinner(false, [document.getElementById("main-content")]);
                 }
