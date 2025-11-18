@@ -61,7 +61,7 @@
                         return;
                     }
 
-                    document.getElementById("user-web-browser-placeholder").textContent = ((userWebBrowserCurrent === null) ? (`Google Chrome ${userChromiumBasedBrowserVersionCurrent}.x.xxxx.xx`) : Utils.jsonStringify(userWebBrowserCurrent));
+                    document.getElementById("user-web-browser-placeholder").textContent = ((userWebBrowserCurrent === null) ? (`Google Chrome ${userChromiumBasedBrowserVersionCurrent}.x.xxxx.xx`) : (`${Utils.jsonStringify(userWebBrowserCurrent)} Google Chrome: ${userChromiumBasedBrowserVersionCurrent}`));
                     document.getElementById("google-chrome-stable-version-placeholder").textContent = (`Google Chrome version >= ${chromiumBasedBrowserMinimumStableVersion}.x.xxxx.xx`);
                     console.log("masuk 4");
                 } catch (anyError) {
