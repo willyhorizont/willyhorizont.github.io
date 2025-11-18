@@ -26,7 +26,8 @@
                     ComponentLoadingSpinner.toggleLoadingSpinner(true, [document.getElementById("main-content")]);
                     const CHROMIUM_BASED_BROWSER_MINIMUM_STABLE_VERSION_PER_2025 = 134;
                     let chromiumBasedBrowserMinimumStableVersion = CHROMIUM_BASED_BROWSER_MINIMUM_STABLE_VERSION_PER_2025;
-                    let userChromiumBasedBrowserVersion = 0;
+                    let userChromiumBasedBrowserVersionCurrent = 0;
+                    let userWebBrowserCurrent = null;
 
                     if (UtilsWeb.checkUserUsingChromiumBasedBrowser() === false) {
                         document.getElementById("google-chrome-stable-version-placeholder").textContent = (`Google Chrome version >= ${chromiumBasedBrowserMinimumStableVersion}.x.xxxx.xx`);
@@ -34,8 +35,10 @@
                     }
 
                     try {
-                        userChromiumBasedBrowserVersion = await UtilsWeb.getUserChromiumBasedBrowserVersion();
-                        console.log({ userChromiumBasedBrowserVersion });
+                        const [userWebBrowser, userChromiumBasedBrowserVersion] = await UtilsWeb.getUserChromiumBasedBrowserVersion();
+                        userChromiumBasedBrowserVersionCurrent = userChromiumBasedBrowserVersion;
+                        userWebBrowserCurrent = userWebBrowser;
+                        console.log({ userWebBrowser, userChromiumBasedBrowserVersion });
 
                         chromiumBasedBrowserMinimumStableVersion = await UtilsWeb.getChromiumBasedBrowserMinimumStableVersion();
                         console.log({ chromiumBasedBrowserMinimumStableVersion });
@@ -43,7 +46,7 @@
                         // fallback to default value
                     }
 
-                    const isUserUsingChromiumBasedBrowserMinimumStableVersion = (userChromiumBasedBrowserVersion >= chromiumBasedBrowserMinimumStableVersion);
+                    const isUserUsingChromiumBasedBrowserMinimumStableVersion = (userChromiumBasedBrowserVersionCurrent >= chromiumBasedBrowserMinimumStableVersion);
                     console.log({ isUserUsingChromiumBasedBrowserMinimumStableVersion });
 
                     if (isUserUsingChromiumBasedBrowserMinimumStableVersion) {
@@ -51,7 +54,7 @@
                         return;
                     }
 
-                    document.getElementById("user-web-browser-placeholder").textContent = (`Google Chrome ${userChromiumBasedBrowserVersion}.x.xxxx.xx`);
+                    document.getElementById("user-web-browser-placeholder").textContent = ((userWebBrowserCurrent === null) ? (`Google Chrome ${userChromiumBasedBrowserVersionCurrent}.x.xxxx.xx`) : Utils.jsonStringify(userWebBrowserCurrent));
                     document.getElementById("google-chrome-stable-version-placeholder").textContent = (`Google Chrome version >= ${chromiumBasedBrowserMinimumStableVersion}.x.xxxx.xx`);
                 } catch (anyError) {
                     // do nothing :p
