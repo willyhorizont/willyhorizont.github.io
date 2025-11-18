@@ -29,7 +29,9 @@
                     let userChromiumBasedBrowserVersionCurrent = 0;
                     let userWebBrowserCurrent = null;
 
-                    if (UtilsWeb.checkUserUsingChromiumBasedBrowser() === false) {
+                    const isUserUsingChromiumBasedBrowser = UtilsWeb.checkUserUsingChromiumBasedBrowser();
+                    console.log(isUserUsingChromiumBasedBrowser);
+                    if (isUserUsingChromiumBasedBrowser === false) {
                         document.getElementById("google-chrome-stable-version-placeholder").textContent = (`Google Chrome version >= ${chromiumBasedBrowserMinimumStableVersion}.x.xxxx.xx`);
                         return;
                     }
@@ -47,7 +49,7 @@
                     }
 
                     const isUserUsingChromiumBasedBrowserMinimumStableVersion = (userChromiumBasedBrowserVersionCurrent >= chromiumBasedBrowserMinimumStableVersion);
-                    console.log({ isUserUsingChromiumBasedBrowserMinimumStableVersion });
+                    console.log({ isUserUsingChromeMinStblVer: isUserUsingChromiumBasedBrowserMinimumStableVersion });
 
                     if (isUserUsingChromiumBasedBrowserMinimumStableVersion) {
                         window.location.href = "/";
