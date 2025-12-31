@@ -6,11 +6,10 @@
     background-color: var(--light-background-color);
 }
 
-html[data-theme="dark"] {
-    .chip-input {
-        background-color: var(--dark-background-color); color: var(--dark-text-color);
-    }
-    .chip-remove-button {
-        background-color: var(--dark-background-color);
-    }
+html[data-theme="dark"] .chip-input {
+    background-color: var(--dark-background-color); color: var(--dark-text-color);
+}
+
+html[data-theme="dark"] .chip-remove-button {
+    background-color: var(--dark-background-color);
 }

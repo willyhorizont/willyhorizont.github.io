@@ -36,21 +36,19 @@ window.UtilsWeb = ((() => {
             return Infinity;
         }
     };
-    const checkUserUsingChromiumBasedBrowser = async () => (!navigator.userAgentData || !navigator.userAgentData.getHighEntropyValues);
+    const checkUserUsingChromiumBasedBrowser = () => ((navigator?.userAgentData !== undefined) || (navigator?.userAgentData?.getHighEntropyValues !== undefined));
     const getUserChromiumBasedBrowserVersion = async () => {
         try {
+            const isUserUsingChromiumBasedBrowser = checkUserUsingChromiumBasedBrowser();
+            if (isUserUsingChromiumBasedBrowser === false) return 0;
             const getHighEntropyValuesResult = await navigator.userAgentData.getHighEntropyValues(["fullVersionList"]);
-            return [getHighEntropyValuesResult, (getHighEntropyValuesResult?.fullVersionList?.reduce?.((currentUserBiggestChromiumBasedBrowserVersion, anyBrowser) => {
+            return (getHighEntropyValuesResult?.fullVersionList?.reduce?.((currentUserBiggestChromiumBasedBrowserVersion, anyBrowser) => {
+                if (["Google Chrome", "Chromium"]?.every?.((anyArrayItem) => (anyArrayItem !== anyBrowser?.["brand"]))) return currentUserBiggestChromiumBasedBrowserVersion;
                 const currentChromiumBasedBrowserMajorVersion = parseInt(anyBrowser?.["version"]?.split?.(".")?.at?.(0), 10);
-                console.log({ currentChromiumBasedBrowserMajorVersion });
-                if (Number.isFinite(currentChromiumBasedBrowserMajorVersion) === true) {
-                    console.log("Number.isFinite(currentChromiumBasedBrowserMajorVersion) === true");
-                    return currentChromiumBasedBrowserMajorVersion;
-                }
                 return ((currentChromiumBasedBrowserMajorVersion > currentUserBiggestChromiumBasedBrowserVersion) ? currentChromiumBasedBrowserMajorVersion : currentUserBiggestChromiumBasedBrowserVersion);
-            }, -Infinity))];
+            }, 0));
         } catch (anyError) {
-            return [null, 0];
+            return 0;
         }
     };
 
