@@ -23,5 +23,5 @@ req:
     console.log({ isUserUsingChromiumBasedBrowserMinimumStableVersion });
 
     if (isUserUsingChromiumBasedBrowserMinimumStableVersion) return;
-    window.location.href = "/unsupported-browser";
+    // window.location.href = "/unsupported-browser";
 })();
