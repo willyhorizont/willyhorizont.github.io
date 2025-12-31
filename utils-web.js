@@ -42,7 +42,11 @@ window.UtilsWeb = ((() => {
             const getHighEntropyValuesResult = await navigator.userAgentData.getHighEntropyValues(["fullVersionList"]);
             return [getHighEntropyValuesResult, (getHighEntropyValuesResult?.fullVersionList?.reduce?.((currentUserBiggestChromiumBasedBrowserVersion, anyBrowser) => {
                 const currentChromiumBasedBrowserMajorVersion = parseInt(anyBrowser?.["version"]?.split?.(".")?.at?.(0), 10);
-                if (Number.isFinite(currentChromiumBasedBrowserMajorVersion) === true) return currentChromiumBasedBrowserMajorVersion;
+                console.log({ currentChromiumBasedBrowserMajorVersion });
+                if (Number.isFinite(currentChromiumBasedBrowserMajorVersion) === true) {
+                    console.log("Number.isFinite(currentChromiumBasedBrowserMajorVersion) === true");
+                    return currentChromiumBasedBrowserMajorVersion;
+                }
                 return ((currentChromiumBasedBrowserMajorVersion > currentUserBiggestChromiumBasedBrowserVersion) ? currentChromiumBasedBrowserMajorVersion : currentUserBiggestChromiumBasedBrowserVersion);
             }, -Infinity))];
         } catch (anyError) {
