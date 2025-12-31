@@ -29,13 +29,13 @@
 
     --dark-accent-color-1: #213000;
     --dark-accent-color-2: #2a0033;
-    --dark-accent-color-3: 	#2B0B0B;
-    --dark-accent-color-4: 	#1C2B1F;
-    --dark-accent-color-5: 	#191970;
-    --dark-accent-color-6: 	#2A003F;
-    --dark-accent-color-7: 	#102820;
-    --dark-accent-color-8: 	#2C1A24;
-    --dark-accent-color-9: 	#12343B;
+    --dark-accent-color-3: #2B0B0B;
+    --dark-accent-color-4: #1C2B1F;
+    --dark-accent-color-5: #191970;
+    --dark-accent-color-6: #2A003F;
+    --dark-accent-color-7: #102820;
+    --dark-accent-color-8: #2C1A24;
+    --dark-accent-color-9: #12343B;
     --dark-accent-color-10: #643843;
     --dark-accent-color-11: #583C42;
     --dark-accent-color-12: #6D3B47;
@@ -60,11 +60,18 @@
 }
 
 body {
-    display: flex; flex-direction: column; min-height: 100vh; line-height: 1.6; font-family: Arial, Helvetica, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    line-height: 1.6;
+    font-family: Arial, Helvetica, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 a {
-    text-decoration: none; transition: opacity 0.2s ease;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
     color: var(--light-text-color);
 }
 
@@ -79,7 +86,8 @@ button,
 textarea,
 select {
     /* font: inherit; color: inherit; background-color: transparent; */
-    border: none; outline: none;
+    border: none;
+    outline: none;
 }
 
 button {
@@ -87,8 +95,10 @@ button {
 }
 
 textarea {
-    padding: 8px; border: 1px solid var(--light-border-color);
-    background-color: var(--light-background-color); color: var(--light-text-color);
+    padding: 8px;
+    border: 1px solid var(--light-border-color);
+    background-color: var(--light-background-color);
+    color: var(--light-text-color);
 }
 
 html[data-theme="light"] {
@@ -106,7 +116,8 @@ html[data-theme="dark"] a {
 }
 
 html[data-theme="dark"] textarea {
-    background-color: var(--dark-background-color); color: var(--dark-text-color);
+    background-color: var(--dark-background-color);
+    color: var(--dark-text-color);
 }
 
 /* end of setup */
@@ -116,11 +127,16 @@ html[data-theme="dark"] textarea {
 /* start of app style */
 
 header {
-    padding: 8px; background-color: var(--accent-color-2); position: sticky; top: 0px; left: 0px;
+    padding: 8px;
+    background-color: var(--accent-color-2);
+    position: sticky;
+    top: 0;
+    left: 0;
 }
 
 .app-logo {
-    display: flex; align-items: center;
+    display: flex;
+    align-items: center;
 
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -133,16 +149,20 @@ header {
 }
 
 .navbar {
-    display: flex; align-items: center; justify-content: space-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .navbar a {
-    color: var(--dark-text-color); text-decoration: none;
+    color: var(--dark-text-color);
+    text-decoration: none;
 }
 
 .navbar ul {
     list-style: none;
-    display: flex; align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .navbar ul li {
@@ -150,7 +170,9 @@ header {
 }
 
 .navbar ul li a img {
-    height: 48px; vertical-align: middle; margin-right: 8px;
+    height: 48px;
+    vertical-align: middle;
+    margin-right: 8px;
     transition: opacity 0.3s ease;
 }
 
@@ -165,9 +187,11 @@ header {
     -ms-user-select: none;
     user-select: none;
 
-    min-width: 30px; text-align: center;
-
-    display: none; font-size: 30px; cursor: pointer;
+    min-width: 30px;
+    text-align: center;
+    display: none;
+    font-size: 30px;
+    cursor: pointer;
 }
 
 .navbar-hamburger-menu-button:hover {
@@ -193,15 +217,15 @@ header {
     color: var(--light-accent-color-1);
 }
 
-.navbar-menu-item .navbar-hamburger-menu-close-button {
+.navbar-menu-item.navbar-hamburger-menu-close-button {
     display: none;
 }
 
-.navbar-menu-item .navbar-menu-item-selected a {
+.navbar-menu-item.navbar-menu-item-selected a {
     color: var(--accent-color-1);
 }
 
-.navbar-menu-item .navbar-menu-item-selected a:hover {
+.navbar-menu-item.navbar-menu-item-selected a:hover {
     color: var(--light-accent-color-1);
 }
 
@@ -214,7 +238,13 @@ header {
 }
 
 .toggle-theme-button {
-    background: none; border: 1px solid #fff; border-radius: 50%; font-size: 0.75em; cursor: pointer; padding-left: 0.02em; aspect-ratio: 1/1;
+    background: none;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    font-size: 0.75em;
+    cursor: pointer;
+    padding-left: 0.02em;
+    aspect-ratio: 1 / 1;
 }
 
 .toggle-theme-button:hover {
@@ -244,47 +274,66 @@ footer {
 
 @media screen and (max-width: 768px) {
     .navbar ul {
-        box-shadow: -2px 0 4px rgba(0, 0, 0, 0.5); text-align: right; background-color: var(--accent-color-2); width: 60%; padding-top: 64px; max-width: 200px; position: fixed; top: 0; right: -100%; flex-direction: column; align-items: flex-start;
+        box-shadow: -2px 0 4px rgba(0, 0, 0, 0.5);
+        text-align: right;
+        background-color: var(--accent-color-2);
+        width: 60%;
+        padding-top: 64px;
+        max-width: 200px;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        flex-direction: column;
+        align-items: flex-start;
     }
 
-    .navbar .navbar-menu-small-screen {
+    .navbar.navbar-menu-small-screen {
         align-items: center;
     }
 
-    .navbar .navbar-menu-small-screen ul {
+    .navbar.navbar-menu-small-screen ul {
         display: flex;
         right: 0;
     }
 
     .navbar-hamburger-menu-button {
-        display: inline-block; color: var(--dark-text-color);
+        display: inline-block;
+        color: var(--dark-text-color);
     }
 
     .navbar-menu-item {
-        margin-right: 0px;
+        margin-right: 0;
     }
 
     .navbar-menu-item a {
-        display: block; padding: 16px;
+        display: block;
+        padding: 16px;
     }
 
     .navbar-menu-item:hover {
         background-color: var(--dark-background-color);
     }
 
-    .navbar-menu-item .navbar-hamburger-menu-close-button {
+    .navbar-menu-item.navbar-hamburger-menu-close-button {
         width: auto;
-        display: block; color: var(--dark-text-color); position: absolute; top: 10px; right: 10px; font-size: 30px; cursor: pointer;
+        display: block;
+        color: var(--dark-text-color);
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 30px;
+        cursor: pointer;
         text-align: right;
     }
 
-    .navbar-menu-item .navbar-hamburger-menu-close-button:hover {
+    .navbar-menu-item.navbar-hamburger-menu-close-button:hover {
         opacity: 0.7;
         background-color: initial;
     }
 
     .toggle-theme-button-container {
-        padding: 16px; text-align: left;
+        padding: 16px;
+        text-align: left;
     }
 }
 
