@@ -187,7 +187,7 @@
             const yearPlusOneNewYearDateDotToIsoStringDotSliceZeroCommaTen = (`${yearPlusOneString}-01-01`);
 
             const dataTimestamp = "((2025//(09|Sep)//(04|Thu)||(03:38AM|03:38)))";
-            console.log(Utils.generateTimestamp());
+            console.log(window.Utils.generateTimestamp({ precise: true }));
             const localStorageKeyKalenderLiburGeneratorTimestamp = ("kalender-libur-generator-timestamp");
             const localStorageKeyKalenderLiburGeneratorDemoFinished = ("kalender-libur-generator-demo-finished");
             const localStorageKeyZyxCalendarEventHolidayIndonesiaRawData = (`zyx-calendar-event-holiday-indonesia-${yearString}-raw-data`);

@@ -1,7 +1,7 @@
 /*
 req:
-    Utils
-    UtilsWeb
+    window.Utils
+    window.UtilsWeb
 */
 
 class ComponentChipInput {
@@ -13,7 +13,7 @@ class ComponentChipInput {
     }
 
     createHtmlElementChipTextContainer = (arrayOfEntryProperty) => {
-        const htmlElementChipText = UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+        const htmlElementChipText = window.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
             <span data-id="chip-text" style="white-space: nowrap;">
             </span>`
         );
@@ -25,7 +25,7 @@ class ComponentChipInput {
     };
 
     createHtmlElementChipRemoveButton = () => {
-        const htmlElementChipRemoveButton = UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+        const htmlElementChipRemoveButton = window.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
             <div data-id="chip-remove-button" style="display: flex; align-items: center; justify-content: center; line-height: 1.2em; background-color: var(--accent-color-4); color: var(--dark-text-color); width: 1.6em; aspect-ratio: 1 / 1; border-radius: 50%;">
                 <span data-id="chip-remove-button-content" style="cursor: pointer; font-weight: bold;">×</span>
             </div>`
@@ -37,7 +37,7 @@ class ComponentChipInput {
     };
 
     createHtmlElementChip = (chipTextTrimmed) => {
-        const htmlElementChipContainer = UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+        const htmlElementChipContainer = window.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
             <div data-id="chip-container" style="cursor: pointer; padding: 4px 6px; border-radius: 0.2em; display: flex; align-items: center; gap: 12px; flex: 0 0 auto; border: 1px solid var(--light-border-color); color: var(--light-text-color); background-color: #ffdddd;">
             </div>`
         );
@@ -48,7 +48,7 @@ class ComponentChipInput {
     };
 
     createHtmlElementChipInput = (placeholderValue = "") => {
-        const htmlElementChipInput = UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`<input data-id="chip-input" class="chip-input" style="flex: 1 1 auto; padding: 8px 8px 8px 0px; border: none; outline: none;" name="chip-input" type="text" />`);
+        const htmlElementChipInput = window.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`<input data-id="chip-input" class="chip-input" style="flex: 1 1 auto; padding: 8px 8px 8px 0px; border: none; outline: none;" name="chip-input" type="text" />`);
         htmlElementChipInput.setEventStuffs([
             ({ handlerRefName: "refEventHandlerKeyDown", eventType: "keydown", eventHandler: this.handleEventKeyDownChipInput }),
             ({ handlerRefName: "refEventHandlerBlur", eventType: "blur", eventHandler: this.handleEventBlurChipInput }),
@@ -58,7 +58,7 @@ class ComponentChipInput {
     };
 
     createHtmlElementChipUpdateInput = (chipTextTrimmed = "") => {
-        const htmlElementChipUpdateInput = UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`<input data-id="chip-update-input" class="chip-input" style="flex: 1 1 auto; padding: 8px; border: 1px solid var(--light-border-color); outline: none;" name="chip-update-input" type="text" />`);
+        const htmlElementChipUpdateInput = window.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`<input data-id="chip-update-input" class="chip-input" style="flex: 1 1 auto; padding: 8px; border: 1px solid var(--light-border-color); outline: none;" name="chip-update-input" type="text" />`);
         htmlElementChipUpdateInput.setEventStuffs([
             ({ handlerRefName: "refEventHandlerKeyDown", eventType: "keydown", eventHandler: this.handleEventKeyDownChipUpdateInput }),
             ({ handlerRefName: "refEventHandlerBlur", eventType: "blur", eventHandler: this.handleEventBlurChipUpdateInput }),
@@ -68,7 +68,7 @@ class ComponentChipInput {
     };
 
     createHtmlElementChipInputContainer = async (itemList) => {
-        const htmlElementChipInputContainer = UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+        const htmlElementChipInputContainer = window.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
             <div data-id="chip-input-container" style="cursor: text; display: flex; gap: 8px; padding: 8px; flex-wrap: wrap; flex: 1; overflow-x: auto; border: 1px solid var(--light-border-color);">
             </div>`
         );
@@ -98,7 +98,7 @@ class ComponentChipInput {
             })
             return datasetItemsJsonParsed;
         })()));
-        const chipInputValueAsListNoDuplicate = Utils.removeDuplicateListItem(chipInputValueAsListMergedWithDataset);
+        const chipInputValueAsListNoDuplicate = window.Utils.removeDuplicateListItem(chipInputValueAsListMergedWithDataset);
 
         htmlElementChipInputContainer.setAttribute("data-items", JSON.stringify(chipInputValueAsListNoDuplicate));
 
@@ -248,4 +248,4 @@ class ComponentChipInput {
     };
 }
 
-window.ComponentChipInput = ComponentChipInput;
+window.ComponentChipInput = ((!window.Utils || !window.UtilsWeb) ? undefined : ComponentChipInput);

@@ -1,9 +1,11 @@
 /*
 req:
-    Utils
+    window.Utils
 */
 
 window.UtilsWeb = ((() => {
+    if (!window.Utils) return;
+
     const createSetHtmlElementPropertyValues = (htmlElement) => ((arrayOfEntryProperty) => ([(arrayOfEntryProperty.forEach(([htmlElementProperty, htmlElementPropertyValue]) => (Reflect.set(htmlElement, htmlElementProperty, htmlElementPropertyValue)))), htmlElement].at(-1)));
     const createSetHtmlElementEventStuffs = (htmlElement) => ((arrayOfElementEventStuff) => ([(arrayOfElementEventStuff.forEach(({ handlerRefName, eventType, elementHandler, eventHandler }) => (((handlerFunction) => ([(Reflect.set(htmlElement, handlerRefName, handlerFunction)), (htmlElement.addEventListener(eventType, handlerFunction)), undefined].at(-1)))(eventHandler || elementHandler(htmlElement))))), htmlElement].at(-1)));
     const createSetHtmlElementAttributes = (htmlElement) => ((arrayOfEntryAttribute) => ([(arrayOfEntryAttribute.forEach(([htmlElementAttribute, htmlElementAttributeValue]) => (htmlElement.setAttribute(htmlElementAttribute, String(htmlElementAttributeValue))))), htmlElement].at(-1)));
@@ -12,7 +14,7 @@ window.UtilsWeb = ((() => {
         if (!Reflect.has(htmlElement, "setEventStuffs")) Reflect.set(htmlElement, "setEventStuffs", createSetHtmlElementEventStuffs(htmlElement));
         if (!Reflect.has(htmlElement, "setAttributes")) Reflect.set(htmlElement, "setAttributes", createSetHtmlElementAttributes(htmlElement));
         if (!htmlElement.children.length) return;
-        Utils.iterateList(htmlElement.children, (htmlElementInnerChild) => {
+        window.Utils.iterateList(htmlElement.children, (htmlElementInnerChild) => {
             attachMethodToHtmlElementRecursively(htmlElementInnerChild);
         });
     };
@@ -22,7 +24,7 @@ window.UtilsWeb = ((() => {
         return htmlElementNew;
     };
     const appendChildrenReturnParent = (htmlElementParent, ...htmlElementChildren) => ([(htmlElementChildren.forEach((htmlElementChild) => (htmlElementParent.appendChild(htmlElementChild)))), htmlElementParent].at(-1));
-    const fetchThrowErrorIfNotOk = async (anyUrl) => (((anyFetchResponse) => ((!anyFetchResponse.ok) ? Utils.throwError(`fetch ${anyUrl} not ok`) : anyFetchResponse))(await fetch(anyUrl)));
+    const fetchThrowErrorIfNotOk = async (anyUrl) => (((anyFetchResponse) => ((!anyFetchResponse.ok) ? window.Utils.throwError(`fetch ${anyUrl} not ok`) : anyFetchResponse))(await fetch(anyUrl)));
     const getChromiumBasedBrowserMinimumStableVersion = async () => {
         try {
             const getChromiumBasedBrowserMinimumStableVersionResponse = await fetchThrowErrorIfNotOk("https://chromiumdash.appspot.com/fetch_releases?channel=Stable&num=1");

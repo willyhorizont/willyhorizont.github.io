@@ -1,18 +1,20 @@
 /*
 req:
-    UtilsWeb
+    window.UtilsWeb
 */
 
 (async () => {
+    if (!window.UtilsWeb) return;
+
     const CHROMIUM_BASED_BROWSER_MINIMUM_STABLE_VERSION_PER_2025 = 134;
     let chromiumBasedBrowserMinimumStableVersion = CHROMIUM_BASED_BROWSER_MINIMUM_STABLE_VERSION_PER_2025;
     let userChromiumBasedBrowserVersionCurrent = 0;
 
     try {
-        const userChromiumBasedBrowserVersion = await UtilsWeb.getUserChromiumBasedBrowserVersion();
+        const userChromiumBasedBrowserVersion = await window.UtilsWeb.getUserChromiumBasedBrowserVersion();
         userChromiumBasedBrowserVersionCurrent = userChromiumBasedBrowserVersion;
 
-        chromiumBasedBrowserMinimumStableVersion = await UtilsWeb.getChromiumBasedBrowserMinimumStableVersion();
+        chromiumBasedBrowserMinimumStableVersion = await window.UtilsWeb.getChromiumBasedBrowserMinimumStableVersion();
     } catch (anyError) {
         // fallback to default value
     }
