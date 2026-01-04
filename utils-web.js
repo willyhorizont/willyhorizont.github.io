@@ -6,6 +6,7 @@ req:
 window.UtilsWeb = ((() => {
     if (!window.Utils) return;
 
+    const IS_IN_DEVELOPMENT_MODE = (window.location.hostname === "127.0.0.1");
     const createSetHtmlElementPropertyValues = (htmlElement) => ((arrayOfEntryProperty) => ([(arrayOfEntryProperty.forEach(([htmlElementProperty, htmlElementPropertyValue]) => (Reflect.set(htmlElement, htmlElementProperty, htmlElementPropertyValue)))), htmlElement].at(-1)));
     const createSetHtmlElementEventStuffs = (htmlElement) => ((arrayOfElementEventStuff) => ([(arrayOfElementEventStuff.forEach(({ handlerRefName, eventType, elementHandler, eventHandler }) => (((handlerFunction) => ([(Reflect.set(htmlElement, handlerRefName, handlerFunction)), (htmlElement.addEventListener(eventType, handlerFunction)), undefined].at(-1)))(eventHandler || elementHandler(htmlElement))))), htmlElement].at(-1)));
     const createSetHtmlElementAttributes = (htmlElement) => ((arrayOfEntryAttribute) => ([(arrayOfEntryAttribute.forEach(([htmlElementAttribute, htmlElementAttributeValue]) => (htmlElement.setAttribute(htmlElementAttribute, String(htmlElementAttributeValue))))), htmlElement].at(-1)));
@@ -55,6 +56,7 @@ window.UtilsWeb = ((() => {
     };
 
     return {
+        IS_IN_DEVELOPMENT_MODE,
         htmlTemplateStringToHtmlElement,
         appendChildrenReturnParent,
         fetchThrowErrorIfNotOk,

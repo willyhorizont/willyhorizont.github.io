@@ -186,7 +186,7 @@
             const yearPlusOneNewYearEveDateDotToIsoStringDotSliceZeroCommaTen = (`${yearString}-12-31`);
             const yearPlusOneNewYearDateDotToIsoStringDotSliceZeroCommaTen = (`${yearPlusOneString}-01-01`);
 
-            const dataTimestamp = "(01/12 month) | Mon, 05 Jan 2026 | 01:24:50:691 | 01:24 AM";
+            const dataTimestamp = ("(01/12 month) | Mon, 05 Jan 2026 | 03:10:21.424 | 03:10 AM");
             console.log(Utils.generateTimestamp({ precise: true }));
             const localStorageKeyKalenderLiburGeneratorTimestamp = ("kalender-libur-generator-timestamp");
             const localStorageKeyKalenderLiburGeneratorDemoFinished = ("kalender-libur-generator-demo-finished");
@@ -417,7 +417,7 @@
                     document.getElementById("placeholder-year").textContent = yearString;
 
                     const dataFromLocalStorageKalenderLiburGeneratorTimestamp = JSON.parse(localStorage.getItem(localStorageKeyKalenderLiburGeneratorTimestamp));
-                    if (dataFromLocalStorageKalenderLiburGeneratorTimestamp !== dataTimestamp) {
+                    if (UtilsWeb.IS_IN_DEVELOPMENT_MODE || (dataFromLocalStorageKalenderLiburGeneratorTimestamp !== dataTimestamp)) {
                         localStorage.setItem(localStorageKeyKalenderLiburGeneratorDemoFinished, JSON.stringify(false));
                         await localDatabase.removeItem(localStorageKeyZyxCalendarEventHolidayIndonesiaRawData);
                         await localDatabase.removeItem(localStorageKeyZyxCalendarEventHolidayIndonesiaData);
@@ -444,6 +444,7 @@
 
                     if (dataFromLocalStorageZyxCalendarEventHolidayIndonesiaData === null) {
                         const zyxCalendarEventHolidayIndonesiaRawDataModified = modifyZyxCalendarEventHolidayIndonesiaData(dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw);
+                        // console.log({ zyxCalendarEventHolidayIndonesiaRawDataModified });
                         await localDatabase.setItem(localStorageKeyZyxCalendarEventHolidayIndonesiaData, zyxCalendarEventHolidayIndonesiaRawDataModified);
                         dataFromLocalStorageZyxCalendarEventHolidayIndonesiaData = zyxCalendarEventHolidayIndonesiaRawDataModified;
                     }

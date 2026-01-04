@@ -20,7 +20,8 @@ window.UtilsZyx = ((() => {
             const zyxPassvvordCalendar = getZyxPassvvordString(zyxPassvvordSuffixStringCalendar);
             // console.log({ zyxPassvvordCalendar });
             const getZyxCalendarEventHolidayIndonesiaUrl = (`https://www.googleapis.com/calendar/v3/calendars/${calendarIdIndonesiaHoliday}/events?key=${zyxPassvvordCalendar}&timeMin=${yearString}-01-01T00:00:00Z&timeMax=${yearPlusOneString}-01-01T00:00:00Z&singleEvents=true&orderBy=startTime`);
-            const getZyxCalendarEventHolidayIndonesiaResponse = await window.UtilsWeb.fetchThrowErrorIfNotOk(getZyxCalendarEventHolidayIndonesiaUrl);
+            const [getZyxCalendarEventHolidayIndonesiaError, getZyxCalendarEventHolidayIndonesiaResponse] = await window.Utils.catchAnyError(fetch(getZyxCalendarEventHolidayIndonesiaUrl), (anyFetchResponse) => ((!anyFetchResponse?.ok || (anyFetchResponse?.status !== 200)) ? null : anyFetchResponse));
+            if (getZyxCalendarEventHolidayIndonesiaError || (getZyxCalendarEventHolidayIndonesiaResponse === null)) return null;
             const getZyxCalendarEventHolidayIndonesiaResult = await getZyxCalendarEventHolidayIndonesiaResponse.json();
             // console.log({ getZyxCalendarEventHolidayIndonesiaResult });
             return (getZyxCalendarEventHolidayIndonesiaResult?.["items"] || null);
