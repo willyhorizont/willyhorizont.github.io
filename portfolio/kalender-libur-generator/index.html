@@ -186,7 +186,7 @@
             const yearPlusOneNewYearEveDateDotToIsoStringDotSliceZeroCommaTen = (`${yearString}-12-31`);
             const yearPlusOneNewYearDateDotToIsoStringDotSliceZeroCommaTen = (`${yearPlusOneString}-01-01`);
 
-            const dataTimestamp = "(01/12 month) | Sun, 04 Jan 2026 | 05:04:15:404 | 05:04 AM";
+            const dataTimestamp = "(01/12 month) | Mon, 05 Jan 2026 | 01:24:50:691 | 01:24 AM";
             console.log(Utils.generateTimestamp({ precise: true }));
             const localStorageKeyKalenderLiburGeneratorTimestamp = ("kalender-libur-generator-timestamp");
             const localStorageKeyKalenderLiburGeneratorDemoFinished = ("kalender-libur-generator-demo-finished");
@@ -389,7 +389,7 @@
                 localStorage.setItem(localStorageKeyKalenderLiburGeneratorTimestamp, JSON.stringify(dataTimestamp));
             };
 
-            (() => {
+            const initializeApp = async () => {
                 const isDemoFinished = (JSON.parse(localStorage.getItem(localStorageKeyKalenderLiburGeneratorDemoFinished)) || false);
                 if (isDemoFinished) return;
 
@@ -399,11 +399,19 @@
 
                 rerenderMainContent(zyxCalendarEventHolidayIndonesiaDataInitialGrouped);
                 localStorage.setItem(localStorageKeyKalenderLiburGeneratorDemoFinished, JSON.stringify(true));
-            })();
+
+                ComponentLoadingSpinner.toggleLoadingSpinner(false, [document.getElementById("kalender-libur-generator-container")]);
+
+                await Utils.pythonLikeSleep(3);
+
+                ComponentLoadingSpinner.toggleLoadingSpinner(true, [document.getElementById("kalender-libur-generator-container")]);
+            };
 
             (async () => {
                 try {
                     ComponentLoadingSpinner.toggleLoadingSpinner(true, [document.getElementById("kalender-libur-generator-container")]);
+
+                    await initializeApp();
 
                     document.getElementById("placeholder-error").innerHTML = "";
                     document.getElementById("placeholder-year").textContent = yearString;
