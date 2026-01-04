@@ -1,4 +1,15 @@
 window.UtilsDate = ((() => {
+    const ONE_SECOND_IN_MILLISECOND = 1000;
+    const ONE_MINUTE_IN_SECOND = 60;
+    const ONE_MINUTE_IN_MILLISECOND = (ONE_MINUTE_IN_SECOND * ONE_SECOND_IN_MILLISECOND);
+    const ONE_HOUR_IN_MINUTE = 60;
+    const ONE_HOUR_IN_SECOND = (ONE_HOUR_IN_MINUTE * ONE_MINUTE_IN_SECOND);
+    const ONE_HOUR_IN_MILLISECOND = (ONE_HOUR_IN_SECOND * ONE_SECOND_IN_MILLISECOND);
+    const ONE_DAY_IN_HOUR = 24;
+    const ONE_DAY_IN_MINUTE = (ONE_DAY_IN_HOUR * ONE_HOUR_IN_MINUTE);
+    const ONE_DAY_IN_SECOND = (ONE_DAY_IN_MINUTE * ONE_MINUTE_IN_SECOND);
+    const ONE_DAY_IN_MILLISECOND = (ONE_DAY_IN_SECOND * ONE_SECOND_IN_MILLISECOND);
+
     const dictionaryDay = {
         "ENG": {
             "short": {
@@ -131,12 +142,12 @@ window.UtilsDate = ((() => {
         { "name_ENG": "Earth", "name_IDN": "Tanah", "icon": "🌍" },
         { "name_ENG": "Earth", "name_IDN": "Tanah", "icon": "🌍" },
     ];
-    const getDateOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen) => new Date(`${dateDotToIsoStringDotSliceZeroCommaTen}T00:00:00`);
-    const getDayInNumericOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen) => (getDateOfDateDotToIsoStringDotSliceZeroCommaTen(dateDotToIsoStringDotSliceZeroCommaTen).getDate());
-    const getMonthInNumericOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen) => ((getDateOfDateDotToIsoStringDotSliceZeroCommaTen(dateDotToIsoStringDotSliceZeroCommaTen).getMonth() + 1));
-    const getYearInNumericOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen) => (getDateOfDateDotToIsoStringDotSliceZeroCommaTen(dateDotToIsoStringDotSliceZeroCommaTen).getFullYear());
-    const getMonthLengthInNumericOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen) => ((({ anyDate }) => (new Date(anyDate.getFullYear(), (anyDate.getMonth() + 1), 0).getDate()))({ anyDate: new Date(dateDotToIsoStringDotSliceZeroCommaTen) }));
-    const updateDateDotToIsoStringDotSliceZeroCommaTenByNumericVariable = (dateDotToIsoStringDotSliceZeroCommaTen, numericVariable) => (((dateDotToIsoStringDotSliceZeroCommaTenParsedToDate) => (((dateDotToIsoStringDotSliceZeroCommaTenParsedToDateClone) => ([(dateDotToIsoStringDotSliceZeroCommaTenParsedToDateClone.setDate(dateDotToIsoStringDotSliceZeroCommaTenParsedToDateClone.getDate() + numericVariable)), (`${dateDotToIsoStringDotSliceZeroCommaTenParsedToDateClone.getFullYear()}-${String(dateDotToIsoStringDotSliceZeroCommaTenParsedToDateClone.getMonth() + 1).padStart(2, "0")}-${String(dateDotToIsoStringDotSliceZeroCommaTenParsedToDateClone.getDate()).padStart(2, "0")}`)].at(-1)))(new Date(dateDotToIsoStringDotSliceZeroCommaTenParsedToDate))))(new Date(dateDotToIsoStringDotSliceZeroCommaTen)));
+    const getDateOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen = "2026-01-01") => new Date(`${dateDotToIsoStringDotSliceZeroCommaTen}T00:00:00`);
+    const getDayInNumericOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen = "2026-01-01") => (getDateOfDateDotToIsoStringDotSliceZeroCommaTen(dateDotToIsoStringDotSliceZeroCommaTen).getDate());
+    const getMonthInNumericOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen = "2026-01-01") => ((getDateOfDateDotToIsoStringDotSliceZeroCommaTen(dateDotToIsoStringDotSliceZeroCommaTen).getMonth() + 1));
+    const getYearInNumericOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen = "2026-01-01") => (getDateOfDateDotToIsoStringDotSliceZeroCommaTen(dateDotToIsoStringDotSliceZeroCommaTen).getFullYear());
+    const getMonthLengthInNumericOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen = "2026-01-01") => ((({ anyDate }) => (new Date(anyDate.getFullYear(), (anyDate.getMonth() + 1), 0).getDate()))({ anyDate: new Date(dateDotToIsoStringDotSliceZeroCommaTen) }));
+    const updateDateDotToIsoStringDotSliceZeroCommaTenByNumericVariable = (dateDotToIsoStringDotSliceZeroCommaTen = "2026-01-01", numericVariable) => (((dateDotToIsoStringDotSliceZeroCommaTenParsedToDate) => (((dateDotToIsoStringDotSliceZeroCommaTenParsedToDateClone) => ([(dateDotToIsoStringDotSliceZeroCommaTenParsedToDateClone.setDate(dateDotToIsoStringDotSliceZeroCommaTenParsedToDateClone.getDate() + numericVariable)), (`${dateDotToIsoStringDotSliceZeroCommaTenParsedToDateClone.getFullYear()}-${String(dateDotToIsoStringDotSliceZeroCommaTenParsedToDateClone.getMonth() + 1).padStart(2, "0")}-${String(dateDotToIsoStringDotSliceZeroCommaTenParsedToDateClone.getDate()).padStart(2, "0")}`)].at(-1)))(new Date(dateDotToIsoStringDotSliceZeroCommaTenParsedToDate))))(new Date(dateDotToIsoStringDotSliceZeroCommaTen)));
     const YEAR_ANNO_DOMINI_GREGORIAN_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN = 2025; // Tahun Baru Masehi 2025
     const YEAR_EID_AL_FITR_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN = 1446; // Idul Fitri 1 Syawal 1446 Hijriah
     const YEAR_HIJRIAH_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN = 1447; // Satu Muharam / Tahun Baru Hijriah 1 Muharam 1447 Hijriah
@@ -151,8 +162,19 @@ window.UtilsDate = ((() => {
     const convertYearAnnoDominiGregorianToIndonesiaIndependenceProclamation = (yearAnnoDominiGregorianNumeric) => (YEAR_INDONESIA_INDEPENDENCE_PROCLAMATION_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN + (yearAnnoDominiGregorianNumeric - YEAR_ANNO_DOMINI_GREGORIAN_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN));
     const getChineseZodiacOrShio = (yearAnnoDominiGregorianNumeric) => (dictionaryZodiacsOrShios[yearAnnoDominiGregorianNumeric % 12]);
     const getChineseZodiacOrShioWithElement = (yearAnnoDominiGregorianNumeric) => (dictionaryZodiacOrShioElements[yearAnnoDominiGregorianNumeric.toString().at(-1)]);
-    
+    const getDayDifferenceInNumeric = (dateDotToIsoStringDotSliceZeroCommaTenEnd, dateDotToIsoStringDotSliceZeroCommaTenStart) => (((new Date(dateDotToIsoStringDotSliceZeroCommaTenEnd) - new Date(dateDotToIsoStringDotSliceZeroCommaTenStart)) / UtilsDate.ONE_DAY_IN_MILLISECOND) - 1);
+
     return {
+        ONE_SECOND_IN_MILLISECOND,
+        ONE_MINUTE_IN_SECOND,
+        ONE_MINUTE_IN_MILLISECOND,
+        ONE_HOUR_IN_MINUTE,
+        ONE_HOUR_IN_SECOND,
+        ONE_HOUR_IN_MILLISECOND,
+        ONE_DAY_IN_HOUR,
+        ONE_DAY_IN_MINUTE,
+        ONE_DAY_IN_SECOND,
+        ONE_DAY_IN_MILLISECOND,
         dictionaryDay,
         dictionaryMonth,
         dictionaryZodiacsOrShios,
@@ -177,5 +199,6 @@ window.UtilsDate = ((() => {
         convertYearAnnoDominiGregorianToIndonesiaIndependenceProclamation,
         getChineseZodiacOrShio,
         getChineseZodiacOrShioWithElement,
+        getDayDifferenceInNumeric,
     };
 })());

@@ -174,8 +174,8 @@
             ]);
             const getPrefixSuffixOfText = (anyString, textToFind) => (((indexOfTextToFind) => ([(anyString.substring(0, indexOfTextToFind)), (anyString.substring((indexOfTextToFind + textToFind.length), anyString.length))]))(anyString.indexOf(textToFind)));
             const getYearFromUrl = () => ((({ yearStringNew }) => ((({ yearNumericNew }) => ([yearNumericNew.toString(), yearNumericNew]))({ yearNumericNew: ((yearStringNew === null) ? new Date().getFullYear() : parseInt(yearStringNew, 10)) })))({ yearStringNew: new URLSearchParams(window.location.search).get("year") }));
-            const getShortDayNameOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen) => (new Intl.DateTimeFormat("id-ID", { weekday: "short" }).format(new Date(dateDotToIsoStringDotSliceZeroCommaTen)));
-            const getShortMonthNameOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen) => (new Intl.DateTimeFormat("id-ID", { month: "short" }).format(new Date(dateDotToIsoStringDotSliceZeroCommaTen)));
+            const getShortDayNameOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen = "2026-01-01") => (new Intl.DateTimeFormat("id-ID", { weekday: "short" }).format(new Date(dateDotToIsoStringDotSliceZeroCommaTen)));
+            const getShortMonthNameOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen = "2026-01-01") => (new Intl.DateTimeFormat("id-ID", { month: "short" }).format(new Date(dateDotToIsoStringDotSliceZeroCommaTen)));
             const [yearString, yearNumeric] = getYearFromUrl();
             const yearPlusOneNumeric = (yearNumeric + 1);
             const yearPlusOneString = yearPlusOneNumeric.toString();
@@ -186,7 +186,7 @@
             const yearPlusOneNewYearEveDateDotToIsoStringDotSliceZeroCommaTen = (`${yearString}-12-31`);
             const yearPlusOneNewYearDateDotToIsoStringDotSliceZeroCommaTen = (`${yearPlusOneString}-01-01`);
 
-            const dataTimestamp = ("(01/12 month) | Mon, 05 Jan 2026 | 03:10:21.424 | 03:10 AM");
+            const dataTimestamp = ("(01/12 month) | Mon, 05 Jan 2026 | 05:12:44.150 | 05:12 AM");
             console.log(Utils.generateTimestamp({ precise: true }));
             const localStorageKeyKalenderLiburGeneratorTimestamp = ("kalender-libur-generator-timestamp");
             const localStorageKeyKalenderLiburGeneratorDemoFinished = ("kalender-libur-generator-demo-finished");
@@ -199,6 +199,24 @@
             const modifyZyxCalendarEventHolidayIndonesiaData = (zyxCalendarEventHolidayIndonesiaData) => {
                 const zyxCalendarEventHolidayIndonesiaDataNewMap = new Map();
 
+                const addDayOffRecomendation = (zyxCalendarEventHolidayIndonesiaEventDate, startNumber, stopNumber) => {
+                    Utils.loop(startNumber, stopNumber)((rangeItemDay) => {
+                        if (rangeItemDay === 0) return;
+                        const zyxCalendarEventHolidayIndonesiaEventDateNew = UtilsDate.updateDateDotToIsoStringDotSliceZeroCommaTenByNumericVariable(zyxCalendarEventHolidayIndonesiaEventDate, rangeItemDay);
+                        if (zyxCalendarEventHolidayIndonesiaDataNewMap.get(zyxCalendarEventHolidayIndonesiaEventDateNew) !== undefined) return;
+                        const zyxCalendarEventHolidayIndonesiaEventShortDayNameNew = getShortDayNameOfDateDotToIsoStringDotSliceZeroCommaTen(zyxCalendarEventHolidayIndonesiaEventDateNew);
+                        const zyxCalendarEventHolidayIndonesiaEventLongDayNameNew = new Intl.DateTimeFormat("id-ID", { weekday: "long" }).format(new Date(zyxCalendarEventHolidayIndonesiaEventDateNew));
+                        const zyxCalendarEventHolidayIndonesiaEventShortMonthNameNew = getShortMonthNameOfDateDotToIsoStringDotSliceZeroCommaTen(zyxCalendarEventHolidayIndonesiaEventDateNew);
+                        const zyxCalendarEventHolidayIndonesiaEventNameNew = (([UtilsDate.dictionaryDay["IDN"]["long"]["Sat"], UtilsDate.dictionaryDay["IDN"]["long"]["Sun"]].some((weekendDayNameLong) => (zyxCalendarEventHolidayIndonesiaEventLongDayNameNew === weekendDayNameLong))) ? (`Hari ${zyxCalendarEventHolidayIndonesiaEventLongDayNameNew}`) : eventNameDefault);
+                        zyxCalendarEventHolidayIndonesiaDataNewMap.set(zyxCalendarEventHolidayIndonesiaEventDateNew, ({
+                            "event_name": zyxCalendarEventHolidayIndonesiaEventNameNew,
+                            "event_date": zyxCalendarEventHolidayIndonesiaEventDateNew,
+                            "event_day": zyxCalendarEventHolidayIndonesiaEventShortDayNameNew,
+                            "event_month": zyxCalendarEventHolidayIndonesiaEventShortMonthNameNew,
+                        }));
+                    });
+                };
+
                 zyxCalendarEventHolidayIndonesiaData.forEach((zyxCalendarEventHolidayIndonesia) => {
                     const zyxCalendarEventHolidayIndonesiaEventName = zyxCalendarEventHolidayIndonesia["summary"];
 
@@ -207,31 +225,13 @@
                     const zyxCalendarEventHolidayIndonesiaEventDate = zyxCalendarEventHolidayIndonesia["start"]["date"];
                     const zyxCalendarEventHolidayIndonesiaEventShortDayName = getShortDayNameOfDateDotToIsoStringDotSliceZeroCommaTen(zyxCalendarEventHolidayIndonesiaEventDate);
 
-                    const addDayOffRecomendation = (startNumber, stopNumber) => {
-                        Utils.loop(startNumber, stopNumber)((rangeItemDay) => {
-                            if (rangeItemDay === 0) return;
-                            const zyxCalendarEventHolidayIndonesiaEventDateNew = UtilsDate.updateDateDotToIsoStringDotSliceZeroCommaTenByNumericVariable(zyxCalendarEventHolidayIndonesiaEventDate, rangeItemDay);
-                            if (zyxCalendarEventHolidayIndonesiaDataNewMap.get(zyxCalendarEventHolidayIndonesiaEventDateNew) !== undefined) return;
-                            const zyxCalendarEventHolidayIndonesiaEventShortDayNameNew = getShortDayNameOfDateDotToIsoStringDotSliceZeroCommaTen(zyxCalendarEventHolidayIndonesiaEventDateNew);
-                            const zyxCalendarEventHolidayIndonesiaEventLongDayNameNew = new Intl.DateTimeFormat("id-ID", { weekday: "long" }).format(new Date(zyxCalendarEventHolidayIndonesiaEventDateNew));
-                            const zyxCalendarEventHolidayIndonesiaEventShortMonthNameNew = getShortMonthNameOfDateDotToIsoStringDotSliceZeroCommaTen(zyxCalendarEventHolidayIndonesiaEventDateNew);
-                            const zyxCalendarEventHolidayIndonesiaEventNameNew = (([UtilsDate.dictionaryDay["IDN"]["long"]["Sat"], UtilsDate.dictionaryDay["IDN"]["long"]["Sun"]].some((weekendDayNameLong) => (zyxCalendarEventHolidayIndonesiaEventLongDayNameNew === weekendDayNameLong))) ? (`Hari ${zyxCalendarEventHolidayIndonesiaEventLongDayNameNew}`) : eventNameDefault);
-                            zyxCalendarEventHolidayIndonesiaDataNewMap.set(zyxCalendarEventHolidayIndonesiaEventDateNew, ({
-                                "event_name": zyxCalendarEventHolidayIndonesiaEventNameNew,
-                                "event_date": zyxCalendarEventHolidayIndonesiaEventDateNew,
-                                "event_day": zyxCalendarEventHolidayIndonesiaEventShortDayNameNew,
-                                "event_month": zyxCalendarEventHolidayIndonesiaEventShortMonthNameNew,
-                            }));
-                        });
-                    };
-
-                    if (zyxCalendarEventHolidayIndonesiaEventShortDayName === UtilsDate.dictionaryDay["IDN"]["short"]["Mon"]) addDayOffRecomendation(-2, 0);
-                    if (zyxCalendarEventHolidayIndonesiaEventShortDayName === UtilsDate.dictionaryDay["IDN"]["short"]["Tue"]) addDayOffRecomendation(-3, 0);
-                    if (zyxCalendarEventHolidayIndonesiaEventShortDayName === UtilsDate.dictionaryDay["IDN"]["short"]["Wed"]) addDayOffRecomendation(-4, 4);
-                    if (zyxCalendarEventHolidayIndonesiaEventShortDayName === UtilsDate.dictionaryDay["IDN"]["short"]["Thu"]) addDayOffRecomendation(0, 3);
-                    if (zyxCalendarEventHolidayIndonesiaEventShortDayName === UtilsDate.dictionaryDay["IDN"]["short"]["Fri"]) addDayOffRecomendation(0, 2);
-                    if (zyxCalendarEventHolidayIndonesiaEventShortDayName === UtilsDate.dictionaryDay["IDN"]["short"]["Sat"]) addDayOffRecomendation(0, 1);
-                    if (zyxCalendarEventHolidayIndonesiaEventShortDayName === UtilsDate.dictionaryDay["IDN"]["short"]["Sun"]) addDayOffRecomendation(-1, 0);
+                    if (zyxCalendarEventHolidayIndonesiaEventShortDayName === UtilsDate.dictionaryDay["IDN"]["short"]["Mon"]) addDayOffRecomendation(zyxCalendarEventHolidayIndonesiaEventDate, -2, 0);
+                    if (zyxCalendarEventHolidayIndonesiaEventShortDayName === UtilsDate.dictionaryDay["IDN"]["short"]["Tue"]) addDayOffRecomendation(zyxCalendarEventHolidayIndonesiaEventDate, -3, 0);
+                    if (zyxCalendarEventHolidayIndonesiaEventShortDayName === UtilsDate.dictionaryDay["IDN"]["short"]["Wed"]) addDayOffRecomendation(zyxCalendarEventHolidayIndonesiaEventDate, -4, 4);
+                    if (zyxCalendarEventHolidayIndonesiaEventShortDayName === UtilsDate.dictionaryDay["IDN"]["short"]["Thu"]) addDayOffRecomendation(zyxCalendarEventHolidayIndonesiaEventDate, 0, 3);
+                    if (zyxCalendarEventHolidayIndonesiaEventShortDayName === UtilsDate.dictionaryDay["IDN"]["short"]["Fri"]) addDayOffRecomendation(zyxCalendarEventHolidayIndonesiaEventDate, 0, 2);
+                    if (zyxCalendarEventHolidayIndonesiaEventShortDayName === UtilsDate.dictionaryDay["IDN"]["short"]["Sat"]) addDayOffRecomendation(zyxCalendarEventHolidayIndonesiaEventDate, 0, 1);
+                    if (zyxCalendarEventHolidayIndonesiaEventShortDayName === UtilsDate.dictionaryDay["IDN"]["short"]["Sun"]) addDayOffRecomendation(zyxCalendarEventHolidayIndonesiaEventDate, -1, 0);
 
                     const createNewZyxCalendarEventHolidayIndonesia = (newZyxCalendarEventHolidayIndonesiaObject) => {
                         const zyxCalendarEventHolidayIndonesiaEventNameNew = (newZyxCalendarEventHolidayIndonesiaObject?.["event_name"] || zyxCalendarEventHolidayIndonesiaEventName);
@@ -327,8 +327,20 @@
                     "event_month": getShortMonthNameOfDateDotToIsoStringDotSliceZeroCommaTen(yearPlusOneNewYearDateDotToIsoStringDotSliceZeroCommaTen),
                 }));
 
+                const modifyZyxCalendarEventHolidayIndonesiaDataCurrentResult = Array.from(zyxCalendarEventHolidayIndonesiaDataNewMap.values());
+                modifyZyxCalendarEventHolidayIndonesiaDataCurrentResult.sort((a, b) => (new Date(a["event_date"]) - new Date(b["event_date"])));
+                modifyZyxCalendarEventHolidayIndonesiaDataCurrentResult.forEach((anyArrayItem, anyArrayItemIndex) => {
+                    if (anyArrayItemIndex === 0) return;
+
+                    const previousArrayItem = modifyZyxCalendarEventHolidayIndonesiaDataCurrentResult.at(anyArrayItemIndex - 1);
+                    const dayDifferenceInNumeric = UtilsDate.getDayDifferenceInNumeric(anyArrayItem?.["event_date"], previousArrayItem?.["event_date"]);
+
+                    if ((dayDifferenceInNumeric > 0) && (dayDifferenceInNumeric <= 3)) addDayOffRecomendation(anyArrayItem?.["event_date"], -dayDifferenceInNumeric, 0);
+                })
+
                 const modifyZyxCalendarEventHolidayIndonesiaDataResult = Array.from(zyxCalendarEventHolidayIndonesiaDataNewMap.values());
                 modifyZyxCalendarEventHolidayIndonesiaDataResult.sort((a, b) => (new Date(a["event_date"]) - new Date(b["event_date"])));
+
                 return modifyZyxCalendarEventHolidayIndonesiaDataResult;
             };
 
