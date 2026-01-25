@@ -1,13 +1,13 @@
 (function (root, factory) {
     if ((typeof module === "object") && module.exports) {
         // Node.js
-        module.exports = factory();
+        module.exports = factory(root);
     } else {
         // Browser
         root.WillyHorizont = (root.WillyHorizont || {});
-        root.WillyHorizont.Utils = factory();
+        root.WillyHorizont.Utils = factory(root);
     }
-})(((typeof globalThis !== "undefined") ? globalThis : this), function () {
+})(((typeof globalThis !== "undefined") ? globalThis : this), function (root) {
     const regexPattern = {
         "three_digit_grouping": (/\B(?=(\d{3})+(?!\d))/g),
     };

@@ -6,7 +6,7 @@ req:
 (function (root, factory) {
     if ((typeof module === "object") && module.exports) {
         // Node.js
-        module.exports = factory();
+        module.exports = factory(root);
     } else {
         // Browser
         root.WillyHorizont = (root.WillyHorizont || {});
