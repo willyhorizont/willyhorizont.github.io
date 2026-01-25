@@ -429,7 +429,7 @@
                     document.getElementById("placeholder-year").textContent = yearString;
 
                     const dataFromLocalStorageKalenderLiburGeneratorTimestamp = JSON.parse(localStorage.getItem(localStorageKeyKalenderLiburGeneratorTimestamp));
-                    if (UtilsWeb.IS_IN_DEVELOPMENT_MODE || (dataFromLocalStorageKalenderLiburGeneratorTimestamp !== dataTimestamp)) {
+                    if (WillyHorizont.UtilsWeb.IS_IN_DEVELOPMENT_MODE || (dataFromLocalStorageKalenderLiburGeneratorTimestamp !== dataTimestamp)) {
                         localStorage.setItem(localStorageKeyKalenderLiburGeneratorDemoFinished, JSON.stringify(false));
                         await localDatabase.removeItem(localStorageKeyZyxCalendarEventHolidayIndonesiaRawData);
                         await localDatabase.removeItem(localStorageKeyZyxCalendarEventHolidayIndonesiaData);

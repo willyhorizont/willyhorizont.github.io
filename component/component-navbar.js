@@ -1,10 +1,10 @@
 /*
 req:
-    window.UtilsWeb
+    WillyHorizont.UtilsWeb
 */
 
 (() => {
-    if (!window.UtilsWeb) return;
+    if (!WillyHorizont.UtilsWeb) return;
 
     const arrayOfPathSegment = window.location.pathname.replace(/\/+$/, "").split("/");
     const relativePath = arrayOfPathSegment.map((pathSegment) => (pathSegment ? (`../`) : "")).join("");
@@ -48,7 +48,7 @@ req:
 
     const htmlElementHeader = document.body.querySelector("header");
 
-    const htmlElementNavbar = window.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+    const htmlElementNavbar = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
         <nav id="navbar" class="navbar">
             <a href="/" class="app-logo">
                 <img src="${relativePath}android-chrome-192x192.png" alt="Willy Horizont's logo" width="48px" height="48px" />

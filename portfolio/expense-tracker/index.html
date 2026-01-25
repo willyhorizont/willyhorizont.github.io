@@ -111,7 +111,7 @@
             const componentChipInput = new ComponentChipInput({ chipInputPlaceholder, collectionOrStoreKey, localDatabase, syncLocalStorageDataImportExportTextAreaContentWithMainContent: componentImportExport.syncLocalStorageDataImportExportTextAreaContentWithMainContent });
 
             function createHtmlElementExpenseContainer(arrayOfEntryAttribute) {
-                const htmlElementExpenseContainer = UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+                const htmlElementExpenseContainer = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
                     <div data-id="expense-container" style="width: 100%; column-gap: 8px; padding: 8px; display: flex; flex-direction: row; border: 1px solid var(--light-border-color);">
                     </div>`
                 );
@@ -120,7 +120,7 @@
             }
 
             function createHtmlElementPriceInputContainer({ arrayOfEntryProperty, arrayOfEntryAttribute }) {
-                const htmlElementPriceInputContainer = UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+                const htmlElementPriceInputContainer = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
                     <div data-id="price-input-container" style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;">
                         <input data-id="price-input" class="price-input" name="price-input" placeholder="1_234_500" type="text" />
                     </div>`
@@ -138,7 +138,7 @@
             }
 
             function createHtmlElementExpenseRemoveButtonContainer() {
-                const htmlElementExpenseRemoveButtonContainer = UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+                const htmlElementExpenseRemoveButtonContainer = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
                     <div data-id="expense-remove-button-container" style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;">
                         <button data-id="expense-remove-button" style="background-color: var(--accent-color-4); color: white; border: none; padding: 0.2em 0.4em; cursor: pointer; width: 1.6em; aspect-ratio: 1 / 1;">x</button>
                     </div>`

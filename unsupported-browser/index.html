@@ -29,14 +29,14 @@
                     let chromiumBasedBrowserMinimumStableVersion = CHROMIUM_BASED_BROWSER_MINIMUM_STABLE_VERSION_PER_2025;
                     let userChromiumBasedBrowserVersionCurrent = 0;
 
-                    const isUserUsingChromiumBasedBrowser = UtilsWeb.checkUserUsingChromiumBasedBrowser();
+                    const isUserUsingChromiumBasedBrowser = WillyHorizont.UtilsWeb.checkUserUsingChromiumBasedBrowser();
                     if (isUserUsingChromiumBasedBrowser === false) return;
 
                     try {
-                        const userChromiumBasedBrowserVersion = await UtilsWeb.getUserChromiumBasedBrowserVersion();
+                        const userChromiumBasedBrowserVersion = await WillyHorizont.UtilsWeb.getUserChromiumBasedBrowserVersion();
                         userChromiumBasedBrowserVersionCurrent = userChromiumBasedBrowserVersion;
 
-                        chromiumBasedBrowserMinimumStableVersion = await UtilsWeb.getChromiumBasedBrowserMinimumStableVersion();
+                        chromiumBasedBrowserMinimumStableVersion = await WillyHorizont.UtilsWeb.getChromiumBasedBrowserMinimumStableVersion();
                     } catch (anyError) {
                         // fallback to default value
                     }
