@@ -4,7 +4,8 @@
         module.exports = factory();
     } else {
         // Browser
-        root.Utils = factory();
+        root.WillyHorizont = (root.WillyHorizont || {});
+        root.WillyHorizont.Utils = factory();
     }
 })(((typeof globalThis !== "undefined") ? globalThis : this), function () {
     const regexPattern = {

@@ -187,7 +187,7 @@
             const yearPlusOneNewYearDateDotToIsoStringDotSliceZeroCommaTen = (`${yearPlusOneString}-01-01`);
 
             const dataTimestamp = ("(01/12 month) | Mon, 05 Jan 2026 | 05:12:44.150 | 05:12 AM");
-            console.log(Utils.generateTimestamp({ precise: true }));
+            console.log(WillyHorizont.Utils.generateTimestamp({ precise: true }));
             const localStorageKeyKalenderLiburGeneratorTimestamp = ("kalender-libur-generator-timestamp");
             const localStorageKeyKalenderLiburGeneratorDemoFinished = ("kalender-libur-generator-demo-finished");
             const localStorageKeyZyxCalendarEventHolidayIndonesiaRawData = (`zyx-calendar-event-holiday-indonesia-${yearString}-raw-data`);
@@ -200,7 +200,7 @@
                 const zyxCalendarEventHolidayIndonesiaDataNewMap = new Map();
 
                 const addDayOffRecomendation = (zyxCalendarEventHolidayIndonesiaEventDate, startNumber, stopNumber) => {
-                    Utils.loop(startNumber, stopNumber)((rangeItemDay) => {
+                    WillyHorizont.Utils.loop(startNumber, stopNumber)((rangeItemDay) => {
                         if (rangeItemDay === 0) return;
                         const zyxCalendarEventHolidayIndonesiaEventDateNew = UtilsDate.updateDateDotToIsoStringDotSliceZeroCommaTenByNumericVariable(zyxCalendarEventHolidayIndonesiaEventDate, rangeItemDay);
                         if (zyxCalendarEventHolidayIndonesiaDataNewMap.get(zyxCalendarEventHolidayIndonesiaEventDateNew) !== undefined) return;
@@ -414,7 +414,7 @@
 
                 ComponentLoadingSpinner.toggleLoadingSpinner(false, [document.getElementById("kalender-libur-generator-container")]);
 
-                await Utils.pythonLikeSleep(3);
+                await WillyHorizont.Utils.pythonLikeSleep(3);
 
                 ComponentLoadingSpinner.toggleLoadingSpinner(true, [document.getElementById("kalender-libur-generator-container")]);
             };
@@ -447,7 +447,7 @@
 
                     while (dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw === null) {
                         dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw = await UtilsZyx.getZyxCalendarEventHolidayIndonesia();
-                        await Utils.pythonLikeSleep((dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw === null) ? 10 : 1);
+                        await WillyHorizont.Utils.pythonLikeSleep((dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw === null) ? 10 : 1);
                     }
                     // console.log({ dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw });
                     await localDatabase.setItem(localStorageKeyZyxCalendarEventHolidayIndonesiaRawData, dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw);

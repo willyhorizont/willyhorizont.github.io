@@ -101,7 +101,7 @@
                             "price": (htmlElementExpense.getAttribute("data-price") || ""),
                             "items": (JSON.parse(htmlElementExpense.children[1].getAttribute("data-items")) || []),
                         });
-                        if (((newExpenseContainerContent?.price === "") && (Utils.checkIsArray(newExpenseContainerContent?.items) && (newExpenseContainerContent?.items?.length === 0))) === false) dataFromImportExportTextAreaContentCurrentResult.push(newExpenseContainerContent);
+                        if (((newExpenseContainerContent?.price === "") && (WillyHorizont.Utils.checkIsArray(newExpenseContainerContent?.items) && (newExpenseContainerContent?.items?.length === 0))) === false) dataFromImportExportTextAreaContentCurrentResult.push(newExpenseContainerContent);
                         return dataFromImportExportTextAreaContentCurrentResult;
                     }), []));
                     return ((dataFromImportExportTextAreaContent.length === 0) ? null : dataFromImportExportTextAreaContent);
@@ -166,7 +166,7 @@
                     const priceInNumeric = (parseFloat(htmlElementExpense.getAttribute("data-price").replace((/_/g), "") || "0"));
                     return (totalExpensesInNumericCurrentResult + priceInNumeric);
                 }), 0));
-                htmlElementTotalExpenseContainer.textContent = totalExpensesInNumeric.toString().replace(Utils.regexPattern["three_digit_grouping"], "_");
+                htmlElementTotalExpenseContainer.textContent = totalExpensesInNumeric.toString().replace(WillyHorizont.Utils.regexPattern["three_digit_grouping"], "_");
             }
 
             async function createNewExpense() {
@@ -189,7 +189,7 @@
             function handleElementChangePriceInput(htmlElementPriceInput) {
                 return (async (event) => {
                     const htmlElementExpenseContainer = htmlElementPriceInput.parentElement.parentElement;
-                    htmlElementExpenseContainer.setAttribute("data-price", event.target.value.replace((/_/g), "").replace(Utils.regexPattern["three_digit_grouping"], "_"));
+                    htmlElementExpenseContainer.setAttribute("data-price", event.target.value.replace((/_/g), "").replace(WillyHorizont.Utils.regexPattern["three_digit_grouping"], "_"));
                     updateTotalExpenses();
                     await componentImportExport.syncLocalStorageDataImportExportTextAreaContentWithMainContent();
                 })
@@ -203,7 +203,7 @@
                     }
                     const htmlElementChipInputContainer = event.target.parentElement.parentElement.querySelector('[data-id="chip-input-container"]');
                     const datasetItems = JSON.parse(htmlElementChipInputContainer.getAttribute("data-items"));
-                    if ((Utils.checkIsArray(datasetItems) === true) && (datasetItems.length === 0)) {
+                    if ((WillyHorizont.Utils.checkIsArray(datasetItems) === true) && (datasetItems.length === 0)) {
                         const htmlElementChipInput = htmlElementChipInputContainer.querySelector('[data-id="chip-input"]');
                         htmlElementChipInput.setAttribute("placeholder", chipInputPlaceholder);
                         htmlElementChipInput.focus();
@@ -218,9 +218,9 @@
                 return (async (event) => {
                     let htmlElementPriceInputNewValue = htmlElementPriceInput.value.replace((/[^0-9_]/g), "");
                     htmlElementPriceInputNewValue = ((!htmlElementPriceInputNewValue) ? (htmlElementPriceInput.getAttribute("data-price").replace((/_/g), "") || "") : htmlElementPriceInputNewValue);
-                    htmlElementPriceInput.value = htmlElementPriceInputNewValue.replace((/_/g), "").replace(Utils.regexPattern["three_digit_grouping"], "_");
+                    htmlElementPriceInput.value = htmlElementPriceInputNewValue.replace((/_/g), "").replace(WillyHorizont.Utils.regexPattern["three_digit_grouping"], "_");
                     const htmlElementExpenseContainer = htmlElementPriceInput.parentElement.parentElement;
-                    htmlElementExpenseContainer.setAttribute("data-price", event.target.value.replace((/_/g), "").replace(Utils.regexPattern["three_digit_grouping"], "_"));
+                    htmlElementExpenseContainer.setAttribute("data-price", event.target.value.replace((/_/g), "").replace(WillyHorizont.Utils.regexPattern["three_digit_grouping"], "_"));
                     updateTotalExpenses();
                     await componentImportExport.syncLocalStorageDataImportExportTextAreaContentWithMainContent();
                 })

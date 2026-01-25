@@ -1,10 +1,10 @@
 /*
 req:
-    window.Utils
+    window.WillyHorizont.Utils
 */
 
 window.UtilsWeb = ((() => {
-    if (!window.Utils) return;
+    if (!window.WillyHorizont.Utils) return;
 
     const IS_IN_DEVELOPMENT_MODE = (window.location.hostname === "127.0.0.1");
     const createSetHtmlElementPropertyValues = (htmlElement) => ((arrayOfEntryProperty) => ([(arrayOfEntryProperty.forEach(([htmlElementProperty, htmlElementPropertyValue]) => (Reflect.set(htmlElement, htmlElementProperty, htmlElementPropertyValue)))), htmlElement].at(-1)));
@@ -15,7 +15,7 @@ window.UtilsWeb = ((() => {
         if (!Reflect.has(htmlElement, "setEventStuffs")) Reflect.set(htmlElement, "setEventStuffs", createSetHtmlElementEventStuffs(htmlElement));
         if (!Reflect.has(htmlElement, "setAttributes")) Reflect.set(htmlElement, "setAttributes", createSetHtmlElementAttributes(htmlElement));
         if (!htmlElement.children.length) return;
-        window.Utils.iterateList(htmlElement.children, (htmlElementInnerChild) => {
+        window.WillyHorizont.Utils.iterateList(htmlElement.children, (htmlElementInnerChild) => {
             attachMethodToHtmlElementRecursively(htmlElementInnerChild);
         });
     };
@@ -25,7 +25,7 @@ window.UtilsWeb = ((() => {
         return htmlElementNew;
     };
     const appendChildrenReturnParent = (htmlElementParent, ...htmlElementChildren) => ([(htmlElementChildren.forEach((htmlElementChild) => (htmlElementParent.appendChild(htmlElementChild)))), htmlElementParent].at(-1));
-    const fetchThrowErrorIfNotOk = async (anyUrl) => (((anyFetchResponse) => ((!anyFetchResponse.ok) ? window.Utils.throwError(`fetch ${anyUrl} not ok`) : anyFetchResponse))(await fetch(anyUrl)));
+    const fetchThrowErrorIfNotOk = async (anyUrl) => (((anyFetchResponse) => ((!anyFetchResponse.ok) ? window.WillyHorizont.Utils.throwError(`fetch ${anyUrl} not ok`) : anyFetchResponse))(await fetch(anyUrl)));
     const getChromiumBasedBrowserMinimumStableVersion = async () => {
         try {
             const getChromiumBasedBrowserMinimumStableVersionResponse = await fetchThrowErrorIfNotOk("https://chromiumdash.appspot.com/fetch_releases?channel=Stable&num=1");

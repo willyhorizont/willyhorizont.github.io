@@ -1,0 +1,9 @@
+{
+    "name": "willyhorizont.github.io",
+    "version": "1.0.0",
+    "description": "willyhorizont.github.io",
+    "main": "main.js",
+    "files": [
+        "utils.js"
+    ]
+}

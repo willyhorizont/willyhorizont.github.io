@@ -1,13 +1,13 @@
 /*
 req:
-    window.Utils
+    window.WillyHorizont.Utils
     window.UtilsWeb
 */
 
 window.UtilsZyx = ((() => {
-    if (!window.Utils || !window.UtilsWeb) return;
+    if (!window.WillyHorizont.Utils || !window.UtilsWeb) return;
 
-    const pickStringChunkRandomly = (anyEvenLengthString, stringChunkLength) => ((({ stringChunkIndex }) => (anyEvenLengthString.slice((stringChunkIndex * stringChunkLength), ((stringChunkIndex * stringChunkLength) + stringChunkLength))))({ stringChunkIndex: window.Utils.randomIntInclusive(0, ((anyEvenLengthString.length / stringChunkLength) - 1)) }));
+    const pickStringChunkRandomly = (anyEvenLengthString, stringChunkLength) => ((({ stringChunkIndex }) => (anyEvenLengthString.slice((stringChunkIndex * stringChunkLength), ((stringChunkIndex * stringChunkLength) + stringChunkLength))))({ stringChunkIndex: window.WillyHorizont.Utils.randomIntInclusive(0, ((anyEvenLengthString.length / stringChunkLength) - 1)) }));
     const characterSetZyxPassvvord = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_");
     const getZyxPassvvordPrefixString = () => (({ myFriendMomFavoriteNumberCombination, myFriendDadFavoriteNumberCombination }) => myFriendMomFavoriteNumberCombination.split("").reduce((currentResult, currentCharacter, currentCharacterIndex) => (`${currentResult}${characterSetZyxPassvvord[parseInt((`${myFriendMomFavoriteNumberCombination.charAt(currentCharacterIndex)}${myFriendDadFavoriteNumberCombination.charAt(currentCharacterIndex)}`), 10)]}`), ""))({ myFriendMomFavoriteNumberCombination: "005215", myFriendDadFavoriteNumberCombination: "081680" });
     // const zyxPassvvordSuffixStringCalendar = ("Bo6Ggn8qJwveMlZ2dw3wRmWmH5odxYXzYDHoGFBaW1JDdSbw94Vqm2Keww-FxfpJiADHoGFBaW1JDdSbw94Vqm2Keww-FxfpJiB");
@@ -20,7 +20,7 @@ window.UtilsZyx = ((() => {
             const zyxPassvvordCalendar = getZyxPassvvordString(zyxPassvvordSuffixStringCalendar);
             // console.log({ zyxPassvvordCalendar });
             const getZyxCalendarEventHolidayIndonesiaUrl = (`https://www.googleapis.com/calendar/v3/calendars/${calendarIdIndonesiaHoliday}/events?key=${zyxPassvvordCalendar}&timeMin=${yearString}-01-01T00:00:00Z&timeMax=${yearPlusOneString}-01-01T00:00:00Z&singleEvents=true&orderBy=startTime`);
-            const [getZyxCalendarEventHolidayIndonesiaError, getZyxCalendarEventHolidayIndonesiaResponse] = await window.Utils.catchAnyError(fetch(getZyxCalendarEventHolidayIndonesiaUrl), (anyFetchResponse) => ((!anyFetchResponse?.ok || (anyFetchResponse?.status !== 200)) ? null : anyFetchResponse));
+            const [getZyxCalendarEventHolidayIndonesiaError, getZyxCalendarEventHolidayIndonesiaResponse] = await window.WillyHorizont.Utils.catchAnyError(fetch(getZyxCalendarEventHolidayIndonesiaUrl), (anyFetchResponse) => ((!anyFetchResponse?.ok || (anyFetchResponse?.status !== 200)) ? null : anyFetchResponse));
             if (getZyxCalendarEventHolidayIndonesiaError || (getZyxCalendarEventHolidayIndonesiaResponse === null)) return null;
             const getZyxCalendarEventHolidayIndonesiaResult = await getZyxCalendarEventHolidayIndonesiaResponse.json();
             // console.log({ getZyxCalendarEventHolidayIndonesiaResult });

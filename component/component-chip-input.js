@@ -1,6 +1,6 @@
 /*
 req:
-    window.Utils
+    window.WillyHorizont.Utils
     window.UtilsWeb
 */
 
@@ -98,7 +98,7 @@ class ComponentChipInput {
             })
             return datasetItemsJsonParsed;
         })()));
-        const chipInputValueAsListNoDuplicate = window.Utils.removeDuplicateListItem(chipInputValueAsListMergedWithDataset);
+        const chipInputValueAsListNoDuplicate = window.WillyHorizont.Utils.removeDuplicateListItem(chipInputValueAsListMergedWithDataset);
 
         htmlElementChipInputContainer.setAttribute("data-items", JSON.stringify(chipInputValueAsListNoDuplicate));
 
@@ -248,4 +248,4 @@ class ComponentChipInput {
     };
 }
 
-window.ComponentChipInput = ((!window.Utils || !window.UtilsWeb) ? undefined : ComponentChipInput);
+window.ComponentChipInput = ((!window.WillyHorizont.Utils || !window.UtilsWeb) ? undefined : ComponentChipInput);

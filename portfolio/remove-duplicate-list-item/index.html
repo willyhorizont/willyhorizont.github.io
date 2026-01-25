@@ -95,9 +95,9 @@
             const defaultListItemSeparator = "\\n\\n";
 
             function processInputData(inputData) {
-                const separatorValue = Utils.parseEscapeSequence(document.getElementById("separator-input").value.trim() || defaultListItemSeparator);
+                const separatorValue = WillyHorizont.Utils.parseEscapeSequence(document.getElementById("separator-input").value.trim() || defaultListItemSeparator);
                 const listFromRawText = inputData.split(separatorValue);
-                const listFromRawTextNoDuplicateListItem = Utils.removeDuplicateListItem(listFromRawText);
+                const listFromRawTextNoDuplicateListItem = WillyHorizont.Utils.removeDuplicateListItem(listFromRawText);
                 return ({ separatorValue, listFromRawText, listFromRawTextNoDuplicateListItem });
             }
 
@@ -124,7 +124,7 @@
             htmlElementInputOfRemoveDuplicateListItemTextarea.addEventListener("blur", handleEventBlurRawTextTextArea);
 
             document.getElementById("separator-input").value = defaultListItemSeparator;
-            const initialData = (("abba").split("").join(Utils.parseEscapeSequence(defaultListItemSeparator)));
+            const initialData = (("abba").split("").join(WillyHorizont.Utils.parseEscapeSequence(defaultListItemSeparator)));
             htmlElementInputOfRemoveDuplicateListItemTextarea.value = initialData;
             renderOutputData(processInputData(initialData));
         </script>
