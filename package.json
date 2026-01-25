@@ -4,6 +4,8 @@
     "description": "willyhorizont.github.io",
     "main": "main.js",
     "files": [
+        "utils-date.js",
+        "utils-zyx.js",
         "utils.js"
     ]
 }

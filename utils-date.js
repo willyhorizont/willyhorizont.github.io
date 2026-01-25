@@ -1,4 +1,13 @@
-window.UtilsDate = ((() => {
+(function (root, factory) {
+    if ((typeof module === "object") && module.exports) {
+        // Node.js
+        module.exports = factory();
+    } else {
+        // Browser
+        root.WillyHorizont = (root.WillyHorizont || {});
+        root.WillyHorizont.UtilsDate = factory(root);
+    }
+})(((typeof globalThis !== "undefined") ? globalThis : this), function (root) {
     const ONE_SECOND_IN_MILLISECOND = 1000;
     const ONE_MINUTE_IN_SECOND = 60;
     const ONE_MINUTE_IN_MILLISECOND = (ONE_MINUTE_IN_SECOND * ONE_SECOND_IN_MILLISECOND);
@@ -162,7 +171,7 @@ window.UtilsDate = ((() => {
     const convertYearAnnoDominiGregorianToIndonesiaIndependenceProclamation = (yearAnnoDominiGregorianNumeric) => (YEAR_INDONESIA_INDEPENDENCE_PROCLAMATION_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN + (yearAnnoDominiGregorianNumeric - YEAR_ANNO_DOMINI_GREGORIAN_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN));
     const getChineseZodiacOrShio = (yearAnnoDominiGregorianNumeric) => (dictionaryZodiacsOrShios[yearAnnoDominiGregorianNumeric % 12]);
     const getChineseZodiacOrShioWithElement = (yearAnnoDominiGregorianNumeric) => (dictionaryZodiacOrShioElements[yearAnnoDominiGregorianNumeric.toString().at(-1)]);
-    const getDayDifferenceInNumeric = (dateDotToIsoStringDotSliceZeroCommaTenEnd, dateDotToIsoStringDotSliceZeroCommaTenStart) => (((new Date(dateDotToIsoStringDotSliceZeroCommaTenEnd) - new Date(dateDotToIsoStringDotSliceZeroCommaTenStart)) / UtilsDate.ONE_DAY_IN_MILLISECOND) - 1);
+    const getDayDifferenceInNumeric = (dateDotToIsoStringDotSliceZeroCommaTenEnd, dateDotToIsoStringDotSliceZeroCommaTenStart) => (((new Date(dateDotToIsoStringDotSliceZeroCommaTenEnd) - new Date(dateDotToIsoStringDotSliceZeroCommaTenStart)) / ONE_DAY_IN_MILLISECOND) - 1);
 
     return {
         ONE_SECOND_IN_MILLISECOND,
@@ -201,4 +210,4 @@ window.UtilsDate = ((() => {
         getChineseZodiacOrShioWithElement,
         getDayDifferenceInNumeric,
     };
-})());
+});

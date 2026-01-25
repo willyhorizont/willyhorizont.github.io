@@ -4,10 +4,10 @@
         module.exports = factory();
     } else {
         // Browser
-        root.WillyHorizont = factory();
+        root.WillyHorizont = factory(root);
     }
-})(((typeof globalThis !== "undefined") ? globalThis : this), function () {
-    const hi = () => ("Hi!");
+})(((typeof globalThis !== "undefined") ? globalThis : this), function (root) {
+    const hi = () => console.log("Hi!");
 
     return {
         hi,
