@@ -56,7 +56,6 @@
                 color: var(--light-text-color);
                 background-color: var(--light-background-color);
                 border: 1px solid var(--light-border-color);
-                max-width: calc(400px - 32px);
             }
             .event-detail-text-day-off-recommendation {
                 color: var(--accent-color-4);
@@ -90,6 +89,12 @@
                 }
                 .event-card-footer {
                     border-top: 1px solid var(--light-border-color); 
+                }
+            }
+
+            @media screen and (max-width: 768px) {
+                .event-group-card {
+                    max-width: calc(400px - 32px);
                 }
             }
         </style>
@@ -179,7 +184,7 @@
             const yearPlusOneNewYearEveDateDotToIsoStringDotSliceZeroCommaTen = (`${yearString}-12-31`);
             const yearPlusOneNewYearDateDotToIsoStringDotSliceZeroCommaTen = (`${yearPlusOneString}-01-01`);
 
-            const dataTimestamp = ("(02/12 month) | Sat, 28 Feb 2026 | 18:40:54.584 | 06:40 PM");
+            const dataTimestamp = ("(02/12 month) | Sat, 28 Feb 2026 | 18:42:20.446 | 06:42 PM");
             console.log(WillyHorizont.Utils.generateTimestamp({ precise: true }));
             const localStorageKeyKalenderLiburGeneratorTimestamp = ("kalender-libur-generator-timestamp");
             const localStorageKeyKalenderLiburGeneratorDemoFinished = ("kalender-libur-generator-demo-finished");
