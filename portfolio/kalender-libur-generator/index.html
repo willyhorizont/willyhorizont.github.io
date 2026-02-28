@@ -179,7 +179,7 @@
             const yearPlusOneNewYearEveDateDotToIsoStringDotSliceZeroCommaTen = (`${yearString}-12-31`);
             const yearPlusOneNewYearDateDotToIsoStringDotSliceZeroCommaTen = (`${yearPlusOneString}-01-01`);
 
-            const dataTimestamp = ("(01/12 month) | Mon, 05 Jan 2026 | 05:12:44.150 | 05:12 AM");
+            const dataTimestamp = ("(02/12 month) | Sat, 28 Feb 2026 | 18:28:03.595 | 06:28 PM");
             console.log(WillyHorizont.Utils.generateTimestamp({ precise: true }));
             const localStorageKeyKalenderLiburGeneratorTimestamp = ("kalender-libur-generator-timestamp");
             const localStorageKeyKalenderLiburGeneratorDemoFinished = ("kalender-libur-generator-demo-finished");
@@ -251,7 +251,6 @@
                     }
                     const eventNameIdulAdha = "Idul Adha";
                     if (zyxCalendarEventHolidayIndonesiaEventName.includes(eventNameIdulAdha)) {
-                        console.log(zyxCalendarEventHolidayIndonesiaEventName);
                         const [zyxCalendarEventHolidayIndonesiaEventNamePrefix, zyxCalendarEventHolidayIndonesiaEventNameSuffix] = getPrefixSuffixOfText(zyxCalendarEventHolidayIndonesiaEventName, eventNameIdulAdha);
                         const yearHijriahIdulAdha = "1447";
                         zyxCalendarEventHolidayIndonesiaDataNewMap.set(zyxCalendarEventHolidayIndonesiaEventDate, createNewZyxCalendarEventHolidayIndonesia({ "event_name": `${zyxCalendarEventHolidayIndonesiaEventNamePrefix}Hari Raya Idul Adha ${yearHijriahIdulAdha} Hijriah*)` }));
