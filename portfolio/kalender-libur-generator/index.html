@@ -56,7 +56,6 @@
                 color: var(--light-text-color);
                 background-color: var(--light-background-color);
                 border: 1px solid var(--light-border-color);
-                width: 32em;
             }
             .event-detail-text-day-off-recommendation {
                 color: var(--accent-color-4);
@@ -105,7 +104,7 @@
                 <p style="text-align: center; font-size: 0.75em;">*) Penetapan Idul Fitri, Idul Adha dan Tahun Baru Islam mengikuti keputusan Pemerintah RI</p>
                 <div id="loading-spinner"></div>
                 <div id="placeholder-error"></div>
-                <div id="kalender-libur-generator-container" data-display="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(480px, 1fr)); gap: 8px; margin-top: 8px;"></div>
+                <div id="kalender-libur-generator-container" data-display="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 8px; margin-top: 8px;"></div>
                 <div id="placeholder-link"></div>
             </div>
         </main>
@@ -179,7 +178,7 @@
             const yearPlusOneNewYearEveDateDotToIsoStringDotSliceZeroCommaTen = (`${yearString}-12-31`);
             const yearPlusOneNewYearDateDotToIsoStringDotSliceZeroCommaTen = (`${yearPlusOneString}-01-01`);
 
-            const dataTimestamp = ("(02/12 month) | Sat, 28 Feb 2026 | 18:28:03.595 | 06:28 PM");
+            const dataTimestamp = ("(02/12 month) | Sat, 28 Feb 2026 | 18:35:19.517 | 06:35 PM");
             console.log(WillyHorizont.Utils.generateTimestamp({ precise: true }));
             const localStorageKeyKalenderLiburGeneratorTimestamp = ("kalender-libur-generator-timestamp");
             const localStorageKeyKalenderLiburGeneratorDemoFinished = ("kalender-libur-generator-demo-finished");
