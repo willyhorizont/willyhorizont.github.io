@@ -187,16 +187,20 @@ finished in only about 1 year (sep 2021 - sep 2022).
                 },
             ];
 
-            document.getElementById("portfolio-container").innerHTML = ((myProjects.map((myProjectsItem) => (/*html*/`
-                <div style="width: 100%; border: 1px solid var(--light-border-color); border-radius: 8px; display: flex; flex-direction: column; overflow: hidden;">
-                    <a href="${myProjectsItem['href']}" target="${myProjectsItem['target']}"${myProjectsItem['rel'] ? ' rel="noopener noreferrer"' : ''} aria-label="${myProjectsItem['title']}">
-                        <div style="padding: 8px; display: flex; flex-direction: row; align-items: center; gap: 8px; background-color: #091929;">
-                            <div style="min-width: 16px; min-height: 16px; border-radius: 0.5em; background-color: ${`${WillyHorizont.Utils.stringToRgbHexColor(myProjectsItem['title'])}`};"></div>
-                            <p style="color: var(--dark-text-color);">${myProjectsItem['title']}</p>
-                        </div>
-                        <pre class="project-body" style="padding: 8px; text-wrap: auto;">${myProjectsItem['body']}</pre>
-                    </a>
-                </div>`)).join("")));
+            document.getElementById("portfolio-container").innerHTML = ((myProjects.map((myProjectsItem) => {
+                const { backgroundColor, isBackgroundColorLight } = WillyHorizont.Utils.getColorFromString(myProjectsItem['title']);
+                const textColor = (isBackgroundColorLight ? "var(--light-text-color)" : "var(--dark-text-color)")
+                return (/*html*/`
+                    <div style="width: 100%; border: 1px solid var(--light-border-color); border-radius: 8px; display: flex; flex-direction: column; overflow: hidden;">
+                        <a href="${myProjectsItem['href']}" target="${myProjectsItem['target']}"${myProjectsItem['rel'] ? ' rel="noopener noreferrer"' : ''} aria-label="${myProjectsItem['title']}">
+                            <div style="padding: 8px; display: flex; flex-direction: row; align-items: center; gap: 8px; background-color: ${backgroundColor};">
+                                <!-- <div style="min-width: 16px; min-height: 16px; border-radius: 0.5em; background-color: ${backgroundColor};"></div> -->
+                                <p style="color: ${textColor};">${myProjectsItem['title']}</p>
+                            </div>
+                            <pre class="project-body" style="padding: 8px; text-wrap: auto;">${myProjectsItem['body']}</pre>
+                        </a>
+                    </div>`);
+            }).join("")));
         </script>
     </body>
 </html>
