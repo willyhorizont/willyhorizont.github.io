@@ -15,6 +15,14 @@
         </main>
         <script>
             setTimeout(() => {
+                if (window.location.pathname === "/portfolio/kalender-libur-generator/") {
+                    window.location.href = `${window.location.origin}/portfolio/kalender-libur-advisor/`;
+                    return;
+                }
+                if (window.location.pathname === "/portfolio/kalender-cuti-generator/") {
+                    window.location.href = `${window.location.origin}/portfolio/kalender-libur-advisor/`;
+                    return;
+                }
                 window.location.href = "/";
             }, 5000);
         </script>
