@@ -14,7 +14,7 @@
             </div>
         </main>
         <script>
-            setTimeout(() => {
+            ((() => {
                 if (window.location.pathname === "/portfolio/kalender-libur-generator/") {
                     window.location.href = `${window.location.origin}/portfolio/kalender-libur-advisor/`;
                     return;
@@ -23,8 +23,10 @@
                     window.location.href = `${window.location.origin}/portfolio/kalender-libur-advisor/`;
                     return;
                 }
-                window.location.href = "/";
-            }, 5000);
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 5000);
+            })());
         </script>
     </body>
 </html>
