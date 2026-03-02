@@ -194,6 +194,10 @@ header {
     cursor: pointer;
 }
 
+.navbar.navbar-menu-small-screen .navbar-hamburger-menu-button {
+  display: none;
+}
+
 .navbar-hamburger-menu-button:hover {
     opacity: 0.7;
 }
