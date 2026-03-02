@@ -15,17 +15,22 @@
         </main>
         <script>
             ((() => {
-                if (window.location.pathname === "/portfolio/kalender-libur-generator/") {
-                    window.location.href = `${window.location.origin}/portfolio/kalender-libur-advisor/`;
+                const hrefList = [
+                    { old: `${window.location.origin}/portfolio/kalender-libur-generator/`, new: `${window.location.origin}/portfolio/kalender-libur-advisor/` },
+                    { old: `${window.location.origin}/portfolio/kalender-cuti-generator/`, new: `${window.location.origin}/portfolio/kalender-libur-advisor/` },
+                ];
+                if (!hrefList.some((href) => (window.location.href === href.old))) {
+                    setTimeout(() => {
+                        window.location.href = "/";
+                    }, 5000);
                     return;
                 }
-                if (window.location.pathname === "/portfolio/kalender-cuti-generator/") {
-                    window.location.href = `${window.location.origin}/portfolio/kalender-libur-advisor/`;
-                    return;
-                }
-                setTimeout(() => {
-                    window.location.href = "/";
-                }, 5000);
+                hrefList.forEach((href) => {
+                    if (window.location.pathname === href.old) {
+                        window.location.href = href.new;
+                        return;
+                    }
+                });
             })());
         </script>
     </body>
