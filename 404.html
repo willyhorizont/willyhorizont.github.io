@@ -14,24 +14,24 @@
             </div>
         </main>
         <script>
-            ((() => {
-                const hrefList = [
-                    { old: `${window.location.origin}/portfolio/kalender-libur-generator/`, new: `${window.location.origin}/portfolio/kalender-libur-advisor/` },
-                    { old: `${window.location.origin}/portfolio/kalender-cuti-generator/`, new: `${window.location.origin}/portfolio/kalender-libur-advisor/` },
-                ];
-                if (!hrefList.some((href) => (window.location.href === href.old))) {
+            const hrefList = [
+                { old: `${window.location.origin}/portfolio/kalender-libur-generator/`, new: `${window.location.origin}/portfolio/kalender-libur-advisor/` },
+                { old: `${window.location.origin}/portfolio/kalender-cuti-generator/`, new: `${window.location.origin}/portfolio/kalender-libur-advisor/` },
+            ];
+            let i = 0;
+            while (true) {
+                if (i > hrefList.length) {
                     setTimeout(() => {
                         window.location.href = "/";
                     }, 5000);
-                    return;
+                    break;
                 }
-                hrefList.forEach((href) => {
-                    if (window.location.pathname === href.old) {
-                        window.location.href = href.new;
-                        return;
-                    }
-                });
-            })());
+                if (window.location.pathname === hrefList[i].old) {
+                    window.location.href = href.new;
+                    break;
+                }
+                i += 1;
+            }
         </script>
     </body>
 </html>
