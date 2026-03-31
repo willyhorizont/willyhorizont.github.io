@@ -79,18 +79,18 @@
                 "Dec": "Dec",
             },
             "long": {
-                "January": "January",
-                "February": "February",
-                "March": "March",
-                "April": "April",
+                "Jan": "January",
+                "Feb": "February",
+                "Mar": "March",
+                "Apr": "April",
                 "May": "May",
-                "June": "June",
-                "July": "July",
-                "August": "August",
-                "September": "September",
-                "October": "October",
-                "November": "November",
-                "December": "December",
+                "Jun": "June",
+                "Jul": "July",
+                "Aug": "August",
+                "Sep": "September",
+                "Oct": "October",
+                "Nov": "November",
+                "Dec": "December",
             },
         },
         "IDN": {
@@ -125,6 +125,8 @@
         },
     };
 
+    const getZeroPaddedMonthByMonthThreeFirstLetter = (monthThreeFirstLetter) => (`${Object.values(dictionaryMonth["ENG"]["short"]).findIndex((m) => (m === monthThreeFirstLetter)) + 1}`).padStart(2, "0");
+
     const dictionaryZodiacsOrShios = [
         { "name_ENG": "Monkey", "name_IDN": "Monyet", "icon": "🐒" },
         { "name_ENG": "Rooster", "name_IDN": "Ayam", "icon": "🐓" },
@@ -151,27 +153,184 @@
         { "name_ENG": "Earth", "name_IDN": "Tanah", "icon": "🌍" },
         { "name_ENG": "Earth", "name_IDN": "Tanah", "icon": "🌍" },
     ];
-    const getDateOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen = "2026-01-01") => new Date(`${dateDotToIsoStringDotSliceZeroCommaTen}T00:00:00`);
-    const getDayInNumericOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen = "2026-01-01") => (getDateOfDateDotToIsoStringDotSliceZeroCommaTen(dateDotToIsoStringDotSliceZeroCommaTen).getDate());
-    const getMonthInNumericOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen = "2026-01-01") => ((getDateOfDateDotToIsoStringDotSliceZeroCommaTen(dateDotToIsoStringDotSliceZeroCommaTen).getMonth() + 1));
-    const getYearInNumericOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen = "2026-01-01") => (getDateOfDateDotToIsoStringDotSliceZeroCommaTen(dateDotToIsoStringDotSliceZeroCommaTen).getFullYear());
-    const getMonthLengthInNumericOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen = "2026-01-01") => ((({ anyDate }) => (new Date(anyDate.getFullYear(), (anyDate.getMonth() + 1), 0).getDate()))({ anyDate: new Date(dateDotToIsoStringDotSliceZeroCommaTen) }));
-    const updateDateDotToIsoStringDotSliceZeroCommaTenByNumericVariable = (dateDotToIsoStringDotSliceZeroCommaTen = "2026-01-01", numericVariable) => (((dateDotToIsoStringDotSliceZeroCommaTenParsedToDate) => (((dateDotToIsoStringDotSliceZeroCommaTenParsedToDateClone) => ([(dateDotToIsoStringDotSliceZeroCommaTenParsedToDateClone.setDate(dateDotToIsoStringDotSliceZeroCommaTenParsedToDateClone.getDate() + numericVariable)), (`${dateDotToIsoStringDotSliceZeroCommaTenParsedToDateClone.getFullYear()}-${String(dateDotToIsoStringDotSliceZeroCommaTenParsedToDateClone.getMonth() + 1).padStart(2, "0")}-${String(dateDotToIsoStringDotSliceZeroCommaTenParsedToDateClone.getDate()).padStart(2, "0")}`)].at(-1)))(new Date(dateDotToIsoStringDotSliceZeroCommaTenParsedToDate))))(new Date(dateDotToIsoStringDotSliceZeroCommaTen)));
+    const parseYyyyMmDdToUtcDate = (yyyyMmDdString) => {
+        const [yearString, monthString, dayString] = yyyyMmDdString.split("-");
+        return new Date(Date.UTC(Number(yearString), (Number(monthString) - 1), Number(dayString)));
+    };
+    const extractDate = (anything) => {
+        const anythingType = WillyHorizont.Utils.getType(anything);
+        const dateObject = ((anythingType === WillyHorizont.Utils.AnyType["String"]) ? new Date(anything) : ((anythingType === WillyHorizont.Utils.AnyType["Date"]) ? anything : undefined));
+        if (dateObject === undefined) return undefined;
+        const [hourMinuteTwentyFourHourClockAllZeroPaddedJoinByColon, twelveHourClockLatinAbbreviation] = new Intl.DateTimeFormat("en-US", { hour: "2-digit", minute: "2-digit", hour12: true }).format(dateObject).split(" ");
+        const [zeroPaddedHourTwelveHourClock, _] = hourMinuteTwentyFourHourClockAllZeroPaddedJoinByColon.split(":");
+        const [zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute] = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false }).format(dateObject).split(":");
+        return ({
+            fullYear: (`${dateObject.getUTCFullYear()}`),
+            zeroPaddedMonth: ((`${dateObject.getUTCMonth() + 1}`).padStart(2, "0")),
+            monthThreeFirstLetter: (new Intl.DateTimeFormat("en-US", { month: "short" }).format(dateObject)),
+            zeroPaddedDay: ((`${dateObject.getUTCDate()}`).padStart(2, "0")),
+            dayThreeFirstLetter: (new Intl.DateTimeFormat("en-US", { weekday: "short" }).format(dateObject)),
+            zeroPaddedHourTwelveHourClock,
+            twelveHourClockLatinAbbreviation,
+            zeroPaddedHourTwentyFourHourClock,
+            zeroPaddedMinute,
+            zeroPaddedSecond: ((`${dateObject.getUTCSeconds()}`).padStart(2, "0")),
+            zeroPaddedMiliSecondThreeDigit: ((`${dateObject.getUTCMilliseconds()}`).padStart(3, "0")),
+        });
+    }; /* extractDateV3 */
+    const prettyFormatDate = ({ includeSecond = false, includeMiliSecond = false, fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit }) => (`(${zeroPaddedMonth}/12 month) | ${dayThreeFirstLetter}, ${zeroPaddedDay} ${monthThreeFirstLetter} ${fullYear} | ${zeroPaddedHourTwentyFourHourClock}:${zeroPaddedMinute}${includeSecond ? `:${zeroPaddedSecond}` : ``}${includeMiliSecond ? `.${zeroPaddedMiliSecondThreeDigit}` : ``} | ${zeroPaddedHourTwelveHourClock}:${zeroPaddedMinute} ${twelveHourClockLatinAbbreviation}`); /* prettyFormatDateV2 */
+    const getDayDifferenceInNumeric = (dateDotToIsoStringDotSliceZeroCommaTenNewer, dateDotToIsoStringDotSliceZeroCommaTenOlder) => (((new Date(dateDotToIsoStringDotSliceZeroCommaTenNewer) - new Date(dateDotToIsoStringDotSliceZeroCommaTenOlder)) / ONE_DAY_IN_MILLISECOND) - 1);
+    const getYyyyMinusMmMinusDdOfDateObject = (dateObject) => {
+        const newDateObject = new Date(dateObject.getTime());
+        const { fullYear, zeroPaddedMonth, zeroPaddedDay } = extractDate(newDateObject);
+        return (`${fullYear}-${zeroPaddedMonth}-${zeroPaddedDay}`);
+    }
+    const addOrSubtractDay = (dateObject, integerVariable) => {
+        const newDateObject = new Date(dateObject.getTime());
+        newDateObject.setUTCDate(newDateObject.getUTCDate() + integerVariable);
+        return newDateObject;
+    };
+    const updateDateDotToIsoStringDotSliceZeroCommaTenByNumericVariable = (dateDotToIsoStringDotSliceZeroCommaTen = "2026-01-01", numericVariable) => {
+        const newDateObject = new Date(dateDotToIsoStringDotSliceZeroCommaTen);
+        const dateDotToIsoStringDotSliceZeroCommaTenUpdated = addOrSubtractDay(newDateObject, numericVariable);
+        return getYyyyMinusMmMinusDdOfDateObject(dateDotToIsoStringDotSliceZeroCommaTenUpdated);
+    };
     const YEAR_ANNO_DOMINI_GREGORIAN_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN = 2025; // Tahun Baru Masehi 2025
-    const YEAR_EID_AL_FITR_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN = 1446; // Idul Fitri 1 Syawal 1446 Hijriah
-    const YEAR_HIJRIAH_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN = 1447; // Satu Muharam / Tahun Baru Hijriah 1 Muharam 1447 Hijriah
     const YEAR_SAKA_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN = 1947; // Hari Suci Nyepi (Tahun Baru Saka 1947)
     const YEAR_CHINESE_LUNAR_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN = 2576; // Tahun Baru Imlek 2576 Kongzili
     const YEAR_BUDDHIST_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN = 2569; // Hari Raya Waisak 2569 Buddhist Era
     const YEAR_INDONESIA_INDEPENDENCE_PROCLAMATION_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN = 80; // Hari Proklamasi Kemerdekaan R.I. ke - 80
-    const convertYearAnnoDominiGregorianToHijriah = (yearAnnoDominiGregorianNumeric) => (Math.round(YEAR_HIJRIAH_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN + ((yearAnnoDominiGregorianNumeric - YEAR_ANNO_DOMINI_GREGORIAN_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN) * (33 / 32))));
     const convertYearAnnoDominiGregorianToSaka = (yearAnnoDominiGregorianNumeric) => (YEAR_SAKA_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN + (yearAnnoDominiGregorianNumeric - YEAR_ANNO_DOMINI_GREGORIAN_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN));
     const convertYearAnnoDominiGregorianToChineseLunar = (yearAnnoDominiGregorianNumeric) => (YEAR_CHINESE_LUNAR_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN + (yearAnnoDominiGregorianNumeric - YEAR_ANNO_DOMINI_GREGORIAN_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN));
     const convertYearAnnoDominiGregorianToBuddhist = (yearAnnoDominiGregorianNumeric) => (YEAR_BUDDHIST_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN + (yearAnnoDominiGregorianNumeric - YEAR_ANNO_DOMINI_GREGORIAN_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN));
     const convertYearAnnoDominiGregorianToIndonesiaIndependenceProclamation = (yearAnnoDominiGregorianNumeric) => (YEAR_INDONESIA_INDEPENDENCE_PROCLAMATION_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN + (yearAnnoDominiGregorianNumeric - YEAR_ANNO_DOMINI_GREGORIAN_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN));
     const getChineseZodiacOrShio = (yearAnnoDominiGregorianNumeric) => (dictionaryZodiacsOrShios[yearAnnoDominiGregorianNumeric % 12]);
     const getChineseZodiacOrShioWithElement = (yearAnnoDominiGregorianNumeric) => (dictionaryZodiacOrShioElements[yearAnnoDominiGregorianNumeric.toString().at(-1)]);
-    const getDayDifferenceInNumeric = (dateDotToIsoStringDotSliceZeroCommaTenEnd, dateDotToIsoStringDotSliceZeroCommaTenStart) => (((new Date(dateDotToIsoStringDotSliceZeroCommaTenEnd) - new Date(dateDotToIsoStringDotSliceZeroCommaTenStart)) / ONE_DAY_IN_MILLISECOND) - 1);
+
+    const HIJRIAH_TABULAR_CYCLE_YEAR_COUNT = 30;
+    const HIJRIAH_TABULAR_CYCLE_LEAP_YEAR_COUNT = 11;
+    const HIJRIAH_TABULAR_CYCLE_LEAP_CONFIGURATION_VARIANT_DEFAULT_KEY = "fazari_or_khwarizmi_or_battani_or_toledan_or_alfonsine_or_microsoft_kuwaiti";
+    const HIJRIAH_TABULAR_CYCLE_LEAP_CONFIGURATION_VARIANT = {
+        [HIJRIAH_TABULAR_CYCLE_LEAP_CONFIGURATION_VARIANT_DEFAULT_KEY]: [2, 5, 7, 10, 13, 16, 18, 21, 24, 26, 29],
+        "fifteenth_instead_of_sixteenth": [2, 5, 7, 10, 13, 15, 18, 21, 24, 26, 29],
+        "tayyibi_like": [2, 5, 8, 10, 13, 16, 19, 21, 24, 27, 29],
+        "thirtieth_year_variant": [2, 5, 8, 11, 13, 16, 19, 21, 24, 27, 30],
+    };
+    const HIJRIAH_TABULAR_CYCLE_LEAP_CONFIGURATION = HIJRIAH_TABULAR_CYCLE_LEAP_CONFIGURATION_VARIANT[HIJRIAH_TABULAR_CYCLE_LEAP_CONFIGURATION_VARIANT_DEFAULT_KEY];
+    const HIJRIAH_HOLIDAY = {
+        "Idul Fitri": {
+            name: "Idul Fitri",
+            references: [
+                {
+                    gregorianDate: `2026-${getZeroPaddedMonthByMonthThreeFirstLetter(dictionaryMonth["ENG"]["short"]["Mar"])}-21`,
+                    hijriahYear: 1447,
+                },
+                {
+                    gregorianDate: `2025-${getZeroPaddedMonthByMonthThreeFirstLetter(dictionaryMonth["ENG"]["short"]["Mar"])}-31`,
+                    hijriahYear: 1446,
+                },
+                {
+                    gregorianDate: `2023-${getZeroPaddedMonthByMonthThreeFirstLetter(dictionaryMonth["ENG"]["short"]["Apr"])}-22`,
+                    hijriahYear: 1444,
+                },
+                {
+                    gregorianDate: `2022-${getZeroPaddedMonthByMonthThreeFirstLetter(dictionaryMonth["ENG"]["short"]["May"])}-02`,
+                    hijriahYear: 1443,
+                },
+            ],
+        },
+        "Idul Adha": {
+            name: "Idul Adha",
+            references: [
+                {
+                    gregorianDate: `2026-${getZeroPaddedMonthByMonthThreeFirstLetter(dictionaryMonth["ENG"]["short"]["May"])}-27`,
+                    hijriahYear: 1447,
+                },
+                {
+                    gregorianDate: `2025-${getZeroPaddedMonthByMonthThreeFirstLetter(dictionaryMonth["ENG"]["short"]["Jun"])}-06`,
+                    hijriahYear: 1446,
+                },
+                {
+                    gregorianDate: `2023-${getZeroPaddedMonthByMonthThreeFirstLetter(dictionaryMonth["ENG"]["short"]["Jun"])}-29`,
+                    hijriahYear: 1444,
+                },
+                {
+                    gregorianDate: `2022-${getZeroPaddedMonthByMonthThreeFirstLetter(dictionaryMonth["ENG"]["short"]["Jul"])}-09`,
+                    hijriahYear: 1443,
+                },
+            ],
+        },
+        "Satu Muharam / Tahun Baru Hijriah": {
+            name: "Satu Muharam / Tahun Baru Hijriah",
+            references: [
+                {
+                    gregorianDate: `2026-${getZeroPaddedMonthByMonthThreeFirstLetter(dictionaryMonth["ENG"]["short"]["Jun"])}-16`,
+                    hijriahYear: 1448,
+                },
+                {
+                    gregorianDate: `2025-${getZeroPaddedMonthByMonthThreeFirstLetter(dictionaryMonth["ENG"]["short"]["Jun"])}-27`,
+                    hijriahYear: 1447,
+                },
+                {
+                    gregorianDate: `2023-${getZeroPaddedMonthByMonthThreeFirstLetter(dictionaryMonth["ENG"]["short"]["Jul"])}-19`,
+                    hijriahYear: 1445,
+                },
+                {
+                    gregorianDate: `2022-${getZeroPaddedMonthByMonthThreeFirstLetter(dictionaryMonth["ENG"]["short"]["Jul"])}-30`,
+                    hijriahYear: 1444,
+                },
+            ],
+        },
+    };
+    const getCycleYear = (hijriahYear) => (((hijriahYear - 1) % HIJRIAH_TABULAR_CYCLE_YEAR_COUNT) + 1);
+    const checkIsHijriahLeapYear = (hijriahYear, hijriahTabularCycleLeapPosition = HIJRIAH_TABULAR_CYCLE_LEAP_CONFIGURATION) => {
+        if (hijriahTabularCycleLeapPosition.length !== HIJRIAH_TABULAR_CYCLE_LEAP_YEAR_COUNT) throw new Error("Invalid Hijriah tabular cycle leap configuration.");
+        return (hijriahTabularCycleLeapPosition.includes(getCycleYear(hijriahYear)));
+    };
+    const getHijriahYearLengthInDays = (hijriahYear) => (checkIsHijriahLeapYear(hijriahYear) ? 355 : 354);
+    const estimateHijriahHoliday = ({ hijriahHolidayName, targetGregorianYearInt }) => {
+        const { gregorianDate: referenceGregorianDate, hijriahYear: referenceHijriahYear } = HIJRIAH_HOLIDAY[hijriahHolidayName]["references"][1];
+        const referenceGregorianDateData = extractDate(referenceGregorianDate);
+        const referenceGregorianYearInt = parseInt(referenceGregorianDateData["fullYear"], 10);
+        const gregorianYearDifference = WillyHorizont.Utils.getNumberDifferenceInNumeric(targetGregorianYearInt, referenceGregorianYearInt); 
+        const hijriahYearEstimation = (referenceHijriahYear + gregorianYearDifference);
+        const gregorianReferenceDateObject = parseYyyyMmDdToUtcDate(referenceGregorianDate);
+        if (hijriahYearEstimation === referenceHijriahYear) {
+            return ({
+                hijriahHolidayName,
+                targetGregorianYearInt,
+                referenceHijriahYear,
+                referenceGregorianDate,
+                hijriahYearEstimation,
+                gregorianEstimationDate: getYyyyMinusMmMinusDdOfDateObject(gregorianReferenceDateObject),
+            });
+        }
+        let totalDaysToAdd = 0;
+        if (hijriahYearEstimation > referenceHijriahYear) {
+            for (let hijriahYear = referenceHijriahYear; (hijriahYear < hijriahYearEstimation); hijriahYear += 1) {
+                totalDaysToAdd += getHijriahYearLengthInDays(hijriahYear);
+            }
+            return ({
+                hijriahHolidayName,
+                targetGregorianYearInt,
+                referenceHijriahYear,
+                referenceGregorianDate,
+                hijriahYearEstimation,
+                gregorianEstimationDate: getYyyyMinusMmMinusDdOfDateObject(addOrSubtractDay(gregorianReferenceDateObject, totalDaysToAdd)),
+            });
+        }
+        for (let hijriahYear = hijriahYearEstimation; (hijriahYear < referenceHijriahYear); hijriahYear += 1) {
+            totalDaysToAdd += getHijriahYearLengthInDays(hijriahYear);
+        }
+        return ({
+            hijriahHolidayName,
+            targetGregorianYearInt,
+            referenceHijriahYear,
+            referenceGregorianDate,
+            hijriahYearEstimation,
+            gregorianEstimationDate: getYyyyMinusMmMinusDdOfDateObject(addOrSubtractDay(gregorianReferenceDateObject, -totalDaysToAdd)),
+        });
+    };
 
     return {
         ONE_SECOND_IN_MILLISECOND,
@@ -188,20 +347,17 @@
         dictionaryMonth,
         dictionaryZodiacsOrShios,
         dictionaryZodiacOrShioElements,
-        getDateOfDateDotToIsoStringDotSliceZeroCommaTen,
-        getDayInNumericOfDateDotToIsoStringDotSliceZeroCommaTen,
-        getMonthInNumericOfDateDotToIsoStringDotSliceZeroCommaTen,
-        getYearInNumericOfDateDotToIsoStringDotSliceZeroCommaTen,
-        getMonthLengthInNumericOfDateDotToIsoStringDotSliceZeroCommaTen,
+        getZeroPaddedMonthByMonthThreeFirstLetter,
+        parseYyyyMmDdToUtcDate,
+        extractDate,
+        prettyFormatDate,
+        getYyyyMinusMmMinusDdOfDateObject,
         updateDateDotToIsoStringDotSliceZeroCommaTenByNumericVariable,
         YEAR_ANNO_DOMINI_GREGORIAN_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN,
-        YEAR_EID_AL_FITR_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN,
-        YEAR_HIJRIAH_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN,
         YEAR_SAKA_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN,
         YEAR_CHINESE_LUNAR_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN,
         YEAR_BUDDHIST_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN,
         YEAR_INDONESIA_INDEPENDENCE_PROCLAMATION_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN,
-        convertYearAnnoDominiGregorianToHijriah,
         convertYearAnnoDominiGregorianToSaka,
         convertYearAnnoDominiGregorianToChineseLunar,
         convertYearAnnoDominiGregorianToBuddhist,
@@ -209,5 +365,7 @@
         getChineseZodiacOrShio,
         getChineseZodiacOrShioWithElement,
         getDayDifferenceInNumeric,
+        HIJRIAH_HOLIDAY,
+        estimateHijriahHoliday,
     };
 });

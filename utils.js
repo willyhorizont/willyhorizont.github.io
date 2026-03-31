@@ -11,16 +11,29 @@
     const regexPattern = {
         "three_digit_grouping": (/\B(?=(\d{3})+(?!\d))/g),
     };
+    const getNumberDifferenceInNumeric = (a, b) => ((a === b) ? 0 : ((a > b) ? (a - b) : (b - a)));
+    const getMostFrequent = (anyArray, callbackFunction = (anyArrayItem) => (anyArrayItem)) => {
+        const frequencyMap = new Map();
+        let maxCount = 0;
+        let mostFrequentResult = null;
+        for (const anyArrayItem of anyArray) {
+            const currentCount = ((frequencyMap.get(callbackFunction(anyArrayItem)) || 0) + 1);
+            frequencyMap.set(callbackFunction(anyArrayItem), currentCount);
+            if (currentCount > maxCount) {
+                maxCount = currentCount;
+                mostFrequentResult = callbackFunction(anyArrayItem);
+            }
+        }
+        return mostFrequentResult;
+    };
+    const pickArrayItemRandomly = (anyArray) => (anyArray.at(WillyHorizont.Utils.randomIntInclusive(0, (anyArray.length - 1))));
     const parseEscapeSequence = (anyString) => JSON.parse(`"${anyString}"`);
     const pythonLikeSleep = (anySeconds) => new Promise((anyResolveFunction) => setTimeout(anyResolveFunction, (anySeconds * 1 * (({ secondInMiliseconds }) => secondInMiliseconds)({ secondInMiliseconds: 1_000 }))));
     const runOnce = ((keySet) => (anyStringKey = "something", callbackFunction = (() => (undefined))) => (keySet.has(anyStringKey) ? undefined : ([(keySet.add(anyStringKey)), (callbackFunction())].at(-1))))(new Set()); /* runOnceV2 */
     const runNthTime = ((keyCountMap) => (({ keyString = "something", runTime = 1 } = {}, callbackFunction = ((totalRunTime, currentRunTime) => (undefined))) => (((keyCountMap.get(keyString) ?? 0) >= runTime) ? undefined : ([(keyCountMap.set(keyString, ((keyCountMap.get(keyString) ?? 0) + 1))), (callbackFunction(runTime, keyCountMap.get(keyString)))].at(-1)))))(new Map()); /* runNthTimeV2 */
     const printOnce = ((keySet) => (anything, { key, title, formatter = ((anythingInner) => anythingInner) } = {}) => (((anyStringKey) => (keySet.has(anyStringKey) ? anything : ([(keySet.add(anyStringKey)), (console.log(`${title ? `${title}: ` : ""}${formatter(anything)}`)), anything].at(-1))))(key || title || "first")))(new Set()); /* printOnceV2 */
     const printAndReturn = (anything, { title, formatter = ((anythingInner) => anythingInner) } = {}) => ([(console.log(`${title ? `${title}: ` : ""}${formatter(anything)}`)), anything].at(-1));
-    const extractDate = (anything) => (((anythingType) => (((anyDate) => ((anyDate === undefined) ? undefined : (((anyDate) => ((([hourMinuteTwentyFourHourClockAllZeroPaddedJoinByColon, twelveHourClockLatinAbbreviation], [zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute]) => ((([zeroPaddedHourTwelveHourClock, _]) => ({ fullYear: (String(anyDate.getFullYear())), zeroPaddedMonth: (String(anyDate.getMonth() + 1).padStart(2, "0")), monthThreeFirstLetter: (new Intl.DateTimeFormat("en-US", { month: "short" }).format(anyDate)), zeroPaddedDay: (String(anyDate.getDate()).padStart(2, "0")), dayThreeFirstLetter: (new Intl.DateTimeFormat("en-US", { weekday: "short" }).format(anyDate)), zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond: (String(anyDate.getSeconds()).padStart(2, "0")), zeroPaddedMiliSecondThreeDigit: (String(anyDate.getMilliseconds()).padStart(3, "0")) }))(hourMinuteTwentyFourHourClockAllZeroPaddedJoinByColon.split(":"))))((new Intl.DateTimeFormat("en-US", { hour: "2-digit", minute: "2-digit", hour12: true }).format(anyDate).split(" ")), (new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false }).format(anyDate).split(":")))))(new Date(anything)))))((anythingType === AnyType["String"]) ? new Date(anything) : ((anythingType === AnyType["Date"]) ? anything : undefined))))(getType(anything))); /* extractDateV3 */
-    const prettyFormatDate = ({ includeSecond = false, includeMiliSecond = false, fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit }) => (`(${zeroPaddedMonth}/12 month) | ${dayThreeFirstLetter}, ${zeroPaddedDay} ${monthThreeFirstLetter} ${fullYear} | ${zeroPaddedHourTwentyFourHourClock}:${zeroPaddedMinute}${includeSecond ? `:${zeroPaddedSecond}` : ``}${includeMiliSecond ? `.${zeroPaddedMiliSecondThreeDigit}` : ``} | ${zeroPaddedHourTwelveHourClock}:${zeroPaddedMinute} ${twelveHourClockLatinAbbreviation}`); /* prettyFormatDateV2 */
-    const datePrettier = (anything = new Date(), precise) => (((anythingType) => ((({ fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit }) => (prettyFormatDate({ fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit })))((anythingType === AnyType["String"]) ? extractDate(new Date(anything).toISOString()) : ((anythingType === AnyType["Date"]) ? extractDate(anything.toISOString()) : []))))(getType(anything))); /* datePrettierV2 */
-    const generateTimestamp = ({ precise = true } = {}) => ((({ fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit }) => (prettyFormatDate({ includeSecond: precise, includeMiliSecond: precise, fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit })))(extractDate(new Date().toISOString()))); /* generateTimestampV2 */
+    const generateTimestamp = ({ precise = true } = {}) => ((({ fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit }) => (WillyHorizont.UtilsDate.prettyFormatDate({ includeSecond: precise, includeMiliSecond: precise, fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit })))(WillyHorizont.UtilsDate.extractDate(new Date().toISOString()))); /* generateTimestampV2 */
     const AnyType = { "Null": "Null", "Undefined": "Undefined", "Boolean": "Boolean", "String": "String", "Numeric": "Numeric", "Object": "Object", "Array": "Array", "Function": "Function", "Error": "Error", "Date": "Date" };
     const checkIsNull = (anything) => ((Object.prototype.toString.call(anything) === "[object Null]") && (anything === null));
     const checkIsUndefined = (anything) => ((Object.prototype.toString.call(anything) === "[object Undefined]") && (anything === undefined));
@@ -141,15 +154,15 @@
 
     return {
         regexPattern,
+        getNumberDifferenceInNumeric,
+        getMostFrequent,
+        pickArrayItemRandomly,
         parseEscapeSequence,
         pythonLikeSleep,
         runOnce,
         runNthTime,
         printOnce,
         printAndReturn,
-        extractDate,
-        prettyFormatDate,
-        datePrettier,
         generateTimestamp,
         AnyType,
         checkIsNull,
