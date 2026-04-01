@@ -22,42 +22,42 @@
     const dictionaryDay = {
         "ENG": {
             "short": {
-                "Sun": "Sun",
                 "Mon": "Mon",
                 "Tue": "Tue",
                 "Wed": "Wed",
                 "Thu": "Thu",
                 "Fri": "Fri",
                 "Sat": "Sat",
+                "Sun": "Sun",
             },
             "long": {
-                "Sun": "Sunday",
                 "Mon": "Monday",
                 "Tue": "Tuesday",
                 "Wed": "Wednesday",
                 "Thu": "Thursday",
                 "Fri": "Friday",
                 "Sat": "Saturday",
+                "Sun": "Sunday",
             },
         },
         "IDN": {
             "short": {
-                "Sun": "Min",
                 "Mon": "Sen",
                 "Tue": "Sel",
                 "Wed": "Rab",
                 "Thu": "Kam",
                 "Fri": "Jum",
                 "Sat": "Sab",
+                "Sun": "Min",
             },
             "long": {
-                "Sun": "Minggu", 
                 "Mon": "Senin", 
                 "Tue": "Selasa", 
                 "Wed": "Rabu", 
                 "Thu": "Kamis", 
                 "Fri": "Jumat", 
                 "Sat": "Sabtu",
+                "Sun": "Minggu", 
             },
         },
     };
@@ -178,7 +178,7 @@
             zeroPaddedMiliSecondThreeDigit: ((`${dateObject.getUTCMilliseconds()}`).padStart(3, "0")),
         });
     }; /* extractDateV3 */
-    const prettyFormatDate = ({ includeSecond = false, includeMiliSecond = false, fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit }) => (`(${zeroPaddedMonth}/12 month) | ${dayThreeFirstLetter}, ${zeroPaddedDay} ${monthThreeFirstLetter} ${fullYear} | ${zeroPaddedHourTwentyFourHourClock}:${zeroPaddedMinute}${includeSecond ? `:${zeroPaddedSecond}` : ``}${includeMiliSecond ? `.${zeroPaddedMiliSecondThreeDigit}` : ``} | ${zeroPaddedHourTwelveHourClock}:${zeroPaddedMinute} ${twelveHourClockLatinAbbreviation}`); /* prettyFormatDateV2 */
+    const prettyFormatDate = ({ includeSecond = true, includeMiliSecond = false, fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit }) => (`(${zeroPaddedMonth}/12 month) | ${dayThreeFirstLetter}, ${zeroPaddedDay} ${monthThreeFirstLetter} ${fullYear} | ${zeroPaddedHourTwentyFourHourClock}:${zeroPaddedMinute}${includeSecond ? `:${zeroPaddedSecond}` : ``}${includeMiliSecond ? `.${zeroPaddedMiliSecondThreeDigit}` : ``} | ${zeroPaddedHourTwelveHourClock}:${zeroPaddedMinute} ${twelveHourClockLatinAbbreviation}`); /* prettyFormatDateV2 */
     const getDayDifferenceInNumeric = (dateDotToIsoStringDotSliceZeroCommaTenNewer, dateDotToIsoStringDotSliceZeroCommaTenOlder) => (((new Date(dateDotToIsoStringDotSliceZeroCommaTenNewer) - new Date(dateDotToIsoStringDotSliceZeroCommaTenOlder)) / ONE_DAY_IN_MILLISECOND) - 1);
     const getYyyyMinusMmMinusDdOfDateObject = (dateObject) => {
         const newDateObject = new Date(dateObject.getTime());
@@ -218,6 +218,27 @@
     };
     const HIJRIAH_TABULAR_CYCLE_LEAP_CONFIGURATION = HIJRIAH_TABULAR_CYCLE_LEAP_CONFIGURATION_VARIANT[HIJRIAH_TABULAR_CYCLE_LEAP_CONFIGURATION_VARIANT_DEFAULT_KEY];
     const HIJRIAH_HOLIDAY = {
+        "Isra Mikraj": {
+            name: "Isra Mikraj",
+            references: [
+                {
+                    gregorianDate: `2026-${getZeroPaddedMonthByMonthThreeFirstLetter(dictionaryMonth["ENG"]["short"]["Jan"])}-16`,
+                    hijriahYear: 1447,
+                },
+                {
+                    gregorianDate: `2025-${getZeroPaddedMonthByMonthThreeFirstLetter(dictionaryMonth["ENG"]["short"]["Jan"])}-27`,
+                    hijriahYear: 1446,
+                },
+                {
+                    gregorianDate: `2023-${getZeroPaddedMonthByMonthThreeFirstLetter(dictionaryMonth["ENG"]["short"]["Feb"])}-18`,
+                    hijriahYear: 1444,
+                },
+                {
+                    gregorianDate: `2022-${getZeroPaddedMonthByMonthThreeFirstLetter(dictionaryMonth["ENG"]["short"]["Feb"])}-28`,
+                    hijriahYear: 1443,
+                },
+            ],
+        },
         "Idul Fitri": {
             name: "Idul Fitri",
             references: [
@@ -281,6 +302,27 @@
                 },
             ],
         },
+        "Maulid Nabi": {
+            name: "Maulid Nabi",
+            references: [
+                {
+                    gregorianDate: `2026-${getZeroPaddedMonthByMonthThreeFirstLetter(dictionaryMonth["ENG"]["short"]["Aug"])}-25`,
+                    hijriahYear: 1448,
+                },
+                {
+                    gregorianDate: `2025-${getZeroPaddedMonthByMonthThreeFirstLetter(dictionaryMonth["ENG"]["short"]["Sep"])}-05`,
+                    hijriahYear: 1447,
+                },
+                {
+                    gregorianDate: `2023-${getZeroPaddedMonthByMonthThreeFirstLetter(dictionaryMonth["ENG"]["short"]["Sep"])}-28`,
+                    hijriahYear: 1445,
+                },
+                {
+                    gregorianDate: `2022-${getZeroPaddedMonthByMonthThreeFirstLetter(dictionaryMonth["ENG"]["short"]["Oct"])}-08`,
+                    hijriahYear: 1444,
+                },
+            ],
+        },
     };
     const getCycleYear = (hijriahYear) => (((hijriahYear - 1) % HIJRIAH_TABULAR_CYCLE_YEAR_COUNT) + 1);
     const checkIsHijriahLeapYear = (hijriahYear, hijriahTabularCycleLeapPosition = HIJRIAH_TABULAR_CYCLE_LEAP_CONFIGURATION) => {
@@ -332,6 +374,38 @@
         });
     };
 
+    const getGregorianEasterDate = (gregorianYearInt) => {
+        // Step 1: Golden Number / Metonic cycle
+        const metonicCycleRemainder = (gregorianYearInt % 19);
+
+        // Step 2: Gregorian century components
+        const century = Math.floor(gregorianYearInt / 100);
+        const yearWithinCentury = (gregorianYearInt % 100);
+        const leapCenturyCorrection = Math.floor(century / 4);
+        const centuryRemainder = (century % 4);
+
+        // Step 3: Gregorian moon corrections
+        const moonCorrectionFactor = Math.floor((century + 8) / 25);
+        const gregorianMoonShiftCorrection = Math.floor((century - moonCorrectionFactor + 1) / 3);
+
+        // Step 4: Paschal full moon offset
+        const paschalFullMoonOffset = (((19 * metonicCycleRemainder) + century - leapCenturyCorrection - gregorianMoonShiftCorrection + 15) % 30);
+
+        // Step 5: Weekday corrections
+        const leapYearWithinCenturyCorrection = Math.floor(yearWithinCentury / 4);
+        const yearWithinCenturyRemainder = (yearWithinCentury % 4);
+        const weekdayOffset = ((32 + (2 * centuryRemainder) + (2 * leapYearWithinCenturyCorrection) - paschalFullMoonOffset - yearWithinCenturyRemainder) % 7);
+
+        // Step 6: Final Easter correction
+        const easterMonthCorrection = Math.floor((metonicCycleRemainder + (11 * paschalFullMoonOffset) + (22 * weekdayOffset)) / 451);
+
+        // Step 7: Extract final month/day
+        const easterMonth = Math.floor((paschalFullMoonOffset + weekdayOffset - (7 * easterMonthCorrection) + 114) / 31);
+        const easterDay = (((paschalFullMoonOffset + weekdayOffset - (7 * easterMonthCorrection) + 114) % 31) + 1);
+
+        return new Date(Date.UTC(gregorianYearInt, (easterMonth - 1), easterDay));
+    };
+
     return {
         ONE_SECOND_IN_MILLISECOND,
         ONE_MINUTE_IN_SECOND,
@@ -349,6 +423,7 @@
         dictionaryZodiacOrShioElements,
         getZeroPaddedMonthByMonthThreeFirstLetter,
         parseYyyyMmDdToUtcDate,
+        addOrSubtractDay,
         extractDate,
         prettyFormatDate,
         getYyyyMinusMmMinusDdOfDateObject,
@@ -367,5 +442,6 @@
         getDayDifferenceInNumeric,
         HIJRIAH_HOLIDAY,
         estimateHijriahHoliday,
+        getGregorianEasterDate,
     };
 });

@@ -33,7 +33,7 @@
     const runNthTime = ((keyCountMap) => (({ keyString = "something", runTime = 1 } = {}, callbackFunction = ((totalRunTime, currentRunTime) => (undefined))) => (((keyCountMap.get(keyString) ?? 0) >= runTime) ? undefined : ([(keyCountMap.set(keyString, ((keyCountMap.get(keyString) ?? 0) + 1))), (callbackFunction(runTime, keyCountMap.get(keyString)))].at(-1)))))(new Map()); /* runNthTimeV2 */
     const printOnce = ((keySet) => (anything, { key, title, formatter = ((anythingInner) => anythingInner) } = {}) => (((anyStringKey) => (keySet.has(anyStringKey) ? anything : ([(keySet.add(anyStringKey)), (console.log(`${title ? `${title}: ` : ""}${formatter(anything)}`)), anything].at(-1))))(key || title || "first")))(new Set()); /* printOnceV2 */
     const printAndReturn = (anything, { title, formatter = ((anythingInner) => anythingInner) } = {}) => ([(console.log(`${title ? `${title}: ` : ""}${formatter(anything)}`)), anything].at(-1));
-    const generateTimestamp = ({ precise = true } = {}) => ((({ fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit }) => (WillyHorizont.UtilsDate.prettyFormatDate({ includeSecond: precise, includeMiliSecond: precise, fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit })))(WillyHorizont.UtilsDate.extractDate(new Date().toISOString()))); /* generateTimestampV2 */
+    const generateTimestamp = ({ includeSecond = true, includeMiliSecond = true } = {}) => ((({ fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit }) => (WillyHorizont.UtilsDate.prettyFormatDate({ includeSecond, includeMiliSecond, fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit })))(WillyHorizont.UtilsDate.extractDate(new Date().toISOString()))); /* generateTimestampV2 */
     const AnyType = { "Null": "Null", "Undefined": "Undefined", "Boolean": "Boolean", "String": "String", "Numeric": "Numeric", "Object": "Object", "Array": "Array", "Function": "Function", "Error": "Error", "Date": "Date" };
     const checkIsNull = (anything) => ((Object.prototype.toString.call(anything) === "[object Null]") && (anything === null));
     const checkIsUndefined = (anything) => ((Object.prototype.toString.call(anything) === "[object Undefined]") && (anything === undefined));
@@ -147,7 +147,7 @@
             }
         });
     };
-    const catchAnyError = (asyncFunction, callbackFunction = ((anyResult) => anyResult)) => (asyncFunction.then((anyResult) => ([null, callbackFunction(anyResult)])).catch((anyError) => ([anyError, null])));
+    const catchAnyError = (asyncFunction, callbackFunction = ((anyResult) => (anyResult))) => (asyncFunction.then((anyResult) => ([null, callbackFunction(anyResult)])).catch((anyError) => ([anyError, null])));
     const throwError = (anyErrorMessage) => {
         throw new Error(anyErrorMessage);
     };

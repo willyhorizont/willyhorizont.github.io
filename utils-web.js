@@ -25,7 +25,13 @@ WillyHorizont.UtilsWeb = ((() => {
         return htmlElementNew;
     };
     const appendChildrenReturnParent = (htmlElementParent, ...htmlElementChildren) => ([(htmlElementChildren.forEach((htmlElementChild) => (htmlElementParent.appendChild(htmlElementChild)))), htmlElementParent].at(-1));
-    const fetchThrowErrorIfNotOk = async (anyUrl) => (((anyFetchResponse) => ((!anyFetchResponse.ok) ? WillyHorizont.Utils.throwError(`fetch ${anyUrl} not ok`) : anyFetchResponse))(await fetch(anyUrl)));
+    const fetchThrowErrorIfNotOk = async (anyUrl) => {
+        const anyFetchResponse = await fetch(anyUrl);
+        if (!anyFetchResponse.ok) {
+            throw new Error(`fetch ${anyUrl} not ok`);
+        }
+        return anyFetchResponse;
+    };
     const getChromiumBasedBrowserMinimumStableVersion = async () => {
         try {
             const getChromiumBasedBrowserMinimumStableVersionResponse = await fetchThrowErrorIfNotOk("https://chromiumdash.appspot.com/fetch_releases?channel=Stable&num=1");

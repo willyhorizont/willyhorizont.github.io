@@ -27,27 +27,22 @@ req:
     const getZyxPassvvordString = (zyxPassvvordSuffixString) => (`${getZyxPassvvordPrefixString()}${pickStringChunkRandomly(zyxPassvvordSuffixString, ((({ zyxPassvvordSuffixStringLength }) => zyxPassvvordSuffixStringLength)({ zyxPassvvordSuffixStringLength: 33 })))}`);
     const getZyxPassvvordStringCustomSearchJsonWithCx = (zyxPassvvordSuffixString) => (`${getZyxPassvvordPrefixString()}${WillyHorizont.Utils.pickArrayItemRandomly(zyxPassvvordSuffixString.split("&cok=u"))}`);
     const getZyxCalendarEventHolidayIndonesia = async (yearString) => {
-        try {
-            const calendarIdIndonesiaHoliday = encodeURIComponent("id.indonesian#holiday@group.v.calendar.google.com");
-            const zyxPassvvordCalendar = getZyxPassvvordString(zyxPassvvordSuffixStringCalendar);
-            // console.log({ zyxPassvvordCalendar });
-            const getZyxCalendarEventHolidayIndonesiaUrl = (`https://www.googleapis.com/calendar/v3/calendars/${calendarIdIndonesiaHoliday}/events?key=${zyxPassvvordCalendar}&timeMin=${yearString}-01-01T00:00:00Z&timeMax=${yearPlusOneString}-01-01T00:00:00Z&singleEvents=true&orderBy=startTime`);
-            const [getZyxCalendarEventHolidayIndonesiaError, getZyxCalendarEventHolidayIndonesiaResponse] = await WillyHorizont.Utils.catchAnyError(fetch(getZyxCalendarEventHolidayIndonesiaUrl), (anyFetchResponse) => ((!anyFetchResponse?.ok || (anyFetchResponse?.status !== 200)) ? null : anyFetchResponse));
-            if (getZyxCalendarEventHolidayIndonesiaError || (getZyxCalendarEventHolidayIndonesiaResponse === null)) return null;
-            const getZyxCalendarEventHolidayIndonesiaResult = await getZyxCalendarEventHolidayIndonesiaResponse.json();
-            // console.log({ getZyxCalendarEventHolidayIndonesiaResult });
-            return (getZyxCalendarEventHolidayIndonesiaResult?.["items"] || null);
-        } catch (anyError) {
-            // console.log({ "getZyxCalendarEventHolidayIndonesia.anyError": anyError });
-            return null;
-        }
+        const calendarIdIndonesiaHoliday = encodeURIComponent("id.indonesian#holiday@group.v.calendar.google.com");
+        const zyxPassvvordCalendar = getZyxPassvvordString(zyxPassvvordSuffixStringCalendar);
+        // console.log({ zyxPassvvordCalendar });
+        const getZyxCalendarEventHolidayIndonesiaUrl = (`https://www.googleapis.com/calendar/v3/calendars/${calendarIdIndonesiaHoliday}/events?key=${zyxPassvvordCalendar}&timeMin=${yearString}-01-01T00:00:00Z&timeMax=${yearPlusOneString}-01-01T00:00:00Z&singleEvents=true&orderBy=startTime`);
+        const getZyxCalendarEventHolidayIndonesiaResponse = await WillyHorizont.UtilsWeb.fetchThrowErrorIfNotOk(getZyxCalendarEventHolidayIndonesiaUrl);
+        const getZyxCalendarEventHolidayIndonesiaResult = await getZyxCalendarEventHolidayIndonesiaResponse.json();
+        // console.log({ getZyxCalendarEventHolidayIndonesiaResult });
+        if (!getZyxCalendarEventHolidayIndonesiaResult?.["items"]?.length) return null;
+        return getZyxCalendarEventHolidayIndonesiaResult["items"];
     };
     const getZyxCustomSearchJson = async (anyString, queryParameterString = "") => {
         try {
             const zyxPassvvordCustomSearchJsonWithCx = getZyxPassvvordStringCustomSearchJsonWithCx(zyxPassvvordSuffixStringCustomSearchJsonWithCx);
             // console.log({ zyxPassvvordCustomSearchJsonWithCx });
             const getZyxCustomSearchJsonUrl = (`https://www.googleapis.com/customsearch/v1?key=${zyxPassvvordCustomSearchJsonWithCx}&q=${encodeURIComponent(anyString)}${queryParameterString}`);
-            const [getZyxCustomSearchJsonError, getZyxCustomSearchJsonResponse] = await WillyHorizont.Utils.catchAnyError(fetch(getZyxCustomSearchJsonUrl), (anyFetchResponse) => ((!anyFetchResponse?.ok || (anyFetchResponse?.status !== 200)) ? null : anyFetchResponse));
+            const [getZyxCustomSearchJsonError, getZyxCustomSearchJsonResponse] = await WillyHorizont.Utils.catchAnyError(WillyHorizont.UtilsWeb.fetchThrowErrorIfNotOk(getZyxCustomSearchJsonUrl));
             // console.log({ getZyxCustomSearchJsonError });
             if (getZyxCustomSearchJsonError || (getZyxCustomSearchJsonResponse === null)) return null;
             const getZyxCustomSearchJsonResult = await getZyxCustomSearchJsonResponse.json();

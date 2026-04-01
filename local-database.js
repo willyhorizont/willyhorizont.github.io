@@ -76,20 +76,36 @@ class LocalDatabase {
         return (new Promise((resolve, reject) => {
             const databaseTransaction = databaseConnection.transaction(this.collectionOrStoreNameInString, "readwrite");
             const collectionOrStore = databaseTransaction.objectStore(this.collectionOrStoreNameInString);
-            const collectionOrStoreRequest = collectionOrStore.delete(collectionOrStoreKey);
-
-            collectionOrStoreRequest.onsuccess = () => {
-                resolve(true);
-            };
-            collectionOrStoreRequest.onerror = (event) => {
-                reject(event.target.error);
-            };
+            collectionOrStore.delete(collectionOrStoreKey);
 
             databaseTransaction.oncomplete = () => {
                 databaseConnection.close();
+                resolve(true);
             };
-            databaseTransaction.onerror = () => {
+            databaseTransaction.onerror = (event) => {
                 databaseConnection.close();
+                reject(event.target.error);
+            };
+            databaseTransaction.onabort = () => {
+                databaseConnection.close();
+            };
+        }));
+    }
+
+    async clear() {
+        const databaseConnection = await (this.connect());
+        return (new Promise((resolve, reject) => {
+            const databaseTransaction = databaseConnection.transaction(this.collectionOrStoreNameInString, "readwrite");
+            const collectionOrStore = databaseTransaction.objectStore(this.collectionOrStoreNameInString);
+            collectionOrStore.clear();
+
+            databaseTransaction.oncomplete = () => {
+                databaseConnection.close();
+                resolve(true);
+            };
+            databaseTransaction.onerror = (event) => {
+                databaseConnection.close();
+                reject(event.target.error);
             };
             databaseTransaction.onabort = () => {
                 databaseConnection.close();
