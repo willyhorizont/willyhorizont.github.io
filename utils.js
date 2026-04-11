@@ -151,6 +151,11 @@
     const throwError = (anyErrorMessage) => {
         throw new Error(anyErrorMessage);
     };
+    const getRandomString = (minLength = 2, maxLength = 10) => {
+        const characters = "abcdefghijklmnopqrstuvwxyz";
+        const lengthRandomString = (Math.floor(Math.random() * (maxLength - 1)) + minLength);
+        return (Array.from({ length: lengthRandomString }, () => (characters[Math.floor(Math.random() * characters.length)])).join(""));
+    };
 
     return {
         regexPattern,
@@ -199,5 +204,6 @@
         loopAsync,
         catchAnyError,
         throwError,
+        getRandomString,
     };
 });

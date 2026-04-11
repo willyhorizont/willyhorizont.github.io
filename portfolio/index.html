@@ -189,7 +189,7 @@ finished in only about 1 year (sep 2021 - sep 2022).
 
             document.getElementById("portfolio-container").innerHTML = ((myProjects.map((myProjectsItem) => {
                 const { backgroundColor, isBackgroundColorLight } = WillyHorizont.Utils.getColorFromString(myProjectsItem['title']);
-                const textColor = (isBackgroundColorLight ? "var(--light-text-color)" : "var(--dark-text-color)")
+                const textColor = (isBackgroundColorLight ? "var(--light-text-color)" : "var(--dark-text-color)");
                 return (/*html*/`
                     <div style="width: 100%; border: 1px solid var(--light-border-color); border-radius: 8px; display: flex; flex-direction: column; overflow: hidden;">
                         <a href="${myProjectsItem['href']}" target="${myProjectsItem['target']}"${myProjectsItem['rel'] ? ' rel="noopener noreferrer"' : ''} aria-label="${myProjectsItem['title']}">
