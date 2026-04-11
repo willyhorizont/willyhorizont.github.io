@@ -582,7 +582,7 @@
                     const previousArrayItem = modifyZyxCalendarEventHolidayIndonesiaDataCurrentResult.at(anyArrayItemIndex - 1);
                     const dayDifferenceInNumeric = WillyHorizont.UtilsDate.getDayDifferenceInNumeric(anyArrayItem?.["event_date"], previousArrayItem?.["event_date"]);
 
-                    if ((dayDifferenceInNumeric > 0) && (dayDifferenceInNumeric <= 3)) addDayOffRecomendation(anyArrayItem?.["event_date"], -dayDifferenceInNumeric, 0);
+                    if ((dayDifferenceInNumeric > 0) && (dayDifferenceInNumeric <= 5)) addDayOffRecomendation(anyArrayItem?.["event_date"], -dayDifferenceInNumeric, 0);
                 })
 
                 const modifyZyxCalendarEventHolidayIndonesiaDataResult = Array.from(zyxCalendarEventHolidayIndonesiaDataNewMap.values());
