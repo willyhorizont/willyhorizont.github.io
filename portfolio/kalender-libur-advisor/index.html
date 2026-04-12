@@ -325,7 +325,7 @@
                 ]);
             };
 
-            const dataTimestamp = ("(04/12 month) | Sun, 12 Apr 2026 | 16:54:59 | 04:54 PM");
+            const dataTimestamp = ("(04/12 month) | Sun, 12 Apr 2026 | 16:56:19 | 04:56 PM");
             console.log(WillyHorizont.Utils.generateTimestamp({ includeSecond: true, includeMiliSecond: false }));
             const localStorageKeyKalenderLiburAdvisorTimestamp = ("kalender-libur-advisor-timestamp");
             const localStorageKeyKalenderLiburAdvisorDemoFinished = ("kalender-libur-advisor-demo-finished");
@@ -760,7 +760,7 @@
 
                     if (dataFromLocalStorageZyxCalendarEventHolidayIndonesiaData === null) {
                         const zyxCalendarEventHolidayIndonesiaRawDataModified = modifyZyxCalendarEventHolidayIndonesiaData(dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw);
-                        console.log({ zyxCalendarEventHolidayIndonesiaRawDataModified });
+                        // console.log({ zyxCalendarEventHolidayIndonesiaRawDataModified });
                         await localDatabase.setItem(localStorageKeyZyxCalendarEventHolidayIndonesiaData, zyxCalendarEventHolidayIndonesiaRawDataModified);
                         dataFromLocalStorageZyxCalendarEventHolidayIndonesiaData = zyxCalendarEventHolidayIndonesiaRawDataModified;
                     }
