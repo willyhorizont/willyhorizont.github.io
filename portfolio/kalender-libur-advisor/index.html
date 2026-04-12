@@ -116,9 +116,10 @@
         <main>
             <div style="padding: 8px;">
                 <h1 style="text-align: center;">Kalender Libur Advisor <span id="placeholder-year"></span></h1>
-                <p style="text-align: center; font-size: 0.75em;">* data hari libur didapatkan dari Google Calendar dan disesuaikan dengan kalender Bank Indonesia</p>
-                <p style="text-align: center; font-size: 0.75em;">* kalender libur akan tergenerasi otomatis setiap tahun</p>
-                <p style="text-align: center; font-size: 0.75em;">*) Penetapan Idul Fitri, Idul Adha dan Tahun Baru Islam mengikuti keputusan Pemerintah RI</p>
+                <p style="text-align: center; font-size: 0.75em;">* Data hari libur didapatkan dari Google Calendar dan sedikit disesuaikan dengan kalender Bank Indonesia</p>
+                <p style="text-align: center; font-size: 0.75em;">* Kalender libur akan tergenerasi otomatis setiap tahun</p>
+                <p style="text-align: center; font-size: 0.75em;">*) Penetapan Idul Fitri, Idul Adha dan Tahun Baru Islam mengikuti keputusan Pemerintah R.I.</p>
+                <!-- <p style="text-align: center; font-size: 0.75em;">Penetapan Tahun Baru Imlek, Hari Suci Nyepi Tahun Baru Saka dan Hari Raya Waisak mengikuti keputusan Pemerintah R.I.</p> -->
                 <div id="loading-spinner"></div>
                 <div id="placeholder-error"></div>
                 <div id="kalender-libur-advisor-container" data-display="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 8px; margin-top: 8px;"></div>
@@ -140,7 +141,7 @@
             ];
             const localDatabase = new LocalDatabase("kalender-libur-advisor");
             const currentYear = new Date().getUTCFullYear();
-            const getPrefixSuffixOfText = (anyString, textToFind) => (((indexOfTextToFind) => ([(anyString.substring(0, indexOfTextToFind)), (anyString.substring((indexOfTextToFind + textToFind.length), anyString.length))]))(anyString.indexOf(textToFind)));
+            const getPrefixSuffixOfText = (anyString, textToFind) => (anyString.split(textToFind).map((textSplit) => (textSplit.trim())));
             const getYearFromUrl = () => ((({ yearStringNew }) => ((({ yearNumericNew }) => ([yearNumericNew.toString(), yearNumericNew]))({ yearNumericNew: ((yearStringNew === null) ? new Date().getUTCFullYear() : parseInt(yearStringNew, 10)) })))({ yearStringNew: new URLSearchParams(window.location.search).get("year") }));
             const [yearString, yearNumeric] = getYearFromUrl();
             const yearPlusOneNumeric = (yearNumeric + 1);
@@ -277,7 +278,7 @@
                 });
                 return ([
                     {
-                        "summary": "Isra Mikraj Nabi Muhammad SAW?",
+                        "summary": "Isra Mikraj Nabi Muhammad S.A.W.?",
                         "start": {
                             "date": hijriahHolidayEstimationIsraMikraj?.gregorianEstimationDate,
                         },
@@ -313,7 +314,7 @@
                         }
                     },
                     {
-                        "summary": "Maulid Nabi Muhammad SAW?",
+                        "summary": "Maulid Nabi Muhammad S.A.W.?",
                         "start": {
                             "date": hijriahHolidayEstimationMaulidNabi?.gregorianEstimationDate,
                         },
@@ -324,7 +325,7 @@
                 ]);
             };
 
-            const dataTimestamp = ("(04/12 month) | Sat, 11 Apr 2026 | 22:52:40 | 10:52 PM");
+            const dataTimestamp = ("(04/12 month) | Sun, 12 Apr 2026 | 16:54:59 | 04:54 PM");
             console.log(WillyHorizont.Utils.generateTimestamp({ includeSecond: true, includeMiliSecond: false }));
             const localStorageKeyKalenderLiburAdvisorTimestamp = ("kalender-libur-advisor-timestamp");
             const localStorageKeyKalenderLiburAdvisorDemoFinished = ("kalender-libur-advisor-demo-finished");
@@ -430,7 +431,7 @@
                         return;
                     }
                     if (zyxCalendarEventHolidayIndonesiaEventName === "Isra Mikraj Nabi Muhammad") {
-                        zyxCalendarEventHolidayIndonesiaDataNewMap.set(zyxCalendarEventHolidayIndonesiaEventDate, createNewZyxCalendarEventHolidayIndonesia({ "event_name": "Isra Mikraj Nabi Muhammad SAW" }));
+                        zyxCalendarEventHolidayIndonesiaDataNewMap.set(zyxCalendarEventHolidayIndonesiaEventDate, createNewZyxCalendarEventHolidayIndonesia({ "event_name": "Isra Mikraj Nabi Muhammad S.A.W." }));
                         return;
                     }
                     if (zyxCalendarEventHolidayIndonesiaEventName.includes("Wafat Isa Almasih") || zyxCalendarEventHolidayIndonesiaEventName.includes("Wafat Isa Al Masih")) {
@@ -442,8 +443,7 @@
                         return;
                     }
                     if (zyxCalendarEventHolidayIndonesiaEventName.includes("Kenaikan Isa Almasih") || zyxCalendarEventHolidayIndonesiaEventName.includes("Kenaikan Isa Al Masih")) {
-                        const [zyxCalendarEventHolidayIndonesiaEventNamePrefix, zyxCalendarEventHolidayIndonesiaEventNameSuffix] = getPrefixSuffixOfText(zyxCalendarEventHolidayIndonesiaEventName, "Kenaikan");
-                        zyxCalendarEventHolidayIndonesiaDataNewMap.set(zyxCalendarEventHolidayIndonesiaEventDate, createNewZyxCalendarEventHolidayIndonesia({ "event_name": `${zyxCalendarEventHolidayIndonesiaEventNamePrefix}Kenaikan Yesus Kristus` }));
+                        zyxCalendarEventHolidayIndonesiaDataNewMap.set(zyxCalendarEventHolidayIndonesiaEventDate, createNewZyxCalendarEventHolidayIndonesia({ "event_name": `Kenaikan Yesus Kristus` }));
                         return;
                     }
                     if (zyxCalendarEventHolidayIndonesiaEventName.includes("Hari Buruh")) {
@@ -451,7 +451,7 @@
                         return;
                     }
                     if (zyxCalendarEventHolidayIndonesiaEventName.includes("Maulid Nabi Muhammad")) {
-                        zyxCalendarEventHolidayIndonesiaDataNewMap.set(zyxCalendarEventHolidayIndonesiaEventDate, createNewZyxCalendarEventHolidayIndonesia({ "event_name": "Maulid Nabi Muhammad SAW" }));
+                        zyxCalendarEventHolidayIndonesiaDataNewMap.set(zyxCalendarEventHolidayIndonesiaEventDate, createNewZyxCalendarEventHolidayIndonesia({ "event_name": "Maulid Nabi Muhammad S.A.W." }));
                         return;
                     }
                     if (zyxCalendarEventHolidayIndonesiaEventName.includes("Hari Raya Natal")) {
@@ -465,35 +465,37 @@
                         const currentChineseZodiacOrShioElement = WillyHorizont.UtilsDate.getChineseZodiacOrShioWithElement(yearNumeric);
 
                         const [zyxCalendarEventHolidayIndonesiaEventNamePrefix, zyxCalendarEventHolidayIndonesiaEventNameSuffix] = getPrefixSuffixOfText(zyxCalendarEventHolidayIndonesiaEventName, eventNameChineseLunarNewYear);
-                        const zyxCalendarEventHolidayIndonesiaEventNameNew = (`${zyxCalendarEventHolidayIndonesiaEventNamePrefix}${eventNameChineseLunarNewYear} ${currentChineseLunarYearNumeric} Kongzili Tahun ${currentChineseZodiacOrShio["name_IDN"]} ${currentChineseZodiacOrShioElement["name_IDN"]} ${currentChineseZodiacOrShio["icon"]} ${currentChineseZodiacOrShioElement["icon"]}`);
+                        const zyxCalendarEventHolidayIndonesiaEventNameNew = (`${zyxCalendarEventHolidayIndonesiaEventNamePrefix} ${eventNameChineseLunarNewYear} ${currentChineseLunarYearNumeric} Kongzili Tahun ${currentChineseZodiacOrShio["name_IDN"]} ${currentChineseZodiacOrShioElement["name_IDN"]} ${currentChineseZodiacOrShio["icon"]} ${currentChineseZodiacOrShioElement["icon"]} ${zyxCalendarEventHolidayIndonesiaEventNameSuffix}`).trim();
                         zyxCalendarEventHolidayIndonesiaDataNewMap.set(zyxCalendarEventHolidayIndonesiaEventDate, createNewZyxCalendarEventHolidayIndonesia({ "event_name": zyxCalendarEventHolidayIndonesiaEventNameNew }));
                         return;
                     }
                     const eventNameSakaNewYear = "Hari Suci Nyepi (Tahun Baru Saka)";
                     if (zyxCalendarEventHolidayIndonesiaEventName.includes(eventNameSakaNewYear)) {
                         const [zyxCalendarEventHolidayIndonesiaEventNamePrefix, zyxCalendarEventHolidayIndonesiaEventNameSuffix] = getPrefixSuffixOfText(zyxCalendarEventHolidayIndonesiaEventName, eventNameSakaNewYear);
-                        const zyxCalendarEventHolidayIndonesiaEventNameNew = (`${zyxCalendarEventHolidayIndonesiaEventNamePrefix}Hari Suci Nyepi Tahun Baru Saka ${WillyHorizont.UtilsDate.convertYearAnnoDominiGregorianToSaka(yearNumeric)}`);
+                        const zyxCalendarEventHolidayIndonesiaEventNameNew = (`${zyxCalendarEventHolidayIndonesiaEventNamePrefix} Hari Suci Nyepi Tahun Baru Saka ${WillyHorizont.UtilsDate.convertYearAnnoDominiGregorianToSaka(yearNumeric)} ${zyxCalendarEventHolidayIndonesiaEventNameSuffix}`).trim();
                         zyxCalendarEventHolidayIndonesiaDataNewMap.set(zyxCalendarEventHolidayIndonesiaEventDate, createNewZyxCalendarEventHolidayIndonesia({ "event_name": zyxCalendarEventHolidayIndonesiaEventNameNew }));
                         return;
                     }
                     if (zyxCalendarEventHolidayIndonesiaEventName.includes(WillyHorizont.UtilsDate.HIJRIAH_HOLIDAY["Idul Fitri"]["name"])) {
-                        const [zyxCalendarEventHolidayIndonesiaEventNamePrefix, zyxCalendarEventHolidayIndonesiaEventNameSuffix] = getPrefixSuffixOfText(zyxCalendarEventHolidayIndonesiaEventName, WillyHorizont.UtilsDate.HIJRIAH_HOLIDAY["Idul Fitri"]["name"]);
-                        const zyxCalendarEventHolidayIndonesiaEventNamePrefixNew = (zyxCalendarEventHolidayIndonesiaEventNamePrefix.includes("Cuti Bersama") ? zyxCalendarEventHolidayIndonesiaEventNamePrefix : zyxCalendarEventHolidayIndonesiaEventNamePrefix.replace("Hari", "").trim());
+                        let [zyxCalendarEventHolidayIndonesiaEventNamePrefix, zyxCalendarEventHolidayIndonesiaEventNameSuffix] = getPrefixSuffixOfText(zyxCalendarEventHolidayIndonesiaEventName, WillyHorizont.UtilsDate.HIJRIAH_HOLIDAY["Idul Fitri"]["name"]);
+                        zyxCalendarEventHolidayIndonesiaEventNamePrefix = (zyxCalendarEventHolidayIndonesiaEventNamePrefix.includes("Cuti Bersama") ? zyxCalendarEventHolidayIndonesiaEventNamePrefix : zyxCalendarEventHolidayIndonesiaEventNamePrefix.replace("Hari", "").trim());
                         const hijriahHolidayEstimationIdulFitri = WillyHorizont.UtilsDate.estimateHijriahHoliday({
                             hijriahHolidayName: WillyHorizont.UtilsDate.HIJRIAH_HOLIDAY["Idul Fitri"]["name"],
                             targetGregorianYearInt: yearNumeric,
                         });
-                        const zyxCalendarEventHolidayIndonesiaEventNameNew = (`${zyxCalendarEventHolidayIndonesiaEventNamePrefixNew}Hari Raya Idul Fitri 1 Syawal ${hijriahHolidayEstimationIdulFitri?.hijriahYearEstimation} Hijriah*)`);
+                        const zyxCalendarEventHolidayIndonesiaEventNameNew = (`${zyxCalendarEventHolidayIndonesiaEventNamePrefix} Hari Raya Idul Fitri 1 Syawal ${hijriahHolidayEstimationIdulFitri?.hijriahYearEstimation} Hijriah*) ${zyxCalendarEventHolidayIndonesiaEventNameSuffix}`).trim().replace(new RegExp("\\(belum pasti\\)", "g"), "").trim();
                         zyxCalendarEventHolidayIndonesiaDataNewMap.set(zyxCalendarEventHolidayIndonesiaEventDate, createNewZyxCalendarEventHolidayIndonesia({ "event_name": zyxCalendarEventHolidayIndonesiaEventNameNew }));
                         return;
                     }
                     if (zyxCalendarEventHolidayIndonesiaEventName.includes(WillyHorizont.UtilsDate.HIJRIAH_HOLIDAY["Idul Adha"]["name"])) {
-                        const [zyxCalendarEventHolidayIndonesiaEventNamePrefix, zyxCalendarEventHolidayIndonesiaEventNameSuffix] = getPrefixSuffixOfText(zyxCalendarEventHolidayIndonesiaEventName, WillyHorizont.UtilsDate.HIJRIAH_HOLIDAY["Idul Adha"]["name"]);
+                        let [zyxCalendarEventHolidayIndonesiaEventNamePrefix, zyxCalendarEventHolidayIndonesiaEventNameSuffix] = getPrefixSuffixOfText(zyxCalendarEventHolidayIndonesiaEventName, WillyHorizont.UtilsDate.HIJRIAH_HOLIDAY["Idul Adha"]["name"]);
                         const hijriahHolidayEstimationIdulAdha = WillyHorizont.UtilsDate.estimateHijriahHoliday({
                             hijriahHolidayName: WillyHorizont.UtilsDate.HIJRIAH_HOLIDAY["Idul Adha"]["name"],
                             targetGregorianYearInt: yearNumeric,
                         });
-                        zyxCalendarEventHolidayIndonesiaDataNewMap.set(zyxCalendarEventHolidayIndonesiaEventDate, createNewZyxCalendarEventHolidayIndonesia({ "event_name": `${zyxCalendarEventHolidayIndonesiaEventNamePrefix}Hari Raya Idul Adha (Lebaran Haji) ${hijriahHolidayEstimationIdulAdha?.hijriahYearEstimation} Hijriah*)` }));
+                        zyxCalendarEventHolidayIndonesiaEventNameSuffix = zyxCalendarEventHolidayIndonesiaEventNameSuffix.replace(new RegExp("\\(Lebaran Haji\\)"), "").trim();
+                        const zyxCalendarEventHolidayIndonesiaEventNameNew = (`${zyxCalendarEventHolidayIndonesiaEventNamePrefix} Hari Raya Idul Adha (Lebaran Haji) ${hijriahHolidayEstimationIdulAdha?.hijriahYearEstimation} Hijriah*) ${zyxCalendarEventHolidayIndonesiaEventNameSuffix}`).trim().replace(new RegExp("\\(belum pasti\\)", "g"), "").trim();
+                        zyxCalendarEventHolidayIndonesiaDataNewMap.set(zyxCalendarEventHolidayIndonesiaEventDate, createNewZyxCalendarEventHolidayIndonesia({ "event_name": zyxCalendarEventHolidayIndonesiaEventNameNew }));
                         return;
                     }
                     if (zyxCalendarEventHolidayIndonesiaEventName.includes(WillyHorizont.UtilsDate.HIJRIAH_HOLIDAY["Satu Muharam / Tahun Baru Hijriah"]["name"])) {
@@ -502,21 +504,21 @@
                             hijriahHolidayName: WillyHorizont.UtilsDate.HIJRIAH_HOLIDAY["Satu Muharam / Tahun Baru Hijriah"]["name"],
                             targetGregorianYearInt: yearNumeric,
                         });
-                        const zyxCalendarEventHolidayIndonesiaEventNameNew = (`${zyxCalendarEventHolidayIndonesiaEventNamePrefix}${WillyHorizont.UtilsDate.HIJRIAH_HOLIDAY["Satu Muharam / Tahun Baru Hijriah"]["name"]} / Tahun Baru Islam / 1 Muharam ${hijriahHolidayEstimationTahunBaru?.hijriahYearEstimation} Hijriah*)`);
+                        const zyxCalendarEventHolidayIndonesiaEventNameNew = (`${zyxCalendarEventHolidayIndonesiaEventNamePrefix} ${WillyHorizont.UtilsDate.HIJRIAH_HOLIDAY["Satu Muharam / Tahun Baru Hijriah"]["name"]} / Tahun Baru Islam / 1 Muharam ${hijriahHolidayEstimationTahunBaru?.hijriahYearEstimation} Hijriah*) ${zyxCalendarEventHolidayIndonesiaEventNameSuffix}`).trim().replace(new RegExp("\\(belum pasti\\)", "g"), "").trim();
                         zyxCalendarEventHolidayIndonesiaDataNewMap.set(zyxCalendarEventHolidayIndonesiaEventDate, createNewZyxCalendarEventHolidayIndonesia({ "event_name": zyxCalendarEventHolidayIndonesiaEventNameNew }));
                         return;
                     }
                     const eventNameWaisakHollyDay = "Hari Raya Waisak";
                     if (zyxCalendarEventHolidayIndonesiaEventName.includes(eventNameWaisakHollyDay)) {
                         const [zyxCalendarEventHolidayIndonesiaEventNamePrefix, zyxCalendarEventHolidayIndonesiaEventNameSuffix] = getPrefixSuffixOfText(zyxCalendarEventHolidayIndonesiaEventName, eventNameWaisakHollyDay);
-                        const zyxCalendarEventHolidayIndonesiaEventNameNew = (`${zyxCalendarEventHolidayIndonesiaEventNamePrefix}${eventNameWaisakHollyDay} ${WillyHorizont.UtilsDate.convertYearAnnoDominiGregorianToBuddhist(yearNumeric)} Buddhist Era${zyxCalendarEventHolidayIndonesiaEventNameSuffix}`);
+                        const zyxCalendarEventHolidayIndonesiaEventNameNew = (`${zyxCalendarEventHolidayIndonesiaEventNamePrefix} ${eventNameWaisakHollyDay} ${WillyHorizont.UtilsDate.convertYearAnnoDominiGregorianToBuddhist(yearNumeric)} Buddhist Era ${zyxCalendarEventHolidayIndonesiaEventNameSuffix}`).trim().replace(new RegExp("\\(belum pasti\\)", "g"), "").trim();
                         zyxCalendarEventHolidayIndonesiaDataNewMap.set(zyxCalendarEventHolidayIndonesiaEventDate, createNewZyxCalendarEventHolidayIndonesia({ "event_name": zyxCalendarEventHolidayIndonesiaEventNameNew }));
                         return;
                     }
                     const eventNameIndonesiaIndependenceProclamation = "Hari Proklamasi Kemerdekaan R.I.";
                     if (zyxCalendarEventHolidayIndonesiaEventName.includes(eventNameIndonesiaIndependenceProclamation)) {
                         const [zyxCalendarEventHolidayIndonesiaEventNamePrefix, zyxCalendarEventHolidayIndonesiaEventNameSuffix] = getPrefixSuffixOfText(zyxCalendarEventHolidayIndonesiaEventName, eventNameIndonesiaIndependenceProclamation);
-                        const zyxCalendarEventHolidayIndonesiaEventNameNew = (`${zyxCalendarEventHolidayIndonesiaEventNamePrefix}${eventNameIndonesiaIndependenceProclamation} ke - ${WillyHorizont.UtilsDate.convertYearAnnoDominiGregorianToIndonesiaIndependenceProclamation(yearNumeric)}`);
+                        const zyxCalendarEventHolidayIndonesiaEventNameNew = (`${zyxCalendarEventHolidayIndonesiaEventNamePrefix} ${eventNameIndonesiaIndependenceProclamation} ke - ${WillyHorizont.UtilsDate.convertYearAnnoDominiGregorianToIndonesiaIndependenceProclamation(yearNumeric)} ${zyxCalendarEventHolidayIndonesiaEventNameSuffix}`).trim();
                         zyxCalendarEventHolidayIndonesiaDataNewMap.set(zyxCalendarEventHolidayIndonesiaEventDate, createNewZyxCalendarEventHolidayIndonesia({ "event_name": zyxCalendarEventHolidayIndonesiaEventNameNew }));
                         return;
                     }
@@ -711,23 +713,42 @@
                     let dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw = await localDatabase.getItem(localStorageKeyZyxCalendarEventHolidayIndonesiaRawData);
 
                     if (dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw === null) {
-                        let dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRawNew = null;
+                        let zyxCalendarEventHolidayIndonesiaRawNew = null;
                         while (true) {
                             // break; // uncomment to test initial data
                             const [getZyxCalendarEventHolidayIndonesiaError, getZyxCalendarEventHolidayIndonesiaResponse] = await WillyHorizont.Utils.catchAnyError(WillyHorizont.UtilsZyx.getZyxCalendarEventHolidayIndonesia(yearString));
                             if (!getZyxCalendarEventHolidayIndonesiaError && getZyxCalendarEventHolidayIndonesiaResponse) {
-                                dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRawNew = getZyxCalendarEventHolidayIndonesiaResponse;
+                                zyxCalendarEventHolidayIndonesiaRawNew = getZyxCalendarEventHolidayIndonesiaResponse.filter((zyxCalendarEventHolidayIndonesiaData) => (!notHolidayIndonesiaList.some((notHolidayIndonesia) => (notHolidayIndonesia === zyxCalendarEventHolidayIndonesiaData["summary"]))));
+                                zyxCalendarEventHolidayIndonesiaRawNew.unshift({
+                                    "summary": "Hari Raya Natal / Kelahiran Yesus Kristus",
+                                    "start": {
+                                        "date": hariNatalYearMinusOneDate,
+                                    },
+                                    "end": {
+                                        "date": `${yearMinusOneNumeric}-12-26`,
+                                    }
+                                });
+                                zyxCalendarEventHolidayIndonesiaRawNew.push({
+                                    "summary": `Tahun Baru ${yearPlusOneNumeric} Masehi`,
+                                    "start": {
+                                        "date": `${yearPlusOneNumeric}-01-01`,
+                                    },
+                                    "end": {
+                                        "date": `${yearPlusOneNumeric}-01-02`,
+                                    },
+                                });
                                 console.log("succes get data from Google Calendar");
+                                // console.log({ zyxCalendarEventHolidayIndonesiaRawNew });
                                 break;
                             }
                             await WillyHorizont.Utils.pythonLikeSleep(WillyHorizont.Utils.randomIntInclusive(5, 10));
-                            console.log("continue get data from Google Calendar");
+                            console.log("waiting data from Google Calendar");
                         }
-                        if (dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRawNew === null) {
+                        if (zyxCalendarEventHolidayIndonesiaRawNew === null) {
                             // console.log("no result from Google Calendar");
                             return;
                         }
-                        dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw = dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRawNew;
+                        dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw = zyxCalendarEventHolidayIndonesiaRawNew;
                         // console.log({ dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw });
                         // await WillyHorizont.Utils.pythonLikeSleep((dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw === null) ? WillyHorizont.Utils.randomIntInclusive(5, 10) : 1);
                     }
@@ -738,28 +759,8 @@
                     let dataFromLocalStorageZyxCalendarEventHolidayIndonesiaData = await localDatabase.getItem(localStorageKeyZyxCalendarEventHolidayIndonesiaData);
 
                     if (dataFromLocalStorageZyxCalendarEventHolidayIndonesiaData === null) {
-                        dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw = dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw.filter((zyxCalendarEventHolidayIndonesiaData) => (!notHolidayIndonesiaList.some((notHolidayIndonesia) => (notHolidayIndonesia === zyxCalendarEventHolidayIndonesiaData["summary"]))))
-                        dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw.unshift({
-                            "summary": "Hari Raya Natal / Kelahiran Yesus Kristus",
-                            "start": {
-                                "date": hariNatalYearMinusOneDate,
-                            },
-                            "end": {
-                                "date": `${yearMinusOneNumeric}-12-26`,
-                            }
-                        });
-                        dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw.push({
-                            "summary": `Tahun Baru ${yearPlusOneNumeric} Masehi`,
-                            "start": {
-                                "date": `${yearPlusOneNumeric}-01-01`,
-                            },
-                            "end": {
-                                "date": `${yearPlusOneNumeric}-01-02`,
-                            },
-                        });
-                        // console.log({ dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw });
                         const zyxCalendarEventHolidayIndonesiaRawDataModified = modifyZyxCalendarEventHolidayIndonesiaData(dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw);
-                        // console.log({ zyxCalendarEventHolidayIndonesiaRawDataModified });
+                        console.log({ zyxCalendarEventHolidayIndonesiaRawDataModified });
                         await localDatabase.setItem(localStorageKeyZyxCalendarEventHolidayIndonesiaData, zyxCalendarEventHolidayIndonesiaRawDataModified);
                         dataFromLocalStorageZyxCalendarEventHolidayIndonesiaData = zyxCalendarEventHolidayIndonesiaRawDataModified;
                     }
