@@ -1,22 +1,35 @@
-/*
-req:
-    WillyHorizont.Utils
-    WillyHorizont.UtilsWeb
-*/
+document.body.appendChild(WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+        <style>
+            .chip-input {
+                background-color: var(--light-background-color); color: var(--light-text-color);
+            }
+
+            .chip-remove-button {
+                background-color: var(--light-background-color);
+            }
+
+            html[data-theme="dark"] .chip-input {
+                background-color: var(--dark-background-color); color: var(--dark-text-color);
+            }
+
+            html[data-theme="dark"] .chip-remove-button {
+                background-color: var(--dark-background-color);
+            }
+        </style>
+    `));
 
 class ComponentChipInput {
-    constructor({ chipInputPlaceholder, collectionOrStoreKey, localDatabase, syncLocalStorageDataImportExportTextAreaContentWithMainContent }) {
+    constructor({ chipInputPlaceholder, getDataFromLocalDatabase, syncLocalStorageDataImportExportTextAreaContentWithMainContent }) {
         this.chipInputPlaceholder = chipInputPlaceholder;
-        this.collectionOrStoreKey = collectionOrStoreKey;
-        this.localDatabase = localDatabase;
+        this.getDataFromLocalDatabase = getDataFromLocalDatabase;
         this.syncLocalStorageDataImportExportTextAreaContentWithMainContent = syncLocalStorageDataImportExportTextAreaContentWithMainContent;
     }
 
     createHtmlElementChipTextContainer = (arrayOfEntryProperty) => {
         const htmlElementChipText = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
-            <span data-id="chip-text" style="white-space: nowrap;">
-            </span>`
-        );
+                <span data-id="chip-text" style="white-space: nowrap;">
+                </span>
+            `);
         htmlElementChipText.setPropertyValues(arrayOfEntryProperty);
         htmlElementChipText.setEventStuffs([
             ({ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: this.handleElementClickChipText }),
@@ -26,10 +39,10 @@ class ComponentChipInput {
 
     createHtmlElementChipRemoveButton = () => {
         const htmlElementChipRemoveButton = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
-            <div data-id="chip-remove-button" style="display: flex; align-items: center; justify-content: center; line-height: 1.2em; background-color: var(--accent-color-4); color: var(--dark-text-color); width: 1.6em; aspect-ratio: 1 / 1; border-radius: 50%;">
-                <span data-id="chip-remove-button-content" style="cursor: pointer; font-weight: bold;">×</span>
-            </div>`
-        );
+                <div data-id="chip-remove-button" style="display: flex; align-items: center; justify-content: center; line-height: 1.2em; background-color: var(--accent-color-4); color: var(--dark-text-color); width: 1.6em; aspect-ratio: 1 / 1; border-radius: 50%;">
+                    <span data-id="chip-remove-button-content" style="cursor: pointer; font-weight: bold;">×</span>
+                </div>
+            `);
         htmlElementChipRemoveButton.setEventStuffs([
             ({ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: this.handleElementClickChipRemoveButton }),
         ]);
@@ -38,9 +51,9 @@ class ComponentChipInput {
 
     createHtmlElementChip = (chipTextTrimmed) => {
         const htmlElementChipContainer = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
-            <div data-id="chip-container" style="cursor: pointer; padding: 4px 6px; border-radius: 0.2em; display: flex; align-items: center; gap: 12px; flex: 0 0 auto; border: 1px solid var(--light-border-color); color: var(--light-text-color); background-color: #ffdddd;">
-            </div>`
-        );
+                <div data-id="chip-container" style="cursor: pointer; padding: 4px 6px; border-radius: 0.2em; display: flex; align-items: center; gap: 12px; flex: 0 0 auto; border: 1px solid var(--light-border-color); color: var(--light-text-color); background-color: #ffdddd;">
+                </div>
+            `);
         htmlElementChipContainer.setAttributes([["data-item", chipTextTrimmed]]);
         htmlElementChipContainer.appendChild(this.createHtmlElementChipTextContainer([["textContent", chipTextTrimmed]]));
         htmlElementChipContainer.appendChild(this.createHtmlElementChipRemoveButton());
@@ -48,7 +61,9 @@ class ComponentChipInput {
     };
 
     createHtmlElementChipInput = (placeholderValue = "") => {
-        const htmlElementChipInput = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`<input data-id="chip-input" class="chip-input" style="flex: 1 1 auto; padding: 8px 8px 8px 0px; border: none; outline: none;" name="chip-input" type="text" />`);
+        const htmlElementChipInput = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+                <input data-id="chip-input" class="chip-input" style="flex: 1 1 auto; padding: 8px 8px 8px 0px; border: none; outline: none;" name="chip-input" type="text" />
+            `);
         htmlElementChipInput.setEventStuffs([
             ({ handlerRefName: "refEventHandlerKeyDown", eventType: "keydown", eventHandler: this.handleEventKeyDownChipInput }),
             ({ handlerRefName: "refEventHandlerBlur", eventType: "blur", eventHandler: this.handleEventBlurChipInput }),
@@ -58,7 +73,9 @@ class ComponentChipInput {
     };
 
     createHtmlElementChipUpdateInput = (chipTextTrimmed = "") => {
-        const htmlElementChipUpdateInput = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`<input data-id="chip-update-input" class="chip-input" style="flex: 1 1 auto; padding: 8px; border: 1px solid var(--light-border-color); outline: none;" name="chip-update-input" type="text" />`);
+        const htmlElementChipUpdateInput = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+                <input data-id="chip-update-input" class="chip-input" style="flex: 1 1 auto; padding: 8px; border: 1px solid var(--light-border-color); outline: none;" name="chip-update-input" type="text" />
+            `);
         htmlElementChipUpdateInput.setEventStuffs([
             ({ handlerRefName: "refEventHandlerKeyDown", eventType: "keydown", eventHandler: this.handleEventKeyDownChipUpdateInput }),
             ({ handlerRefName: "refEventHandlerBlur", eventType: "blur", eventHandler: this.handleEventBlurChipUpdateInput }),
@@ -69,9 +86,9 @@ class ComponentChipInput {
 
     createHtmlElementChipInputContainer = async (itemList) => {
         const htmlElementChipInputContainer = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
-            <div data-id="chip-input-container" style="cursor: text; display: flex; gap: 8px; padding: 8px; flex-wrap: wrap; flex: 1; overflow-x: auto; border: 1px solid var(--light-border-color);">
-            </div>`
-        );
+                <div data-id="chip-input-container" style="cursor: text; display: flex; gap: 8px; padding: 8px; flex-wrap: wrap; flex: 1; overflow-x: auto; border: 1px solid var(--light-border-color);">
+                </div>
+            `);
         htmlElementChipInputContainer.setEventStuffs([
             ({ handlerRefName: "refElementHandlerClick", eventType: "click", elementHandler: this.handleElementClickChipInputContainer }),
         ]);
@@ -81,8 +98,8 @@ class ComponentChipInput {
                 htmlElementChipInputContainer.appendChild(this.createHtmlElementChip(chipText));
             });
         }
-        const dataFromLocalStorage = await (this.localDatabase.getItem(collectionOrStoreKey));
-        const isNeedPlaceholder = ((dataFromLocalStorage === null) || ((dataFromLocalStorage?.length === 1) && !dataFromLocalStorage?.[0]?.items?.length));
+        const dataFromLocalDatabase = await (this.getDataFromLocalDatabase());
+        const isNeedPlaceholder = ((dataFromLocalDatabase === null) || ((dataFromLocalDatabase?.length === 1) && !dataFromLocalDatabase?.[0]?.items?.length));
         htmlElementChipInputContainer.appendChild(this.createHtmlElementChipInput(isNeedPlaceholder ? this.chipInputPlaceholder : ""));
         return htmlElementChipInputContainer;
     };

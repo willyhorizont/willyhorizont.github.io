@@ -1,6 +1,7 @@
 class ComponentImportExport {
-    constructor({ collectionOrStoreKey, rerenderMainContent, getDataFromMainContent }) {
-        this.collectionOrStoreKey = collectionOrStoreKey;
+    constructor({ saveDataToLocalDatabase, getDataFromLocalDatabase, rerenderMainContent, getDataFromMainContent }) {
+        this.saveDataToLocalDatabase = saveDataToLocalDatabase;
+        this.getDataFromLocalDatabase = getDataFromLocalDatabase;
         this.rerenderMainContent = rerenderMainContent;
         this.getDataFromMainContent = getDataFromMainContent;
 
@@ -28,7 +29,7 @@ class ComponentImportExport {
                 anyListItem["uuid"] = crypto.randomUUID();
                 return anyListItem;
             });
-            await localDatabase.setItem(this.collectionOrStoreKey, dataFromImportExportTextAreaContent);
+            await this.saveDataToLocalDatabase(dataFromImportExportTextAreaContent);
             this.updateImportExportTextAreaValue(dataFromImportExportTextAreaContent);
             await (this.rerenderMainContent(dataFromImportExportTextAreaContent));
         } catch (anyError) {
@@ -44,16 +45,16 @@ class ComponentImportExport {
 
     syncLocalStorageDataImportExportTextAreaContentWithMainContent = async () => {
         const dataFromMainContent = this.getDataFromMainContent();
-        await localDatabase.setItem(this.collectionOrStoreKey, dataFromMainContent);
+        await this.saveDataToLocalDatabase(dataFromMainContent);
         this.updateImportExportTextAreaValue(dataFromMainContent);
         document.getElementById("placeholder-error").innerHTML = "";
     };
 
     syncImportExportTextAreaContentMainContentWithLocalStorageData = async () => {
-        const dataFromLocalStorage = await localDatabase.getItem(this.collectionOrStoreKey);
-        if (dataFromLocalStorage === null) return;
-        this.updateImportExportTextAreaValue(dataFromLocalStorage);
-        await (this.rerenderMainContent(dataFromLocalStorage));
+        const dataFromLocalDatabase = await this.getDataFromLocalDatabase();
+        if (dataFromLocalDatabase === null) return;
+        this.updateImportExportTextAreaValue(dataFromLocalDatabase);
+        await (this.rerenderMainContent(dataFromLocalDatabase));
     };
 }
 

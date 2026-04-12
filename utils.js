@@ -3,7 +3,7 @@
         // Node.js
         module.exports = factory(root);
     } else {
-        // Browser
+        // Web Browser
         root.WillyHorizont = (root.WillyHorizont || {});
         root.WillyHorizont.Utils = factory(root);
     }
@@ -11,6 +11,18 @@
     const regexPattern = {
         "three_digit_grouping": (/\B(?=(\d{3})+(?!\d))/g),
     };
+    const optionalChaining = (callbackFunction) => {
+        try {
+            return callbackFunction();
+        } catch (anyError) {
+            return null;
+        }
+    };
+    const safeGetObjectProperty = (rootObject, methodChain) => {
+        if (typeof rootObject === "undefined") return false;
+        return methodChain.split(".").slice(1).reduce((currentResult, currentProperty) => ((currentResult && (currentProperty in currentResult)) ? currentResult[currentProperty] : undefined), rootObject);
+    };
+    const checkIsMethodAvailable = (rootObject, methodChain) => (typeof safeGetObjectProperty(rootObject, methodChain) === "function");
     const getNumberDifferenceInNumeric = (a, b) => ((a === b) ? 0 : ((a > b) ? (a - b) : (b - a)));
     const getMostFrequent = (anyArray, callbackFunction = (anyArrayItem) => (anyArrayItem)) => {
         const frequencyMap = new Map();
@@ -205,5 +217,7 @@
         catchAnyError,
         throwError,
         getRandomString,
+        safeGetObjectProperty,
+        checkIsMethodAvailable,
     };
 });

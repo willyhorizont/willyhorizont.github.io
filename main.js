@@ -3,7 +3,7 @@
         // Node.js
         module.exports = factory(root);
     } else {
-        // Browser
+        // Web Browser
         root.WillyHorizont = factory(root);
     }
 })(((typeof globalThis !== "undefined") ? globalThis : this), function (root) {

@@ -3,7 +3,7 @@
         // Node.js
         module.exports = factory(root);
     } else {
-        // Browser
+        // Web Browser
         root.WillyHorizont = (root.WillyHorizont || {});
         root.WillyHorizont.UtilsDate = factory(root);
     }

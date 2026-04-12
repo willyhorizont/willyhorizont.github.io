@@ -35,34 +35,39 @@
         <link rel="stylesheet" href="../style.css" />
         <script src="../utils.js"></script>
         <script src="../utils-web.js"></script>
-        <script src="../utils-date.js"></script>
 
-        <meta name="description" content="About Willy Horizont" />
-        <meta name="keywords" content="About Willy Horizont" />
-        <title>About | Willy Horizont</title>
-
-        <!-- google-adsense-placeholder -->
+        <title>Unsupported Browser | Willy Horizont</title>
     </head>
     <body>
-        <header>
-        </header>
         <main>
-            <div class="about-me" style="padding: 8px;">
-                <h1 style="text-align: center;">About Willy Horizont</h1>
-                <pre style="display: flex; flex-direction: column; overflow-wrap: break-word; text-wrap: wrap; text-align: justify; white-space: pre-wrap; font-family: monospace; font-size: 1em;">
-
-
-
-
-I loves Programming AND/OR Languages, I'm a Polyglot AND/OR Programmer that "touch grass" with 3+ years of experiences (since September 2021) in developing full-stack web apps (MongoDB, ExpressJS, ReactJS, NodeJS), back-end RESTful APIs (NodeJS and ExpressJS), front-end web apps (ReactJS), front-end hybrid mobile apps (React Native), and Python (Automation, Scripting, and Web Scraping).
-
-Proficient in a wide range of programming languages including JavaScript, Python, PHP, Go, Perl, Julia, Lua, Ruby, R, Kotlin, Swift, Dart, Visual Basic .NET, C#, Matlab, GNU Octave, Wolfram, Raku, and Scala.</pre>
+            <div data-display="flex" style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; row-gap: 8px; background-color: var(--safe-background-color-1); color: var(--safe-text-color-1);">
+                <h1 style="text-align: center;">Unsupported Web Browser</h1>
+                <h2>⛔ Access Denied ⛔</h2>
+                <p style="text-align: center;">Your <strong>web browser</strong> is not supported.</p>
+                <p style="text-align: center;">Please use <strong>latest stable Google Chrome</strong> to continue.</p>
+                <a href="https://www.google.com/chrome/" target="_blank" rel="noopener noreferrer" style="color:blue;">Download Chrome</a>
             </div>
         </main>
-        <footer>
-        </footer>
-        <script src="../component/component-navbar.js"></script>
-        <script src="../component/component-footer.js"></script>
-        <script src="../component/component-user-web-browser-checker.js"></script>
+        <script>
+            (async () => {
+                if (!WillyHorizont.UtilsWeb) return;
+
+                const isUserUsingChromiumBasedWebBrowser = WillyHorizont.UtilsWeb.checkIsUserUsingChromiumBasedWebBrowser();
+                // console.log({ isUserUsingChromiumBasedWebBrowser });
+
+                if (isUserUsingChromiumBasedWebBrowser) {
+                    window.location.href = "/";
+                    return;
+                }
+
+                const isUserUsingLatestStableChromiumBasedWebBrowser = await WillyHorizont.UtilsWeb.checkIsUserUsingMinimumStableChromiumBasedWebBrowser();
+                // console.log({ isUserUsingLatestStableChromiumBasedWebBrowser });
+
+                if (isUserUsingLatestStableChromiumBasedWebBrowser) {
+                    window.location.href = "/";
+                    return;
+                }
+            })();
+        </script>
     </body>
 </html>
