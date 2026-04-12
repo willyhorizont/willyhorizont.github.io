@@ -15,7 +15,7 @@
                     <p>This website is better in latest stable Google Chrome.</p>
                 `),
                 (/*html*/`
-                    <a href="https://www.google.com/chrome/" target="_blank" rel="noopener noreferrer" style="color:blue;">Download Chrome</a>
+                    <a href="https://www.google.com/chrome/" target="_blank" rel="noopener noreferrer" style="color:blue;">Download Google Chrome</a>
                 `),
             ],
         });
@@ -36,7 +36,7 @@
                     <p>This website is better in latest stable Google Chrome.</p>
                 `),
                 (/*html*/`
-                    <a href="https://www.google.com/chrome/" target="_blank" rel="noopener noreferrer" style="color:blue;">Update Chrome</a>
+                    <a href="https://www.google.com/chrome/" target="_blank" rel="noopener noreferrer" style="color:blue;">Update Google Chrome</a>
                 `),
             ],
         });

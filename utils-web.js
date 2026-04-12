@@ -202,22 +202,36 @@ WillyHorizont.UtilsWeb = ((() => {
                 }
 
                 .popup-box {
-                    padding: 24px;
                     border-radius: 8px;
                     min-width: 240px;
+                    max-width: 480px;
                     position: relative;
-
+                    
                     background-color: var(--light-background-color); color: var(--light-text-color);
+                    overflow: hidden;
+                }
+
+                .popup-header {
+                    display: flex;
+                    flex-direction: row;
+                    padding: 8px;
+                    background-color: #999;
+                }
+
+                .popup-body {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    padding: 8px;
                 }
 
                 .popup-close-button {
-                    position: absolute;
-                    top: 8px;
-                    right: 8px;
                     cursor: pointer;
-                    font-size: 18px;
+                    font-size: 1.2em;
                     border: 1px solid black;
                     border-radius: 0.2em;
+                    background-color: #ff0000;
+                    color: var(--dark-text-color);
                     width: 1em;
                     aspect-ratio: 1 / 1;
                     line-height: 0px;
@@ -242,16 +256,26 @@ WillyHorizont.UtilsWeb = ((() => {
                 <div data-id="popup-box-${popupId}" class="popup-box">
                 </div>
             `);
+        const htmlElementPopupHeader = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+                <div data-id="popup-header-${popupId}" class="popup-header">
+                </div>
+            `);
+        htmlElementPopupHeader.appendChild(WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+                <h3 style="flex: 1; line-height: 1; text-align: center;">${titleString}</h3>
+            `));
         const popupCloseButton = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
                 <button data-id="popup-close-button-${popupId}" class="popup-close-button">&times;</button>
             `);
-        htmlElementPopupBox.appendChild(popupCloseButton);
-        htmlElementPopupBox.appendChild(WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
-                <h3>${titleString}</h3>
-            `));
+        htmlElementPopupHeader.appendChild(popupCloseButton);
+        const htmlElementPopupBody = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+                <div data-id="popup-body-${popupId}" class="popup-body">
+                </div>
+            `);
         htmlTemplateStringContentChildren.forEach((htmlTemplateStringContent) => {
-            htmlElementPopupBox.appendChild(WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(htmlTemplateStringContent));
+            htmlElementPopupBody.appendChild(WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(htmlTemplateStringContent));
         })
+        htmlElementPopupBox.appendChild(htmlElementPopupHeader);
+        htmlElementPopupBox.appendChild(htmlElementPopupBody);
         htmlElementPopupOverlay.appendChild(htmlElementPopupBox);
         document.body.appendChild(htmlElementPopupOverlay);
 
