@@ -79,19 +79,17 @@
         <script src="../../component/component-navbar.js"></script>
         <script src="../../component/component-footer.js"></script>
         <script src="../../component/component-user-web-browser-checker.js"></script>
-        <script src="../../component/component-chip-input.js"></script>
-        <script src="../../component/component-import-export.js"></script>
-        <script src="../../component/component-donation-platform.js"></script>
+        <script src="../../component/component-donation-platforms.js"></script>
 
         <script>
-            const localDatabase = new WillyHorizont.UtilsWeb.LocalDatabase("expense-tracker");
+            const localDatabase = WillyHorizont.UtilsWeb.initializeLocalDatabase("expense-tracker");
             const chipInputPlaceholder = ("item a 2, item b 1, item c 4, ...");
             const collectionOrStoreKey = "expense-data";
             
             const saveDataToLocalDatabase = async (newData) => await localDatabase.setItem(collectionOrStoreKey, newData);
             const getDataFromLocalDatabase = async () => await localDatabase.getItem(collectionOrStoreKey);
 
-            const componentImportExport = new ComponentImportExport({
+            const componentImportExport = WillyHorizont.UtilsWeb.initializeComponentImportExport({
                 saveDataToLocalDatabase,
                 getDataFromLocalDatabase,
                 rerenderMainContent,
@@ -108,8 +106,10 @@
                     return ((dataFromImportExportTextAreaContent.length === 0) ? null : dataFromImportExportTextAreaContent);
                 },
             });
+            // console.log({ componentImportExport });
 
-            const componentChipInput = new ComponentChipInput({ chipInputPlaceholder, getDataFromLocalDatabase: async () => await getDataFromLocalDatabase(), syncLocalStorageDataImportExportTextAreaContentWithMainContent: componentImportExport.syncLocalStorageDataImportExportTextAreaContentWithMainContent });
+            const componentChipInput = WillyHorizont.UtilsWeb.initializeComponentChipInput({ chipInputPlaceholder, getDataFromLocalDatabase: async () => await getDataFromLocalDatabase(), syncWithMainContent: componentImportExport.syncWithMainContent });
+            // console.log({ componentChipInput });
 
             function createHtmlElementExpenseContainer(arrayOfEntryAttribute) {
                 const htmlElementExpenseContainer = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
@@ -192,8 +192,8 @@
                     const htmlElementExpenseContainer = htmlElementPriceInput.parentElement.parentElement;
                     htmlElementExpenseContainer.setAttribute("data-price", event.target.value.replace((/_/g), "").replace(WillyHorizont.Utils.regexPattern["three_digit_grouping"], "_"));
                     updateTotalExpenses();
-                    await componentImportExport.syncLocalStorageDataImportExportTextAreaContentWithMainContent();
-                })
+                    await componentImportExport.syncWithMainContent();
+                });
             }
 
             async function handleEventKeyDownPriceInput (event) {
@@ -223,8 +223,8 @@
                     const htmlElementExpenseContainer = htmlElementPriceInput.parentElement.parentElement;
                     htmlElementExpenseContainer.setAttribute("data-price", event.target.value.replace((/_/g), "").replace(WillyHorizont.Utils.regexPattern["three_digit_grouping"], "_"));
                     updateTotalExpenses();
-                    await componentImportExport.syncLocalStorageDataImportExportTextAreaContentWithMainContent();
-                })
+                    await componentImportExport.syncWithMainContent();
+                });
             }
 
             function handleElementClickExpenseRemoveButton(htmlElementExpenseRemoveButton) {
@@ -250,8 +250,8 @@
                     });
                     htmlElementExpenseContainer.remove();
                     updateTotalExpenses();
-                    await componentImportExport.syncLocalStorageDataImportExportTextAreaContentWithMainContent();
-                })
+                    await componentImportExport.syncWithMainContent();
+                });
             }
 
             async function rerenderMainContent (dataFromImportExportTextAreaContent) {
@@ -280,12 +280,12 @@
             };
 
             (async () => {
-                const dataFromLocalStorage = await getDataFromLocalDatabase();
-                if (dataFromLocalStorage === null) {
+                const dataFromLocalDatabase = await getDataFromLocalDatabase();
+                if (dataFromLocalDatabase === null) {
                     await runDemo();
                     return;
                 }
-                await componentImportExport.syncImportExportTextAreaContentMainContentWithLocalStorageData();
+                await componentImportExport.syncWithLocalDatabase();
                 document.getElementById("placeholder-error").innerHTML = "";
             })();
         </script>

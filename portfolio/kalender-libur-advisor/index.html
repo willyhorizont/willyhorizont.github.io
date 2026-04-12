@@ -127,8 +127,7 @@
         <script src="../../component/component-navbar.js"></script>
         <script src="../../component/component-footer.js"></script>
         <script src="../../component/component-user-web-browser-checker.js"></script>
-        <!-- <script src="../../component/component-loading-spinner.js"></script> -->
-        <script src="../../component/component-donation-platform.js"></script>
+        <script src="../../component/component-donation-platforms.js"></script>
         <script>
             const notHolidayIndonesiaList = [
                 "Diwali",
@@ -136,7 +135,7 @@
                 // "Malam Natal",
                 "1 Ramadan",
             ];
-            const localDatabase = new WillyHorizont.UtilsWeb.LocalDatabase("kalender-libur-advisor");
+            const localDatabase = WillyHorizont.UtilsWeb.initializeLocalDatabase("kalender-libur-advisor");
             const currentYear = new Date().getUTCFullYear();
             const getPrefixSuffixOfText = (anyString, textToFind) => (anyString.split(textToFind).map((textSplit) => (textSplit.trim())));
             const getYearFromUrl = () => ((({ yearStringNew }) => ((({ yearNumericNew }) => ([yearNumericNew.toString(), yearNumericNew]))({ yearNumericNew: ((yearStringNew === null) ? new Date().getUTCFullYear() : parseInt(yearStringNew, 10)) })))({ yearStringNew: new URLSearchParams(window.location.search).get("year") }));
@@ -322,7 +321,7 @@
                 ]);
             };
 
-            const dataTimestamp = ("(04/12 month) | Mon, 12 Apr 2026 | 01:38:52 | 01:38 AM");
+            const dataTimestamp = ("(04/12 month) | Mon, 12 Apr 2026 | 04:48:04 | 04:48 AM");
             console.log(WillyHorizont.Utils.generateTimestamp({ includeSecond: true, includeMiliSecond: false }));
             const localStorageKeyKalenderLiburAdvisorTimestamp = ("kalender-libur-advisor-timestamp");
             const localStorageKeyKalenderLiburAdvisorDemoFinished = ("kalender-libur-advisor-demo-finished");
@@ -343,7 +342,6 @@
                         if (rangeItemDay === 0) return;
                         const zyxCalendarEventHolidayIndonesiaEventDateNew = WillyHorizont.UtilsDate.updateDateDotToIsoStringDotSliceZeroCommaTenByNumericVariable(zyxCalendarEventHolidayIndonesiaEventDate, rangeItemDay);
                         const zyxCalendarEventHolidayIndonesiaEventDateNewDateData = WillyHorizont.UtilsDate.extractDate(zyxCalendarEventHolidayIndonesiaEventDateNew);
-                        // if (zyxCalendarEventHolidayIndonesiaEventDateNewDateData.fullYear === yearMinusOneString) return;
                         if (zyxCalendarEventHolidayIndonesiaDataNewMap.get(zyxCalendarEventHolidayIndonesiaEventDateNew) !== undefined) return;
                         const zyxCalendarEventHolidayIndonesiaEventShortDayNameNew = zyxCalendarEventHolidayIndonesiaEventDateNewDateData.dayThreeFirstLetter;
                         const zyxCalendarEventHolidayIndonesiaEventLongDayNameIdn = WillyHorizont.UtilsDate.dictionaryDay["IDN"]["long"][zyxCalendarEventHolidayIndonesiaEventShortDayNameNew];
@@ -609,8 +607,8 @@
                 return currentResult;
             }, []));
 
-            const rerenderMainContent = (dataFromLocalStorageKalenderLiburAdvisor) => {
-                document.getElementById("kalender-libur-advisor-container").innerHTML = (dataFromLocalStorageKalenderLiburAdvisor.reduce((currentResult, zyxCalendarEventHolidayIndonesiaDataGrouped) => {
+            const rerenderMainContent = (dataFromLocalDatabaseKalenderLiburAdvisor) => {
+                document.getElementById("kalender-libur-advisor-container").innerHTML = (dataFromLocalDatabaseKalenderLiburAdvisor.reduce((currentResult, zyxCalendarEventHolidayIndonesiaDataGrouped) => {
                     const zyxCalendarEventHolidayIndonesiaDataGroupedStartDateData = WillyHorizont.UtilsDate.extractDate(zyxCalendarEventHolidayIndonesiaDataGrouped.at(0)["event_date"]);
                     const zyxCalendarEventHolidayIndonesiaDataGroupedEventDateStart = zyxCalendarEventHolidayIndonesiaDataGroupedStartDateData.zeroPaddedDay;
                     const zyxCalendarEventHolidayIndonesiaDataGroupedEventShortMonthNameStart = WillyHorizont.UtilsDate.dictionaryMonth["IDN"]["short"][zyxCalendarEventHolidayIndonesiaDataGroupedStartDateData.monthThreeFirstLetter];
@@ -673,17 +671,10 @@
 
                 rerenderMainContent(zyxCalendarEventHolidayIndonesiaDataInitialGrouped);
                 localStorage.setItem(localStorageKeyKalenderLiburAdvisorDemoFinished, JSON.stringify(true));
-
-                // ComponentLoadingSpinner.toggleLoadingSpinner(false, [document.getElementById("kalender-libur-advisor-container")]);
-                // await WillyHorizont.Utils.pythonLikeSleep(3);
-                // ComponentLoadingSpinner.toggleLoadingSpinner(true, [document.getElementById("kalender-libur-advisor-container")]);
             };
 
             (async () => {
                 try {
-                    // ComponentLoadingSpinner.toggleLoadingSpinner(false, [document.getElementById("kalender-libur-advisor-container")]);
-                    // ComponentLoadingSpinner.toggleLoadingSpinner(true, [document.getElementById("kalender-libur-advisor-container")]);
-
                     document.getElementById("placeholder-error").innerHTML = "";
                     document.getElementById("placeholder-year").textContent = yearString;
 
@@ -697,16 +688,16 @@
                         await localDatabase.clear();
                     }
 
-                    const dataFromLocalStorageKalenderLiburAdvisor = await localDatabase.getItem(localStorageKeyKalenderLiburAdvisorData);
+                    const dataFromLocalDatabaseKalenderLiburAdvisor = await localDatabase.getItem(localStorageKeyKalenderLiburAdvisorData);
 
-                    if (dataFromLocalStorageKalenderLiburAdvisor !== null) {
-                        rerenderMainContent(dataFromLocalStorageKalenderLiburAdvisor);
+                    if (dataFromLocalDatabaseKalenderLiburAdvisor !== null) {
+                        rerenderMainContent(dataFromLocalDatabaseKalenderLiburAdvisor);
                         return;
                     }
 
-                    let dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw = await localDatabase.getItem(localStorageKeyZyxCalendarEventHolidayIndonesiaRawData);
+                    let dataFromLocalDatabaseZyxCalendarEventHolidayIndonesiaRaw = await localDatabase.getItem(localStorageKeyZyxCalendarEventHolidayIndonesiaRawData);
 
-                    if (dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw === null) {
+                    if (dataFromLocalDatabaseZyxCalendarEventHolidayIndonesiaRaw === null) {
                         let zyxCalendarEventHolidayIndonesiaRawNew = null;
                         while (true) {
                             // break; // uncomment to test initial data
@@ -739,28 +730,26 @@
                             console.log("waiting data from Google Calendar");
                         }
                         if (zyxCalendarEventHolidayIndonesiaRawNew === null) {
-                            // console.log("no result from Google Calendar");
+                            console.log("no result from Google Calendar");
                             return;
                         }
-                        dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw = zyxCalendarEventHolidayIndonesiaRawNew;
-                        // console.log({ dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw });
-                        // await WillyHorizont.Utils.pythonLikeSleep((dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw === null) ? WillyHorizont.Utils.randomIntInclusive(5, 10) : 1);
+                        dataFromLocalDatabaseZyxCalendarEventHolidayIndonesiaRaw = zyxCalendarEventHolidayIndonesiaRawNew;
+                        // console.log({ dataFromLocalDatabaseZyxCalendarEventHolidayIndonesiaRaw });
                     }
-                    // console.log("succes get data from Google Calendar");
-                    // console.log({ dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw });
-                    await localDatabase.setItem(localStorageKeyZyxCalendarEventHolidayIndonesiaRawData, dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw);
+                    // console.log({ dataFromLocalDatabaseZyxCalendarEventHolidayIndonesiaRaw });
+                    await localDatabase.setItem(localStorageKeyZyxCalendarEventHolidayIndonesiaRawData, dataFromLocalDatabaseZyxCalendarEventHolidayIndonesiaRaw);
 
-                    let dataFromLocalStorageZyxCalendarEventHolidayIndonesiaData = await localDatabase.getItem(localStorageKeyZyxCalendarEventHolidayIndonesiaData);
+                    let dataFromLocalDatabaseZyxCalendarEventHolidayIndonesiaData = await localDatabase.getItem(localStorageKeyZyxCalendarEventHolidayIndonesiaData);
 
-                    if (dataFromLocalStorageZyxCalendarEventHolidayIndonesiaData === null) {
-                        const zyxCalendarEventHolidayIndonesiaRawDataModified = modifyZyxCalendarEventHolidayIndonesiaData(dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw);
+                    if (dataFromLocalDatabaseZyxCalendarEventHolidayIndonesiaData === null) {
+                        const zyxCalendarEventHolidayIndonesiaRawDataModified = modifyZyxCalendarEventHolidayIndonesiaData(dataFromLocalDatabaseZyxCalendarEventHolidayIndonesiaRaw);
                         // console.log({ zyxCalendarEventHolidayIndonesiaRawDataModified });
                         await localDatabase.setItem(localStorageKeyZyxCalendarEventHolidayIndonesiaData, zyxCalendarEventHolidayIndonesiaRawDataModified);
-                        dataFromLocalStorageZyxCalendarEventHolidayIndonesiaData = zyxCalendarEventHolidayIndonesiaRawDataModified;
+                        dataFromLocalDatabaseZyxCalendarEventHolidayIndonesiaData = zyxCalendarEventHolidayIndonesiaRawDataModified;
                     }
-                    // console.log({ dataFromLocalStorageZyxCalendarEventHolidayIndonesiaData });
+                    // console.log({ dataFromLocalDatabaseZyxCalendarEventHolidayIndonesiaData });
 
-                    const zyxCalendarEventHolidayIndonesiaDataGrouped = groupZyxCalendarEventHolidayIndonesiaData(dataFromLocalStorageZyxCalendarEventHolidayIndonesiaData);
+                    const zyxCalendarEventHolidayIndonesiaDataGrouped = groupZyxCalendarEventHolidayIndonesiaData(dataFromLocalDatabaseZyxCalendarEventHolidayIndonesiaData);
                     // console.log({ zyxCalendarEventHolidayIndonesiaDataGrouped });
 
                     await localDatabase.setItem(localStorageKeyKalenderLiburAdvisorData, zyxCalendarEventHolidayIndonesiaDataGrouped);
