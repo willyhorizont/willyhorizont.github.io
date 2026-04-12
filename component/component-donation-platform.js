@@ -16,7 +16,7 @@ const donationPlatformLinkContainerInnerHtml = [
     },
     {
         "donationPlatformUrl": "https://www.nihbuatjajan.com/p3thvx",
-        "donationPlatformName": "nameih Buat Jajan",
+        "donationPlatformName": "Nih Buat Jajan",
         "donationPlatformLogoSource": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxp6o2dSrvX4XsYqykH8l5-APqtOuniis61Q&s",
     },
     {
