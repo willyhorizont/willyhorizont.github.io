@@ -92,7 +92,7 @@
             const componentImportExport = WillyHorizont.UtilsWeb.initializeComponentImportExport({
                 saveDataToLocalDatabase,
                 getDataFromLocalDatabase,
-                rerenderMainContent,
+                renderMainContent,
                 getDataFromMainContent: () => {
                     const dataFromImportExportTextAreaContent = (Array.from(document.getElementById("expense-tracker-container").children).reduce(((dataFromImportExportTextAreaContentCurrentResult, htmlElementExpense) => {
                         const newExpenseContainerContent = ({
@@ -254,7 +254,7 @@
                 });
             }
 
-            async function rerenderMainContent (dataFromImportExportTextAreaContent) {
+            async function renderMainContent (dataFromImportExportTextAreaContent) {
                 const htmlElementExpenseTrackerContainer = document.getElementById("expense-tracker-container");
                 htmlElementExpenseTrackerContainer.innerHTML = "";
 
@@ -275,7 +275,7 @@
             const runDemo = async () => {
                 await saveDataToLocalDatabase(demoData);
                 componentImportExport.updateImportExportTextAreaValue(demoData);
-                await rerenderMainContent(demoData);
+                await renderMainContent(demoData);
                 document.getElementById("placeholder-error").innerHTML = "";
             };
 

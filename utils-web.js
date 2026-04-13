@@ -568,7 +568,7 @@ WillyHorizont.UtilsWeb = ((() => {
         };
     };
 
-    const initializeComponentImportExport = ({ saveDataToLocalDatabase, getDataFromLocalDatabase, rerenderMainContent, getDataFromMainContent }) => {
+    const initializeComponentImportExport = ({ saveDataToLocalDatabase, getDataFromLocalDatabase, renderMainContent, getDataFromMainContent }) => {
         document.getElementById("placeholder-import-export").innerHTML = (/*html*/`
             <div id="import-export-container" style="padding: 4px; width: 100%; display: flex; flex-direction: column;">
                 <h2 style="margin-top: 8px;">Import & Export:</h2>
@@ -594,7 +594,7 @@ WillyHorizont.UtilsWeb = ((() => {
                 });
                 await saveDataToLocalDatabase(dataFromImportExportTextAreaContent);
                 updateImportExportTextAreaValue(dataFromImportExportTextAreaContent);
-                await (rerenderMainContent(dataFromImportExportTextAreaContent));
+                await (renderMainContent(dataFromImportExportTextAreaContent));
             } catch (anyError) {
                 document.getElementById("placeholder-error").innerHTML = (/*html*/`<p style="color: red;">Format export-an yang di-import tidak sesuai.</p>`);
             }
@@ -617,7 +617,7 @@ WillyHorizont.UtilsWeb = ((() => {
             const dataFromLocalDatabase = await getDataFromLocalDatabase();
             if (dataFromLocalDatabase === null) return;
             updateImportExportTextAreaValue(dataFromLocalDatabase);
-            await (rerenderMainContent(dataFromLocalDatabase));
+            await (renderMainContent(dataFromLocalDatabase));
         }
 
         return {

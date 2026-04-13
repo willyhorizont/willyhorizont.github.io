@@ -5,6 +5,8 @@
 }
 
 :root {
+    --scroll-width: calc(60px - 8px);
+
     --light-border-color: #cccccc;
     --dark-border-color: #222222;
 

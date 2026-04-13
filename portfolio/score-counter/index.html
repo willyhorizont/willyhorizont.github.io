@@ -47,16 +47,6 @@
         <!-- end of Google AdSense -->
 
         <style>
-            :root {
-                --scroll-width: calc(56px - 8px);
-                --row-height: 40px;
-            }
-
-            body {
-                margin: 0;
-                font-family: Arial, sans-serif;
-            }
-
             .grid-table-container {
                 /* width: 60vw; */
                 /* height: 60vh; */
@@ -73,7 +63,7 @@
                 min-width: max-content;
             }
 
-            .cell {
+            .grid-table-cell {
                 border: 1px solid #ccc;
                 display: flex;
                 align-items: center;
@@ -81,7 +71,7 @@
                 background: #fff;
             }
 
-            .cell input {
+            .grid-table-cell input {
                 width: 100%;
                 height: 100%;
                 margin: 0;
@@ -91,12 +81,12 @@
                 text-align: center;
             }
 
-            .cell input:focus {
+            .grid-table-cell input:focus {
                 background: #e3f2fd;
             }
 
             /* HEADER STICKY */
-            .header {
+            .grid-table-sticky-header-row {
                 position: sticky;
                 top: 0;
                 background: #f5f5f5;
@@ -104,14 +94,14 @@
             }
 
             /* LEFT COLUMN */
-            .number-column {
+            .grid-table-number-column {
                 position: sticky;
                 left: 0;
                 background: #f5f5f5;
                 z-index: 0;
             }
 
-            .corner {
+            .grid-table-corner {
                 position: sticky;
                 left: 0;
                 z-index: 2;
@@ -119,7 +109,7 @@
             }
 
             /* SCORE ROW (BOTTOM) */
-            .score {
+            .score-row {
                 background: #222;
                 color: #fff;
                 font-weight: bold;
@@ -161,10 +151,11 @@
 
         <script>
             document.querySelector("header").style.setProperty("z-index", "3");
-            const htmlElementGrid = document.getElementById("grid-table");
 
-            let columnCount = 4;
-            let rowCount = 20;
+            let columnCount = 1;
+            let rowCount = 1;
+            // let columnCount = 4;
+            // let rowCount = 20;
 
             function getColumnName(columnIndexZeroBased) {
                 const charCode = {
@@ -182,106 +173,202 @@
                 return columnName;
             }
 
-            function render() {
-                htmlElementGrid.innerHTML = "";
+            function createHtmlElementNumberColumnHeader() {
+                const htmlElementNumberColumnHeader = document.createElement("div");
+                htmlElementNumberColumnHeader.setAttribute("class", "grid-table-cell grid-table-corner grid-table-sticky-header-row");
+                htmlElementNumberColumnHeader.textContent = "#";
+                return htmlElementNumberColumnHeader;
+            }
 
-                htmlElementGrid.style.gridTemplateColumns = `80px repeat(${columnCount}, 120px) 80px`;
+            function createHtmlElementHeaderRowContainer(columnIndexZeroBased) {
+                const htmlElementHeaderRowContainer = document.createElement("div");
+                htmlElementHeaderRowContainer.setAttribute("class", "grid-table-cell grid-table-sticky-header-row");
 
-                // ===== HEADER =====
-                const htmlElementTopLeftCorner = document.createElement("div");
-                htmlElementTopLeftCorner.className = "cell corner header";
-                htmlElementTopLeftCorner.textContent = "#";
-                htmlElementGrid.appendChild(htmlElementTopLeftCorner);
+                const htmlElementHeaderRowInput = document.createElement("input");
+                const columnName = getColumnName(columnIndexZeroBased);
+                htmlElementHeaderRowInput.value = columnName
+                htmlElementHeaderRowInput.type = "text";
+                htmlElementHeaderRowInput.name = `cell-header-input-${columnName}`;
 
-                for (let columnIndexZeroBased = 0; (columnIndexZeroBased < columnCount); columnIndexZeroBased += 1) {
-                    const htmlElementCellHeaderContainer = document.createElement("div");
-                    htmlElementCellHeaderContainer.className = "cell header";
+                htmlElementHeaderRowContainer.appendChild(htmlElementHeaderRowInput);
+                return htmlElementHeaderRowContainer;
+            }
 
-                    const htmlElementCellHeaderInput = document.createElement("input");
-                    const columnName = getColumnName(columnIndexZeroBased);
-                    htmlElementCellHeaderInput.value = columnName
-                    htmlElementCellHeaderInput.type = "text";
-                    htmlElementCellHeaderInput.name = `cell-header-input-${columnName}`;
-
-                    htmlElementCellHeaderContainer.appendChild(htmlElementCellHeaderInput);
-                    htmlElementGrid.appendChild(htmlElementCellHeaderContainer);
-                }
+            function createHtmlElementHeaderRowCellAddButton() {
+                const htmlElementGrid = document.getElementById("grid-table");
 
                 const htmlElementHeaderRowCellAddButton = document.createElement("div");
-                htmlElementHeaderRowCellAddButton.className = "cell header add-button";
+                htmlElementHeaderRowCellAddButton.setAttribute("class", "grid-table-cell grid-table-sticky-header-row add-button");
+                htmlElementHeaderRowCellAddButton.setAttribute("data-right-most-cell", "header-row-cell-add-button");
                 htmlElementHeaderRowCellAddButton.textContent = "+";
-                htmlElementHeaderRowCellAddButton.onclick = () => {
+                htmlElementHeaderRowCellAddButton.onclick = function () {
                     columnCount += 1;
-                    render();
-                };
-                htmlElementGrid.appendChild(htmlElementHeaderRowCellAddButton);
+                    // console.log({ columnName: getColumnName(columnCount - 1), columnCount, rowCount, eventName: "header-row-cell-add-button" });
+                    htmlElementGrid.insertBefore(createHtmlElementHeaderRowContainer(columnCount - 1), htmlElementGrid.querySelector('[data-right-most-cell="header-row-cell-add-button"]'));
 
-                // ===== DATA ROWS =====
+                    htmlElementGrid.querySelectorAll('[data-right-most-cell="data-row"]').forEach((htmlElementDataRowEmptyColumn, rowIndexZeroBased) => {
+                        htmlElementGrid.insertBefore(createHtmlElementCellInputContainer((rowIndexZeroBased + 1), (columnCount - 1)), htmlElementDataRowEmptyColumn);
+                    });
+
+                    const htmlElementBottomMostRow = createHtmlElementEmptyContainer();
+                    htmlElementBottomMostRow.setAttribute("data-bottom-most-cell", "add-row");
+                    htmlElementGrid.insertBefore(htmlElementBottomMostRow, htmlElementGrid.querySelector('[data-bottom-right-most-cell="add-row"]'));
+
+                    const htmlElementScoreColumnCell = createHtmlElementScoreColumnCell(columnCount - 1);
+                    htmlElementScoreColumnCell.textContent = 0;
+                    htmlElementGrid.insertBefore(htmlElementScoreColumnCell, htmlElementGrid.querySelector('[data-right-most-cell="score-row"]'));
+                    
+                    htmlElementGrid.style.gridTemplateColumns = `80px repeat(${columnCount}, 120px) 80px`;
+                }
+                return htmlElementHeaderRowCellAddButton;
+            }
+
+            function appendHeaderRow() {
+                const htmlElementGrid = document.getElementById("grid-table");
+                
+                htmlElementGrid.appendChild(createHtmlElementNumberColumnHeader());
+
+                for (let columnIndexZeroBased = 0; (columnIndexZeroBased < columnCount); columnIndexZeroBased += 1) {
+                    htmlElementGrid.appendChild(createHtmlElementHeaderRowContainer(columnIndexZeroBased));
+                }
+
+                htmlElementGrid.appendChild(createHtmlElementHeaderRowCellAddButton());
+            }
+
+            function createHtmlElementNumberColumn(rowIndexOneBased) {
+                const htmlElementNumberColumn = document.createElement("div");
+                htmlElementNumberColumn.setAttribute("class", "grid-table-cell grid-table-number-column");
+                htmlElementNumberColumn.textContent = rowIndexOneBased;
+                return htmlElementNumberColumn;
+            }
+
+            function createHtmlElementCellInputContainer(rowIndexOneBased, columnIndexZeroBased) {
+                const htmlElementCellInputContainer = document.createElement("div");
+                htmlElementCellInputContainer.setAttribute("class", "grid-table-cell");
+
+                const htmlElementCellInput = document.createElement("input");
+                htmlElementCellInput.type = "text";
+                htmlElementCellInput.name = `cell-input-${getColumnName(columnIndexZeroBased)}${rowIndexOneBased}`;
+                htmlElementCellInput.setAttribute("data-row-index-one-based", rowIndexOneBased);
+                htmlElementCellInput.setAttribute("data-column-index-zero-based", columnIndexZeroBased);
+
+                htmlElementCellInput.addEventListener("input", updateScore); // TODO
+
+                htmlElementCellInputContainer.appendChild(htmlElementCellInput);
+                return htmlElementCellInputContainer;
+            }
+
+            function createHtmlElementEmptyContainer() {
+                const htmlElementEmptyContainer = document.createElement("div");
+                htmlElementEmptyContainer.setAttribute("class", "grid-table-cell");
+                return htmlElementEmptyContainer;
+            }
+
+            function appendDataRow() {
+                const htmlElementGrid = document.getElementById("grid-table");
+
                 for (let rowIndexOneBased = 1; (rowIndexOneBased <= rowCount); rowIndexOneBased += 1) {
-                    const htmlElementNumberColumnCell = document.createElement("div");
-                    htmlElementNumberColumnCell.className = "cell number-column";
-                    htmlElementNumberColumnCell.textContent = rowIndexOneBased;
-                    htmlElementGrid.appendChild(htmlElementNumberColumnCell);
+                    htmlElementGrid.appendChild(createHtmlElementNumberColumn(rowIndexOneBased));
 
                     for (let columnIndexZeroBased = 0; (columnIndexZeroBased < columnCount); columnIndexZeroBased += 1) {
-                        const htmlElementCellContainer = document.createElement("div");
-                        htmlElementCellContainer.className = "cell";
-
-                        const htmlElementCellInput = document.createElement("input");
-                        const columnName = getColumnName(columnIndexZeroBased);
-                        htmlElementCellInput.type = "text";
-                        htmlElementCellInput.name = `cell-input-${columnName}${rowIndexOneBased}`;
-                        htmlElementCellInput.setAttribute("data-row-index-one-based", rowIndexOneBased);
-                        htmlElementCellInput.setAttribute("data-column-index-zero-based", columnIndexZeroBased);
-
-                        htmlElementCellInput.addEventListener("input", updateScore);
-
-                        htmlElementCellContainer.appendChild(htmlElementCellInput);
-                        htmlElementGrid.appendChild(htmlElementCellContainer);
+                        htmlElementGrid.appendChild(createHtmlElementCellInputContainer(rowIndexOneBased, columnIndexZeroBased));
                     }
 
-                    const htmlElementEmptyColumn = document.createElement("div");
-                    htmlElementEmptyColumn.className = "cell";
-                    htmlElementGrid.appendChild(htmlElementEmptyColumn);
+                    const htmlElementRightMostColumn = createHtmlElementEmptyContainer();
+                    htmlElementRightMostColumn.setAttribute("data-right-most-cell", "data-row");
+                    htmlElementGrid.appendChild(htmlElementRightMostColumn);
                 }
+            }
 
-                // ===== ADD ROW =====
+            function createHtmlElementNumberColumnCellAddButton() {
                 const htmlElementNumberColumnCellAddButton = document.createElement("div");
-                htmlElementNumberColumnCellAddButton.className = "cell number-column add-button";
+                htmlElementNumberColumnCellAddButton.setAttribute("class", "grid-table-cell grid-table-number-column add-button");
+                htmlElementNumberColumnCellAddButton.setAttribute("data-bottom-most-cell", "number-collumn-cell-add-button");
                 htmlElementNumberColumnCellAddButton.textContent = "+";
-                htmlElementNumberColumnCellAddButton.onclick = () => {
+                htmlElementNumberColumnCellAddButton.onclick = function () {
                     rowCount += 1;
-                    render();
-                };
-                htmlElementGrid.appendChild(htmlElementNumberColumnCellAddButton);
+                    // console.log({ columnName: getColumnName(columnCount), columnCount, rowCount, eventName: "number-collumn-cell-add-button" });
+                    
+                    const htmlElementGrid = document.getElementById("grid-table");
+
+                    const newRows = []
+                    newRows.push(createHtmlElementNumberColumn(rowCount));
+
+                    for (let columnIndexZeroBased = 0; (columnIndexZeroBased < htmlElementGrid.querySelectorAll('[data-bottom-most-cell="add-row"]').length); columnIndexZeroBased += 1) {
+                        newRows.push(createHtmlElementCellInputContainer(rowCount, columnIndexZeroBased));
+                    }
+
+                    const htmlElementRightMostColumn = createHtmlElementEmptyContainer();
+                    htmlElementRightMostColumn.setAttribute("data-right-most-cell", "data-row");
+                    newRows.push(htmlElementRightMostColumn);
+
+                    // htmlElementGrid.querySelector('[data-bottom-most-cell="number-collumn-cell-add-button"]').before(...newRows);
+                    this.before(...newRows);
+
+                    htmlElementGrid.style.gridTemplateColumns = `80px repeat(${columnCount}, 120px) 80px`;
+                }
+                return htmlElementNumberColumnCellAddButton;
+            }
+
+            function appendAddRow() {
+                const htmlElementGrid = document.getElementById("grid-table");
+
+                htmlElementGrid.appendChild(createHtmlElementNumberColumnCellAddButton());
 
                 for (let columnIndexZeroBased = 0; (columnIndexZeroBased < columnCount); columnIndexZeroBased += 1) {
-                    const htmlElementEmptyRow = document.createElement("div");
-                    htmlElementEmptyRow.className = "cell";
-                    htmlElementGrid.appendChild(htmlElementEmptyRow);
+                    const htmlElementBottomMostRow = createHtmlElementEmptyContainer();
+                    htmlElementBottomMostRow.setAttribute("data-bottom-most-cell", "add-row");
+                    htmlElementGrid.appendChild(htmlElementBottomMostRow);
                 }
 
-                const htmlElementBottomRightCornerEmptyCell = document.createElement("div");
-                htmlElementBottomRightCornerEmptyCell.className = "cell";
-                htmlElementGrid.appendChild(htmlElementBottomRightCornerEmptyCell);
+                const htmlElementRightMostColumn = createHtmlElementEmptyContainer();
+                htmlElementRightMostColumn.setAttribute("data-bottom-right-most-cell", "add-row");
+                htmlElementGrid.appendChild(htmlElementRightMostColumn);
+            }
 
-                // ===== SCORE ROW (BOTTOM) =====
-                const htmlElementBottomLeftCorner = document.createElement("div");
-                htmlElementBottomLeftCorner.className = "cell number-column score";
-                htmlElementBottomLeftCorner.textContent = "Σ";
-                htmlElementGrid.appendChild(htmlElementBottomLeftCorner);
+            function createHtmlElementScoreColumnHeader() {
+                const htmlElementScoreColumnHeader = document.createElement("div");
+                htmlElementScoreColumnHeader.setAttribute("class", "grid-table-cell grid-table-number-column score-row");
+                htmlElementScoreColumnHeader.textContent = "Σ";
+                return htmlElementScoreColumnHeader;
+            }
 
-                for (let columnIndexZeroBased = 0; (columnIndexZeroBased < columnCount); columnIndexZeroBased += 1) {
-                    const htmlElementScoreColumnCell = document.createElement("div");
-                    htmlElementScoreColumnCell.className = "cell score";
-                    htmlElementScoreColumnCell.setAttribute("data-score-column", columnIndexZeroBased);
-                    htmlElementGrid.appendChild(htmlElementScoreColumnCell);
-                }
+            function createHtmlElementScoreColumnCell(columnIndexZeroBased) {
+                const htmlElementScoreColumnCell = document.createElement("div");
+                htmlElementScoreColumnCell.setAttribute("class", "grid-table-cell score-row");
+                htmlElementScoreColumnCell.setAttribute("data-score-column", columnIndexZeroBased);
+                return htmlElementScoreColumnCell;
+            }
 
+            function createHtmlElementScoreColumnCellEmpty() {
                 const htmlElementScoreColumnCellEmpty = document.createElement("div");
-                htmlElementScoreColumnCellEmpty.className = "cell score";
-                htmlElementGrid.appendChild(htmlElementScoreColumnCellEmpty);
+                htmlElementScoreColumnCellEmpty.setAttribute("class", "grid-table-cell score-row");
+                return htmlElementScoreColumnCellEmpty;
+            }
 
+            function appendScoreRow() {
+                const htmlElementGrid = document.getElementById("grid-table");
+
+                htmlElementGrid.appendChild(createHtmlElementScoreColumnHeader());
+
+                for (let columnIndexZeroBased = 0; (columnIndexZeroBased < columnCount); columnIndexZeroBased += 1) {
+                    htmlElementGrid.appendChild(createHtmlElementScoreColumnCell(columnIndexZeroBased));
+                }
+
+                const htmlElementRightMostColumn = createHtmlElementScoreColumnCellEmpty();
+                htmlElementRightMostColumn.setAttribute("data-right-most-cell", "score-row");
+                htmlElementGrid.appendChild(htmlElementRightMostColumn);
+            }
+
+            function renderMainContent() {
+                const htmlElementGrid = document.getElementById("grid-table");
+                htmlElementGrid.innerHTML = "";
+                htmlElementGrid.style.gridTemplateColumns = `80px repeat(${columnCount}, 120px) 80px`;
+
+                appendHeaderRow();
+                appendDataRow();
+                appendAddRow();
+                appendScoreRow();
                 updateScore();
             }
 
@@ -301,7 +388,7 @@
                 }
             }
 
-            render();
+            renderMainContent();
         </script>
 
         <script src="../../component/component-donation-platforms.js"></script>

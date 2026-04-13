@@ -607,7 +607,7 @@
                 return currentResult;
             }, []));
 
-            const rerenderMainContent = (dataFromLocalDatabaseKalenderLiburAdvisor) => {
+            const renderMainContent = (dataFromLocalDatabaseKalenderLiburAdvisor) => {
                 document.getElementById("kalender-libur-advisor-container").innerHTML = (dataFromLocalDatabaseKalenderLiburAdvisor.reduce((currentResult, zyxCalendarEventHolidayIndonesiaDataGrouped) => {
                     const zyxCalendarEventHolidayIndonesiaDataGroupedStartDateData = WillyHorizont.UtilsDate.extractDate(zyxCalendarEventHolidayIndonesiaDataGrouped.at(0)["event_date"]);
                     const zyxCalendarEventHolidayIndonesiaDataGroupedEventDateStart = zyxCalendarEventHolidayIndonesiaDataGroupedStartDateData.zeroPaddedDay;
@@ -669,7 +669,7 @@
                 const zyxCalendarEventHolidayIndonesiaDataInitialModified = modifyZyxCalendarEventHolidayIndonesiaData(zyxCalendarEventHolidayIndonesiaDataInitial);
                 const zyxCalendarEventHolidayIndonesiaDataInitialGrouped = groupZyxCalendarEventHolidayIndonesiaData(zyxCalendarEventHolidayIndonesiaDataInitialModified);
 
-                rerenderMainContent(zyxCalendarEventHolidayIndonesiaDataInitialGrouped);
+                renderMainContent(zyxCalendarEventHolidayIndonesiaDataInitialGrouped);
                 localStorage.setItem(localStorageKeyKalenderLiburAdvisorDemoFinished, JSON.stringify(true));
             };
 
@@ -691,7 +691,7 @@
                     const dataFromLocalDatabaseKalenderLiburAdvisor = await localDatabase.getItem(localStorageKeyKalenderLiburAdvisorData);
 
                     if (dataFromLocalDatabaseKalenderLiburAdvisor !== null) {
-                        rerenderMainContent(dataFromLocalDatabaseKalenderLiburAdvisor);
+                        renderMainContent(dataFromLocalDatabaseKalenderLiburAdvisor);
                         return;
                     }
 
@@ -754,7 +754,7 @@
 
                     await localDatabase.setItem(localStorageKeyKalenderLiburAdvisorData, zyxCalendarEventHolidayIndonesiaDataGrouped);
 
-                    rerenderMainContent(zyxCalendarEventHolidayIndonesiaDataGrouped);
+                    renderMainContent(zyxCalendarEventHolidayIndonesiaDataGrouped);
                 } catch (anyError) {
                     console.error(anyError);
                     document.getElementById("placeholder-error").innerHTML = (/*html*/`<p style="color: red; text-align: center;">Something went wrong.</p>`);
