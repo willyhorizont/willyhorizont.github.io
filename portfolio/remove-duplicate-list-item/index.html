@@ -47,9 +47,31 @@
         <!-- end of Google AdSense -->
 
         <style>
+            :root {
+                --scroll-width: calc(56px - 8px);
+            }
+
             .separator-input {
                 border: 1px solid var(--light-border-color); padding: 16px 8px; outline: none; max-width: 120px;
                 background-color: var(--light-background-color); color: var(--light-text-color);
+                margin-left: var(--scroll-width);
+                margin-right: auto;
+            }
+
+            .remove-duplicate-list-item-card {
+                padding: 4px; width: 100%; display: flex; flex-direction: column; align-items: flex-end;
+            }
+
+            .remove-duplicate-list-item-card-title {
+                width: 100%; padding-left: var(--scroll-width);
+            }
+
+            .remove-duplicate-list-item-textarea {
+                resize: vertical; width: calc(100% - var(--scroll-width));
+            }
+
+            .remove-duplicate-list-item-footnote {
+                align-self: flex-start; margin-left: var(--scroll-width);
             }
 
             html[data-theme="dark"] {
@@ -66,19 +88,19 @@
             <div style="padding: 8px;">
                 <h1 style="text-align: center;">Remove Duplicate List Item</h1>
                 <div style="padding: 4px; width: 100%; display: flex; flex-direction: column; row-gap: 8px;">
-                    <div style="padding: 4px; width: 100%; display: flex; flex-direction: column;">
-                        <h2>Separator:</h2>
+                    <div class="remove-duplicate-list-item-card">
+                        <h2 class="remove-duplicate-list-item-card-title">Separator:</h2>
                         <input id="separator-input" class="separator-input" name="separator-input" placeholder="\n\n" type="text" />
                     </div>
-                    <div style="padding: 4px; width: 100%; display: flex; flex-direction: column;">
-                        <h2>Input:</h2>
-                        <textarea id="input-of-remove-duplicate-list-item-textarea" style="width: 70%;" rows="12" cols="50"></textarea>
-                        <p id="input-of-remove-duplicate-list-item-list-length-container"></p>
+                    <div class="remove-duplicate-list-item-card">
+                        <h2 class="remove-duplicate-list-item-card-title">Input:</h2>
+                        <textarea id="input-of-remove-duplicate-list-item-textarea" class="remove-duplicate-list-item-textarea" rows="12" cols="50"></textarea>
+                        <p id="input-of-remove-duplicate-list-item-list-length-container" class="remove-duplicate-list-item-footnote"></p>
                     </div>
-                    <div style="padding: 4px; width: 100%; display: flex; flex-direction: column;">
-                        <h2>Output:</h2>
-                        <textarea id="output-of-remove-duplicate-list-item-textarea" style="width: 70%;" rows="12" cols="50"></textarea>
-                        <p id="output-of-remove-duplicate-list-item-list-length-container"></p>
+                    <div class="remove-duplicate-list-item-card">
+                        <h2 class="remove-duplicate-list-item-card-title">Output:</h2>
+                        <textarea id="output-of-remove-duplicate-list-item-textarea" class="remove-duplicate-list-item-textarea" rows="12" cols="50"></textarea>
+                        <p id="output-of-remove-duplicate-list-item-list-length-container" class="remove-duplicate-list-item-footnote"></p>
                     </div>
                 </div>
                 <div id="placeholder-link"></div>
