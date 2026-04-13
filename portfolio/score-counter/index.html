@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en" spellcheck="false">
+    <head>
+        <!-- start of Google tag (gtag.js) -->
+        <!-- tagmanager.google.com -->
+        <!-- analytics.google.com/analytics/web -->
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LECMLYN21B"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-LECMLYN21B');
+        </script>
+        <!-- end of Google tag (gtag.js) -->
+
+        <!-- start of Google Search Console Ownership verification -->
+        <!-- search.google.com * search-console/ownership -->
+        <meta name="google-site-verification" content="UqB5vtnZNIl-hvyiqwM0PDgX772rcbWWjt0g9onB_BQ" />
+        <meta name="robots" content="index, follow" />
+        <meta name="googlebot" content="notranslate" />
+        <meta name="google" content="nopagereadaloud" />
+        <!-- end of Google Search Console Ownership verification -->
+
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="author" content="Willy Horizont" />
+        <link rel="icon" type="image/x-icon" href="../../favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="192x192" href="../../android-chrome-192x192.png" />
+        <link rel="icon" type="image/png" sizes="512x512" href="../../android-chrome-512x512.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png" />
+        <link rel="stylesheet" href="../../style.css" />
+        <script src="../../utils.js"></script>
+        <script src="../../utils-web.js"></script>
+        <script src="../../utils-date.js"></script>
+
+        <meta name="description" content="Score Counter by Willy Horizont" />
+        <meta name="keywords" content="Score Counter by Willy Horizont" />
+        <title>Score Counter | Portfolio | Willy Horizont</title>
+
+        <!-- start of Google AdSense -->
+        <!-- adsense.google.com/adsense -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5944204031363480" crossorigin="anonymous"></script>
+        <!-- end of Google AdSense -->
+
+        <style>
+            :root {
+                --scroll-width: calc(56px - 8px);
+                --row-height: 40px;
+            }
+
+            body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+            }
+
+            .grid-table-container {
+                /* width: 60vw; */
+                /* height: 60vh; */
+                width: calc(100% - var(--scroll-width));
+                height: calc(100vh - (64px + 16px + 88px));
+                overflow: auto;
+
+                position: relative;
+            }
+
+            .grid-table {
+                display: grid;
+                grid-auto-rows: var(--row-height);
+                min-width: max-content;
+            }
+
+            .cell {
+                border: 1px solid #ccc;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #fff;
+            }
+
+            .cell input {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                border: none;
+                outline: none;
+                text-align: center;
+            }
+
+            .cell input:focus {
+                background: #e3f2fd;
+            }
+
+            /* HEADER STICKY */
+            .header {
+                position: sticky;
+                top: 0;
+                background: #f5f5f5;
+                z-index: 1;
+            }
+
+            /* LEFT COLUMN */
+            .number-column {
+                position: sticky;
+                left: 0;
+                background: #f5f5f5;
+                z-index: 0;
+            }
+
+            .corner {
+                position: sticky;
+                left: 0;
+                z-index: 2;
+                background: #ddd;
+            }
+
+            /* SCORE ROW (BOTTOM) */
+            .score {
+                background: #222;
+                color: #fff;
+                font-weight: bold;
+            }
+
+            /* button */
+            .add-button {
+                cursor: pointer;
+                background: #fafafa;
+                font-weight: bold;
+            }
+            .add-button:hover {
+                background: #e0e0e0;
+            }
+
+            /* html[data-theme="dark"] {
+            } */
+        </style>
+    </head>
+    <body>
+        <header>
+        </header>
+        <main>
+            <div style="padding: 8px;">
+                <h1 style="text-align: center;">Score Counter</h1>
+                <div style="padding: 4px; width: 100%; display: flex; flex-direction: column; align-items: flex-end;">
+                    <div class="grid-table-container">
+                        <div id="grid-table" class="grid-table"></div>
+                    </div>
+                </div>
+                <div id="placeholder-link"></div>
+            </div>
+        </main>
+        <footer>
+        </footer>
+        <script src="../../component/component-navbar.js"></script>
+        <script src="../../component/component-footer.js"></script>
+        <script src="../../component/component-user-web-browser-checker.js"></script>
+
+        <script>
+            document.querySelector("header").style.setProperty("z-index", "3");
+            const htmlElementGrid = document.getElementById("grid-table");
+
+            let columnCount = 4;
+            let rowCount = 20;
+
+            function getColumnName(columnIndexZeroBased) {
+                const charCode = {
+                    "A": 65,
+                };
+                const azLength = 26;
+                let columnName = "";
+                let currentIndexOneBased = (columnIndexZeroBased + 1);
+                while (currentIndexOneBased > 0) {
+                    const remainderZeroToTwentyFive = ((currentIndexOneBased - 1) % azLength);
+                    const currentCharacter = String.fromCharCode(charCode["A"] + remainderZeroToTwentyFive);
+                    columnName = `${currentCharacter}${columnName}`;
+                    currentIndexOneBased = Math.floor((currentIndexOneBased - 1) / azLength);
+                }
+                return columnName;
+            }
+
+            function render() {
+                htmlElementGrid.innerHTML = "";
+
+                htmlElementGrid.style.gridTemplateColumns = `80px repeat(${columnCount}, 120px) 80px`;
+
+                // ===== HEADER =====
+                const htmlElementTopLeftCorner = document.createElement("div");
+                htmlElementTopLeftCorner.className = "cell corner header";
+                htmlElementTopLeftCorner.textContent = "#";
+                htmlElementGrid.appendChild(htmlElementTopLeftCorner);
+
+                for (let columnIndexZeroBased = 0; (columnIndexZeroBased < columnCount); columnIndexZeroBased += 1) {
+                    const htmlElementCellHeaderContainer = document.createElement("div");
+                    htmlElementCellHeaderContainer.className = "cell header";
+
+                    const htmlElementCellHeaderInput = document.createElement("input");
+                    const columnName = getColumnName(columnIndexZeroBased);
+                    htmlElementCellHeaderInput.value = columnName
+                    htmlElementCellHeaderInput.type = "text";
+                    htmlElementCellHeaderInput.name = `cell-header-input-${columnName}`;
+
+                    htmlElementCellHeaderContainer.appendChild(htmlElementCellHeaderInput);
+                    htmlElementGrid.appendChild(htmlElementCellHeaderContainer);
+                }
+
+                const htmlElementHeaderRowCellAddButton = document.createElement("div");
+                htmlElementHeaderRowCellAddButton.className = "cell header add-button";
+                htmlElementHeaderRowCellAddButton.textContent = "+";
+                htmlElementHeaderRowCellAddButton.onclick = () => {
+                    columnCount += 1;
+                    render();
+                };
+                htmlElementGrid.appendChild(htmlElementHeaderRowCellAddButton);
+
+                // ===== DATA ROWS =====
+                for (let rowIndexOneBased = 1; (rowIndexOneBased <= rowCount); rowIndexOneBased += 1) {
+                    const htmlElementNumberColumnCell = document.createElement("div");
+                    htmlElementNumberColumnCell.className = "cell number-column";
+                    htmlElementNumberColumnCell.textContent = rowIndexOneBased;
+                    htmlElementGrid.appendChild(htmlElementNumberColumnCell);
+
+                    for (let columnIndexZeroBased = 0; (columnIndexZeroBased < columnCount); columnIndexZeroBased += 1) {
+                        const htmlElementCellContainer = document.createElement("div");
+                        htmlElementCellContainer.className = "cell";
+
+                        const htmlElementCellInput = document.createElement("input");
+                        const columnName = getColumnName(columnIndexZeroBased);
+                        htmlElementCellInput.type = "text";
+                        htmlElementCellInput.name = `cell-input-${columnName}${rowIndexOneBased}`;
+                        htmlElementCellInput.setAttribute("data-row-index-one-based", rowIndexOneBased);
+                        htmlElementCellInput.setAttribute("data-column-index-zero-based", columnIndexZeroBased);
+
+                        htmlElementCellInput.addEventListener("input", updateScore);
+
+                        htmlElementCellContainer.appendChild(htmlElementCellInput);
+                        htmlElementGrid.appendChild(htmlElementCellContainer);
+                    }
+
+                    const htmlElementEmptyColumn = document.createElement("div");
+                    htmlElementEmptyColumn.className = "cell";
+                    htmlElementGrid.appendChild(htmlElementEmptyColumn);
+                }
+
+                // ===== ADD ROW =====
+                const htmlElementNumberColumnCellAddButton = document.createElement("div");
+                htmlElementNumberColumnCellAddButton.className = "cell number-column add-button";
+                htmlElementNumberColumnCellAddButton.textContent = "+";
+                htmlElementNumberColumnCellAddButton.onclick = () => {
+                    rowCount += 1;
+                    render();
+                };
+                htmlElementGrid.appendChild(htmlElementNumberColumnCellAddButton);
+
+                for (let columnIndexZeroBased = 0; (columnIndexZeroBased < columnCount); columnIndexZeroBased += 1) {
+                    const htmlElementEmptyRow = document.createElement("div");
+                    htmlElementEmptyRow.className = "cell";
+                    htmlElementGrid.appendChild(htmlElementEmptyRow);
+                }
+
+                const htmlElementBottomRightCornerEmptyCell = document.createElement("div");
+                htmlElementBottomRightCornerEmptyCell.className = "cell";
+                htmlElementGrid.appendChild(htmlElementBottomRightCornerEmptyCell);
+
+                // ===== SCORE ROW (BOTTOM) =====
+                const htmlElementBottomLeftCorner = document.createElement("div");
+                htmlElementBottomLeftCorner.className = "cell number-column score";
+                htmlElementBottomLeftCorner.textContent = "Σ";
+                htmlElementGrid.appendChild(htmlElementBottomLeftCorner);
+
+                for (let columnIndexZeroBased = 0; (columnIndexZeroBased < columnCount); columnIndexZeroBased += 1) {
+                    const htmlElementScoreColumnCell = document.createElement("div");
+                    htmlElementScoreColumnCell.className = "cell score";
+                    htmlElementScoreColumnCell.setAttribute("data-score-column", columnIndexZeroBased);
+                    htmlElementGrid.appendChild(htmlElementScoreColumnCell);
+                }
+
+                const htmlElementScoreColumnCellEmpty = document.createElement("div");
+                htmlElementScoreColumnCellEmpty.className = "cell score";
+                htmlElementGrid.appendChild(htmlElementScoreColumnCellEmpty);
+
+                updateScore();
+            }
+
+            function updateScore() {
+                for (let columnIndexZeroBased = 0; (columnIndexZeroBased < columnCount); columnIndexZeroBased += 1) {
+                    let scoreSummary = 0;
+
+                    for (let rowIndexOneBased = 1; (rowIndexOneBased <= rowCount); rowIndexOneBased += 1) {
+                        const htmlElementCellInput = document.querySelector(`input[data-row-index-one-based="${rowIndexOneBased}"][data-column-index-zero-based="${columnIndexZeroBased}"]`);
+
+                        const htmlElementCellInputValue = parseFloat(htmlElementCellInput?.value);
+                        if (WillyHorizont.Utils.checkIsNumeric(htmlElementCellInputValue)) scoreSummary += htmlElementCellInputValue;
+                    }
+
+                    const htmlElementScoreColumnCell = document.querySelector(`[data-score-column="${columnIndexZeroBased}"]`);
+                    if (htmlElementScoreColumnCell) htmlElementScoreColumnCell.textContent = scoreSummary;
+                }
+            }
+
+            render();
+        </script>
+
+        <script src="../../component/component-donation-platforms.js"></script>
+    </body>
+</html>

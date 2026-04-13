@@ -133,6 +133,7 @@ header {
     position: sticky;
     top: 0;
     left: 0;
+    z-index: 1;
 }
 
 .app-logo {
@@ -268,6 +269,14 @@ h1 {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    /*
+    margin: 0;
+    padding: 0;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: 1.1;
+    text-wrap: balance;
+    */
 }
 
 footer {

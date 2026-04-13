@@ -11,6 +11,7 @@
     const regexPattern = {
         "three_digit_grouping": (/\B(?=(\d{3})+(?!\d))/g),
     };
+    const replaceAnyLineBreak = (inputString, separator = " ") => (inputString.replace(new RegExp("\\s*(?:\\r\\n|\\r|\\n|\\u2028|\\u2029)+\\s*", "g"), separator).trim());
     const optionalChaining = (callbackFunction) => {
         try {
             return callbackFunction();
@@ -197,6 +198,7 @@
         pipe,
         jsonStringify,
         randomIntInclusive,
+        replaceAnyLineBreak,
         removeDuplicateListItem,
         rangeInclusive,
         generatorExpression,

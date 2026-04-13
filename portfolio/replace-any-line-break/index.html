@@ -37,9 +37,9 @@
         <script src="../../utils-web.js"></script>
         <script src="../../utils-date.js"></script>
 
-        <meta name="description" content="Remove Duplicate List Item by Willy Horizont, get unique list" />
-        <meta name="keywords" content="Remove Duplicate List Item by Willy Horizont, get unique list" />
-        <title>Remove Duplicate List Item | Portfolio | Willy Horizont</title>
+        <meta name="description" content="Replace Any Line Break by Willy Horizont" />
+        <meta name="keywords" content="Replace Any Line Break by Willy Horizont" />
+        <title>Replace Any Line Break | Portfolio | Willy Horizont</title>
 
         <!-- start of Google AdSense -->
         <!-- adsense.google.com/adsense -->
@@ -58,19 +58,19 @@
                 margin-right: auto;
             }
 
-            .remove-duplicate-list-item-card {
+            .replace-any-line-break-card {
                 padding: 4px; width: 100%; display: flex; flex-direction: column; align-items: flex-end;
             }
 
-            .remove-duplicate-list-item-card-title {
+            .replace-any-line-break-card-title {
                 width: 100%; padding-left: var(--scroll-width);
             }
 
-            .remove-duplicate-list-item-textarea {
+            .replace-any-line-break-textarea {
                 resize: vertical; width: calc(100% - var(--scroll-width));
             }
 
-            .remove-duplicate-list-item-footnote {
+            .replace-any-line-break-footnote {
                 align-self: flex-start; margin-left: var(--scroll-width);
             }
 
@@ -86,21 +86,19 @@
         </header>
         <main>
             <div style="padding: 8px;">
-                <h1 style="text-align: center;">Remove Duplicate List Item</h1>
+                <h1 style="text-align: center;">Replace Any Line Break</h1>
                 <div style="padding: 4px; width: 100%; display: flex; flex-direction: column; row-gap: 8px;">
-                    <div class="remove-duplicate-list-item-card">
-                        <h2 class="remove-duplicate-list-item-card-title">Separator:</h2>
+                    <div class="replace-any-line-break-card">
+                        <h2 class="replace-any-line-break-card-title">Replace with:</h2>
                         <input id="separator-input" class="separator-input" name="separator-input" placeholder="\n\n" type="text" />
                     </div>
-                    <div class="remove-duplicate-list-item-card">
-                        <h2 class="remove-duplicate-list-item-card-title">Input:</h2>
-                        <textarea id="input-of-remove-duplicate-list-item-textarea" class="remove-duplicate-list-item-textarea" rows="12" cols="50"></textarea>
-                        <p class="remove-duplicate-list-item-footnote">listed <strong id="input-of-remove-duplicate-list-item-list-length-container">0</strong> items.</p>
+                    <div class="replace-any-line-break-card">
+                        <h2 class="replace-any-line-break-card-title">Input:</h2>
+                        <textarea id="input-of-replace-any-line-break-textarea" class="replace-any-line-break-textarea" rows="12" cols="50"></textarea>
                     </div>
-                    <div class="remove-duplicate-list-item-card">
-                        <h2 class="remove-duplicate-list-item-card-title">Output:</h2>
-                        <textarea id="output-of-remove-duplicate-list-item-textarea" class="remove-duplicate-list-item-textarea" rows="12" cols="50"></textarea>
-                        <p class="remove-duplicate-list-item-footnote">listed <strong id="output-of-remove-duplicate-list-item-list-length-container">0</strong> items.</p>
+                    <div class="replace-any-line-break-card">
+                        <h2 class="replace-any-line-break-card-title">Output:</h2>
+                        <textarea id="output-of-replace-any-line-break-textarea" class="replace-any-line-break-textarea" rows="12" cols="50"></textarea>
                     </div>
                 </div>
                 <div id="placeholder-link"></div>
@@ -113,40 +111,40 @@
         <script src="../../component/component-user-web-browser-checker.js"></script>
 
         <script>
-            const defaultListItemSeparator = "\\n\\n";
+            const defaultOutputStringSeparator = `" "`;
 
             function processInputData(inputData) {
-                const separatorValue = WillyHorizont.Utils.parseEscapeSequence(document.getElementById("separator-input").value.trim() || defaultListItemSeparator);
-                const listFromRawText = inputData.split(separatorValue);
-                const listFromRawTextNoDuplicateListItem = WillyHorizont.Utils.removeDuplicateListItem(listFromRawText);
-                return ({ separatorValue, listFromRawText, listFromRawTextNoDuplicateListItem });
+                const outputSeparatorValue = document.getElementById("separator-input").value.trim().slice(1, -1);
+                const outputStringSeparator = WillyHorizont.Utils.parseEscapeSequence(outputSeparatorValue || defaultOutputStringSeparator);
+                const outputString = WillyHorizont.Utils.replaceAnyLineBreak(inputData, outputStringSeparator);
+                return ({ outputStringSeparator, outputString });
             }
 
-            function renderOutputData({ separatorValue, listFromRawText, listFromRawTextNoDuplicateListItem }) {
-                document.getElementById("input-of-remove-duplicate-list-item-list-length-container").textContent = listFromRawText.length;
-                document.getElementById("output-of-remove-duplicate-list-item-list-length-container").textContent = listFromRawTextNoDuplicateListItem.length;
-                document.getElementById("output-of-remove-duplicate-list-item-textarea").value = listFromRawTextNoDuplicateListItem.join(separatorValue);
+            function renderOutputData({ outputStringSeparator, outputString }) {
+                document.getElementById("output-of-replace-any-line-break-textarea").value = outputString;
             }
 
             function handleEventBlurRawTextTextArea(event) {
-                const htmlElementInputOfRemoveDuplicateListItemTextareaValueTrimmed = event.target.value.trim();
-                if (htmlElementInputOfRemoveDuplicateListItemTextareaValueTrimmed === "") {
+                const htmlElementInputOfReplaceAnyLineBreakTextareaValueTrimmed = event.target.value.trim();
+                if (htmlElementInputOfReplaceAnyLineBreakTextareaValueTrimmed === "") {
                     event.preventDefault();
                     return;
                 }
 
-                renderOutputData(processInputData(htmlElementInputOfRemoveDuplicateListItemTextareaValueTrimmed));
+                renderOutputData(processInputData(htmlElementInputOfReplaceAnyLineBreakTextareaValueTrimmed));
 
                 event.preventDefault();
             }
 
-            const htmlElementInputOfRemoveDuplicateListItemTextarea = document.getElementById("input-of-remove-duplicate-list-item-textarea");
+            const htmlElementInputOfReplaceAnyLineBreakTextarea = document.getElementById("input-of-replace-any-line-break-textarea");
 
-            htmlElementInputOfRemoveDuplicateListItemTextarea.addEventListener("blur", handleEventBlurRawTextTextArea);
+            htmlElementInputOfReplaceAnyLineBreakTextarea.addEventListener("blur", handleEventBlurRawTextTextArea);
 
-            document.getElementById("separator-input").value = defaultListItemSeparator;
-            const initialData = (("abba").split("").join(WillyHorizont.Utils.parseEscapeSequence(defaultListItemSeparator)));
-            htmlElementInputOfRemoveDuplicateListItemTextarea.value = initialData;
+            document.getElementById("separator-input").value = defaultOutputStringSeparator;
+            const initialData = (`width: 60vw;
+        height: 60vh;
+        overflow: auto;`);
+            htmlElementInputOfReplaceAnyLineBreakTextarea.value = initialData;
             renderOutputData(processInputData(initialData));
         </script>
 
