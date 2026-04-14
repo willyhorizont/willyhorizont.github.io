@@ -123,7 +123,7 @@
             function createHtmlElementPriceInputContainer({ arrayOfEntryProperty, arrayOfEntryAttribute }) {
                 const htmlElementPriceInputContainer = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
                         <div data-id="price-input-container" style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;">
-                            <input data-id="price-input" class="price-input" name="price-input" placeholder="1_234_500" type="text" />
+                            <input autocomplete="off" data-id="price-input" class="price-input" name="price-input" placeholder="1_234_500" type="text" />
                         </div>
                     `);
                 const htmlElementPriceInput = htmlElementPriceInputContainer.querySelector('[data-id="price-input"]');

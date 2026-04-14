@@ -52,6 +52,7 @@
                 background-color: var(--light-background-color); color: var(--light-text-color);
                 margin-left: var(--scroll-width);
                 margin-right: auto;
+                font-family: monospace;
             }
 
             .remove-duplicate-list-item-card {
@@ -86,7 +87,7 @@
                 <div style="padding: 4px; width: 100%; display: flex; flex-direction: column; row-gap: 8px;">
                     <div class="remove-duplicate-list-item-card">
                         <h2 class="remove-duplicate-list-item-card-title">Separator:</h2>
-                        <input id="separator-input" class="separator-input" name="separator-input" placeholder="\n\n" type="text" />
+                        <input autocomplete="off" id="separator-input" class="separator-input" name="separator-input" placeholder='"\n\n\"' type="text" />
                     </div>
                     <div class="remove-duplicate-list-item-card">
                         <h2 class="remove-duplicate-list-item-card-title">Input:</h2>
@@ -112,7 +113,7 @@
             const defaultListItemSeparator = "\\n\\n";
 
             function processInputData(inputData) {
-                const separatorValue = WillyHorizont.Utils.parseEscapeSequence(document.getElementById("separator-input").value.trim() || defaultListItemSeparator);
+                const separatorValue = WillyHorizont.Utils.parseEscapeSequence(document.getElementById("separator-input").value.trim().slice(1, -1) || defaultListItemSeparator);
                 const listFromRawText = inputData.split(separatorValue);
                 const listFromRawTextNoDuplicateListItem = WillyHorizont.Utils.removeDuplicateListItem(listFromRawText);
                 return ({ separatorValue, listFromRawText, listFromRawTextNoDuplicateListItem });
@@ -140,7 +141,7 @@
 
             htmlElementInputOfRemoveDuplicateListItemTextarea.addEventListener("blur", handleEventBlurRawTextTextArea);
 
-            document.getElementById("separator-input").value = defaultListItemSeparator;
+            document.getElementById("separator-input").value = `"${defaultListItemSeparator}"`;
             const initialData = (("abba").split("").join(WillyHorizont.Utils.parseEscapeSequence(defaultListItemSeparator)));
             htmlElementInputOfRemoveDuplicateListItemTextarea.value = initialData;
             renderOutputData(processInputData(initialData));

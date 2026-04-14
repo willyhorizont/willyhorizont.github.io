@@ -52,6 +52,7 @@
                 background-color: var(--light-background-color); color: var(--light-text-color);
                 margin-left: var(--scroll-width);
                 margin-right: auto;
+                font-family: monospace;
             }
 
             .replace-any-line-break-card {
@@ -86,7 +87,7 @@
                 <div style="padding: 4px; width: 100%; display: flex; flex-direction: column; row-gap: 8px;">
                     <div class="replace-any-line-break-card">
                         <h2 class="replace-any-line-break-card-title">Replace with:</h2>
-                        <input id="separator-input" class="separator-input" name="separator-input" placeholder="\n\n" type="text" />
+                        <input autocomplete="off" id="separator-input" class="separator-input" name="separator-input" placeholder='" "' type="text" />
                     </div>
                     <div class="replace-any-line-break-card">
                         <h2 class="replace-any-line-break-card-title">Input:</h2>
@@ -107,7 +108,7 @@
         <script src="../../component/component-user-web-browser-checker.js"></script>
 
         <script>
-            const defaultOutputStringSeparator = `" "`;
+            const defaultOutputStringSeparator = " ";
 
             function processInputData(inputData) {
                 const outputSeparatorValue = document.getElementById("separator-input").value.trim().slice(1, -1);
@@ -136,7 +137,7 @@
 
             htmlElementInputOfReplaceAnyLineBreakTextarea.addEventListener("blur", handleEventBlurRawTextTextArea);
 
-            document.getElementById("separator-input").value = defaultOutputStringSeparator;
+            document.getElementById("separator-input").value = `"${defaultOutputStringSeparator}"`;
             const initialData = (`width: 60vw;
         height: 60vh;
         overflow: auto;`);

@@ -361,7 +361,7 @@ WillyHorizont.UtilsWeb = ((() => {
 
         function createHtmlElementChipInput(placeholderValue = "") {
             const htmlElementChipInput = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
-                    <input data-id="chip-input" class="chip-input" style="flex: 1 1 auto; padding: 8px 8px 8px 0px; border: none; outline: none;" name="chip-input" type="text" />
+                    <input autocomplete="off" data-id="chip-input" class="chip-input" style="flex: 1 1 auto; padding: 8px 8px 8px 0px; border: none; outline: none;" name="chip-input" type="text" />
                 `);
             htmlElementChipInput.setEventStuffs([
                 ({ handlerRefName: "refEventHandlerKeyDown", eventType: "keydown", eventHandler: handleEventKeyDownChipInput }),
@@ -373,7 +373,7 @@ WillyHorizont.UtilsWeb = ((() => {
 
         function createHtmlElementChipUpdateInput(chipTextTrimmed = "") {
             const htmlElementChipUpdateInput = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
-                    <input data-id="chip-update-input" class="chip-input" style="flex: 1 1 auto; padding: 8px; border: 1px solid var(--light-border-color); outline: none;" name="chip-update-input" type="text" />
+                    <input autocomplete="off" data-id="chip-update-input" class="chip-input" style="flex: 1 1 auto; padding: 8px; border: 1px solid var(--light-border-color); outline: none;" name="chip-update-input" type="text" />
                 `);
             htmlElementChipUpdateInput.setEventStuffs([
                 ({ handlerRefName: "refEventHandlerKeyDown", eventType: "keydown", eventHandler: handleEventKeyDownChipUpdateInput }),

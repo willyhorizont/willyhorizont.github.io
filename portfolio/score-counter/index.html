@@ -51,7 +51,7 @@
                 /* width: 60vw; */
                 /* height: 60vh; */
                 width: calc(100% - var(--scroll-width));
-                height: calc(100vh - (64px + 16px + 88px));
+                height: calc(70vh);
                 overflow: auto;
 
                 position: relative;
@@ -157,6 +157,10 @@
             // let columnCount = 4;
             // let rowCount = 20;
 
+            function getStyleGridTemplateColumns(columnCount) {
+                return (`60px repeat(${columnCount}, 120px) 80px`);
+            }
+
             function getColumnName(columnIndexZeroBased) {
                 const charCode = {
                     "A": 65,
@@ -189,6 +193,7 @@
                 htmlElementHeaderRowInput.value = columnName
                 htmlElementHeaderRowInput.type = "text";
                 htmlElementHeaderRowInput.name = `cell-header-input-${columnName}`;
+                htmlElementHeaderRowInput.setAttribute("autocomplete", "off");
 
                 htmlElementHeaderRowContainer.appendChild(htmlElementHeaderRowInput);
                 return htmlElementHeaderRowContainer;
@@ -218,7 +223,7 @@
                     htmlElementScoreColumnCell.textContent = 0;
                     htmlElementGrid.insertBefore(htmlElementScoreColumnCell, htmlElementGrid.querySelector('[data-right-most-cell="score-row"]'));
                     
-                    htmlElementGrid.style.gridTemplateColumns = `80px repeat(${columnCount}, 120px) 80px`;
+                    htmlElementGrid.style.gridTemplateColumns = getStyleGridTemplateColumns(columnCount);
                 }
                 return htmlElementHeaderRowCellAddButton;
             }
@@ -251,6 +256,7 @@
                 htmlElementCellInput.name = `cell-input-${getColumnName(columnIndexZeroBased)}${rowIndexOneBased}`;
                 htmlElementCellInput.setAttribute("data-row-index-one-based", rowIndexOneBased);
                 htmlElementCellInput.setAttribute("data-column-index-zero-based", columnIndexZeroBased);
+                htmlElementCellInput.setAttribute("autocomplete", "off");
 
                 htmlElementCellInput.addEventListener("input", updateScore); // TODO
 
@@ -305,7 +311,7 @@
                     // htmlElementGrid.querySelector('[data-bottom-most-cell="number-collumn-cell-add-button"]').before(...newRows);
                     this.before(...newRows);
 
-                    htmlElementGrid.style.gridTemplateColumns = `80px repeat(${columnCount}, 120px) 80px`;
+                    htmlElementGrid.style.gridTemplateColumns = getStyleGridTemplateColumns(columnCount);
                 }
                 return htmlElementNumberColumnCellAddButton;
             }
@@ -363,7 +369,7 @@
             function renderMainContent() {
                 const htmlElementGrid = document.getElementById("grid-table");
                 htmlElementGrid.innerHTML = "";
-                htmlElementGrid.style.gridTemplateColumns = `80px repeat(${columnCount}, 120px) 80px`;
+                htmlElementGrid.style.gridTemplateColumns = getStyleGridTemplateColumns(columnCount);
 
                 appendHeaderRow();
                 appendDataRow();
