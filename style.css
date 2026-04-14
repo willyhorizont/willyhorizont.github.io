@@ -5,8 +5,8 @@
 }
 
 :root {
-    --viewport-height-offset-landscape: 30;
-    --viewport-height-offset-portrait: 40;
+    --max-height-landscape: calc(calc(100vw * var(--viewport-width-multiplier, 1.7)) * (30 / 100));
+    --max-height-portrait: calc(calc(100vw * var(--viewport-width-multiplier, 1.7)) * (80 / 100));
     --scroll-width: calc(60px - 8px);
 
     --light-border-color: #cccccc;

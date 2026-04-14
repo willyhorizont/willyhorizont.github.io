@@ -208,9 +208,9 @@ WillyHorizont.UtilsWeb = ((() => {
             requestAnimationFrameId = requestAnimationFrame(() => {
                 const [ratioWidth, ratioHeight] = WillyHorizont.UtilsWeb.getAspectRatio();
                 const newViewportHeight = WillyHorizont.UtilsWeb.getViewportHeightFromViewportWidth();
-                document.documentElement.style.setProperty("--viewport-height-from-viewport-width", newViewportHeight);
-                const viewportHeightOffset = ((ratioWidth > ratioHeight) ? "var(--viewport-height-offset-landscape)" : "var(--viewport-height-offset-portrait)");
-                document.documentElement.style.setProperty("--viewport-height-offset", viewportHeightOffset);
+                document.documentElement.style.setProperty("--viewport-width-multiplier", newViewportHeight);
+                const viewportHeightOffset = ((ratioWidth > ratioHeight) ? "var(--max-height-landscape)" : "var(--max-height-portrait)");
+                document.documentElement.style.setProperty("--max-height", viewportHeightOffset);
                 // console.log({
                 //     ratioWidth, ratioHeight,
                 //     newViewportHeight,
