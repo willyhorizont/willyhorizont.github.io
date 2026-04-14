@@ -199,6 +199,35 @@ WillyHorizont.UtilsWeb = ((() => {
         return (rh / rw);
     };
 
+    const setupViewportHeightFromViewportWidthListener = () => {
+        let requestAnimationFrameId;
+
+        const updateViewportHeightFromViewportWidth = () => {
+            cancelAnimationFrame(requestAnimationFrameId);
+
+            requestAnimationFrameId = requestAnimationFrame(() => {
+                const [ratioWidth, ratioHeight] = WillyHorizont.UtilsWeb.getAspectRatio();
+                const newViewportHeight = WillyHorizont.UtilsWeb.getViewportHeightFromViewportWidth();
+                document.documentElement.style.setProperty("--viewport-height-from-viewport-width", newViewportHeight);
+                const viewportHeightOffset = ((ratioWidth > ratioHeight) ? "var(--viewport-height-offset-landscape)" : "var(--viewport-height-offset-portrait)");
+                document.documentElement.style.setProperty("--viewport-height-offset", viewportHeightOffset);
+                // console.log({
+                //     ratioWidth, ratioHeight,
+                //     newViewportHeight,
+                //     viewportHeightOffset,
+                // });
+            });
+        };
+
+        updateViewportHeightFromViewportWidth();
+
+        window.addEventListener("resize", updateViewportHeightFromViewportWidth);
+        window.addEventListener("orientationchange", updateViewportHeightFromViewportWidth);
+        if (WillyHorizont.Utils.checkIsMethodAvailable(window, "window.visualViewport.addEventListener")) {
+            window.visualViewport.addEventListener("resize", updateViewportHeightFromViewportWidth);
+        }
+    };
+
     const setupViewportHeightListener = () => {
         const localStorageKeyViewportHeight = "viewport-height";
         let requestAnimationFrameId;
@@ -697,6 +726,7 @@ WillyHorizont.UtilsWeb = ((() => {
         initializeComponentChipInput,
         initializeComponentImportExport,
         setupViewportHeightListener,
+        setupViewportHeightFromViewportWidthListener,
         getAspectRatio,
         getViewportHeightFromViewportWidth,
     };

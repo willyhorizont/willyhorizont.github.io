@@ -52,7 +52,7 @@
                 /* height: 60vh; */
                 width: calc(100% - var(--scroll-width));
                 min-height: 120px;
-                max-height: calc(calc(100vw * var(--viewport-height-from-viewport-width, 1.5)) * ((90 - var(--viewport-height-offset, 30)) / 100));
+                max-height: calc(calc(100vw * var(--viewport-height-from-viewport-width, 1.7)) * ((90 - var(--viewport-height-offset, 40)) / 100));
                 overflow: auto;
 
                 position: relative;
@@ -152,11 +152,8 @@
 
         <script>
             document.querySelector("header").style.setProperty("z-index", "3");
-            const [ratioWidth, ratioHeight] = WillyHorizont.UtilsWeb.getAspectRatio();
-            const newViewportHeight = WillyHorizont.UtilsWeb.getViewportHeightFromViewportWidth();
-            document.documentElement.style.setProperty("--viewport-height-from-viewport-width", newViewportHeight);
-            const viewportHeightOffset = ((ratioWidth > ratioHeight) ? "var(--viewport-height-offset-landscape)" : "var(--viewport-height-offset-portrait)");
-            document.documentElement.style.setProperty("--viewport-height-offset", viewportHeightOffset);
+
+            WillyHorizont.UtilsWeb.setupViewportHeightFromViewportWidthListener();
 
             let columnCount = 1;
             let rowCount = 1;
