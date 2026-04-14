@@ -186,8 +186,21 @@ WillyHorizont.UtilsWeb = ((() => {
         return (userChromiumBasedWebBrowserMajorVersion >= minimumStableChromiumBasedWebBrowserMatchUserPlatformMajorVersion);
     };
 
-    const setupViewportHeightListener = (localStorageKeyViewportHeight) => {
-        const viewportHeightKey = `viewport-height-${localStorageKeyViewportHeight}`;
+    const getAspectRatio = () => {
+        const currentViewportWidth = (WillyHorizont.Utils.safeGetObjectProperty(window, "window.visualViewport.width") || window.innerWidth);
+        const currentViewportHeight = (WillyHorizont.Utils.safeGetObjectProperty(window, "window.visualViewport.height") || window.innerHeight);
+        const getGreatestCommonFactor = (a, b) => ((b === 0) ? a : getGreatestCommonFactor(b, (a % b)));
+        const greatestCommonFactor = getGreatestCommonFactor(currentViewportWidth, currentViewportHeight);
+        return [(currentViewportWidth / greatestCommonFactor), (currentViewportHeight / greatestCommonFactor)];
+    };
+
+    const getViewportHeightFromViewportWidth = () => {
+        const [rw, rh] = getAspectRatio();
+        return (rh / rw);
+    };
+
+    const setupViewportHeightListener = () => {
+        const localStorageKeyViewportHeight = "viewport-height";
         let animationFrameId;
 
         const overrideStyleVariableRealViewportHeight = (newViewportHeightValue) => {
@@ -200,15 +213,15 @@ WillyHorizont.UtilsWeb = ((() => {
             animationFrameId = requestAnimationFrame(() => {
                 const currentViewportHeight = (WillyHorizont.Utils.safeGetObjectProperty(window, "window.visualViewport.height") || window.innerHeight);
 
-                if (!localStorage.getItem(viewportHeightKey)) {
-                    localStorage.setItem(viewportHeightKey, currentViewportHeight);
+                if (!localStorage.getItem(localStorageKeyViewportHeight)) {
+                    localStorage.setItem(localStorageKeyViewportHeight, currentViewportHeight);
                     overrideStyleVariableRealViewportHeight(currentViewportHeight);
                     return;
                 }
 
-                const lockedViewportHeightInLocalStorage = parseFloat(localStorage.getItem(viewportHeightKey));
+                const lockedViewportHeightInLocalStorage = parseFloat(localStorage.getItem(localStorageKeyViewportHeight));
                 if (currentViewportHeight > lockedViewportHeightInLocalStorage) {
-                    localStorage.setItem(viewportHeightKey, currentViewportHeight);
+                    localStorage.setItem(localStorageKeyViewportHeight, currentViewportHeight);
                     overrideStyleVariableRealViewportHeight(currentViewportHeight);
                     return;
                 }
@@ -684,5 +697,7 @@ WillyHorizont.UtilsWeb = ((() => {
         initializeComponentChipInput,
         initializeComponentImportExport,
         setupViewportHeightListener,
+        getAspectRatio,
+        getViewportHeightFromViewportWidth,
     };
 })());
