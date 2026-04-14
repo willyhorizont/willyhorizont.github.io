@@ -188,23 +188,33 @@ WillyHorizont.UtilsWeb = ((() => {
 
     const setupViewportHeightListener = (localStorageKeyViewportHeight) => {
         const viewportHeightKey = `viewport-height-${localStorageKeyViewportHeight}`;
+        let animationFrameId;
+
         const overrideStyleVariableRealViewportHeight = (newViewportHeightValue) => {
             document.documentElement.style.setProperty("--real-vh", `${(newViewportHeightValue * 0.01)}px`);
         };
 
         const updateRealViewportHeight = () => {
-            const currentViewportHeight = (WillyHorizont.Utils.safeGetObjectProperty(window, "window.visualViewport.height") || window.innerHeight);
+            cancelAnimationFrame(animationFrameId);
 
-            if (!localStorage.getItem(viewportHeightKey)) {
-                localStorage.setItem(viewportHeightKey, currentViewportHeight);
-                overrideStyleVariableRealViewportHeight(currentViewportHeight);
-                return;
-            }
+            animationFrameId = requestAnimationFrame(() => {
+                const currentViewportHeight = (WillyHorizont.Utils.safeGetObjectProperty(window, "window.visualViewport.height") || window.innerHeight);
 
-            const lockedViewportHeightInLocalStorage = parseFloat(localStorage.getItem(viewportHeightKey));
-            if (currentViewportHeight > lockedViewportHeightInLocalStorage) localStorage.setItem(viewportHeightKey, currentViewportHeight);
+                if (!localStorage.getItem(viewportHeightKey)) {
+                    localStorage.setItem(viewportHeightKey, currentViewportHeight);
+                    overrideStyleVariableRealViewportHeight(currentViewportHeight);
+                    return;
+                }
 
-            overrideStyleVariableRealViewportHeight(lockedViewportHeightInLocalStorage);
+                const lockedViewportHeightInLocalStorage = parseFloat(localStorage.getItem(viewportHeightKey));
+                if (currentViewportHeight > lockedViewportHeightInLocalStorage) {
+                    localStorage.setItem(viewportHeightKey, currentViewportHeight);
+                    overrideStyleVariableRealViewportHeight(currentViewportHeight);
+                    return;
+                }
+
+                overrideStyleVariableRealViewportHeight(lockedViewportHeightInLocalStorage);
+            });
         };
 
         updateRealViewportHeight();

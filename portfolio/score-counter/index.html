@@ -52,7 +52,7 @@
                 /* height: 60vh; */
                 width: calc(100% - var(--scroll-width));
                 min-height: 120px;
-                max-height: calc(var(--real-vh, 1vh) * 60);
+                max-height: calc(calc(calc(calc(var(--real-vh, 1vh) * 100) - 64px) - 64px) - var(--scroll-width));
                 overflow: auto;
 
                 position: relative;
