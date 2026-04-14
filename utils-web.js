@@ -201,16 +201,16 @@ WillyHorizont.UtilsWeb = ((() => {
 
     const setupViewportHeightListener = () => {
         const localStorageKeyViewportHeight = "viewport-height";
-        let animationFrameId;
+        let requestAnimationFrameId;
 
         const overrideStyleVariableRealViewportHeight = (newViewportHeightValue) => {
             document.documentElement.style.setProperty("--real-vh", `${(newViewportHeightValue * 0.01)}px`);
         };
 
         const updateRealViewportHeight = () => {
-            cancelAnimationFrame(animationFrameId);
+            cancelAnimationFrame(requestAnimationFrameId);
 
-            animationFrameId = requestAnimationFrame(() => {
+            requestAnimationFrameId = requestAnimationFrame(() => {
                 const currentViewportHeight = (WillyHorizont.Utils.safeGetObjectProperty(window, "window.visualViewport.height") || window.innerHeight);
 
                 if (!localStorage.getItem(localStorageKeyViewportHeight)) {
