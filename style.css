@@ -6,7 +6,7 @@
 
 :root {
     --viewport-height-offset-landscape: 20;
-    --viewport-height-offset-portrait: 40;
+    --viewport-height-offset-portrait: 50;
     --scroll-width: calc(60px - 8px);
 
     --light-border-color: #cccccc;
