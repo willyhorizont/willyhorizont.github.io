@@ -186,6 +186,39 @@ WillyHorizont.UtilsWeb = ((() => {
         return (userChromiumBasedWebBrowserMajorVersion >= minimumStableChromiumBasedWebBrowserMatchUserPlatformMajorVersion);
     };
 
+    const setupViewportHeightListener = (localStorageKeyViewportHeight) => {
+        const viewportHeightKey = `viewport-height-${localStorageKeyViewportHeight}`;
+        const overrideStyleVariableRealViewportHeight = (newViewportHeightValue) => {
+            document.documentElement.style.setProperty("--real-vh", `${(newViewportHeightValue * 0.01)}px`);
+        };
+
+        const updateRealViewportHeight = () => {
+            const currentViewportHeight = (WillyHorizont.Utils.safeGetObjectProperty(window, "window.visualViewport.height") || window.innerHeight);
+
+            if (!localStorage.getItem(viewportHeightKey)) {
+                localStorage.setItem(viewportHeightKey, currentViewportHeight);
+                overrideStyleVariableRealViewportHeight(currentViewportHeight);
+                return;
+            }
+
+            const lockedViewportHeightInLocalStorage = parseFloat(localStorage.getItem(viewportHeightKey));
+            if (currentViewportHeight > lockedViewportHeightInLocalStorage) localStorage.setItem(viewportHeightKey, currentViewportHeight);
+
+            overrideStyleVariableRealViewportHeight(lockedViewportHeightInLocalStorage);
+        };
+
+        updateRealViewportHeight();
+
+        window.addEventListener("resize", updateRealViewportHeight);
+        window.addEventListener("orientationchange", () => {
+            localStorage.removeItem(localStorageKeyViewportHeight);
+            updateRealViewportHeight();
+        });
+        if (WillyHorizont.Utils.checkIsMethodAvailable(window, "window.visualViewport.addEventListener")) {
+            window.visualViewport.addEventListener("resize", updateRealViewportHeight);
+        }
+    };
+
     const getHtmlTemplateStringPopupStyle = (popupStackingOrder) => (/*html*/`
             <style>
                 .popup-overlay {
@@ -640,5 +673,6 @@ WillyHorizont.UtilsWeb = ((() => {
         initializeComponentPopup,
         initializeComponentChipInput,
         initializeComponentImportExport,
+        setupViewportHeightListener,
     };
 })());

@@ -51,7 +51,8 @@
                 /* width: 60vw; */
                 /* height: 60vh; */
                 width: calc(100% - var(--scroll-width));
-                max-height: calc(70vh);
+                min-height: 120px;
+                max-height: calc(var(--real-vh, 1vh) * 60);
                 overflow: auto;
 
                 position: relative;
@@ -150,12 +151,14 @@
         <script src="../../component/component-user-web-browser-checker.js"></script>
 
         <script>
+            WillyHorizont.UtilsWeb.setupViewportHeightListener("score-counter");
+
             document.querySelector("header").style.setProperty("z-index", "3");
 
             let columnCount = 1;
             let rowCount = 1;
-            // let columnCount = 4;
-            // let rowCount = 20;
+            // columnCount = 4;
+            // rowCount = 20;
 
             function getStyleGridTemplateColumns(columnCount) {
                 return (`60px repeat(${columnCount}, 120px) 80px`);
