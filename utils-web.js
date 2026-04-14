@@ -208,7 +208,7 @@ WillyHorizont.UtilsWeb = ((() => {
             requestAnimationFrameId = requestAnimationFrame(() => {
                 const [ratioWidth, ratioHeight] = WillyHorizont.UtilsWeb.getAspectRatio();
                 const viewportWidthMultiplier = WillyHorizont.UtilsWeb.getViewportWidthMultiplier();
-                const maxHeight = ((ratioWidth > ratioHeight) ? (`calc(calc(100vw * ${viewportWidthMultiplier} * (10 / 100))`) : (`calc(calc(100vw * ${viewportWidthMultiplier}) * calc(${viewportWidthMultiplier} / 2.5))`));
+                const maxHeight = ((ratioWidth > ratioHeight) ? (`calc(100vw * ${viewportWidthMultiplier} * (20 / 100))`) : (`calc(calc(100vw * ${viewportWidthMultiplier}) * calc(${viewportWidthMultiplier} * (40 / 100)))`));
                 document.documentElement.style.setProperty("--max-height", maxHeight);
                 // console.log({
                 //     ratioWidth, ratioHeight,
