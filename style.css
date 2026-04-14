@@ -5,8 +5,6 @@
 }
 
 :root {
-    --max-height-landscape: calc(calc(100vw * var(--viewport-width-multiplier, 1.7)) * (10 / 100));
-    --max-height-portrait: calc(calc(100vw * var(--viewport-width-multiplier, 1.7)) * calc(var(--viewport-width-multiplier, 1.7) / 2));
     --scroll-width: calc(60px - 8px);
 
     --light-border-color: #cccccc;

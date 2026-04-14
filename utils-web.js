@@ -194,7 +194,7 @@ WillyHorizont.UtilsWeb = ((() => {
         return [(currentViewportWidth / greatestCommonFactor), (currentViewportHeight / greatestCommonFactor)];
     };
 
-    const getViewportHeightFromViewportWidth = () => {
+    const getViewportWidthMultiplier = () => {
         const [rw, rh] = getAspectRatio();
         return (rh / rw);
     };
@@ -207,13 +207,12 @@ WillyHorizont.UtilsWeb = ((() => {
 
             requestAnimationFrameId = requestAnimationFrame(() => {
                 const [ratioWidth, ratioHeight] = WillyHorizont.UtilsWeb.getAspectRatio();
-                const newViewportHeight = WillyHorizont.UtilsWeb.getViewportHeightFromViewportWidth();
-                document.documentElement.style.setProperty("--viewport-width-multiplier", newViewportHeight);
-                const maxHeight = ((ratioWidth > ratioHeight) ? "var(--max-height-landscape)" : "var(--max-height-portrait)");
+                const viewportWidthMultiplier = WillyHorizont.UtilsWeb.getViewportWidthMultiplier();
+                const maxHeight = ((ratioWidth > ratioHeight) ? (`calc(calc(100vw * ${viewportWidthMultiplier} * (10 / 100))`) : (`calc(calc(100vw * ${viewportWidthMultiplier}) * calc(${viewportWidthMultiplier} / 2.5))`));
                 document.documentElement.style.setProperty("--max-height", maxHeight);
                 // console.log({
                 //     ratioWidth, ratioHeight,
-                //     newViewportHeight,
+                //     viewportWidthMultiplier,
                 //     maxHeight,
                 // });
             });
@@ -728,6 +727,6 @@ WillyHorizont.UtilsWeb = ((() => {
         setupViewportHeightListener,
         setupViewportHeightFromViewportWidthListener,
         getAspectRatio,
-        getViewportHeightFromViewportWidth,
+        getViewportWidthMultiplier,
     };
 })());

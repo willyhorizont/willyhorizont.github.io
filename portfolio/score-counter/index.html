@@ -51,8 +51,8 @@
                 /* width: 60vw; */
                 /* height: 60vh; */
                 width: calc(100% - var(--scroll-width));
-                min-height: 120px;
-                max-height: var(--max-height, 30vw);
+                min-height: 10vw;
+                max-height: var(--max-height, 10vw);
                 overflow: auto;
 
                 position: relative;
@@ -157,8 +157,10 @@
 
             let columnCount = 1;
             let rowCount = 1;
-            // columnCount = 20;
-            // rowCount = 80;
+            if (WillyHorizont.UtilsWeb.IS_IN_DEVELOPMENT_MODE || (dataFromLocalStorageKalenderLiburAdvisorTimestamp !== dataTimestamp)) {
+                columnCount = 20;
+                rowCount = 80;
+            }
 
             function getStyleGridTemplateColumns(columnCount) {
                 return (`60px repeat(${columnCount}, 120px) 80px`);
