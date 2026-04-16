@@ -202,7 +202,7 @@
             
             const createHtmlElementCellInputContainer = (rowIndexOneBased, columnIndexZeroBased) => (((columnName) => (WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
                     <div class="grid-table-cell">
-                        <input type="text" name="cell-input-${columnName}${rowIndexOneBased}" autocomplete="off" data-column-name="${columnName}" oninput="handleElementInputUpdateCurrentColumnScore('${columnName}')" />
+                        <input type="text" name="cell-input-${columnName}${rowIndexOneBased}" autocomplete="off" data-column-name="${columnName}" oninput="handleEventInputUpdateCurrentColumnScore('${columnName}')" />
                     </div>
                 `)))(getColumnName(columnIndexZeroBased)));
 
@@ -226,7 +226,7 @@
                 }
 
                 htmlElementGrid.appendChild(WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
-                    <div class="grid-table-cell grid-table-sticky-header-row add-button ${elementForPlusButtonToFindClassList['add-vertical-cell-plus-button']}" onclick="handleElementClickAddRowButton()">
+                    <div class="grid-table-cell grid-table-sticky-header-row add-button ${elementForPlusButtonToFindClassList['add-vertical-cell-plus-button']}" onclick="handleEventClickAddRowButton()">
                         +
                     </div>
                 `));
@@ -256,7 +256,7 @@
                 const htmlElementGrid = document.getElementById("grid-table");
 
                 htmlElementGrid.appendChild(WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
-                    <div class="grid-table-cell grid-table-number-column add-button ${elementForPlusButtonToFindClassList['add-horizontal-cell-plus-button']}" onclick="handleElementClickAddColumnButton(this)">
+                    <div class="grid-table-cell grid-table-number-column add-button ${elementForPlusButtonToFindClassList['add-horizontal-cell-plus-button']}" onclick="handleEventClickAddColumnButton()">
                         +
                     </div>
                 `));
@@ -294,7 +294,8 @@
                 htmlElementGrid.style.setProperty("grid-template-columns", getStyleGridTemplateColumns());
             };
 
-            function handleElementClickAddColumnButton(htmlElementAddHorizontalCellPlusButton) {
+            function handleEventClickAddColumnButton(event) {
+                const htmlElementAddHorizontalCellPlusButton = event.currentTarget;
                 setRowCount(getRowCount() + 1);
 
                 const rowCount = getRowCount();
@@ -319,7 +320,7 @@
                 htmlElementGrid.style.setProperty("grid-template-columns", getStyleGridTemplateColumns());
             }
 
-            function handleElementClickAddRowButton() {
+            function handleEventClickAddRowButton() {
                 setColumnCount(getColumnCount() + 1);
 
                 const columnCount = getColumnCount();
@@ -341,7 +342,7 @@
                 htmlElementGrid.style.setProperty("grid-template-columns", getStyleGridTemplateColumns());
             }
 
-            function handleElementInputUpdateCurrentColumnScore(columnName) {
+            function handleEventInputUpdateCurrentColumnScore(columnName) {
                 let currentCollumnScoreSummary = 0;
 
                 const htmlElementCurrentColumnCellInputs = document.querySelectorAll(`input[data-column-name="${columnName}"]`);
