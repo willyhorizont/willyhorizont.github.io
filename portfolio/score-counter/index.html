@@ -155,18 +155,25 @@
 
             WillyHorizont.UtilsWeb.setupViewportHeightFromViewportWidthListener();
 
-            let columnCount = 1;
-            let rowCount = 1;
-            if (WillyHorizont.UtilsWeb.IS_IN_DEVELOPMENT_MODE) {
-                columnCount = 20;
-                rowCount = 80;
-            }
+            const elementForPlusButtonToFindClassListItemPrefix = "element-for-plus-button-to-find";
+            const elementForPlusButtonToFindClassList = {
+                "add-horizontal-cell-plus-button": `${elementForPlusButtonToFindClassListItemPrefix}-add-horizontal-cell-plus-button`,
+                "horizontal-blank-cells": `${elementForPlusButtonToFindClassListItemPrefix}-horizontal-blank-cells`,
+                "add-vertical-cell-plus-button": `${elementForPlusButtonToFindClassListItemPrefix}-add-vertical-cell-plus-button`,
+                "vertical-blank-cells": `${elementForPlusButtonToFindClassListItemPrefix}-vertical-blank-cells`,
+                "plus-button-joint-blank-cell": `${elementForPlusButtonToFindClassListItemPrefix}-plus-button-joint-blank-cell`,
+                "score-rows-blank-cell": `${elementForPlusButtonToFindClassListItemPrefix}-score-rows-blank-cell`,
+            };
 
-            function getStyleGridTemplateColumns(columnCount) {
-                return (`60px repeat(${columnCount}, 120px) 80px`);
-            }
+            const LOCAL_STORAGE_KEY_COLUMN = "score-counter-column";
+            const LOCAL_STORAGE_KEY_ROW = "score-counter-row";
+            const getColumnCount = () => (parseInt(localStorage.getItem(LOCAL_STORAGE_KEY_COLUMN), 10) || (WillyHorizont.UtilsWeb.IS_IN_DEVELOPMENT_MODE ? 20 : 1));
+            const getRowCount = () => (parseInt(localStorage.getItem(LOCAL_STORAGE_KEY_ROW), 10) || (WillyHorizont.UtilsWeb.IS_IN_DEVELOPMENT_MODE ? 80 : 1));
+            const setColumnCount = (newColumnCount) => localStorage.setItem(LOCAL_STORAGE_KEY_COLUMN, newColumnCount);
+            const setRowCount = (newRowCount) => localStorage.setItem(LOCAL_STORAGE_KEY_ROW, newRowCount);
+            const getStyleGridTemplateColumns = () => (`60px repeat(${getColumnCount()}, 120px) 80px`);
 
-            function getColumnName(columnIndexZeroBased) {
+            const getColumnName = (columnIndexZeroBased) => {
                 const charCode = {
                     "A": 65,
                 };
@@ -180,224 +187,180 @@
                     currentIndexOneBased = Math.floor((currentIndexOneBased - 1) / azLength);
                 }
                 return columnName;
-            }
+            };
 
-            function createHtmlElementNumberColumnHeader() {
-                const htmlElementNumberColumnHeader = document.createElement("div");
-                htmlElementNumberColumnHeader.setAttribute("class", "grid-table-cell grid-table-corner grid-table-sticky-header-row");
-                htmlElementNumberColumnHeader.textContent = "#";
-                return htmlElementNumberColumnHeader;
-            }
+            const createHtmlElementEmptyContainer = (elementForPlusButtonToFindClass) => (WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+                <div class="grid-table-cell ${elementForPlusButtonToFindClass}">
+                </div>
+            `));
 
-            function createHtmlElementHeaderRowContainer(columnIndexZeroBased) {
-                const htmlElementHeaderRowContainer = document.createElement("div");
-                htmlElementHeaderRowContainer.setAttribute("class", "grid-table-cell grid-table-sticky-header-row");
+            const createHtmlElementHeaderRowContainer = (columnIndexZeroBased) => (((columnName) => (WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+                    <div class="grid-table-cell grid-table-sticky-header-row">
+                        <input type="text" name="cell-header-input-${columnName}" autocomplete="off" value="${columnName}" />
+                    </div>
+                `)))(getColumnName(columnIndexZeroBased)));
+            
+            const createHtmlElementCellInputContainer = (rowIndexOneBased, columnIndexZeroBased) => (((columnName) => (WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+                    <div class="grid-table-cell">
+                        <input type="text" name="cell-input-${columnName}${rowIndexOneBased}" autocomplete="off" data-column-name="${columnName}" oninput="handleElementInputUpdateCurrentColumnScore('${columnName}')" />
+                    </div>
+                `)))(getColumnName(columnIndexZeroBased)));
 
-                const htmlElementHeaderRowInput = document.createElement("input");
-                const columnName = getColumnName(columnIndexZeroBased);
-                htmlElementHeaderRowInput.value = columnName
-                htmlElementHeaderRowInput.type = "text";
-                htmlElementHeaderRowInput.name = `cell-header-input-${columnName}`;
-                htmlElementHeaderRowInput.setAttribute("autocomplete", "off");
+            const createHtmlElementScoreColumnCell = (columnIndexZeroBased) => (WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+                <div class="grid-table-cell score-row" data-current-column-score="${getColumnName(columnIndexZeroBased)}">
+                    0
+                </div>
+            `));
 
-                htmlElementHeaderRowContainer.appendChild(htmlElementHeaderRowInput);
-                return htmlElementHeaderRowContainer;
-            }
-
-            function createHtmlElementHeaderRowCellAddButton() {
-                const htmlElementGrid = document.getElementById("grid-table");
-
-                const htmlElementHeaderRowCellAddButton = document.createElement("div");
-                htmlElementHeaderRowCellAddButton.setAttribute("class", "grid-table-cell grid-table-sticky-header-row add-button");
-                htmlElementHeaderRowCellAddButton.setAttribute("data-right-most-cell", "header-row-cell-add-button");
-                htmlElementHeaderRowCellAddButton.textContent = "+";
-                htmlElementHeaderRowCellAddButton.onclick = function () {
-                    columnCount += 1;
-                    // console.log({ columnName: getColumnName(columnCount - 1), columnCount, rowCount, eventName: "header-row-cell-add-button" });
-                    htmlElementGrid.insertBefore(createHtmlElementHeaderRowContainer(columnCount - 1), htmlElementGrid.querySelector('[data-right-most-cell="header-row-cell-add-button"]'));
-
-                    htmlElementGrid.querySelectorAll('[data-right-most-cell="data-row"]').forEach((htmlElementDataRowEmptyColumn, rowIndexZeroBased) => {
-                        htmlElementGrid.insertBefore(createHtmlElementCellInputContainer((rowIndexZeroBased + 1), (columnCount - 1)), htmlElementDataRowEmptyColumn);
-                    });
-
-                    const htmlElementBottomMostRow = createHtmlElementEmptyContainer();
-                    htmlElementBottomMostRow.setAttribute("data-bottom-most-cell", "add-row");
-                    htmlElementGrid.insertBefore(htmlElementBottomMostRow, htmlElementGrid.querySelector('[data-bottom-right-most-cell="add-row"]'));
-
-                    const htmlElementScoreColumnCell = createHtmlElementScoreColumnCell(columnCount - 1);
-                    htmlElementScoreColumnCell.textContent = 0;
-                    htmlElementGrid.insertBefore(htmlElementScoreColumnCell, htmlElementGrid.querySelector('[data-right-most-cell="score-row"]'));
-                    
-                    htmlElementGrid.style.gridTemplateColumns = getStyleGridTemplateColumns(columnCount);
-                }
-                return htmlElementHeaderRowCellAddButton;
-            }
-
-            function appendHeaderRow() {
+            const appendHeaderRows = () => {
                 const htmlElementGrid = document.getElementById("grid-table");
                 
-                htmlElementGrid.appendChild(createHtmlElementNumberColumnHeader());
+                htmlElementGrid.appendChild(WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+                    <div class="grid-table-cell grid-table-corner grid-table-sticky-header-row">
+                        #
+                    </div>
+                `));
 
-                for (let columnIndexZeroBased = 0; (columnIndexZeroBased < columnCount); columnIndexZeroBased += 1) {
+                for (let columnIndexZeroBased = 0; (columnIndexZeroBased < getColumnCount()); columnIndexZeroBased += 1) {
                     htmlElementGrid.appendChild(createHtmlElementHeaderRowContainer(columnIndexZeroBased));
                 }
 
-                htmlElementGrid.appendChild(createHtmlElementHeaderRowCellAddButton());
-            }
+                htmlElementGrid.appendChild(WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+                    <div class="grid-table-cell grid-table-sticky-header-row add-button ${elementForPlusButtonToFindClassList['add-vertical-cell-plus-button']}" onclick="handleElementClickAddRowButton()">
+                        +
+                    </div>
+                `));
+            };
 
-            function createHtmlElementNumberColumn(rowIndexOneBased) {
-                const htmlElementNumberColumn = document.createElement("div");
-                htmlElementNumberColumn.setAttribute("class", "grid-table-cell grid-table-number-column");
-                htmlElementNumberColumn.textContent = rowIndexOneBased;
-                return htmlElementNumberColumn;
-            }
+            const createHtmlElementNumberColumn = (rowIndexOneBased) => (WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+                <div class="grid-table-cell grid-table-number-column">
+                    ${rowIndexOneBased}
+                </div>
+            `));
 
-            function createHtmlElementCellInputContainer(rowIndexOneBased, columnIndexZeroBased) {
-                const htmlElementCellInputContainer = document.createElement("div");
-                htmlElementCellInputContainer.setAttribute("class", "grid-table-cell");
-
-                const htmlElementCellInput = document.createElement("input");
-                htmlElementCellInput.type = "text";
-                htmlElementCellInput.name = `cell-input-${getColumnName(columnIndexZeroBased)}${rowIndexOneBased}`;
-                htmlElementCellInput.setAttribute("data-row-index-one-based", rowIndexOneBased);
-                htmlElementCellInput.setAttribute("data-column-index-zero-based", columnIndexZeroBased);
-                htmlElementCellInput.setAttribute("autocomplete", "off");
-
-                htmlElementCellInput.addEventListener("input", updateScore); // TODO
-
-                htmlElementCellInputContainer.appendChild(htmlElementCellInput);
-                return htmlElementCellInputContainer;
-            }
-
-            function createHtmlElementEmptyContainer() {
-                const htmlElementEmptyContainer = document.createElement("div");
-                htmlElementEmptyContainer.setAttribute("class", "grid-table-cell");
-                return htmlElementEmptyContainer;
-            }
-
-            function appendDataRow() {
+            const appendDataRows = () => {
                 const htmlElementGrid = document.getElementById("grid-table");
 
-                for (let rowIndexOneBased = 1; (rowIndexOneBased <= rowCount); rowIndexOneBased += 1) {
+                for (let rowIndexOneBased = 1; (rowIndexOneBased <= getRowCount()); rowIndexOneBased += 1) {
                     htmlElementGrid.appendChild(createHtmlElementNumberColumn(rowIndexOneBased));
 
-                    for (let columnIndexZeroBased = 0; (columnIndexZeroBased < columnCount); columnIndexZeroBased += 1) {
+                    for (let columnIndexZeroBased = 0; (columnIndexZeroBased < getColumnCount()); columnIndexZeroBased += 1) {
                         htmlElementGrid.appendChild(createHtmlElementCellInputContainer(rowIndexOneBased, columnIndexZeroBased));
                     }
 
-                    const htmlElementRightMostColumn = createHtmlElementEmptyContainer();
-                    htmlElementRightMostColumn.setAttribute("data-right-most-cell", "data-row");
-                    htmlElementGrid.appendChild(htmlElementRightMostColumn);
+                    htmlElementGrid.appendChild(createHtmlElementEmptyContainer(elementForPlusButtonToFindClassList["vertical-blank-cells"]));
                 }
-            }
+            };
 
-            function createHtmlElementNumberColumnCellAddButton() {
-                const htmlElementNumberColumnCellAddButton = document.createElement("div");
-                htmlElementNumberColumnCellAddButton.setAttribute("class", "grid-table-cell grid-table-number-column add-button");
-                htmlElementNumberColumnCellAddButton.setAttribute("data-bottom-most-cell", "number-collumn-cell-add-button");
-                htmlElementNumberColumnCellAddButton.textContent = "+";
-                htmlElementNumberColumnCellAddButton.onclick = function () {
-                    rowCount += 1;
-                    // console.log({ columnName: getColumnName(columnCount), columnCount, rowCount, eventName: "number-collumn-cell-add-button" });
-                    
-                    const htmlElementGrid = document.getElementById("grid-table");
-
-                    const newRows = []
-                    newRows.push(createHtmlElementNumberColumn(rowCount));
-
-                    for (let columnIndexZeroBased = 0; (columnIndexZeroBased < htmlElementGrid.querySelectorAll('[data-bottom-most-cell="add-row"]').length); columnIndexZeroBased += 1) {
-                        newRows.push(createHtmlElementCellInputContainer(rowCount, columnIndexZeroBased));
-                    }
-
-                    const htmlElementRightMostColumn = createHtmlElementEmptyContainer();
-                    htmlElementRightMostColumn.setAttribute("data-right-most-cell", "data-row");
-                    newRows.push(htmlElementRightMostColumn);
-
-                    // htmlElementGrid.querySelector('[data-bottom-most-cell="number-collumn-cell-add-button"]').before(...newRows);
-                    this.before(...newRows);
-
-                    htmlElementGrid.style.gridTemplateColumns = getStyleGridTemplateColumns(columnCount);
-                }
-                return htmlElementNumberColumnCellAddButton;
-            }
-
-            function appendAddRow() {
+            const appendAddHorizontalCellRows = () => {
                 const htmlElementGrid = document.getElementById("grid-table");
 
-                htmlElementGrid.appendChild(createHtmlElementNumberColumnCellAddButton());
+                htmlElementGrid.appendChild(WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+                    <div class="grid-table-cell grid-table-number-column add-button ${elementForPlusButtonToFindClassList['add-horizontal-cell-plus-button']}" onclick="handleElementClickAddColumnButton()">
+                        +
+                    </div>
+                `));
 
-                for (let columnIndexZeroBased = 0; (columnIndexZeroBased < columnCount); columnIndexZeroBased += 1) {
-                    const htmlElementBottomMostRow = createHtmlElementEmptyContainer();
-                    htmlElementBottomMostRow.setAttribute("data-bottom-most-cell", "add-row");
-                    htmlElementGrid.appendChild(htmlElementBottomMostRow);
+                for (let columnIndexZeroBased = 0; (columnIndexZeroBased < getColumnCount()); columnIndexZeroBased += 1) {
+                    htmlElementGrid.appendChild(createHtmlElementEmptyContainer(elementForPlusButtonToFindClassList["horizontal-blank-cells"]));
                 }
 
-                const htmlElementRightMostColumn = createHtmlElementEmptyContainer();
-                htmlElementRightMostColumn.setAttribute("data-bottom-right-most-cell", "add-row");
-                htmlElementGrid.appendChild(htmlElementRightMostColumn);
-            }
+                htmlElementGrid.appendChild(createHtmlElementEmptyContainer(elementForPlusButtonToFindClassList["plus-button-joint-blank-cell"]));
+            };
 
-            function createHtmlElementScoreColumnHeader() {
-                const htmlElementScoreColumnHeader = document.createElement("div");
-                htmlElementScoreColumnHeader.setAttribute("class", "grid-table-cell grid-table-number-column score-row");
-                htmlElementScoreColumnHeader.textContent = "Σ";
-                return htmlElementScoreColumnHeader;
-            }
-
-            function createHtmlElementScoreColumnCell(columnIndexZeroBased) {
-                const htmlElementScoreColumnCell = document.createElement("div");
-                htmlElementScoreColumnCell.setAttribute("class", "grid-table-cell score-row");
-                htmlElementScoreColumnCell.setAttribute("data-score-column", columnIndexZeroBased);
-                return htmlElementScoreColumnCell;
-            }
-
-            function createHtmlElementScoreColumnCellEmpty() {
-                const htmlElementScoreColumnCellEmpty = document.createElement("div");
-                htmlElementScoreColumnCellEmpty.setAttribute("class", "grid-table-cell score-row");
-                return htmlElementScoreColumnCellEmpty;
-            }
-
-            function appendScoreRow() {
+            const appendScoreRows = () => {
                 const htmlElementGrid = document.getElementById("grid-table");
 
-                htmlElementGrid.appendChild(createHtmlElementScoreColumnHeader());
+                htmlElementGrid.appendChild(WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+                    <div class="grid-table-cell grid-table-number-column score-row">
+                        Σ
+                    </div>
+                `));
 
-                for (let columnIndexZeroBased = 0; (columnIndexZeroBased < columnCount); columnIndexZeroBased += 1) {
+                for (let columnIndexZeroBased = 0; (columnIndexZeroBased < getColumnCount()); columnIndexZeroBased += 1) {
                     htmlElementGrid.appendChild(createHtmlElementScoreColumnCell(columnIndexZeroBased));
                 }
 
-                const htmlElementRightMostColumn = createHtmlElementScoreColumnCellEmpty();
-                htmlElementRightMostColumn.setAttribute("data-right-most-cell", "score-row");
-                htmlElementGrid.appendChild(htmlElementRightMostColumn);
-            }
+                htmlElementGrid.appendChild(WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+                    <div class="grid-table-cell score-row ${elementForPlusButtonToFindClassList["score-rows-blank-cell"]}">
+                        +
+                    </div>
+                `));
+            };
 
-            function renderMainContent() {
+            const resetGridTable = () => {
                 const htmlElementGrid = document.getElementById("grid-table");
                 htmlElementGrid.innerHTML = "";
-                htmlElementGrid.style.gridTemplateColumns = getStyleGridTemplateColumns(columnCount);
+                htmlElementGrid.style.setProperty("grid-template-columns", getStyleGridTemplateColumns());
+            };
 
-                appendHeaderRow();
-                appendDataRow();
-                appendAddRow();
-                appendScoreRow();
-                updateScore();
-            }
+            function handleElementClickAddColumnButton() {
+                setRowCount(getRowCount() + 1);
 
-            function updateScore() {
-                for (let columnIndexZeroBased = 0; (columnIndexZeroBased < columnCount); columnIndexZeroBased += 1) {
-                    let scoreSummary = 0;
+                const rowCount = getRowCount();
+                // const columnCount = getColumnCount();
+                // console.log({ columnName: getColumnName(columnCount), columnCount, rowCount, id: elementForPlusButtonToFindClassList["add-horizontal-cell-plus-button"] });
+                
+                const htmlElementGrid = document.getElementById("grid-table");
 
-                    for (let rowIndexOneBased = 1; (rowIndexOneBased <= rowCount); rowIndexOneBased += 1) {
-                        const htmlElementCellInput = document.querySelector(`input[data-row-index-one-based="${rowIndexOneBased}"][data-column-index-zero-based="${columnIndexZeroBased}"]`);
+                const newRows = []
 
-                        const htmlElementCellInputValue = parseFloat(htmlElementCellInput?.value);
-                        if (WillyHorizont.Utils.checkIsNumeric(htmlElementCellInputValue)) scoreSummary += htmlElementCellInputValue;
-                    }
+                newRows.push(createHtmlElementNumberColumn(rowCount));
 
-                    const htmlElementScoreColumnCell = document.querySelector(`[data-score-column="${columnIndexZeroBased}"]`);
-                    if (htmlElementScoreColumnCell) htmlElementScoreColumnCell.textContent = scoreSummary;
+                for (let columnIndexZeroBased = 0; (columnIndexZeroBased < htmlElementGrid.querySelectorAll(`[class~="${elementForPlusButtonToFindClassList['horizontal-blank-cells']}"]`).length); columnIndexZeroBased += 1) {
+                    newRows.push(createHtmlElementCellInputContainer(rowCount, columnIndexZeroBased));
                 }
+
+                newRows.push(createHtmlElementEmptyContainer(elementForPlusButtonToFindClassList["vertical-blank-cells"]));
+
+                // htmlElementGrid.querySelector(`[class~="${elementForPlusButtonToFindClassList['add-horizontal-cell-plus-button']}"]`).before(...newRows);
+                this.before(...newRows);
+
+                htmlElementGrid.style.setProperty("grid-template-columns", getStyleGridTemplateColumns());
             }
+
+            function handleElementClickAddRowButton() {
+                setColumnCount(getColumnCount() + 1);
+
+                const columnCount = getColumnCount();
+                // const rowCount = getRowCount();
+                // console.log({ columnName: getColumnName(columnCount - 1), columnCount, rowCount, id: elementForPlusButtonToFindClassList["add-vertical-cell-plus-button"] });
+
+                const htmlElementGrid = document.getElementById("grid-table");
+
+                htmlElementGrid.insertBefore((createHtmlElementHeaderRowContainer(columnCount - 1)), (htmlElementGrid.querySelector(`[class~="${elementForPlusButtonToFindClassList['add-vertical-cell-plus-button']}"]`)));
+
+                htmlElementGrid.querySelectorAll(`[class~="${elementForPlusButtonToFindClassList['vertical-blank-cells']}"]`).forEach((htmlElementDataRowEmptyColumn, rowIndexZeroBased) => {
+                    htmlElementGrid.insertBefore((createHtmlElementCellInputContainer((rowIndexZeroBased + 1), (columnCount - 1))), (htmlElementDataRowEmptyColumn));
+                });
+
+                htmlElementGrid.insertBefore((createHtmlElementEmptyContainer(elementForPlusButtonToFindClassList["horizontal-blank-cells"])), (htmlElementGrid.querySelector(`[class~="${elementForPlusButtonToFindClassList['plus-button-joint-blank-cell']}"]`)));
+
+                htmlElementGrid.insertBefore(createHtmlElementScoreColumnCell(columnCount - 1), htmlElementGrid.querySelector(`[class~="${elementForPlusButtonToFindClassList['score-rows-blank-cell']}"]`));
+                
+                htmlElementGrid.style.setProperty("grid-template-columns", getStyleGridTemplateColumns());
+            }
+
+            function handleElementInputUpdateCurrentColumnScore(columnName) {
+                let currentCollumnScoreSummary = 0;
+
+                const htmlElementCurrentColumnCellInputs = document.querySelectorAll(`input[data-column-name="${columnName}"]`);
+                htmlElementCurrentColumnCellInputs.forEach((htmlElementCurrentColumnCellInput) => {
+                    const htmlElementCurrentColumnCellInputValue = parseFloat(htmlElementCurrentColumnCellInput?.value);
+                    if (WillyHorizont.Utils.checkIsNumeric(htmlElementCurrentColumnCellInputValue)) currentCollumnScoreSummary += htmlElementCurrentColumnCellInputValue;
+                });
+
+                const htmlElementScoreColumnCell = document.querySelector(`[data-current-column-score="${columnName}"]`);
+                if (htmlElementScoreColumnCell) htmlElementScoreColumnCell.textContent = currentCollumnScoreSummary;
+            }
+
+            const renderMainContent = () => {
+                resetGridTable();
+                appendHeaderRows();
+                appendDataRows();
+                appendAddHorizontalCellRows();
+                appendScoreRows();
+            };
 
             renderMainContent();
         </script>

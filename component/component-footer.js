@@ -12,7 +12,7 @@
         `));
     
     const renderClock = () => {
-        const [clockPartAa, clockPartBb, clockPartCc, clockPartDd] = WillyHorizont.Utils.generateTimestamp({ includeSecond: true, includeMiliSecond: false }).split(" | ");
+        const [clockPartAa, clockPartBb, clockPartCc, clockPartDd] = WillyHorizont.Utils.getClock({ includeSecond: true, includeMiliSecond: false }).split(" | ");
         document.getElementById("footer").innerHTML = (/*html*/`
                 <div style="display: flex; flex-direction: row; justify-content: center; flex-wrap: wrap;">
                     <p style="text-align: right; padding-right: 2px;">${clockPartAa} |</p>

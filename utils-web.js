@@ -228,7 +228,7 @@ WillyHorizont.UtilsWeb = ((() => {
     };
 
     const setupViewportHeightListener = () => {
-        const localStorageKeyViewportHeight = "viewport-height";
+        const LOCAL_STORAGE_KEY_VIEWPORT_HEIGHT = "viewport-height";
         let requestAnimationFrameId;
 
         const overrideStyleVariableRealViewportHeight = (newViewportHeightValue) => {
@@ -241,15 +241,15 @@ WillyHorizont.UtilsWeb = ((() => {
             requestAnimationFrameId = requestAnimationFrame(() => {
                 const currentViewportHeight = (WillyHorizont.Utils.safeGetObjectProperty(window, "window.visualViewport.height") || window.innerHeight);
 
-                if (!localStorage.getItem(localStorageKeyViewportHeight)) {
-                    localStorage.setItem(localStorageKeyViewportHeight, currentViewportHeight);
+                if (!localStorage.getItem(LOCAL_STORAGE_KEY_VIEWPORT_HEIGHT)) {
+                    localStorage.setItem(LOCAL_STORAGE_KEY_VIEWPORT_HEIGHT, currentViewportHeight);
                     overrideStyleVariableRealViewportHeight(currentViewportHeight);
                     return;
                 }
 
-                const lockedViewportHeightInLocalStorage = parseFloat(localStorage.getItem(localStorageKeyViewportHeight));
+                const lockedViewportHeightInLocalStorage = parseFloat(localStorage.getItem(LOCAL_STORAGE_KEY_VIEWPORT_HEIGHT));
                 if (currentViewportHeight > lockedViewportHeightInLocalStorage) {
-                    localStorage.setItem(localStorageKeyViewportHeight, currentViewportHeight);
+                    localStorage.setItem(LOCAL_STORAGE_KEY_VIEWPORT_HEIGHT, currentViewportHeight);
                     overrideStyleVariableRealViewportHeight(currentViewportHeight);
                     return;
                 }
@@ -262,7 +262,7 @@ WillyHorizont.UtilsWeb = ((() => {
 
         window.addEventListener("resize", updateRealViewportHeight);
         window.addEventListener("orientationchange", () => {
-            localStorage.removeItem(localStorageKeyViewportHeight);
+            localStorage.removeItem(LOCAL_STORAGE_KEY_VIEWPORT_HEIGHT);
             updateRealViewportHeight();
         });
         if (WillyHorizont.Utils.checkIsMethodAvailable(window, "window.visualViewport.addEventListener")) {
