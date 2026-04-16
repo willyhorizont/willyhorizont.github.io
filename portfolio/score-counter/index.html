@@ -256,7 +256,7 @@
                 const htmlElementGrid = document.getElementById("grid-table");
 
                 htmlElementGrid.appendChild(WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
-                    <div class="grid-table-cell grid-table-number-column add-button ${elementForPlusButtonToFindClassList['add-horizontal-cell-plus-button']}" onclick="handleElementClickAddColumnButton()">
+                    <div class="grid-table-cell grid-table-number-column add-button ${elementForPlusButtonToFindClassList['add-horizontal-cell-plus-button']}" onclick="handleElementClickAddColumnButton(this)">
                         +
                     </div>
                 `));
@@ -294,7 +294,7 @@
                 htmlElementGrid.style.setProperty("grid-template-columns", getStyleGridTemplateColumns());
             };
 
-            function handleElementClickAddColumnButton() {
+            function handleElementClickAddColumnButton(htmlElementAddHorizontalCellPlusButton) {
                 setRowCount(getRowCount() + 1);
 
                 const rowCount = getRowCount();
@@ -314,7 +314,7 @@
                 newRows.push(createHtmlElementEmptyContainer(elementForPlusButtonToFindClassList["vertical-blank-cells"]));
 
                 // htmlElementGrid.querySelector(`[class~="${elementForPlusButtonToFindClassList['add-horizontal-cell-plus-button']}"]`).before(...newRows);
-                this.before(...newRows);
+                htmlElementAddHorizontalCellPlusButton.before(...newRows);
 
                 htmlElementGrid.style.setProperty("grid-template-columns", getStyleGridTemplateColumns());
             }
