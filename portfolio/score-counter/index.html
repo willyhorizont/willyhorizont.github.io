@@ -136,6 +136,9 @@
         <main>
             <div style="padding: 8px;">
                 <h1 style="text-align: center;">Score Counter</h1>
+                <div style="padding: 4px; width: 100%; display: flex; flex-direction: column; align-items: center;">
+                    <button onclick="resetGame()" style="padding: 0.2em 0.4em; background-color: var(--accent-color-4); color: var(--dark-text-color);">Reset Game</button>
+                </div>
                 <div style="padding: 4px; width: 100%; display: flex; flex-direction: column; align-items: flex-end;">
                     <div class="grid-table-container">
                         <div id="grid-table" class="grid-table"></div>
@@ -167,11 +170,19 @@
 
             const LOCAL_STORAGE_KEY_COLUMN = "score-counter-column";
             const LOCAL_STORAGE_KEY_ROW = "score-counter-row";
-            const getColumnCount = () => (parseInt(localStorage.getItem(LOCAL_STORAGE_KEY_COLUMN), 10) || (WillyHorizont.UtilsWeb.IS_IN_DEVELOPMENT_MODE ? 20 : 1));
-            const getRowCount = () => (parseInt(localStorage.getItem(LOCAL_STORAGE_KEY_ROW), 10) || (WillyHorizont.UtilsWeb.IS_IN_DEVELOPMENT_MODE ? 80 : 1));
+            const initialColumnCount = (WillyHorizont.UtilsWeb.IS_IN_DEVELOPMENT_MODE ? 20 : 1);
+            const initialRowCount = (WillyHorizont.UtilsWeb.IS_IN_DEVELOPMENT_MODE ? 80 : 1);
+            const getColumnCount = () => (parseInt(localStorage.getItem(LOCAL_STORAGE_KEY_COLUMN), 10) || initialColumnCount);
+            const getRowCount = () => (parseInt(localStorage.getItem(LOCAL_STORAGE_KEY_ROW), 10) || initialRowCount);
             const setColumnCount = (newColumnCount) => localStorage.setItem(LOCAL_STORAGE_KEY_COLUMN, newColumnCount);
             const setRowCount = (newRowCount) => localStorage.setItem(LOCAL_STORAGE_KEY_ROW, newRowCount);
             const getStyleGridTemplateColumns = () => (`60px repeat(${getColumnCount()}, 120px) 80px`);
+
+            function resetGame() {
+                setColumnCount(initialColumnCount);
+                setRowCount(initialRowCount);
+                renderMainContent();
+            }
 
             const getColumnName = (columnIndexZeroBased) => {
                 const charCode = {
