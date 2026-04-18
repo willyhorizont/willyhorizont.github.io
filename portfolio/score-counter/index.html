@@ -486,7 +486,7 @@
                         const currentRowNumber = parseInt(htmlElementCellInput.getAttribute("data-row-number"), 10);
                         const htmlElementCellInputNext = document.querySelector(`[data-id="cell-input"][data-column-index="${columnIndexZeroBased + 1}"][data-row-number="${currentRowNumber}"]`);
                         if (!htmlElementCellInputNext) return;
-                        const htmlElementCellInputNextValue = parseInt(htmlElementCellInputNext.value, 10);
+                        const htmlElementCellInputNextValue = htmlElementCellInputNext.value;
                         const htmlElementCellInputNextName = htmlElementCellInputNext.getAttribute("name");
                         const htmlElementCellInputNextDataRowNumber = parseInt(htmlElementCellInputNext.getAttribute("data-row-number"), 10);
                         const htmlElementCellInputNextDataColumnLetter = htmlElementCellInputNext.getAttribute("data-column-letter");
@@ -539,9 +539,9 @@
                 const selectedColumn = document.getElementById("selected-column");
                 const selectedCellInputColumnIndex = parseInt(selectedColumn.getAttribute("data-column-index"), 10);
 
-                const htmlElementSelectedCellInputValue = parseInt(document.querySelector(`[data-id="cell-input"][data-column-index="${selectedCellInputColumnIndex}"][data-row-number="${selectedCellInputRowNumber}"]`).value, 10);
+                const htmlElementSelectedCellInput = document.querySelector(`[data-id="cell-input"][data-column-index="${selectedCellInputColumnIndex}"][data-row-number="${selectedCellInputRowNumber}"]`);
                 const htmlElementCurrentColumnScoreSummary = document.querySelector(`[data-id=current-column-score-summary][data-column-index="${selectedCellInputColumnIndex}"]`);
-                const currentCollumnScoreSummaryNew = parseInt(htmlElementCurrentColumnScoreSummary.textContent, 10) - htmlElementSelectedCellInputValue;
+                const currentCollumnScoreSummaryNew = (parseInt(htmlElementCurrentColumnScoreSummary.textContent, 10) - (WillyHorizont.Utils.checkIsNumeric(parseInt(htmlElementSelectedCellInput.value, 10)) ? parseInt(htmlElementSelectedCellInput.value, 10) : 0));
                 htmlElementCurrentColumnScoreSummary.textContent = currentCollumnScoreSummaryNew;
 
                 for (let rowIndexOneBased = selectedCellInputRowNumber; (rowIndexOneBased <= rowCount); rowIndexOneBased += 1) {
@@ -551,7 +551,7 @@
 
                         if (!htmlElementCellInputNext) return;
 
-                        htmlElementCellInput.value = parseInt(htmlElementCellInputNext.value, 10);
+                        htmlElementCellInput.value = htmlElementCellInputNext.value;
                     });
                 }
 
@@ -580,6 +580,8 @@
             };
 
             const renderMainContent = () => {
+                main();
+                return;
                 if (!WillyHorizont.UtilsWeb.IS_IN_DEVELOPMENT_MODE) {
                     main();
                     return;
