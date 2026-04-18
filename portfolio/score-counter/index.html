@@ -140,18 +140,17 @@
         </header>
         <main>
             <div style="padding: 8px;">
-                <div style="padding: 4px; width: 100%; display: flex; flex-direction: row; justify-content: center; align-items: center ; gap: 8px;">
-                    <h1 style="text-align: center;">Score Counter</h1>
+                <h1 style="text-align: center;">Score Counter</h1>
+                <div style="padding: 4px; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                     <button onclick="resetGame()" style="height: fit-content; padding: 0.2em 0.4em; border-radius: 0.5em; background-color: var(--accent-color-4); color: var(--dark-text-color);">Reset Game</button>
                 </div>
-                <div style="padding: 4px; width: 100%; display: flex; flex-direction: row; justify-content: center; align-items: center ; gap: 8px;">
-                    <div style="display: flex; flex-direction: row; justify-content: center; column-gap: 8px;">
+                <div style="padding: 4px; width: 100%; display: flex; flex-direction: row; justify-content: center; align-items: center; flex-wrap: wrap;">
+                    <div style="display: flex; flex-direction: row; justify-content: center; align-items: center; column-gap: 8px; border: 1px solid var(--light-border-color); padding: 4px;">
                         <p>selected player:</p>
                         <p id="selected-column" data-column-index="" data-column-letter="">NULL</p>
                         <button onclick="deleteSelectedColumn()" style="height: fit-content; padding: 0.2em 0.4em; border-radius: 0.5em; background-color: var(--accent-color-4); color: var(--dark-text-color);">Delete</button>
                     </div>
-                    <p>—</p>
-                    <div style="display: flex; flex-direction: row; justify-content: center; column-gap: 8px;">
+                    <div style="display: flex; flex-direction: row; justify-content: center; align-items: center; column-gap: 8px; border: 1px solid var(--light-border-color); padding: 4px;">
                         <p>selected #:</p>
                         <p id="selected-row" data-row-number="">NULL</p>
                         <button onclick="deleteSelectedRow()" style="height: fit-content; padding: 0.2em 0.4em; border-radius: 0.5em; background-color: var(--accent-color-4); color: var(--dark-text-color);">Delete</button>
@@ -398,7 +397,7 @@
 
             function handleElementInputUpdateCurrentColumnScore(htmlElementCellInputCurrent) {
                 const columnIndex = htmlElementCellInputCurrent.getAttribute("data-column-index");
-
+                htmlElementCellInputCurrent.value = htmlElementCellInputCurrent.value.replace(new RegExp(`[^0-9-]`, "g"), "").replace(new RegExp(`(?!^)-`, "g"), "");
                 updateCurrentColumnScore(columnIndex);
             }
 
@@ -580,17 +579,17 @@
             };
 
             const renderMainContent = () => {
-                main();
-                return;
+                // main();
+                // return;
                 if (!WillyHorizont.UtilsWeb.IS_IN_DEVELOPMENT_MODE) {
                     main();
                     return;
                 }
 
-                // setColumnCount(20);
-                // setRowCount(80);
-                setColumnCount(4);
-                setRowCount(10);
+                setColumnCount(20);
+                setRowCount(80);
+                // setColumnCount(4);
+                // setRowCount(10);
 
                 main();
 
