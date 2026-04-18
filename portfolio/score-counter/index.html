@@ -362,13 +362,13 @@
             function handleElementClickAddHorizontalCellButton() {
                 setColumnCount(getColumnCount() + 1);
 
-                htmlElementGrid.style.setProperty("grid-template-columns", getStyleGridTemplateColumns());
-
+                const htmlElementGrid = document.getElementById("grid-table");
+                
                 const columnCount = getColumnCount();
                 // const rowCount = getRowCount();
                 // console.log({ columnLetter: getColumnLetter(columnCount - 1), columnCount, rowCount, id: elementForPlusButtonToFindClassList["add-vertical-cell-plus-button"] });
-
-                const htmlElementGrid = document.getElementById("grid-table");
+                
+                htmlElementGrid.style.setProperty("grid-template-columns", getStyleGridTemplateColumns());
 
                 htmlElementGrid.insertBefore((createHtmlElementHeaderRowContainer(columnCount - 1)), (htmlElementGrid.querySelector(`[class~="${elementForPlusButtonToFindClassList['add-vertical-cell-plus-button']}"]`)));
 
