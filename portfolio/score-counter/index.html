@@ -102,6 +102,7 @@
                 position: sticky;
                 left: 0;
                 background-color: var(--light-background-color);
+                color: var(--light-text-color);
                 z-index: 0;
             }
 
@@ -114,6 +115,7 @@
                 left: 0;
                 z-index: 2;
                 background-color: var(--light-background-color);
+                color: var(--light-text-color);
             }
 
             .score-row {
@@ -125,14 +127,64 @@
             .add-button {
                 cursor: pointer;
                 background-color: var(--light-background-color);
+                color: var(--light-text-color);
                 font-weight: bold;
             }
             .add-button:hover {
                 background-color: var(--light-background-focus-color);
             }
 
-            /* html[data-theme="dark"] {
-            } */
+            html[data-theme="dark"] {
+                .grid-table-cell {
+                    background-color: var(--dark-background-color);
+                    color: var(--dark-text-color);
+                }
+
+                .grid-table-cell input {
+                    background-color: var(--dark-background-color);
+                    color: var(--dark-text-color);
+                }
+
+                .grid-table-cell input:focus {
+                    background-color: var(--dark-background-focus-color);
+                }
+
+                .grid-table-cell input.highlight {
+                    background-color: var(--dark-background-focus-color);
+                }
+
+                .grid-table-sticky-header-row {
+                    background-color: var(--dark-background-color);
+                    color: var(--dark-text-color);
+                }
+
+                .grid-table-sticky-header-row.highlight {
+                    background-color: var(--dark-background-focus-color);
+                }
+
+                .grid-table-number-column {
+                    background-color: var(--dark-background-color);
+                    color: var(--dark-text-color);
+                }
+
+                .grid-table-number-column.highlight {
+                    background-color: var(--dark-background-focus-color);
+                }
+
+                .grid-table-top-left-corner {
+                    background-color: var(--dark-background-color);
+                    color: var(--dark-text-color);
+                }
+
+                .add-button {
+                    background-color: var(--dark-background-color);
+                    color: var(--dark-text-color);
+                }
+                .add-button:hover {
+                    background-color: var(--dark-background-focus-color);
+                    color: var(--dark-text-color);
+                }
+            }
         </style>
     </head>
     <body>

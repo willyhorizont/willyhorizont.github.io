@@ -116,6 +116,10 @@ html[data-theme="dark"] {
     color: var(--dark-text-color);
 }
 
+html[data-theme="dark"] {
+    scrollbar-color: var(--light-border-color) var(--dark-background-color);
+}
+
 html[data-theme="dark"] a {
     color: var(--dark-text-color);
 }

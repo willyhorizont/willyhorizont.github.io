@@ -19,10 +19,7 @@
             return null;
         }
     };
-    const safeGetObjectProperty = (rootObject, methodChain) => {
-        if (typeof rootObject === "undefined") return false;
-        return methodChain.split(".").slice(1).reduce((currentResult, currentProperty) => ((currentResult && (currentProperty in currentResult)) ? currentResult[currentProperty] : undefined), rootObject);
-    };
+    const safeGetObjectProperty = (rootObject, methodChain) => ((typeof rootObject === "undefined") ? false : (methodChain.split(".").slice(1).reduce((currentResult, currentProperty) => ((currentResult && (currentProperty in currentResult)) ? currentResult[currentProperty] : undefined), rootObject)))
     const checkIsMethodAvailable = (rootObject, methodChain) => (typeof safeGetObjectProperty(rootObject, methodChain) === "function");
     const getNumberDifferenceInNumeric = (a, b) => ((a === b) ? 0 : ((a > b) ? (a - b) : (b - a)));
     const getMostFrequent = (anyArray, callbackFunction = (anyArrayItem) => (anyArrayItem)) => {
@@ -39,15 +36,16 @@
         }
         return mostFrequentResult;
     };
+    const getMostFrequentOneLiner = (anyArray, callbackFunction = (anyArrayItem) => (anyArrayItem)) => (((frequencyMap) => (anyArray.reduce(((getMostFrequentOneLinerLocalVariableMap, anyArrayItem, anyArrayItemIndex) => (((currentCount) => ([frequencyMap.set(callbackFunction(anyArrayItem), currentCount), ((currentCount > getMostFrequentOneLinerLocalVariableMap.get("maxCount")) ? ([(getMostFrequentOneLinerLocalVariableMap.set("maxCount", currentCount)), (getMostFrequentOneLinerLocalVariableMap.set("mostFrequentResult", callbackFunction(anyArrayItem))), (undefined)].at(-1)) : undefined), ((anyArrayItemIndex === (anyArray.length - 1)) ? getMostFrequentOneLinerLocalVariableMap.get("mostFrequentResult") : getMostFrequentOneLinerLocalVariableMap)].at(-1)))((frequencyMap.get(callbackFunction(anyArrayItem)) || 0) + 1))), (new Map([["maxCount", 0], ["mostFrequentResult", null]])))))(new Map()));
     const pickArrayItemRandomly = (anyArray) => (anyArray.at(WillyHorizont.Utils.randomIntInclusive({ lowerBound: 0, upperBound: (anyArray.length - 1) })));
-    const parseEscapeSequence = (anyString) => JSON.parse(`"${anyString}"`);
+    const parseEscapeSequence = (anyString) => (JSON.parse(`"${anyString}"`));
     const pythonLikeSleep = (anySeconds) => new Promise((anyResolveFunction) => setTimeout(anyResolveFunction, (anySeconds * 1 * (({ secondInMiliseconds }) => secondInMiliseconds)({ secondInMiliseconds: 1_000 }))));
     const runOnce = ((keySet) => (anyStringKey = "something", callbackFunction = (() => (undefined))) => (keySet.has(anyStringKey) ? undefined : ([(keySet.add(anyStringKey)), (callbackFunction())].at(-1))))(new Set()); /* runOnceV2 */
     const runNthTime = ((keyCountMap) => (({ keyString = "something", runTime = 1 } = {}, callbackFunction = ((totalRunTime, currentRunTime) => (undefined))) => (((keyCountMap.get(keyString) ?? 0) >= runTime) ? undefined : ([(keyCountMap.set(keyString, ((keyCountMap.get(keyString) ?? 0) + 1))), (callbackFunction(runTime, keyCountMap.get(keyString)))].at(-1)))))(new Map()); /* runNthTimeV2 */
     const printOnce = ((keySet) => (anything, { key, title, formatter = ((anythingInner) => anythingInner) } = {}) => (((anyStringKey) => (keySet.has(anyStringKey) ? anything : ([(keySet.add(anyStringKey)), (console.log(`${title ? `${title}: ` : ""}${formatter(anything)}`)), anything].at(-1))))(key || title || "first")))(new Set()); /* printOnceV2 */
     const printAndReturn = (anything, { title, formatter = ((anythingInner) => anythingInner) } = {}) => ([(console.log(`${title ? `${title}: ` : ""}${formatter(anything)}`)), anything].at(-1));
     const getClock = ({ includeSecond = true, includeMiliSecond = true } = {}) => ((({ fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit }) => (WillyHorizont.UtilsDate.prettyFormatDate({ includeSecond, includeMiliSecond, fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit })))(WillyHorizont.UtilsDate.extractDate(new Date().toISOString()))); /* getClockV2 */
-    const getTimestamp = () => ((({ fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit }) => (`${fullYear}-${zeroPaddedMonth}-${zeroPaddedDay}-at-${zeroPaddedHourTwentyFourHourClock}.${zeroPaddedHourTwelveHourClock}.${zeroPaddedMinute}.${zeroPaddedMiliSecondThreeDigit}`))(WillyHorizont.UtilsDate.extractDate(new Date().toISOString()))); /* getClockV2 */
+    const getTimestamp = () => ((({ fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit }) => (`${fullYear}-${zeroPaddedMonth}-${zeroPaddedDay}-at-${zeroPaddedHourTwentyFourHourClock}.${zeroPaddedHourTwelveHourClock}.${zeroPaddedMinute}.${zeroPaddedMiliSecondThreeDigit}`))(WillyHorizont.UtilsDate.extractDate(new Date().toISOString()))); /* getTimestampV2 */
     const AnyType = { "Null": "Null", "Undefined": "Undefined", "Boolean": "Boolean", "String": "String", "Numeric": "Numeric", "Object": "Object", "Array": "Array", "Function": "Function", "Error": "Error", "Date": "Date" };
     const checkIsNull = (anything) => ((Object.prototype.toString.call(anything) === "[object Null]") && (anything === null));
     const checkIsUndefined = (anything) => ((Object.prototype.toString.call(anything) === "[object Undefined]") && (anything === undefined));
@@ -72,11 +70,41 @@
         if (getType(pipeResult) === AnyType["Function"]) return pipeResult?.(pipeLastResultMap.get("result"));
         return pipeResult;
     };
+    const pipeOneLiner = (...restArguments) => (((pipeLastResultMap) => (((pipeResult) => (getType(pipeResult) === AnyType["Function"] ? (pipeResult(pipeLastResultMap.get("result"))) : (pipeResult)))(restArguments.reduce((currentResult, currentArgument) => ([(pipeLastResultMap.set("result", currentResult)), ((getType(currentResult) === AnyType["Undefined"]) ? currentArgument : ((getType(currentArgument) === AnyType["Function"]) ? currentArgument(currentResult) : undefined))].at(-1)), undefined))))(new Map()));
     const jsonStringify = (anything, { pretty = false } = {}) => ((temporaryMap) => ([(temporaryMap.set("f", ((anythingInner, { indent = " ".repeat(4), indentLevel = 0, argumentType = getType(anythingInner) } = {}) => ((checkIsStringIso8601(anythingInner) === true) ? (temporaryMap.get("f")({ "pretty": getClock(anythingInner), "ISO8601": anythingInner }, { indentLevel })) : ((argumentType === AnyType["Undefined"]) ? ('"undefined"') : ((argumentType === AnyType["Null"]) ? ("null") : ((argumentType === AnyType["Error"]) ? (`"${anythingInner.toString()}"`) : ((argumentType === AnyType["Date"]) ? (temporaryMap.get("f")({ "pretty": getClock(anythingInner), "ISO8601": anythingInner.toISOString() }, { indentLevel })) : ((argumentType === AnyType["String"]) ? (`"${anythingInner}"`) : (((argumentType === AnyType["Numeric"]) || (argumentType === AnyType["Boolean"])) ? (`${anythingInner}`) : ((argumentType === AnyType["Object"]) ? ((Object.keys(anythingInner).length === 0) ? ("{}") : ((Object.keys(anythingInner).includes("ISO8601") === true) ? (`${((pretty === true) ? (`{\n${indent.repeat(indentLevel + 1)}`) : "{ ")}${(`"pretty": "${anythingInner["pretty"]}"${(pretty === true) ? (`,\n${indent.repeat(indentLevel + 1)}`) : ", "}"ISO8601": "${anythingInner["ISO8601"]}"${(pretty === true) ? "," : ""}`)}${((pretty === true) ? (`\n${indent.repeat(indentLevel)}}`) : " }")}`) : (`${((pretty === true) ? (`{\n${indent.repeat(indentLevel + 1)}`) : "{ ")}${Object.entries(anythingInner).reduce((currentResult, [objectKey, objectValue], objectEntryIndex) => (`${currentResult}"${objectKey}": ${temporaryMap.get("f")(objectValue, { indentLevel: (indentLevel + 1) })}${((objectEntryIndex + 1) !== Object.keys(anythingInner).length) ? ((pretty === true) ? (`,\n${indent.repeat(indentLevel + 1)}`) : ", ") : ""}`), "")}${((pretty === true) ? (`\n${indent.repeat(indentLevel)}}`) : " }")}`))) : ((argumentType === AnyType["Array"]) ? ((anythingInner.length === 0) ? ("[]") : (`${((pretty === true) ? (`[\n${indent.repeat(indentLevel + 1)}`) : "[")}${anythingInner.reduce((currentResult, arrayItem, arrayItemIndex) => (`${currentResult}${temporaryMap.get("f")(arrayItem, { indentLevel: (indentLevel + 1) })}${((arrayItemIndex + 1) !== anythingInner.length) ? ((pretty === true) ? (`,\n${indent.repeat(indentLevel + 1)}`) : ", ") : ""}`), "")}${((pretty === true) ? (`\n${indent.repeat(indentLevel)}]`) : "]")}`)) : ((argumentType === AnyType["Function"]) ? (`"${anythingInner.toString()}"`) : (`${anythingInner}`)))))))))))))), (temporaryMap.get("f")(anything))].at(-1)))(new Map()); /* custom JSON.stringify() function jsonStringifyV5 */
     const randomIntInclusive = ({ lowerBound, upperBound, multiplier = 1 } = {}) => ((({ min, max }) => ((Math.floor(Math.random() * (max - min + 1)) + min) * multiplier))({ min: Math.ceil(lowerBound / multiplier), max: Math.floor(upperBound / multiplier) }));
     const removeDuplicateListItem = (anyArray, callbackFunction = ((anyArrayItem) => (anyArrayItem))) => (anyArray.reduce(([uniqueKeyMap, uniqueArray], anyArrayItem) => ((newUniqueKeyString) => ((uniqueKeyMap.get(newUniqueKeyString) !== undefined) ? [uniqueKeyMap, uniqueArray] : ([(uniqueKeyMap.set(newUniqueKeyString, anyArrayItem)), (uniqueArray.push(anyArrayItem)), ([uniqueKeyMap, uniqueArray])].at(-1))))(callbackFunction(anyArrayItem)), [new Map(), []]).at(-1)); /* removeDuplicateListItemV2 */
+    const fakeGenerator = () => {
+        let i = 0;
+        return ({
+            next() {
+                i += 1;
+                return { value: i, done: (i > 3) };
+            }
+        });
+    };
+    const generatorFunctionWrapper = (nextFunction, initialState) => ((function* () {
+        let state = initialState;
+
+        while (true) {
+            const nextFunctionResult = nextFunction(state);
+
+            const nextFunctionResultValue = (nextFunctionResult?.value ?? nextFunctionResult);
+
+            const nextFunctionResultNextState = (nextFunctionResult?.nextState ?? nextFunctionResultValue);
+
+            const isGeneratorFunctionDone = (nextFunctionResult?.done ?? false);
+
+            if (isGeneratorFunctionDone) return;
+
+            yield nextFunctionResultValue;
+            state = nextFunctionResultNextState;
+        }
+    })());
+    const increment = (start = 0) => generatorFunctionWrapper((current) => (current + 1), start);
+    const rangeInclusiveOneLiner = (startNumber, stopNumber) => (((stepNumber) => (generatorFunctionWrapper((current) => ((stepNumber === 0) ? (current) : (((stepNumber > 0) ? (current > stopNumber) : (current < stopNumber)) ? ({ done: true }) : ({ value: current, nextState: (current + stepNumber), done: false }))), startNumber)))((startNumber < stopNumber) ? 1 : ((startNumber > stopNumber) ? -1 : 0)));
     const rangeInclusive = function* (startNumber, stopNumber) {
-        const stepNumber = ((startNumber < stopNumber) ? 1 : (startNumber > stopNumber) ? -1 : 0);
+        const stepNumber = ((startNumber < stopNumber) ? 1 : ((startNumber > stopNumber) ? -1 : 0));
         if (stepNumber === 0) {
             yield startNumber;
             return;
@@ -106,27 +134,12 @@
         "Default": checkIsRgbHexColorLightLuminance,
     };
     const checkIsRgbHexColorLight = (anyString) => (ColorLightnessMethod["Default"](anyString));
-    const getValidRgbHexColor = (anything) => {
-        if (!anything) return null;
-        const rgbHexColor = anything.trim();
-        if (!(new RegExp("^#?[0-9a-fA-F]{3,6}$", "g").test(rgbHexColor))) return null;
-        if (!rgbHexColor.startsWith("#")) return `#${rgbHexColor}`;
-        return rgbHexColor;
-    };
+    const getValidRgbHexColor = (anything) => ((!anything) ? null : (((rgbHexColor) => ((!(new RegExp("^#?[0-9a-fA-F]{3,6}$", "g").test(rgbHexColor))) ? null : ((!rgbHexColor.startsWith("#")) ? (`#${rgbHexColor}`) : rgbHexColor)))(anything.trim())));
     const getInvertedRgbHexColorByParsePerChannel = (anyString) => (pipe((pipe((anyString.replace(new RegExp("^#", "g"), "")), ((rgbStringInitial) => ((rgbStringInitial.length === 3) ? (rgbStringInitial.split("").map((rgbDigit) => (rgbDigit + rgbDigit)).join("")) : rgbStringInitial)))), ((rgbString) => ([(255 - (parseInt(rgbString.slice(0, 2), 16))), (255 - (parseInt(rgbString.slice(2, 4), 16))), (255 - (parseInt(rgbString.slice(4, 6), 16)))])), (([r, g, b]) => (`#${[r, g, b].map((rgbDigit) => (rgbDigit).toString(16).padStart(2, "0")).join("")}`))));
     const getInvertedRgbHexColorByBitwiseXor = (anyString) => (pipe((pipe((anyString.replace(new RegExp("^#", "g"), "")), ((rgbStringInitial) => ((rgbStringInitial.length === 3) ? (rgbStringInitial.split("").map((rgbDigit) => (rgbDigit + rgbDigit)).join("")) : rgbStringInitial)))), ((rgbString) => (`#${(0xFFFFFF ^ parseInt(rgbString, 16)).toString(16).padStart(6, "0")}`))));
     const getInvertedRgbHexColorByBigInt = (anyString) => (pipe((pipe((anyString.replace(new RegExp("^#", "g"), "")), ((rgbStringInitial) => ((rgbStringInitial.length === 3) ? (rgbStringInitial.split("").map((rgbDigit) => (rgbDigit + rgbDigit)).join("")) : rgbStringInitial)))), ((rgbString) => (`#${(0xFFFFFFn ^ BigInt(rgbString)).toString(16).padStart(6, "0")}`))));
     const getInvertedRgbHexColorFromString = (anyString) => getInvertedRgbHexColorByParsePerChannel(anyString);
-    const getColorFromString = (anyString) => {
-        const rgbHexColorBackground = getRgbHexColorFromString(anyString);
-        const rgbHexColorText = getInvertedRgbHexColorFromString(rgbHexColorBackground);
-        const isRgbHexColorBackgroundLight = checkIsRgbHexColorLight(rgbHexColorBackground);
-        return ({
-            backgroundColor: rgbHexColorBackground,
-            textColor: rgbHexColorText,
-            isBackgroundColorLight: isRgbHexColorBackgroundLight,
-        });
-    };
+    const getColorFromString = (anyString) => (((rgbHexColorBackground) => ({ backgroundColor: rgbHexColorBackground, textColor: getInvertedRgbHexColorFromString(rgbHexColorBackground), isBackgroundColorLight: checkIsRgbHexColorLight(rgbHexColorBackground) }))(getRgbHexColorFromString(anyString)));
     const iterateList = (anyList, callbackFunction = ((anyArrayItem, anyArrayItemIndex, anyArray) => (undefined))) => {
         let i = 0;
         for (const listItem of anyList) {
@@ -165,16 +178,13 @@
     const throwError = (anyErrorMessage) => {
         throw new Error(anyErrorMessage);
     };
-    const getRandomString = (minLength = 2, maxLength = 10) => {
-        const characters = "abcdefghijklmnopqrstuvwxyz";
-        const lengthRandomString = (Math.floor(Math.random() * (maxLength - 1)) + minLength);
-        return (Array.from({ length: lengthRandomString }, () => (characters[Math.floor(Math.random() * characters.length)])).join(""));
-    };
+    const getRandomString = (minLength = 2, maxLength = 10) => ((({ characters, lengthRandomString }) => (Array.from({ length: lengthRandomString }, () => (characters[Math.floor(Math.random() * characters.length)])).join("")))({ characters: "abcdefghijklmnopqrstuvwxyz", lengthRandomString: (Math.floor(Math.random() * (maxLength - 1)) + minLength) }));
 
     return {
         regexPattern,
         getNumberDifferenceInNumeric,
         getMostFrequent,
+        getMostFrequentOneLiner,
         pickArrayItemRandomly,
         parseEscapeSequence,
         pythonLikeSleep,
@@ -198,11 +208,13 @@
         checkIsDate,
         getType,
         pipe,
+        pipeOneLiner,
         jsonStringify,
         randomIntInclusive,
         replaceAnyLineBreak,
         removeDuplicateListItem,
         rangeInclusive,
+        rangeInclusiveOneLiner,
         generatorExpression,
         listComprehension,
         getRgbHexColorFromString,
@@ -223,5 +235,6 @@
         getRandomString,
         safeGetObjectProperty,
         checkIsMethodAvailable,
+        increment,
     };
 });
