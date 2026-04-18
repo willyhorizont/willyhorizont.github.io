@@ -10,10 +10,12 @@
     --light-border-color: #cccccc;
     --dark-border-color: #222222;
 
-    --light-background-color: #ffffff;
+    --light-background-color: #fff;
+    --light-background-focus-color: #eee;
     --light-text-color: #000000;
 
     --dark-background-color: #121212;
+    --dark-background-focus-color: #181818;
     --dark-text-color: #ffffff;
 
     --safe-background-color-1: #8a8a00;

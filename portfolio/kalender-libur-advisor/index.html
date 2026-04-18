@@ -724,7 +724,7 @@
                                 // console.log({ zyxCalendarEventHolidayIndonesiaRawNew });
                                 break;
                             }
-                            await WillyHorizont.Utils.pythonLikeSleep(WillyHorizont.Utils.randomIntInclusive(5, 10));
+                            await WillyHorizont.Utils.pythonLikeSleep(WillyHorizont.Utils.randomIntInclusive({ lowerBound: 5, upperBound: 10 }));
                             console.log("waiting data from Google Calendar");
                         }
                         if (zyxCalendarEventHolidayIndonesiaRawNew === null) {

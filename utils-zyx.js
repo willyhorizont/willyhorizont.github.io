@@ -12,7 +12,7 @@
         throw new Error("WillyHorizont.UtilsZyx requires WillyHorizont.Utils and WillyHorizont.UtilsWeb to be loaded first");
     }
 
-    const pickStringChunkRandomly = (anyEvenLengthString, stringChunkLength) => ((({ stringChunkIndex }) => (anyEvenLengthString.slice((stringChunkIndex * stringChunkLength), ((stringChunkIndex * stringChunkLength) + stringChunkLength))))({ stringChunkIndex: WillyHorizont.Utils.randomIntInclusive(0, ((anyEvenLengthString.length / stringChunkLength) - 1)) }));
+    const pickStringChunkRandomly = (anyEvenLengthString, stringChunkLength) => ((({ stringChunkIndex }) => (anyEvenLengthString.slice((stringChunkIndex * stringChunkLength), ((stringChunkIndex * stringChunkLength) + stringChunkLength))))({ stringChunkIndex: WillyHorizont.Utils.randomIntInclusive({ lowerBound: 0, upperBound: ((anyEvenLengthString.length / stringChunkLength) - 1) }) }));
     const characterSetZyxPassvvord = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_");
     const getZyxPassvvordPrefixString = () => (({ myFriendMomFavoriteNumberCombination, myFriendDadFavoriteNumberCombination }) => myFriendMomFavoriteNumberCombination.split("").reduce((currentResult, currentCharacter, currentCharacterIndex) => (`${currentResult}${characterSetZyxPassvvord[parseInt((`${myFriendMomFavoriteNumberCombination.charAt(currentCharacterIndex)}${myFriendDadFavoriteNumberCombination.charAt(currentCharacterIndex)}`), 10)]}`), ""))({ myFriendMomFavoriteNumberCombination: "005215", myFriendDadFavoriteNumberCombination: "081680" });
     // const zyxPassvvordSuffixStringCalendar = ("Bo6Ggn8qJwveMlZ2dw3wRmWmH5odxYXzYDHoGFBaW1JDdSbw94Vqm2Keww-FxfpJiADHoGFBaW1JDdSbw94Vqm2Keww-FxfpJiB");

@@ -48,13 +48,10 @@
 
         <style>
             .grid-table-container {
-                /* width: 60vw; */
-                /* height: 60vh; */
                 width: calc(100% - var(--scroll-width));
                 min-height: 10vw;
                 max-height: var(--max-height, 10vw);
                 overflow: auto;
-
                 position: relative;
             }
 
@@ -65,11 +62,11 @@
             }
 
             .grid-table-cell {
-                border: 1px solid #ccc;
+                border: 1px solid var(--light-border-color);
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                background: #fff;
+                background-color: var(--light-background-color);
             }
 
             .grid-table-cell input {
@@ -83,47 +80,55 @@
             }
 
             .grid-table-cell input:focus {
-                background: #e3f2fd;
+                background-color: var(--light-background-focus-color);
             }
 
-            /* HEADER STICKY */
+            .grid-table-cell input.highlight {
+                background-color: var(--light-background-focus-color);
+            }
+
             .grid-table-sticky-header-row {
                 position: sticky;
                 top: 0;
-                background: #f5f5f5;
+                background-color: var(--light-background-color);
                 z-index: 1;
             }
 
-            /* LEFT COLUMN */
+            .grid-table-sticky-header-row.highlight {
+                background-color: var(--light-background-focus-color);
+            }
+
             .grid-table-number-column {
                 position: sticky;
                 left: 0;
-                background: #f5f5f5;
+                background-color: var(--light-background-color);
                 z-index: 0;
             }
 
-            .grid-table-corner {
+            .grid-table-number-column.highlight {
+                background-color: var(--light-background-focus-color);
+            }
+
+            .grid-table-top-left-corner {
                 position: sticky;
                 left: 0;
                 z-index: 2;
-                background: #ddd;
+                background-color: var(--light-background-color);
             }
 
-            /* SCORE ROW (BOTTOM) */
             .score-row {
-                background: #222;
-                color: #fff;
+                background-color: var(--accent-color-2);
+                color: var(--dark-text-color);
                 font-weight: bold;
             }
 
-            /* button */
             .add-button {
                 cursor: pointer;
-                background: #fafafa;
+                background-color: var(--light-background-color);
                 font-weight: bold;
             }
             .add-button:hover {
-                background: #e0e0e0;
+                background-color: var(--light-background-focus-color);
             }
 
             /* html[data-theme="dark"] {
@@ -135,9 +140,22 @@
         </header>
         <main>
             <div style="padding: 8px;">
-                <h1 style="text-align: center;">Score Counter</h1>
-                <div style="padding: 4px; width: 100%; display: flex; flex-direction: column; align-items: center;">
-                    <button onclick="resetGame()" style="padding: 0.2em 0.4em; background-color: var(--accent-color-4); color: var(--dark-text-color);">Reset Game</button>
+                <div style="padding: 4px; width: 100%; display: flex; flex-direction: row; justify-content: center; align-items: center ; gap: 8px;">
+                    <h1 style="text-align: center;">Score Counter</h1>
+                    <button onclick="resetGame()" style="height: fit-content; padding: 0.2em 0.4em; border-radius: 0.5em; background-color: var(--accent-color-4); color: var(--dark-text-color);">Reset Game</button>
+                </div>
+                <div style="padding: 4px; width: 100%; display: flex; flex-direction: row; justify-content: center; align-items: center ; gap: 8px;">
+                    <div style="display: flex; flex-direction: row; justify-content: center; column-gap: 8px;">
+                        <p>selected player:</p>
+                        <p id="selected-column" data-column-index="" data-column-letter="">NULL</p>
+                        <button onclick="deleteSelectedColumn()" style="height: fit-content; padding: 0.2em 0.4em; border-radius: 0.5em; background-color: var(--accent-color-4); color: var(--dark-text-color);">Delete</button>
+                    </div>
+                    <p>—</p>
+                    <div style="display: flex; flex-direction: row; justify-content: center; column-gap: 8px;">
+                        <p>selected #:</p>
+                        <p id="selected-row" data-row-number="">NULL</p>
+                        <button onclick="deleteSelectedRow()" style="height: fit-content; padding: 0.2em 0.4em; border-radius: 0.5em; background-color: var(--accent-color-4); color: var(--dark-text-color);">Delete</button>
+                    </div>
                 </div>
                 <div style="padding: 4px; width: 100%; display: flex; flex-direction: column; align-items: flex-end;">
                     <div class="grid-table-container">
@@ -170,8 +188,8 @@
 
             const LOCAL_STORAGE_KEY_COLUMN = "score-counter-column";
             const LOCAL_STORAGE_KEY_ROW = "score-counter-row";
-            const initialColumnCount = (WillyHorizont.UtilsWeb.IS_IN_DEVELOPMENT_MODE ? 20 : 1);
-            const initialRowCount = (WillyHorizont.UtilsWeb.IS_IN_DEVELOPMENT_MODE ? 80 : 1);
+            const initialColumnCount = 1;
+            const initialRowCount = 1;
             const getColumnCount = () => (parseInt(localStorage.getItem(LOCAL_STORAGE_KEY_COLUMN), 10) || initialColumnCount);
             const getRowCount = () => (parseInt(localStorage.getItem(LOCAL_STORAGE_KEY_ROW), 10) || initialRowCount);
             const setColumnCount = (newColumnCount) => localStorage.setItem(LOCAL_STORAGE_KEY_COLUMN, newColumnCount);
@@ -184,41 +202,42 @@
                 renderMainContent();
             }
 
-            const getColumnName = (columnIndexZeroBased) => {
+            const getColumnLetter = (columnIndexZeroBased) => {
                 const charCode = {
                     "A": 65,
                 };
                 const azLength = 26;
-                let columnName = "";
+                let columnLetter = "";
                 let currentIndexOneBased = (columnIndexZeroBased + 1);
                 while (currentIndexOneBased > 0) {
                     const remainderZeroToTwentyFive = ((currentIndexOneBased - 1) % azLength);
                     const currentCharacter = String.fromCharCode(charCode["A"] + remainderZeroToTwentyFive);
-                    columnName = `${currentCharacter}${columnName}`;
+                    columnLetter = `${currentCharacter}${columnLetter}`;
                     currentIndexOneBased = Math.floor((currentIndexOneBased - 1) / azLength);
                 }
-                return columnName;
+                return columnLetter;
             };
 
-            const createHtmlElementEmptyContainer = (elementForPlusButtonToFindClass) => (WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
-                <div class="grid-table-cell ${elementForPlusButtonToFindClass}">
+            const createHtmlElementEmptyContainer = (elementForPlusButtonToFindClass, { columnIndexZeroBased, rowIndexOneBased } = {}) => (((datasets) => (WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+                <div class="grid-table-cell ${elementForPlusButtonToFindClass}"${datasets}>
                 </div>
-            `));
+            `)))(((columnIndexZeroBased === undefined) && (rowIndexOneBased === undefined)) ? ("") : (`data-row-number="${rowIndexOneBased}" data-column-letter="${getColumnLetter(columnIndexZeroBased)}" data-column-index="${columnIndexZeroBased}"`)));
 
-            const createHtmlElementHeaderRowContainer = (columnIndexZeroBased) => (((columnName) => (WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+            const createHtmlElementHeaderRowContainer = (columnIndexZeroBased) => ((({ columnIndex, columnLetter }) => (WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
                     <div class="grid-table-cell grid-table-sticky-header-row">
-                        <input type="text" name="cell-header-input-${columnName}" autocomplete="off" value="${columnName}" />
+                        <input type="text" name="header-cell-input-${columnLetter}" data-id="header-cell-input" data-column-index="${columnIndex}" data-column-letter="${columnLetter}" autocomplete="off" value="${columnLetter}" oninput="handleElementInputUpdatePlayerName(this)" onfocus="handleElementCellInputGetSelectedCell(this)" onblur="handleElementCellInputGetSelectedCell(this)" />
                     </div>
-                `)))(getColumnName(columnIndexZeroBased)));
+                `)))({ columnIndex: columnIndexZeroBased, columnLetter: getColumnLetter(columnIndexZeroBased) }));
             
-            const createHtmlElementCellInputContainer = (rowIndexOneBased, columnIndexZeroBased) => (((columnName) => (WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+            // <input type="text" name="cell-input-${columnLetter}${rowIndexOneBased}" autocomplete="off" data-id="cell-input" data-row-number="${rowIndexOneBased}" data-column-letter="${columnLetter}" data-column-index="${columnIndexZeroBased}" oninput="handleElementInputUpdateCurrentColumnScore(this)" onfocus="handleElementBlurCellInputAddHighlight(this)" onblur="handleElementBlurCellInputRemoveHighlight(this)" />
+            const createHtmlElementCellInputContainer = (rowIndexOneBased, columnIndexZeroBased) => (((columnLetter) => (WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
                     <div class="grid-table-cell">
-                        <input type="text" name="cell-input-${columnName}${rowIndexOneBased}" autocomplete="off" data-column-name="${columnName}" oninput="handleElementInputUpdateCurrentColumnScore('${columnName}')" />
+                        <input type="text" name="cell-input-${columnLetter}${rowIndexOneBased}" autocomplete="off" data-id="cell-input" data-row-number="${rowIndexOneBased}" data-column-letter="${columnLetter}" data-column-index="${columnIndexZeroBased}" oninput="handleElementInputUpdateCurrentColumnScore(this)" onfocus="handleElementCellInputGetSelectedCell(this)" onblur="handleElementCellInputGetSelectedCell(this)" />
                     </div>
-                `)))(getColumnName(columnIndexZeroBased)));
+                `)))(getColumnLetter(columnIndexZeroBased)));
 
             const createHtmlElementScoreColumnCell = (columnIndexZeroBased) => (WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
-                <div class="grid-table-cell score-row" data-current-column-score="${getColumnName(columnIndexZeroBased)}">
+                <div class="grid-table-cell score-row" data-id="current-column-score-summary" data-column-letter="${getColumnLetter(columnIndexZeroBased)}" data-column-index="${columnIndexZeroBased}">
                     0
                 </div>
             `));
@@ -227,7 +246,7 @@
                 const htmlElementGrid = document.getElementById("grid-table");
                 
                 htmlElementGrid.appendChild(WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
-                    <div class="grid-table-cell grid-table-corner grid-table-sticky-header-row">
+                    <div class="grid-table-cell grid-table-top-left-corner grid-table-sticky-header-row">
                         #
                     </div>
                 `));
@@ -237,14 +256,14 @@
                 }
 
                 htmlElementGrid.appendChild(WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
-                    <div class="grid-table-cell grid-table-sticky-header-row add-button ${elementForPlusButtonToFindClassList['add-vertical-cell-plus-button']}" onclick="handleElementClickAddRowButton()">
+                    <div class="grid-table-cell grid-table-sticky-header-row add-button ${elementForPlusButtonToFindClassList['add-vertical-cell-plus-button']}" onclick="handleElementClickAddHorizontalCellButton()">
                         +
                     </div>
                 `));
             };
 
             const createHtmlElementNumberColumn = (rowIndexOneBased) => (WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
-                <div class="grid-table-cell grid-table-number-column">
+                <div class="grid-table-cell grid-table-number-column" data-number-column-row-number="${rowIndexOneBased}">
                     ${rowIndexOneBased}
                 </div>
             `));
@@ -255,11 +274,13 @@
                 for (let rowIndexOneBased = 1; (rowIndexOneBased <= getRowCount()); rowIndexOneBased += 1) {
                     htmlElementGrid.appendChild(createHtmlElementNumberColumn(rowIndexOneBased));
 
-                    for (let columnIndexZeroBased = 0; (columnIndexZeroBased < getColumnCount()); columnIndexZeroBased += 1) {
+                    const columnCount = getColumnCount();
+
+                    for (let columnIndexZeroBased = 0; (columnIndexZeroBased < columnCount); columnIndexZeroBased += 1) {
                         htmlElementGrid.appendChild(createHtmlElementCellInputContainer(rowIndexOneBased, columnIndexZeroBased));
                     }
 
-                    htmlElementGrid.appendChild(createHtmlElementEmptyContainer(elementForPlusButtonToFindClassList["vertical-blank-cells"]));
+                    htmlElementGrid.appendChild(createHtmlElementEmptyContainer(elementForPlusButtonToFindClassList["vertical-blank-cells"], { rowIndexOneBased, columnIndexZeroBased: columnCount }));
                 }
             };
 
@@ -267,11 +288,13 @@
                 const htmlElementGrid = document.getElementById("grid-table");
 
                 htmlElementGrid.appendChild(WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
-                    <div class="grid-table-cell grid-table-number-column add-button ${elementForPlusButtonToFindClassList['add-horizontal-cell-plus-button']}" onclick="handleElementClickAddColumnButton(this)">
+                    <div class="grid-table-cell grid-table-number-column add-button ${elementForPlusButtonToFindClassList['add-horizontal-cell-plus-button']}" onclick="handleElementClickAddVerticalCellButton(this)">
                         +
                     </div>
                 `));
 
+                const rowIndexOneBased = getRowCount();
+                
                 for (let columnIndexZeroBased = 0; (columnIndexZeroBased < getColumnCount()); columnIndexZeroBased += 1) {
                     htmlElementGrid.appendChild(createHtmlElementEmptyContainer(elementForPlusButtonToFindClassList["horizontal-blank-cells"]));
                 }
@@ -294,7 +317,6 @@
 
                 htmlElementGrid.appendChild(WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
                     <div class="grid-table-cell score-row ${elementForPlusButtonToFindClassList["score-rows-blank-cell"]}">
-                        +
                     </div>
                 `));
             };
@@ -305,12 +327,19 @@
                 htmlElementGrid.style.setProperty("grid-template-columns", getStyleGridTemplateColumns());
             };
 
-            function handleElementClickAddColumnButton(htmlElementAddHorizontalCellPlusButton) {
+            function handleElementInputUpdatePlayerName(htmlElementHeaderCellInput) {
+                const { backgroundColor, isBackgroundColorLight } = WillyHorizont.Utils.getColorFromString(htmlElementHeaderCellInput.value);
+                const textColor = (isBackgroundColorLight ? "var(--light-text-color)" : "var(--dark-text-color)");
+                htmlElementHeaderCellInput.style.setProperty("background-color", backgroundColor);
+                htmlElementHeaderCellInput.style.setProperty("color", textColor);
+            }
+
+            function handleElementClickAddVerticalCellButton(htmlElementAddHorizontalCellPlusButton) {
                 setRowCount(getRowCount() + 1);
 
                 const rowCount = getRowCount();
-                // const columnCount = getColumnCount();
-                // console.log({ columnName: getColumnName(columnCount), columnCount, rowCount, id: elementForPlusButtonToFindClassList["add-horizontal-cell-plus-button"] });
+                const columnCount = getColumnCount();
+                // console.log({ columnLetter: getColumnLetter(columnCount), columnCount, rowCount, id: elementForPlusButtonToFindClassList["add-horizontal-cell-plus-button"] });
                 
                 const htmlElementGrid = document.getElementById("grid-table");
 
@@ -322,7 +351,7 @@
                     newRows.push(createHtmlElementCellInputContainer(rowCount, columnIndexZeroBased));
                 }
 
-                newRows.push(createHtmlElementEmptyContainer(elementForPlusButtonToFindClassList["vertical-blank-cells"]));
+                newRows.push(createHtmlElementEmptyContainer(elementForPlusButtonToFindClassList["vertical-blank-cells"], { rowIndexOneBased: rowCount, columnIndexZeroBased: columnCount }));
 
                 // htmlElementGrid.querySelector(`[class~="${elementForPlusButtonToFindClassList['add-horizontal-cell-plus-button']}"]`).before(...newRows);
                 htmlElementAddHorizontalCellPlusButton.before(...newRows);
@@ -330,12 +359,14 @@
                 htmlElementGrid.style.setProperty("grid-template-columns", getStyleGridTemplateColumns());
             }
 
-            function handleElementClickAddRowButton() {
+            function handleElementClickAddHorizontalCellButton() {
                 setColumnCount(getColumnCount() + 1);
+
+                htmlElementGrid.style.setProperty("grid-template-columns", getStyleGridTemplateColumns());
 
                 const columnCount = getColumnCount();
                 // const rowCount = getRowCount();
-                // console.log({ columnName: getColumnName(columnCount - 1), columnCount, rowCount, id: elementForPlusButtonToFindClassList["add-vertical-cell-plus-button"] });
+                // console.log({ columnLetter: getColumnLetter(columnCount - 1), columnCount, rowCount, id: elementForPlusButtonToFindClassList["add-vertical-cell-plus-button"] });
 
                 const htmlElementGrid = document.getElementById("grid-table");
 
@@ -345,32 +376,223 @@
                     htmlElementGrid.insertBefore((createHtmlElementCellInputContainer((rowIndexZeroBased + 1), (columnCount - 1))), (htmlElementDataRowEmptyColumn));
                 });
 
+                const rowIndexOneBased = getRowCount();
+                const columnIndexZeroBased = (columnCount - 1);
+
                 htmlElementGrid.insertBefore((createHtmlElementEmptyContainer(elementForPlusButtonToFindClassList["horizontal-blank-cells"])), (htmlElementGrid.querySelector(`[class~="${elementForPlusButtonToFindClassList['plus-button-joint-blank-cell']}"]`)));
 
-                htmlElementGrid.insertBefore(createHtmlElementScoreColumnCell(columnCount - 1), htmlElementGrid.querySelector(`[class~="${elementForPlusButtonToFindClassList['score-rows-blank-cell']}"]`));
-                
-                htmlElementGrid.style.setProperty("grid-template-columns", getStyleGridTemplateColumns());
+                htmlElementGrid.insertBefore(createHtmlElementScoreColumnCell(columnIndexZeroBased), htmlElementGrid.querySelector(`[class~="${elementForPlusButtonToFindClassList['score-rows-blank-cell']}"]`));
             }
 
-            function handleElementInputUpdateCurrentColumnScore(columnName) {
+            function updateCurrentColumnScore(columnIndex) {
                 let currentCollumnScoreSummary = 0;
 
-                const htmlElementCurrentColumnCellInputs = document.querySelectorAll(`input[data-column-name="${columnName}"]`);
-                htmlElementCurrentColumnCellInputs.forEach((htmlElementCurrentColumnCellInput) => {
-                    const htmlElementCurrentColumnCellInputValue = parseFloat(htmlElementCurrentColumnCellInput?.value);
+                document.querySelectorAll(`[data-id="cell-input"][data-column-index="${columnIndex}"]`).forEach((htmlElementCurrentColumnCellInput) => {
+                    const htmlElementCurrentColumnCellInputValue = parseInt(htmlElementCurrentColumnCellInput.value, 10);
                     if (WillyHorizont.Utils.checkIsNumeric(htmlElementCurrentColumnCellInputValue)) currentCollumnScoreSummary += htmlElementCurrentColumnCellInputValue;
                 });
 
-                const htmlElementScoreColumnCell = document.querySelector(`[data-current-column-score="${columnName}"]`);
-                if (htmlElementScoreColumnCell) htmlElementScoreColumnCell.textContent = currentCollumnScoreSummary;
+                document.querySelector(`[data-id=current-column-score-summary][data-column-index="${columnIndex}"]`).textContent = currentCollumnScoreSummary;
             }
 
-            const renderMainContent = () => {
+            function handleElementInputUpdateCurrentColumnScore(htmlElementCellInputCurrent) {
+                const columnIndex = htmlElementCellInputCurrent.getAttribute("data-column-index");
+
+                updateCurrentColumnScore(columnIndex);
+            }
+
+            function updateAllColumnScore() {
+                for (let columnIndexZeroBased = 0; (columnIndexZeroBased < getColumnCount()); columnIndexZeroBased += 1) {
+                    updateCurrentColumnScore(columnIndexZeroBased);
+                }
+            }
+
+            function handleElementFocusCellInputAddHightlight(htmlElementCellInputCurrent) {
+                const selectedCellInputColumnIndex = parseInt(htmlElementCellInputCurrent.getAttribute("data-column-index"), 10);
+                const selectedCellInputColumnLetter = htmlElementCellInputCurrent.getAttribute("data-column-letter");
+                const selectedCellInputRowNumber = parseInt(htmlElementCellInputCurrent.getAttribute("data-row-number"), 10);
+
+                document.querySelector(`[data-id="header-cell-input"][data-column-index="${selectedCellInputColumnIndex}"]`).classList.add("highlight");
+                document.querySelector(`[data-number-column-row-number="${selectedCellInputRowNumber}"]`).classList.add("highlight");
+
+                document.querySelectorAll(`[data-id="cell-input"]`).forEach((htmlElementCurrentColumnCellInput) => {
+                    const currentCellInputColumnIndex = parseInt(htmlElementCurrentColumnCellInput.getAttribute("data-column-index"), 10);
+                    const currentCellInputColumnLetter = htmlElementCurrentColumnCellInput.getAttribute("data-column-letter");
+                    const currentCellInputRowNumber = parseInt(htmlElementCurrentColumnCellInput.getAttribute("data-row-number"), 10);
+                    const isColumnLetterAndRowNumberMatch = ((currentCellInputColumnLetter === selectedCellInputColumnLetter) || (currentCellInputRowNumber === selectedCellInputRowNumber));
+                    if (isColumnLetterAndRowNumberMatch && ((currentCellInputColumnIndex < selectedCellInputColumnIndex) || (currentCellInputRowNumber < selectedCellInputRowNumber))) {
+                        htmlElementCurrentColumnCellInput.classList.add("highlight");
+                        return;
+                    }
+                    htmlElementCurrentColumnCellInput.classList.remove("highlight");
+                });
+            }
+
+            function handleElementBlurCellInputRemoveHighlight(htmlElementCellInputCurrent) {
+                const selectedCellInputColumnLetter = htmlElementCellInputCurrent.getAttribute("data-column-letter");
+                const selectedCellInputRowNumber = htmlElementCellInputCurrent.getAttribute("data-row-number");
+
+                document.querySelector(`[data-id="header-cell-input"][data-column-index="${selectedCellInputColumnIndex}"]`).classList.remove("highlight");
+                document.querySelector(`[data-number-column-row-number="${selectedCellInputRowNumber}"]`).classList.remove("highlight");
+
+                document.querySelectorAll(`[data-id="cell-input"]`).forEach((htmlElementCurrentColumnCellInput) => {
+                    htmlElementCurrentColumnCellInput.classList.remove("highlight");
+                });
+            }
+
+            const  setSelectedCellTextContent = ({ selectedCellInputColumnIndex, selectedCellInputColumnLetter, selectedCellInputRowNumber }) => {
+                const selectedPlayer = document.querySelector(`[data-id="header-cell-input"][data-column-index="${selectedCellInputColumnIndex}"]`);
+                const selectedColumn = document.getElementById("selected-column");
+                selectedColumn.textContent = ((selectedPlayer ? selectedPlayer.value : undefined) || "NULL");
+                selectedColumn.setAttribute("data-column-index", selectedCellInputColumnIndex);
+                selectedColumn.setAttribute("data-column-letter", selectedCellInputColumnLetter);
+                const selectedRow = document.getElementById("selected-row");
+                selectedRow.textContent = (selectedCellInputRowNumber || "NULL");
+                selectedRow.setAttribute("data-row-number", selectedCellInputRowNumber);
+            };
+
+            function handleElementCellInputGetSelectedCell(htmlElementCellInputCurrent) {
+                const selectedCellInputColumnIndex = (htmlElementCellInputCurrent.getAttribute("data-column-index") || "");
+                const selectedCellInputColumnLetter = (htmlElementCellInputCurrent.getAttribute("data-column-letter") || "");
+                const selectedCellInputRowNumber = (htmlElementCellInputCurrent.getAttribute("data-row-number") || "");
+                setSelectedCellTextContent({ selectedCellInputColumnIndex, selectedCellInputColumnLetter, selectedCellInputRowNumber });
+            }
+
+            function deleteSelectedColumn() {
+                const columnCount = getColumnCount();
+                if (columnCount === 1) return;
+
+                const selectedColumn = document.getElementById("selected-column");
+                const selectedCellInputColumnIndex = parseInt(selectedColumn.getAttribute("data-column-index"), 10);
+
+                if (!WillyHorizont.Utils.checkIsNumeric(selectedCellInputColumnIndex)) return;
+
+                const selectedRow = document.getElementById("selected-row");
+                const selectedCellInputRowNumber = parseInt(selectedRow.getAttribute("data-row-number"), 10);
+
+                setColumnCount(columnCount - 1);
+
+                for (let columnIndexZeroBased = selectedCellInputColumnIndex; (columnIndexZeroBased < columnCount); columnIndexZeroBased += 1) {
+                    const htmlElementCurrentHeaderCellInput = document.querySelector(`[data-id="header-cell-input"][data-column-index="${columnIndexZeroBased}"]`);
+                    const htmlElementNextHeaderCellInput = document.querySelector(`[data-id="header-cell-input"][data-column-index="${columnIndexZeroBased + 1}"]`);
+                    if (htmlElementNextHeaderCellInput) {
+                        htmlElementCurrentHeaderCellInput.value = htmlElementNextHeaderCellInput.value;
+                        htmlElementCurrentHeaderCellInput.style.setProperty("background-color", htmlElementNextHeaderCellInput.style.getPropertyValue("background-color"));
+                        htmlElementCurrentHeaderCellInput.style.setProperty("color", htmlElementNextHeaderCellInput.style.getPropertyValue("color"));
+                    }
+
+                    document.querySelectorAll(`[data-id="cell-input"][data-column-index="${columnIndexZeroBased}"]`).forEach((htmlElementCellInput) => {
+                        const currentRowNumber = parseInt(htmlElementCellInput.getAttribute("data-row-number"), 10);
+                        const htmlElementCellInputNext = document.querySelector(`[data-id="cell-input"][data-column-index="${columnIndexZeroBased + 1}"][data-row-number="${currentRowNumber}"]`);
+                        if (!htmlElementCellInputNext) return;
+                        const htmlElementCellInputNextValue = parseInt(htmlElementCellInputNext.value, 10);
+                        const htmlElementCellInputNextName = htmlElementCellInputNext.getAttribute("name");
+                        const htmlElementCellInputNextDataRowNumber = parseInt(htmlElementCellInputNext.getAttribute("data-row-number"), 10);
+                        const htmlElementCellInputNextDataColumnLetter = htmlElementCellInputNext.getAttribute("data-column-letter");
+                        const htmlElementCellInputNextDataColumnIndex = parseInt(htmlElementCellInputNext.getAttribute("data-column-index"), 10);
+                        htmlElementCellInput.value = htmlElementCellInputNextValue;
+                    });
+
+                    const htmlElementCurrentColumnScoreSummary = document.querySelector(`[data-id=current-column-score-summary][data-column-index="${columnIndexZeroBased}"]`);
+                    const htmlElementNextColumnScoreSummary = document.querySelector(`[data-id=current-column-score-summary][data-column-index="${columnIndexZeroBased + 1}"]`);
+                    if (htmlElementNextColumnScoreSummary) htmlElementCurrentColumnScoreSummary.textContent = parseInt(htmlElementNextColumnScoreSummary.textContent, 10);
+                }
+
+                document.getElementById("grid-table").style.setProperty("grid-template-columns", getStyleGridTemplateColumns());
+
+                document.querySelector(`[data-id="header-cell-input"][data-column-index="${columnCount - 1}"]`).parentElement.remove();
+
+                document.querySelectorAll(`[data-id="cell-input"][data-column-index="${columnCount - 1}"]`).forEach((htmlElementCurrentColumnCellInput) => {
+                    htmlElementCurrentColumnCellInput.parentElement.remove();
+                });
+                
+                document.querySelector(`[class~="element-for-plus-button-to-find-horizontal-blank-cells"]`).remove();
+
+                document.querySelector(`[data-id="current-column-score-summary"][data-column-index="${columnCount - 1}"]`).remove();
+
+                setSelectedCellTextContent({ selectedCellInputColumnIndex: "", selectedCellInputColumnLetter: "", selectedCellInputRowNumber: "" });
+            }
+
+            const deleteLastRowCellInput = () => {
+                const rowCount = getRowCount();
+                if (rowCount === 1) return;
+
+                document.querySelector(`[data-number-column-row-number="${rowCount}"]`).remove();
+
+                document.querySelectorAll(`[data-id="cell-input"][data-row-number="${rowCount}"]`).forEach((htmlElementCurrentColumnCellInput) => {
+                    htmlElementCurrentColumnCellInput.parentElement.remove();
+                });
+
+                document.querySelector(`[class~="${elementForPlusButtonToFindClassList['vertical-blank-cells']}"][data-row-number="${rowCount}"]`).remove();
+            };
+
+            function deleteSelectedRow() {
+                const rowCount = getRowCount();
+                if (rowCount === 1) return;
+
+                const selectedRow = document.getElementById("selected-row");
+                const selectedCellInputRowNumber = parseInt(selectedRow.getAttribute("data-row-number"), 10);
+
+                if (!WillyHorizont.Utils.checkIsNumeric(selectedCellInputRowNumber)) return;
+
+                const selectedColumn = document.getElementById("selected-column");
+                const selectedCellInputColumnIndex = parseInt(selectedColumn.getAttribute("data-column-index"), 10);
+
+                const htmlElementSelectedCellInputValue = parseInt(document.querySelector(`[data-id="cell-input"][data-column-index="${selectedCellInputColumnIndex}"][data-row-number="${selectedCellInputRowNumber}"]`).value, 10);
+                const htmlElementCurrentColumnScoreSummary = document.querySelector(`[data-id=current-column-score-summary][data-column-index="${selectedCellInputColumnIndex}"]`);
+                const currentCollumnScoreSummaryNew = parseInt(htmlElementCurrentColumnScoreSummary.textContent, 10) - htmlElementSelectedCellInputValue;
+                htmlElementCurrentColumnScoreSummary.textContent = currentCollumnScoreSummaryNew;
+
+                for (let rowIndexOneBased = selectedCellInputRowNumber; (rowIndexOneBased <= rowCount); rowIndexOneBased += 1) {
+                    document.querySelectorAll(`[data-id="cell-input"][data-row-number="${rowIndexOneBased}"]`).forEach((htmlElementCellInput) => {
+                        const currentColumnIndexZeroBased = parseInt(htmlElementCellInput.getAttribute("data-column-index"), 10);
+                        const htmlElementCellInputNext = document.querySelector(`[data-id="cell-input"][data-row-number="${rowIndexOneBased + 1}"][data-column-index="${currentColumnIndexZeroBased}"]`);
+
+                        if (!htmlElementCellInputNext) return;
+
+                        htmlElementCellInput.value = parseInt(htmlElementCellInputNext.value, 10);
+                    });
+                }
+
+                deleteLastRowCellInput();
+
+                setRowCount(rowCount - 1);
+
+                setSelectedCellTextContent({ selectedCellInputColumnIndex: "", selectedCellInputColumnLetter: "", selectedCellInputRowNumber: "" });
+            }
+
+            const fillDummyData = () => {
+                document.querySelectorAll(`[data-id="cell-input"]`).forEach((htmlElementCellInput) => {
+                    // htmlElementCellInput.value = WillyHorizont.Utils.randomIntInclusive({ lowerBound: -530, upperBound: 310, multiplier: 5 });
+                    // htmlElementCellInput.value = WillyHorizont.Utils.randomIntInclusive({ lowerBound: -500, upperBound: 300, multiplier: 5 });
+                    htmlElementCellInput.value = WillyHorizont.Utils.randomIntInclusive({ lowerBound: -5, upperBound: 300, multiplier: 100 });
+                    // htmlElementCellInput.value = 100;
+                });
+            };
+
+            const main = () => {
                 resetGridTable();
                 appendHeaderRows();
                 appendDataRows();
                 appendAddHorizontalCellRows();
                 appendScoreRows();
+            };
+
+            const renderMainContent = () => {
+                if (!WillyHorizont.UtilsWeb.IS_IN_DEVELOPMENT_MODE) {
+                    main();
+                    return;
+                }
+
+                // setColumnCount(20);
+                // setRowCount(80);
+                setColumnCount(4);
+                setRowCount(10);
+
+                main();
+
+                fillDummyData();
+                updateAllColumnScore();
             };
 
             renderMainContent();
