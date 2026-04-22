@@ -2,6 +2,7 @@
 <html lang="en" spellcheck="false">
     <head>
         <script src="../requirement.js"></script>
+
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="author" content="Willy Horizont" />
@@ -12,25 +13,22 @@
         <link rel="icon" type="image/png" sizes="512x512" href="../android-chrome-512x512.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png" />
 
-        <meta name="description" content="Web Browser Detector by Willy Horizont" />
-        <meta name="keywords" content="Web Browser Detector by Willy Horizont" />
-        <title>Web Browser Detector | Portfolio | Willy Horizont</title>
-
-        <style>
-        </style>
+        <meta name="description" content="Unsupported Web Browser Detected" />
+        <meta name="keywords" content="Unsupported Web Browser Detected" />
+        <title>Unsupported Web Browser Detected | Willy Horizont</title>
     </head>
     <body style="margin: 0; background-color: #121212; color: #ddd;">
-        <header>
-        </header>
         <main>
-            <h1 style="text-align: center; margin: 0; margin-top: 30vh;">Web Browser Detector</h1>
-            <p style="text-align: center;">You are using <strong id="detected-web-browser-result"></strong> web browser.</p>
+            <h1 style="text-align: center; margin: 0; margin-top: 30vh;">Unsupported Web Browser Detected</h1>
+            <h2 style="text-align: center;">⛔ Access Denied ⛔</h2>
+            <p style="text-align: center;">Your <strong>web browser</strong> is not supported.</p>
+            <p style="text-align: center;">Please use <strong>latest stable Google Chrome</strong> to continue.</p>
+            <a href="https://www.google.com/chrome/" target="_blank" rel="noopener noreferrer" style="color:blue; display: block; text-align: center;">Download Chrome</a>
         </main>
-        <footer>
-        </footer>
-
         <script>
-            document.getElementById("detected-web-browser-result").innerHTML = detectBrowser();
+            (function () {
+                checkIsUserWebBrowserSupported();
+            })();
         </script>
     </body>
 </html>

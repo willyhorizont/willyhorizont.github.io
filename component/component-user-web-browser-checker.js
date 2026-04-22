@@ -5,7 +5,7 @@
     // console.log({ isUserUsingChromiumBasedWebBrowser });
 
     if (!isUserUsingChromiumBasedWebBrowser) {
-        // window.location.href = "/unsupported-web-browser";
+        // window.location.href = "/unsupported-web-browser-detected";
         const { openPopup } = WillyHorizont.UtilsWeb.initializeComponentPopup({
             popupId: "component-user-web-browser-checker-not-chrome",
             popupStackingOrder: 1,

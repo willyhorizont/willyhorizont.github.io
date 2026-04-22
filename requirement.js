@@ -286,7 +286,7 @@ function checkIsUserWebBrowserHasRequiredFeatures() {
     );
 }
 function blockUser() {
-    const unsupportedWebBrowserUrl = "unsupported-web-browser";
+    const unsupportedWebBrowserUrl = "unsupported-web-browser-detected";
     if (window.location.pathname.includes(unsupportedWebBrowserUrl)) return;
     window.location.href = `/${unsupportedWebBrowserUrl}`;
 }
@@ -298,6 +298,7 @@ function detectBrowser() {
     return "Unknown";
 }
 function checkIsUserWebBrowserSupported() {
+    if (window.location.pathname.includes("web-browser-detector")) return;
     if (checkIsUserUsingInternetExplorerWebBrowser()) {
         blockUser();
         return;
