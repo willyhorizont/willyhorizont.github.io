@@ -8,18 +8,19 @@ function checkIsUserUsingGeckoWebBrowser() {
         true
     );
 }
+function checkIsUserUsingWebKitWebBrowser() {
+    return (
+        ((typeof document !== "undefined") && ("documentElement" in document) && (typeof document.documentElement !== "undefined") && ("style" in document.documentElement) && (typeof document.documentElement.style !== "undefined") && ("WebkitAppearance" in document.documentElement.style)) &&
+        ((typeof CSS !== "undefined") && ("supports" in CSS) && (typeof CSS.supports === "function") && (CSS.supports("-webkit-touch-callout", "none"))) &&
+        true
+    )
+}
 function checkIsUserUsingChromiumBasedWebBrowser() {
     return (
-        ((typeof window !== "undefined") && ("chrome" in window) && (typeof window.chrome !== "undefined")) && 
+        ((typeof window !== "undefined") && ("chrome" in window) && (typeof window.chrome !== "undefined")) &&
         // ((typeof navigator !== "undefined") && ("userAgentData" in navigator) && (typeof navigator.userAgentData !== "undefined") && ("getHighEntropyValues" in navigator.userAgentData) && (typeof navigator.userAgentData.getHighEntropyValues === "function")) &&
         true
     );
-}
-function checkIsUserUsingWebKitWebBrowser() {
-    return (
-        (((typeof CSS !== "undefined") && ("supports" in CSS) && (typeof CSS.supports === "function") && (CSS.supports("-webkit-touch-callout", "none"))) && (checkIsUserUsingChromiumBasedWebBrowser() === false)) &&
-        true
-    )
 }
 function checkIsUserWebBrowserHasRequiredFeatures() {
     return (
@@ -293,8 +294,8 @@ function blockUser() {
 function detectBrowser() {
     if (checkIsUserUsingInternetExplorerWebBrowser()) return "InternetExplorer";
     if (checkIsUserUsingGeckoWebBrowser()) return "Gecko";
-    if (checkIsUserUsingChromiumBasedWebBrowser()) return "ChromiumBased";
     if (checkIsUserUsingWebKitWebBrowser()) return "WebKit";
+    if (checkIsUserUsingChromiumBasedWebBrowser()) return "ChromiumBased";
     return "Unknown";
 }
 function checkIsUserWebBrowserSupported() {
@@ -303,7 +304,7 @@ function checkIsUserWebBrowserSupported() {
         blockUser();
         return;
     }
-    const isRenderingEngineSupported = (checkIsUserUsingGeckoWebBrowser() || checkIsUserUsingChromiumBasedWebBrowser() || checkIsUserUsingWebKitWebBrowser());
+    const isRenderingEngineSupported = (checkIsUserUsingGeckoWebBrowser() || checkIsUserUsingWebKitWebBrowser() || checkIsUserUsingChromiumBasedWebBrowser());
     const isUserWebBrowserHasRequiredFeatures = checkIsUserWebBrowserHasRequiredFeatures();
     if (isRenderingEngineSupported && isUserWebBrowserHasRequiredFeatures) return;
     blockUser();

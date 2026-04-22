@@ -159,7 +159,7 @@ WillyHorizont.UtilsWeb = ((() => {
             // "wow64",
         ]);
         // console.log({ getHighEntropyValuesResult });
-        const userChromiumBasedWebBrowserData = getHighEntropyValuesResult?.brands?.find?.((anyWebBrowserData) => ((anyWebBrowserData?.["brand"] === "Google Chrome") || (anyWebBrowserData?.["brand"] === "Chromium")));
+        const userChromiumBasedWebBrowserData = WillyHorizont.Utils.optionalChaining(() => (getHighEntropyValuesResult.brands.find((anyWebBrowserData) => ((anyWebBrowserData["brand"] === "Google Chrome") || (anyWebBrowserData["brand"] === "Chromium")))));
         if (!userChromiumBasedWebBrowserData) return null;
         return ({
             version: userChromiumBasedWebBrowserData?.["version"],

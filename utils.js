@@ -12,11 +12,11 @@
         "three_digit_grouping": (new RegExp(`\B(?=(\d{3})+(?!\d))`, "g")),
     };
     const replaceAnyLineBreak = (inputString, separator = " ") => (inputString.replace(new RegExp("\\s*(?:\\r\\n|\\r|\\n|\\u2028|\\u2029)+\\s*", "g"), separator).trim());
-    const optionalChaining = (callbackFunction) => {
+    const optionalChaining = (callbackFunction, defaultValue = null) => {
         try {
             return callbackFunction();
         } catch (anyError) {
-            return null;
+            return defaultValue;
         }
     };
     const safeGetObjectProperty = (rootObject, methodChain) => ((typeof rootObject === "undefined") ? false : (methodChain.split(".").slice(1).reduce((currentResult, currentProperty) => ((currentResult && (currentProperty in currentResult)) ? currentResult[currentProperty] : undefined), rootObject)))
@@ -183,6 +183,7 @@
 
     return {
         regexPattern,
+        optionalChaining,
         getNumberDifferenceInNumeric,
         getMostFrequent,
         getMostFrequentOneLiner,
