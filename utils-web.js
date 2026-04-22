@@ -364,11 +364,13 @@ WillyHorizont.UtilsWeb = ((() => {
         document.body.appendChild(htmlElementPopupOverlay);
 
         const openPopup = () => {
-            htmlElementPopupOverlay.style.display = "flex";
+            document.querySelector(`[data-id=popup-overlay-${popupId}]`).style.display = "flex";
+            // htmlElementPopupOverlay.style.display = "flex";
         };
 
         const closePopup = () => {
-            htmlElementPopupOverlay.style.display = "none";
+            document.querySelector(`[data-id=popup-overlay-${popupId}]`).style.display = "none";
+            // htmlElementPopupOverlay.style.display = "none";
         };
 
         popupCloseButton.addEventListener("click", () => {
