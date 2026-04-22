@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" spellcheck="false">
     <head>
+        <script src="../requirement.js"></script>
         <!-- start of Google tag (gtag.js) -->
         <!-- tagmanager.google.com -->
         <!-- analytics.google.com/analytics/web -->
@@ -49,24 +50,8 @@
             </div>
         </main>
         <script>
-            (async () => {
-                if (!WillyHorizont.UtilsWeb) return;
-
-                const isUserUsingChromiumBasedWebBrowser = WillyHorizont.UtilsWeb.checkIsUserUsingChromiumBasedWebBrowser();
-                // console.log({ isUserUsingChromiumBasedWebBrowser });
-
-                if (isUserUsingChromiumBasedWebBrowser) {
-                    window.location.href = "/";
-                    return;
-                }
-
-                const isUserUsingLatestStableChromiumBasedWebBrowser = await WillyHorizont.UtilsWeb.checkIsUserUsingMinimumStableChromiumBasedWebBrowser();
-                // console.log({ isUserUsingLatestStableChromiumBasedWebBrowser });
-
-                if (isUserUsingLatestStableChromiumBasedWebBrowser) {
-                    window.location.href = "/";
-                    return;
-                }
+            (function () {
+                checkIsUserWebBrowserSupported();
             })();
         </script>
     </body>

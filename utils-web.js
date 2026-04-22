@@ -145,7 +145,7 @@ WillyHorizont.UtilsWeb = ((() => {
         }
         return anyFetchResponse;
     };
-    const checkIsUserUsingChromiumBasedWebBrowser = () => ((typeof navigator !== "undefined") && ("userAgentData" in navigator) && (navigator.userAgentData) && (typeof navigator.userAgentData.getHighEntropyValues === "function"));
+    const checkIsUserUsingChromiumBasedWebBrowser = () => (((typeof window !== "undefined") && ("chrome" in window) && (typeof window.chrome !== "undefined")) && ((typeof navigator !== "undefined") && ("userAgentData" in navigator) && (typeof navigator.userAgentData !== "undefined") && ("getHighEntropyValues" in navigator.userAgentData) && (typeof navigator.userAgentData.getHighEntropyValues === "function")));
     const getUserChromiumBasedWebBrowserData = async () => {
         const isUserUsingChromiumBasedWebBrowser = checkIsUserUsingChromiumBasedWebBrowser();
         if (isUserUsingChromiumBasedWebBrowser === false) return null;
@@ -529,7 +529,7 @@ WillyHorizont.UtilsWeb = ((() => {
             const datasetItemsNewValue = JSON.parse(htmlElementChipInputContainer.getAttribute("data-items") || []).filter((chipTextInsideDataset, chipTextInsideDatasetIndex) => ((htmlElementChipUpdateInput.value.includes(chipTextInsideDataset) === false) && (chipTextInsideDatasetIndex !== htmlElementChipUpdateInputIndex)));
             const chipUpdateInputValueAsList = htmlElementChipUpdateInput.value.split(",").filter((chipText) => (chipText.trim() !== ""));
             chipUpdateInputValueAsList.forEach((chipText, chipTextIndex) => {
-                datasetItemsNewValue.splice((htmlElementChipUpdateInputIndex + chipTextIndex), 0, chipText);
+                datasetItemsNewValue.splice((htmlElementChipUpdateInputIndex + chipTextIndex), 0, chipText); // TODO why not use toSpliced?
             })
 
             htmlElementChipInputContainer.setAttribute("data-items", JSON.stringify(datasetItemsNewValue));

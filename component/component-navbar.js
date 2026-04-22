@@ -1,7 +1,7 @@
 (() => {
     if (!WillyHorizont.UtilsWeb) return;
 
-    const arrayOfPathSegment = window.location.pathname.replace(/\/+$/, "").split("/");
+    const arrayOfPathSegment = window.location.pathname.replace(new RegExp(`\/+$`, "g"), "").split("/");
     const relativePath = arrayOfPathSegment.map((pathSegment) => (pathSegment ? (`../`) : "")).join("");
 
     function toggleNavbarMenu() {

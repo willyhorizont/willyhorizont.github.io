@@ -1,5 +1,5 @@
 (function (root, factory) {
-    if ((typeof module === "object") && module.exports) {
+    if ((typeof module === "object") && ("exports" in module) && (typeof module.exports !== "undefined")) {
         // Node.js
         module.exports = factory(root);
     } else {
@@ -9,7 +9,7 @@
     }
 })(((typeof globalThis !== "undefined") ? globalThis : this), function (root) {
     const regexPattern = {
-        "three_digit_grouping": (/\B(?=(\d{3})+(?!\d))/g),
+        "three_digit_grouping": (new RegExp(`\B(?=(\d{3})+(?!\d))`, "g")),
     };
     const replaceAnyLineBreak = (inputString, separator = " ") => (inputString.replace(new RegExp("\\s*(?:\\r\\n|\\r|\\n|\\u2028|\\u2029)+\\s*", "g"), separator).trim());
     const optionalChaining = (callbackFunction) => {
@@ -56,7 +56,7 @@
     const checkIsArray = (anything) => ((Object.prototype.toString.call(anything) === "[object Array]") && (Array.isArray(anything) === true));
     const checkIsFunction = (anything) => (Object.prototype.toString.call(anything) === "[object Function]");
     const checkIsError = (anything) => (Object.prototype.toString.call(anything) === "[object Error]");
-    const checkIsStringIso8601 = (anything) => ((checkIsString(anything) === false) ? false : ((/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$/.test(anything) === false) ? false : ((dateParsedFromString) => ((checkIsNumeric(dateParsedFromString.getTime()) === false) ? false : (dateParsedFromString.toISOString().replace(/\.000Z$/, "Z") === anything)))(new Date(anything))));
+    const checkIsStringIso8601 = (anything) => ((checkIsString(anything) === false) ? false : ((new RegExp(`^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$`, "g").test(anything) === false) ? false : ((dateParsedFromString) => ((checkIsNumeric(dateParsedFromString.getTime()) === false) ? false : (dateParsedFromString.toISOString().replace(new RegExp(`\.000Z$`, "g"), "Z") === anything)))(new Date(anything))));
     const checkIsDate = (anything) => (Object.prototype.toString.call(anything) === "[object Date]");
     const getType = (anything) => ((checkIsUndefined(anything) === true) ? AnyType["Undefined"] : ((checkIsNull(anything) === true) ? AnyType["Null"] : ((checkIsBoolean(anything) === true) ? AnyType["Boolean"] : ((checkIsString(anything) === true) ? AnyType["String"] : ((checkIsNumeric(anything) === true) ? AnyType["Numeric"] : ((checkIsObject(anything) === true) ? AnyType["Object"] : ((checkIsArray(anything) === true) ? AnyType["Array"] : ((checkIsFunction(anything) === true) ? AnyType["Function"] : ((checkIsDate(anything) === true) ? AnyType["Date"] : ((checkIsError(anything) === true) ? AnyType["Error"] : Object.prototype.toString.call(anything)))))))))));
     const pipe = (...restArguments) => {
@@ -122,10 +122,11 @@
     };
     const listComprehension = (anyIterable, callbackFunction = ((anyIterableItem) => (anyIterableItem)), filterConditionFunction = (() => (true))) => Array.from(generatorExpression(anyIterable, callbackFunction, filterConditionFunction));
     const getRgbHexColorFromString = (anyString) => (Array.from({ length: 3 }, (_, i) => (((Array.from(anyString).reduce((currentNumericHash, currentCharacter) => (currentCharacter.charCodeAt(0) + ((currentNumericHash << 5) - currentNumericHash)), 0)) >> (i * 8)) & 0xff).toString(16).padStart(2, "0")).reduce((rgbHexColorCurrent, rgbHexColorPartCurrent) => (`${rgbHexColorCurrent}${rgbHexColorPartCurrent}`), "#"));
-    const checkIsRgbHexColorLightLuminance = (anyString) => (pipe((pipe((anyString.replace(new RegExp("^#", "g"), "")), ((rgbStringInitial) => ((rgbStringInitial.length === 3) ? (rgbStringInitial.split("").map((rgbDigit) => (rgbDigit + rgbDigit)).join("")) : rgbStringInitial)))), ((rgbString) => ([(parseInt(rgbString.slice(0, 2), 16) / 255), (parseInt(rgbString.slice(2, 4), 16) / 255), (parseInt(rgbString.slice(4, 6), 16) / 255)])), (([r, g, b]) => (pipe(((0.2126 * r) + (0.7152 * g) + (0.0722 * b)), ((luminance) => (luminance > 0.5)))))));
-    const checkIsRgbHexColorLightYiq = (anyString) => (pipe((pipe((anyString.replace(new RegExp("^#", "g"), "")), ((rgbStringInitial) => ((rgbStringInitial.length === 3) ? (rgbStringInitial.split("").map((rgbDigit) => (rgbDigit + rgbDigit)).join("")) : rgbStringInitial)))), ((rgbString) => ([(parseInt(rgbString.slice(0, 2), 16)), (parseInt(rgbString.slice(2, 4), 16)), (parseInt(rgbString.slice(4, 6), 16))])), (([r, g, b]) => (pipe((((r * 299) + (g * 587) + (b * 114)) / 1000), ((yiq) => (yiq >= 128)))))));
-    const checkIsRgbHexColorLightAverage = (anyString) => (pipe((pipe((anyString.replace(new RegExp("^#", "g"), "")), ((rgbStringInitial) => ((rgbStringInitial.length === 3) ? (rgbStringInitial.split("").map((rgbDigit) => (rgbDigit + rgbDigit)).join("")) : rgbStringInitial)))), ((rgbString) => ([parseInt(rgbString.slice(0, 2), 16), parseInt(rgbString.slice(2, 4), 16), parseInt(rgbString.slice(4, 6), 16)])), (([r, g, b]) => (pipe(((r + g + b) / 3), ((average) => (average > 127.5)))))));
-    const checkIsRgbHexColorLightHsl = (anyString) => (pipe((pipe((anyString.replace(new RegExp("^#", "g"), "")), ((rgbStringInitial) => ((rgbStringInitial.length === 3) ? (rgbStringInitial.split("").map((rgbDigit) => (rgbDigit + rgbDigit)).join("")) : rgbStringInitial)))), ((rgbString) => ([(parseInt(rgbString.slice(0, 2), 16) / 255), (parseInt(rgbString.slice(2, 4), 16) / 255), (parseInt(rgbString.slice(4, 6), 16) / 255)])), (([r, g, b]) => ([(Math.max(r, g, b)), (Math.min(r, g, b))])), (([max, min]) => (pipe(((max + min) / 2), ((l) => (l > 0.5)))))));
+    const getSixDigitRgbStringFromThreeDigitRgbString = (anyString) => (pipe((anyString.replace(new RegExp("^#", "g"), "")), ((rgbStringInitial) => ((rgbStringInitial.length === 3) ? (rgbStringInitial.split("").map((rgbDigit) => (rgbDigit + rgbDigit)).join("")) : rgbStringInitial))));
+    const checkIsRgbHexColorLightLuminance = (anyString) => (pipe((getSixDigitRgbStringFromThreeDigitRgbString(anyString)), ((rgbString) => ([(parseInt(rgbString.slice(0, 2), 16) / 255), (parseInt(rgbString.slice(2, 4), 16) / 255), (parseInt(rgbString.slice(4, 6), 16) / 255)])), (([r, g, b]) => (pipe(((0.2126 * r) + (0.7152 * g) + (0.0722 * b)), ((luminance) => (luminance > 0.5)))))));
+    const checkIsRgbHexColorLightYiq = (anyString) => (pipe((getSixDigitRgbStringFromThreeDigitRgbString(anyString)), ((rgbString) => ([(parseInt(rgbString.slice(0, 2), 16)), (parseInt(rgbString.slice(2, 4), 16)), (parseInt(rgbString.slice(4, 6), 16))])), (([r, g, b]) => (pipe((((r * 299) + (g * 587) + (b * 114)) / 1000), ((yiq) => (yiq >= 128)))))));
+    const checkIsRgbHexColorLightAverage = (anyString) => (pipe((getSixDigitRgbStringFromThreeDigitRgbString(anyString)), ((rgbString) => ([(parseInt(rgbString.slice(0, 2), 16)), (parseInt(rgbString.slice(2, 4), 16)), parseInt(rgbString.slice(4, 6), 16)])), (([r, g, b]) => (pipe(((r + g + b) / 3), ((average) => (average > 127.5)))))));
+    const checkIsRgbHexColorLightHsl = (anyString) => (pipe((getSixDigitRgbStringFromThreeDigitRgbString(anyString)), ((rgbString) => ([(parseInt(rgbString.slice(0, 2), 16) / 255), (parseInt(rgbString.slice(2, 4), 16) / 255), (parseInt(rgbString.slice(4, 6), 16) / 255)])), (([r, g, b]) => ([(Math.max(r, g, b)), (Math.min(r, g, b))])), (([max, min]) => (pipe(((max + min) / 2), ((l) => (l > 0.5)))))));
     const ColorLightnessMethod = {
         "Luminance": checkIsRgbHexColorLightLuminance,
         "Yiq": checkIsRgbHexColorLightYiq,
@@ -135,9 +136,9 @@
     };
     const checkIsRgbHexColorLight = (anyString) => (ColorLightnessMethod["Default"](anyString));
     const getValidRgbHexColor = (anything) => ((!anything) ? null : (((rgbHexColor) => ((!(new RegExp("^#?[0-9a-fA-F]{3,6}$", "g").test(rgbHexColor))) ? null : ((!rgbHexColor.startsWith("#")) ? (`#${rgbHexColor}`) : rgbHexColor)))(anything.trim())));
-    const getInvertedRgbHexColorByParsePerChannel = (anyString) => (pipe((pipe((anyString.replace(new RegExp("^#", "g"), "")), ((rgbStringInitial) => ((rgbStringInitial.length === 3) ? (rgbStringInitial.split("").map((rgbDigit) => (rgbDigit + rgbDigit)).join("")) : rgbStringInitial)))), ((rgbString) => ([(255 - (parseInt(rgbString.slice(0, 2), 16))), (255 - (parseInt(rgbString.slice(2, 4), 16))), (255 - (parseInt(rgbString.slice(4, 6), 16)))])), (([r, g, b]) => (`#${[r, g, b].map((rgbDigit) => (rgbDigit).toString(16).padStart(2, "0")).join("")}`))));
-    const getInvertedRgbHexColorByBitwiseXor = (anyString) => (pipe((pipe((anyString.replace(new RegExp("^#", "g"), "")), ((rgbStringInitial) => ((rgbStringInitial.length === 3) ? (rgbStringInitial.split("").map((rgbDigit) => (rgbDigit + rgbDigit)).join("")) : rgbStringInitial)))), ((rgbString) => (`#${(0xFFFFFF ^ parseInt(rgbString, 16)).toString(16).padStart(6, "0")}`))));
-    const getInvertedRgbHexColorByBigInt = (anyString) => (pipe((pipe((anyString.replace(new RegExp("^#", "g"), "")), ((rgbStringInitial) => ((rgbStringInitial.length === 3) ? (rgbStringInitial.split("").map((rgbDigit) => (rgbDigit + rgbDigit)).join("")) : rgbStringInitial)))), ((rgbString) => (`#${(0xFFFFFFn ^ BigInt(rgbString)).toString(16).padStart(6, "0")}`))));
+    const getInvertedRgbHexColorByParsePerChannel = (anyString) => (pipe((getSixDigitRgbStringFromThreeDigitRgbString(anyString)), ((rgbString) => ([(255 - (parseInt(rgbString.slice(0, 2), 16))), (255 - (parseInt(rgbString.slice(2, 4), 16))), (255 - (parseInt(rgbString.slice(4, 6), 16)))])), (([r, g, b]) => (`#${[r, g, b].map((rgbDigit) => (rgbDigit).toString(16).padStart(2, "0")).join("")}`))));
+    const getInvertedRgbHexColorByBitwiseXor = (anyString) => (pipe((getSixDigitRgbStringFromThreeDigitRgbString(anyString)), ((rgbString) => (`#${(0xFFFFFF ^ parseInt(rgbString, 16)).toString(16).padStart(6, "0")}`))));
+    const getInvertedRgbHexColorByBigInt = (anyString) => (pipe((getSixDigitRgbStringFromThreeDigitRgbString(anyString)), ((rgbString) => (`#${(0xFFFFFFn ^ BigInt(rgbString)).toString(16).padStart(6, "0")}`))));
     const getInvertedRgbHexColorFromString = (anyString) => getInvertedRgbHexColorByParsePerChannel(anyString);
     const getColorFromString = (anyString) => (((rgbHexColorBackground) => ({ backgroundColor: rgbHexColorBackground, textColor: getInvertedRgbHexColorFromString(rgbHexColorBackground), isBackgroundColorLight: checkIsRgbHexColorLight(rgbHexColorBackground) }))(getRgbHexColorFromString(anyString)));
     const iterateList = (anyList, callbackFunction = ((anyArrayItem, anyArrayItemIndex, anyArray) => (undefined))) => {
