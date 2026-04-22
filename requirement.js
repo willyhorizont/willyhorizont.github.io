@@ -1,27 +1,3 @@
-function checkIsUserUsingInternetExplorerWebBrowser() {
-    return !!document.documentMode;
-}
-function checkIsUserUsingGeckoWebBrowser() {
-    return (
-        (typeof InstallTrigger !== "undefined") &&
-        ((typeof CSS !== "undefined") && ("supports" in CSS) && (typeof CSS.supports === "function") && (CSS.supports("-moz-appearance", "none"))) &&
-        true
-    );
-}
-function checkIsUserUsingWebKitWebBrowser() {
-    return (
-        ((typeof document !== "undefined") && ("documentElement" in document) && (typeof document.documentElement !== "undefined") && ("style" in document.documentElement) && (typeof document.documentElement.style !== "undefined") && ("WebkitAppearance" in document.documentElement.style)) &&
-        ((typeof CSS !== "undefined") && ("supports" in CSS) && (typeof CSS.supports === "function") && (CSS.supports("-webkit-touch-callout", "none"))) &&
-        true
-    )
-}
-function checkIsUserUsingChromiumBasedWebBrowser() {
-    return (
-        ((typeof window !== "undefined") && ("chrome" in window) && (typeof window.chrome !== "undefined")) &&
-        // ((typeof navigator !== "undefined") && ("userAgentData" in navigator) && (typeof navigator.userAgentData !== "undefined") && ("getHighEntropyValues" in navigator.userAgentData) && (typeof navigator.userAgentData.getHighEntropyValues === "function")) &&
-        true
-    );
-}
 function checkIsUserWebBrowserHasRequiredFeatures() {
     return (
 
@@ -286,17 +262,41 @@ function checkIsUserWebBrowserHasRequiredFeatures() {
         true
     );
 }
-function blockUser() {
-    const unsupportedWebBrowserUrl = "unsupported-web-browser-detected";
-    if (window.location.pathname.includes(unsupportedWebBrowserUrl)) return;
-    window.location.href = `/${unsupportedWebBrowserUrl}`;
+
+function checkIsUserUsingInternetExplorerWebBrowser() {
+    return !!document.documentMode;
+}
+function checkIsUserUsingWebKitWebBrowser() {
+    return (
+        ((typeof navigator !== "undefined") && ("vendor" in navigator) && (navigator.vendor === "Apple Computer, Inc.")) &&
+        true
+    )
+}
+function checkIsUserUsingGeckoWebBrowser() {
+    return (
+        (typeof InstallTrigger !== "undefined") &&
+        true
+    );
+}
+function checkIsUserUsingChromiumBasedWebBrowser() {
+    return (
+        ((typeof window !== "undefined") && ("chrome" in window) && (typeof window.chrome !== "undefined")) &&
+        true
+    );
 }
 function detectBrowser() {
     if (checkIsUserUsingInternetExplorerWebBrowser()) return "InternetExplorer";
-    if (checkIsUserUsingGeckoWebBrowser()) return "Gecko";
     if (checkIsUserUsingWebKitWebBrowser()) return "WebKit";
+    if (checkIsUserUsingGeckoWebBrowser()) return "Gecko";
     if (checkIsUserUsingChromiumBasedWebBrowser()) return "ChromiumBased";
     return "Unknown";
+}
+function blockUser() {
+    const unsupportedWebBrowserUrl = "unsupported-web-browser-detected";
+    if (window.location.pathname.includes(unsupportedWebBrowserUrl)) return;
+    const url = new URL(`${window.location.origin}/${unsupportedWebBrowserUrl}/`);
+    url.searchParams.set("ref", encodeURIComponent(window.location.pathname));
+    window.location.href = url.toString();
 }
 function checkIsUserWebBrowserSupported() {
     if (window.location.pathname.includes("web-browser-detector")) return;
@@ -304,9 +304,16 @@ function checkIsUserWebBrowserSupported() {
         blockUser();
         return;
     }
-    const isRenderingEngineSupported = (checkIsUserUsingGeckoWebBrowser() || checkIsUserUsingWebKitWebBrowser() || checkIsUserUsingChromiumBasedWebBrowser());
+    const isRenderingEngineSupported = (checkIsUserUsingWebKitWebBrowser() || checkIsUserUsingGeckoWebBrowser() || checkIsUserUsingChromiumBasedWebBrowser());
     const isUserWebBrowserHasRequiredFeatures = checkIsUserWebBrowserHasRequiredFeatures();
-    if (isRenderingEngineSupported && isUserWebBrowserHasRequiredFeatures) return;
+    if (isRenderingEngineSupported && isUserWebBrowserHasRequiredFeatures) {
+        const ref = new URLSearchParams(window.location.search).get("ref");
+        if (ref) {
+            window.location.href = decodeURIComponent(ref);
+            return;
+        }
+        return;
+    }
     blockUser();
 }
 checkIsUserWebBrowserSupported();
