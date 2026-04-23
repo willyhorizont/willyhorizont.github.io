@@ -3,27 +3,27 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="../style.css" />
         <title>404 | Not Found | Willy Horizont</title>
     </head>
     <body>
         <main>
-            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; row-gap: 8px; background-color: var(--safe-background-color-1); color: var(--safe-text-color-1);">
+            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; row-gap: 8px; background-color: #121212; color: #ddd;">
                 <h1 style="text-align: center;">404 | Not Found</h1>
                 <p>Back to <a href="/"><span style="color: #0F7A71;">Home</span></a>.</p>
             </div>
         </main>
         <script>
             const pathnameList = [
-                { old: "/portfolio/kalender-libur-generator", new: "/portfolio/kalender-libur-advisor" },
-                { old: "/portfolio/kalender-cuti-generator", new: "/portfolio/kalender-libur-advisor" },
+                ["/portfolio/kalender-libur-generator", "/portfolio/kalender-libur-advisor"],
+                ["/portfolio/kalender-cuti-generator", "/portfolio/kalender-libur-advisor"],
+                ["/curriculum-vitae", "/cv"],
             ];
 
             let redirected = false;
 
-            for (const pathname of pathnameList) {
-                if (window.location.pathname === pathname.old) {
-                    window.location.href = `${window.location.origin}${pathname.new}`;
+            for (const [pathnameOlder, pathnameNewer] of pathnameList) {
+                if (window.location.pathname === pathnameOlder) {
+                    window.location.href = `${window.location.origin}${pathnameNewer}`;
                     redirected = true;
                     break;
                 }

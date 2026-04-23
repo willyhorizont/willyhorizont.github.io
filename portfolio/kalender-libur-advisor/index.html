@@ -337,7 +337,7 @@
                 const zyxCalendarEventHolidayIndonesiaDataNewMap = new Map();
 
                 const addDayOffRecomendation = (zyxCalendarEventHolidayIndonesiaEventDate, startNumber, stopNumber) => {
-                    WillyHorizont.Utils.loop(startNumber, stopNumber)((rangeItemDay) => {
+                    WillyHorizont.Utils.forLoop({ startNumber, stopNumber }, ((rangeItemDay) => {
                         if (rangeItemDay === 0) return;
                         const zyxCalendarEventHolidayIndonesiaEventDateNew = WillyHorizont.UtilsDate.updateDateDotToIsoStringDotSliceZeroCommaTenByNumericVariable(zyxCalendarEventHolidayIndonesiaEventDate, rangeItemDay);
                         const zyxCalendarEventHolidayIndonesiaEventDateNewDateData = WillyHorizont.UtilsDate.extractDate(zyxCalendarEventHolidayIndonesiaEventDateNew);
@@ -352,7 +352,7 @@
                             "event_day": zyxCalendarEventHolidayIndonesiaEventShortDayNameNew,
                             "event_month": zyxCalendarEventHolidayIndonesiaEventShortMonthNameNew,
                         }));
-                    });
+                    }));
                 };
 
                 addDayOffRecomendation(hariNatalYearMinusOneDate, 0, WillyHorizont.UtilsDate.getDayDifferenceInNumeric(`${yearNumeric}-01-01`, hariNatalYearMinusOneDate));

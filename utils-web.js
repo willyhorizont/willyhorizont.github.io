@@ -120,6 +120,7 @@ WillyHorizont.UtilsWeb = ((() => {
     };
 
     const IS_IN_DEVELOPMENT_MODE = (window.location.hostname === "127.0.0.1");
+    const removeTemplateStringIndentation = ({ indentation = 0, trimmer } = {}, projectBodyString = "") => (projectBodyString[(trimmer === "start") ? "trimStart" : ((trimmer === "end") ? "trimEnd" : "trim")]().replaceAll(" ".repeat(4).repeat(indentation), ""));
     const createSetHtmlElementPropertyValues = (htmlElement) => ((arrayOfEntryProperty) => ([(arrayOfEntryProperty.forEach(([htmlElementProperty, htmlElementPropertyValue]) => (Reflect.set(htmlElement, htmlElementProperty, htmlElementPropertyValue)))), htmlElement].at(-1)));
     const createSetHtmlElementEventStuffs = (htmlElement) => ((arrayOfElementEventStuff) => ([(arrayOfElementEventStuff.forEach(({ handlerRefName, eventType, elementHandler, eventHandler }) => (((handlerFunction) => ([(Reflect.set(htmlElement, handlerRefName, handlerFunction)), (htmlElement.addEventListener(eventType, handlerFunction)), undefined].at(-1)))(eventHandler || elementHandler(htmlElement))))), htmlElement].at(-1)));
     const createSetHtmlElementAttributes = (htmlElement) => ((arrayOfEntryAttribute) => ([(arrayOfEntryAttribute.forEach(([htmlElementAttribute, htmlElementAttributeValue]) => (htmlElement.setAttribute(htmlElementAttribute, String(htmlElementAttributeValue))))), htmlElement].at(-1)));
@@ -128,7 +129,7 @@ WillyHorizont.UtilsWeb = ((() => {
         if (!Reflect.has(htmlElement, "setEventStuffs")) Reflect.set(htmlElement, "setEventStuffs", createSetHtmlElementEventStuffs(htmlElement));
         if (!Reflect.has(htmlElement, "setAttributes")) Reflect.set(htmlElement, "setAttributes", createSetHtmlElementAttributes(htmlElement));
         if (!htmlElement.children.length) return;
-        WillyHorizont.Utils.iterateList(htmlElement.children, (htmlElementInnerChild) => {
+        WillyHorizont.Utils.forEach(htmlElement.children, (htmlElementInnerChild) => {
             attachMethodToHtmlElementRecursively(htmlElementInnerChild);
         });
     };
@@ -715,6 +716,7 @@ WillyHorizont.UtilsWeb = ((() => {
 
     return {
         IS_IN_DEVELOPMENT_MODE,
+        removeTemplateStringIndentation,
         htmlTemplateStringToHtmlElement,
         appendChildrenReturnParent,
         fetchThrowErrorIfNotOk,
