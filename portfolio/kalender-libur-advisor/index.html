@@ -629,14 +629,14 @@
                         const zyxCalendarEventHolidayIndonesiaDataGroupedEventShortMonthName = WillyHorizont.UtilsDate.dictionaryMonth["IDN"]["short"][currentEventDateData.monthThreeFirstLetter];
                         const zyxCalendarEventHolidayIndonesiaDataGroupedEvent = (() => {
                             if (currentEventDateData.fullYear === yearMinusOneString) {
-                                return (`${zyxCalendarEventHolidayIndonesiaDataGroupedEventShortDayName} ${zyxCalendarEventHolidayIndonesiaDataGroupedEventDate} ${zyxCalendarEventHolidayIndonesiaDataGroupedEventShortMonthName} ${yearMinusOneString} : ${currentEvent["event_name"]}`);
+                                return (/*html*/`<p style="white-space: nowrap;">${zyxCalendarEventHolidayIndonesiaDataGroupedEventShortDayName} ${zyxCalendarEventHolidayIndonesiaDataGroupedEventDate} ${zyxCalendarEventHolidayIndonesiaDataGroupedEventShortMonthName} ${yearMinusOneString}&nbsp;:&nbsp;</p><span>${currentEvent["event_name"]}</span>`);
                             }
                             if (currentEventDateData.fullYear === yearPlusOneString) {
-                                return (`${zyxCalendarEventHolidayIndonesiaDataGroupedEventShortDayName} ${zyxCalendarEventHolidayIndonesiaDataGroupedEventDate} ${zyxCalendarEventHolidayIndonesiaDataGroupedEventShortMonthName} ${yearPlusOneString} : ${currentEvent["event_name"]}`);
+                                return (/*html*/`<p style="white-space: nowrap;">${zyxCalendarEventHolidayIndonesiaDataGroupedEventShortDayName} ${zyxCalendarEventHolidayIndonesiaDataGroupedEventDate} ${zyxCalendarEventHolidayIndonesiaDataGroupedEventShortMonthName} ${yearPlusOneString}&nbsp;:&nbsp;</p><span>${currentEvent["event_name"]}</span>`);
                             }
-                            return (`${zyxCalendarEventHolidayIndonesiaDataGroupedEventShortDayName} ${zyxCalendarEventHolidayIndonesiaDataGroupedEventDate} ${zyxCalendarEventHolidayIndonesiaDataGroupedEventShortMonthName} ${yearString} : ${currentEvent["event_name"]}`);
+                            return (/*html*/`<p style="white-space: nowrap;">${zyxCalendarEventHolidayIndonesiaDataGroupedEventShortDayName} ${zyxCalendarEventHolidayIndonesiaDataGroupedEventDate} ${zyxCalendarEventHolidayIndonesiaDataGroupedEventShortMonthName} ${yearString}&nbsp;:&nbsp;</p><span>${currentEvent["event_name"]}</span>`);
                         })()
-                        return (/*html*/`<p data-id="event-detail-text" class="${((currentEvent["event_name"] === eventNameDefault) ? ("event-detail-text") : ("event-detail-text"))}" style="font-family: monospace; white-space: pre; padding: 4px 8px; margin-left: 4px; margin-right: 4px; margin-top: 4px; margin-bottom: ${(currentItemIndex === (zyxCalendarEventHolidayIndonesiaDataGrouped.length - 1)) ? 4 : 1}px; text-wrap: wrap;">${zyxCalendarEventHolidayIndonesiaDataGroupedEvent}</p>`);
+                        return (/*html*/`<div data-id="event-detail-text" class="${((currentEvent["event_name"] === eventNameDefault) ? ("event-detail-text") : ("event-detail-text"))}" style="display: flex; flex-direction: row; padding: 4px 8px; margin-left: 4px; margin-right: 4px; margin-top: 4px; margin-bottom: ${(currentItemIndex === (zyxCalendarEventHolidayIndonesiaDataGrouped.length - 1)) ? 4 : 1}px;">${zyxCalendarEventHolidayIndonesiaDataGroupedEvent}</div>`);
                     }).join(""));
 
                     const zyxCalendarEventHolidayIndonesiaDataGroupedSummaryDetailString = ((amountDayOffRecomendation > 0) ? (` (Tanggal Merah ${amountVacation} Hari + Ambil Izin Libur ${amountDayOffRecomendation} Hari)`) : (" Tanpa Ambil Izin Libur"));
