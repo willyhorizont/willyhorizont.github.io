@@ -55,6 +55,10 @@
                 }
             }
 
+            .my-photo {
+                border: 1px solid var(--light-border-color);
+            }
+
             .programming-languages-bar-chart-container {
                 background-color: var(--light-background-color);
             }
@@ -64,6 +68,9 @@
             }
 
             html[data-theme="dark"] {
+                .my-photo {
+                    border: 1px solid var(--dark-border-color);
+                }
                 .programming-languages-bar-chart-container {
                     background-color: var(--dark-background-color);
                 }
@@ -83,6 +90,7 @@
                         <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: left; flex: 1;">
                             <div style="text-align: center;">
                                 <h1 style="font-size: 3em;">Hello, I'm Willy Horizont!</h1>
+                                <img class="my-photo" alt="Willy Horizont's photo" src="photo.jpg" width="400px" style="border-radius: 0.5em;" />
                                 <p style="font-size: 2em;">I'm a <span style="color: #0F7A71;">Polyglot</span> AND/OR <span style="color: #0F7A71;">Programmer</span> that <span style="color: #0F7A71;">"touch grass"</span> :)</p>
                                 <p style="font-size: 2em;">I loves <span style="color: #0F7A71;">Programming</span> AND/OR <span style="color: #0F7A71;">Languages</span> !</p>
                             </div>
