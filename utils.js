@@ -11,7 +11,9 @@
     const regexPattern = {
         "three_digit_grouping": (new RegExp(`\B(?=(\d{3})+(?!\d))`, "g")),
     };
-    const replaceAnyLineBreak = (inputString, separator = " ") => (inputString.replace(new RegExp("\\s*(?:\\r\\n|\\r|\\n|\\u2028|\\u2029)+\\s*", "g"), separator).trim());
+    const throwError = (anyErrorMessage) => {
+        throw new Error(anyErrorMessage);
+    };
     const optionalChaining = (callbackFunction, defaultValue = null) => {
         try {
             return callbackFunction();
@@ -19,6 +21,27 @@
             return defaultValue;
         }
     };
+    const createGenerator = (nextFunction = ((currentIterator) => ({ value: currentIterator, nextState: currentIterator, done: false })), initialState) => ((function* () {
+        let currentState = initialState;
+        while (true) {
+            const nextFunctionResult = nextFunction(currentState);
+            const nextFunctionResultValue = (nextFunctionResult?.value ?? nextFunctionResult);
+            const nextFunctionResultNextState = (nextFunctionResult?.nextState ?? nextFunctionResultValue);
+            const isGeneratorFunctionDone = (nextFunctionResult?.done ?? false);
+            if (isGeneratorFunctionDone) return;
+            yield nextFunctionResultValue;
+            currentState = nextFunctionResultNextState;
+        }
+    })());
+    const createRecursiveFunctionNoCallStackLimitInner = (callbackFunction) => (...restArguments) => {
+        let result = callbackFunction(...restArguments);
+        while (Object.prototype.toString.call(result) === "[object Function]") {
+            result = result();
+        }
+        return result;
+    };
+    const createRecursiveFunctionNoCallStackLimit = (callbackFunctionWrapper) => (((self = (...restArguments) => () => callbackFunction(...restArguments), callbackFunction = callbackFunctionWrapper(self)) => createRecursiveFunctionNoCallStackLimitInner(callbackFunction))());
+    const replaceAnyLineBreak = (inputString, separator = " ") => (inputString.replace(new RegExp("\\s*(?:\\r\\n|\\r|\\n|\\u2028|\\u2029)+\\s*", "g"), separator).trim());
     const safeGetObjectProperty = (rootObject, methodChain) => ((typeof rootObject === "undefined") ? false : (methodChain.split(".").slice(1).reduce((currentResult, currentProperty) => ((currentResult && (currentProperty in currentResult)) ? currentResult[currentProperty] : undefined), rootObject)))
     const checkIsMethodAvailable = (rootObject, methodChain) => (typeof safeGetObjectProperty(rootObject, methodChain) === "function");
     const getNumberDifferenceInNumeric = (a, b) => ((a === b) ? 0 : ((a > b) ? (a - b) : (b - a)));
@@ -85,38 +108,26 @@
             }
         });
     };
-    const generatorFunctionWrapper = (nextFunction = ((currentIterator) => ({ value: currentIterator, nextState: currentIterator, done: false })), initialState) => ((function* () {
-        let state = initialState;
-        while (true) {
-            const nextFunctionResult = nextFunction(state);
-            const nextFunctionResultValue = (nextFunctionResult?.value ?? nextFunctionResult);
-            const nextFunctionResultNextState = (nextFunctionResult?.nextState ?? nextFunctionResultValue);
-            const isGeneratorFunctionDone = (nextFunctionResult?.done ?? false);
-            if (isGeneratorFunctionDone) return;
-            yield nextFunctionResultValue;
-            state = nextFunctionResultNextState;
-        }
-    })());
-    const increment = (start = 0) => (generatorFunctionWrapper((currentIterator) => (currentIterator + 1), start));
-    const rangeInclusiveOneLiner = (startNumber, stopNumber, stepNumber = ((startNumber < stopNumber) ? 1 : ((startNumber > stopNumber) ? -1 : 0))) => (generatorFunctionWrapper(((currentIterator) => ((stepNumber === 0) ? (currentIterator) : (((stepNumber > 0) ? (currentIterator > stopNumber) : (currentIterator < stopNumber)) ? ({ done: true }) : ({ value: currentIterator, nextState: (currentIterator + stepNumber), done: false })))), startNumber));
-    const rangeInclusive = function* (startNumber, stopNumber, stepNumber = ((startNumber < stopNumber) ? 1 : ((startNumber > stopNumber) ? -1 : 0))) {
-        if (stepNumber === 0) {
-            yield startNumber;
+    const increment = (start = 0) => (createGenerator((currentIterator) => (currentIterator + 1), start));
+    const rangeInclusiveOneLiner = (start, stop, step = ((start < stop) ? 1 : ((start > stop) ? -1 : 0))) => (createGenerator(((currentIterator) => ((step === 0) ? (currentIterator) : (((step > 0) ? (currentIterator > stop) : (currentIterator < stop)) ? ({ done: true }) : ({ value: currentIterator, nextState: (currentIterator + step), done: false })))), start));
+    const rangeInclusive = function* (start, stop, step = ((start < stop) ? 1 : ((start > stop) ? -1 : 0))) {
+        if (step === 0) {
+            yield start;
             return;
         }
-        for (let i = startNumber; ((stepNumber > 0) ? (i <= stopNumber) : (i >= stopNumber)); i += stepNumber) {
+        for (let i = start; ((step > 0) ? (i <= stop) : (i >= stop)); i += step) {
             yield i;
         }
     };
-    const generatorExpression = function* (anyIterable, callbackFunction = ((anyIterableItem) => (anyIterableItem)), filterConditionFunction = ((anyIterableItem) => (true))) {
+    const pythonLikeGeneratorExpression = function* (anyIterable, callbackFunction = ((anyIterableItem) => (anyIterableItem)), filterConditionFunction = ((anyIterableItem) => (true))) {
         for (const anyRangeItem of anyIterable) {
             if (filterConditionFunction(anyRangeItem) === true) {
                 yield callbackFunction(anyRangeItem);
             }
         }
     };
-    const generatorExpressionOneLiner = (anyIterable, callbackFunction = ((anyIterableItem) => (anyIterableItem)), filterConditionFunction = ((anyIterableItem) => (true))) => (generatorFunctionWrapper(((currentIterator) => (((nextIterator) => ((({ nextIteratorValue, isGeneratorFunctionDone }) => (isGeneratorFunctionDone ? ({ done: true }) : ((filterConditionFunction(nextIteratorValue) === true) ? ({ value: callbackFunction(nextIteratorValue), nextState: currentIterator }) : ({ nextState: currentIterator }))))({ nextIteratorValue: nextIterator?.value, isGeneratorFunctionDone: nextIterator?.done })))(currentIterator.next()))), (anyIterable[Symbol.iterator]())));
-    const listComprehension = (anyIterable, callbackFunction = ((anyIterableItem) => (anyIterableItem)), filterConditionFunction = ((anyIterableItem) => (true))) => Array.from(generatorExpression(anyIterable, callbackFunction, filterConditionFunction));
+    const pythonLikeGeneratorExpressionOneLiner = (anyIterable, callbackFunction = ((anyIterableItem) => (anyIterableItem)), filterConditionFunction = ((anyIterableItem) => (true))) => (createGenerator(((currentIterator) => (((nextIterator) => ((({ nextIteratorValue, isGeneratorFunctionDone }) => (isGeneratorFunctionDone ? ({ done: true }) : ((filterConditionFunction(nextIteratorValue) === true) ? ({ value: callbackFunction(nextIteratorValue), nextState: currentIterator }) : ({ nextState: currentIterator }))))({ nextIteratorValue: nextIterator?.value, isGeneratorFunctionDone: nextIterator?.done })))(currentIterator.next()))), (anyIterable[Symbol.iterator]())));
+    const listComprehension = (anyIterable, callbackFunction = ((anyIterableItem) => (anyIterableItem)), filterConditionFunction = ((anyIterableItem) => (true))) => Array.from(pythonLikeGeneratorExpression(anyIterable, callbackFunction, filterConditionFunction));
     const getRgbHexColorFromString = (anyString) => (Array.from({ length: 3 }, (_, i) => (((Array.from(anyString).reduce((currentNumericHash, currentCharacter) => (currentCharacter.charCodeAt(0) + ((currentNumericHash << 5) - currentNumericHash)), 0)) >> (i * 8)) & 0xff).toString(16).padStart(2, "0")).reduce((rgbHexColorCurrent, rgbHexColorPartCurrent) => (`${rgbHexColorCurrent}${rgbHexColorPartCurrent}`), "#"));
     const getSixDigitRgbStringFromThreeDigitRgbString = (anyString) => (pipe((anyString.replace(new RegExp("^#", "g"), "")), ((rgbStringInitial) => ((rgbStringInitial.length === 3) ? (rgbStringInitial.split("").map((rgbDigit) => (rgbDigit + rgbDigit)).join("")) : rgbStringInitial))));
     const checkIsRgbHexColorLightLuminance = (anyString) => (pipe((getSixDigitRgbStringFromThreeDigitRgbString(anyString)), ((rgbString) => ([(parseInt(rgbString.slice(0, 2), 16) / 255), (parseInt(rgbString.slice(2, 4), 16) / 255), (parseInt(rgbString.slice(4, 6), 16) / 255)])), (([r, g, b]) => (pipe(((0.2126 * r) + (0.7152 * g) + (0.0722 * b)), ((luminance) => (luminance > 0.5)))))));
@@ -137,36 +148,33 @@
     const getInvertedRgbHexColorByBigInt = (anyString) => (pipe((getSixDigitRgbStringFromThreeDigitRgbString(anyString)), ((rgbString) => (`#${(0xFFFFFFn ^ BigInt(rgbString)).toString(16).padStart(6, "0")}`))));
     const getInvertedRgbHexColorFromString = (anyString) => getInvertedRgbHexColorByParsePerChannel(anyString);
     const getColorFromString = (anyString) => (((rgbHexColorBackground) => ({ backgroundColor: rgbHexColorBackground, textColor: getInvertedRgbHexColorFromString(rgbHexColorBackground), isBackgroundColorLight: checkIsRgbHexColorLight(rgbHexColorBackground) }))(getRgbHexColorFromString(anyString)));
-    const forEach = (anyIterable, callbackFunction = ((anyArrayItem, anyArrayItemIndex, anyArray) => (undefined))) => {
-        let anyArrayItemIndex = 0;
+    const forEach = (anyIterable, callbackFunction = ((anyIterableItem, anyIterableItemIndex, anyIterable) => (undefined))) => {
+        let anyIterableItemIndex = 0;
         for (const anyIterableItem of anyIterable) {
-            callbackFunction(anyIterableItem, anyArrayItemIndex, anyIterable);
-            anyArrayItemIndex += 1;
+            const isBreak = callbackFunction(anyIterableItem, anyIterableItemIndex, anyIterable);
+            if (isBreak === true) break;
+            anyIterableItemIndex += 1;
         }
     };
-    const forEachAsync = async (anyIterable, callbackFunctionAsync = ((anyArrayItem, anyArrayItemIndex, anyArray) => (undefined))) => {
-        let anyArrayItemIndex = 0;
+    const forEachOneLiner = (anyIterable, callbackFunction = ((anyIterableItem, anyIterableItemIndex, anyIterable) => (undefined))) => (((anyIterator, innerFunction = ((anyIterableItemIndex = 0) => (((step) => (((!step.done) ? ((callbackFunction(step.value, anyIterableItemIndex, anyIterable) === true) ? undefined : innerFunction(anyIterableItemIndex + 1)) : undefined)))(anyIterator.next())))) => (innerFunction(0)))(anyIterable[Symbol.iterator]()));
+    const forEachAsync = async (anyIterable, callbackFunctionAsync = (async (anyIterableItem, anyIterableItemIndex, anyIterable) => (undefined))) => {
+        let anyIterableItemIndex = 0;
         for (const anyIterableItem of anyIterable) {
-            await callbackFunctionAsync(anyIterableItem, anyArrayItemIndex, anyIterable);
-            anyArrayItemIndex += 1;
+            const isBreak = await callbackFunctionAsync(anyIterableItem, anyIterableItemIndex, anyIterable);
+            if (isBreak === true) break;
+            anyIterableItemIndex += 1;
         }
     };
-    const forLoop = ({ startNumber, stopNumber, stepNumber }, callbackFunction = ((anyArrayItem, anyArrayItemIndex, anyArray) => (undefined))) => {
-        const anyIterable = rangeInclusive(startNumber, stopNumber, stepNumber);
-        forEach(anyIterable, callbackFunction);
-    };
-    const forLoopAsync = async ({ startNumber, stopNumber, stepNumber }, callbackFunctionAsync = ((anyArrayItem, anyArrayItemIndex, anyArray) => (undefined))) => {
-        const anyIterable = rangeInclusive(startNumber, stopNumber, stepNumber);
-        forEach(anyIterable, callbackFunctionAsync);
-    };
+    const forEachAsyncOneLiner = async (anyIterable, callbackFunctionAsync = (async (anyIterableItem, anyIterableItemIndex, anyIterable) => (undefined))) => (((anyIterator, innerFunction = ((anyIterableItemIndex = 0) => ((async (step) => (((!step.done) ? (((await callbackFunctionAsync(step.value, anyIterableItemIndex, anyIterable)) === true) ? undefined : innerFunction(anyIterableItemIndex + 1)) : undefined)))(anyIterator.next())))) => (innerFunction(0)))(anyIterable[Symbol.iterator]()));
+    const forLoop = ({ start, stop, step }, callbackFunction = ((anyIterableItem, anyIterableItemIndex, anyIterable) => (undefined))) => ([(forEach(rangeInclusive(start, stop, step), callbackFunction)), undefined].at(-1));
+    const forLoopAsync = async ({ start, stop, step }, callbackFunctionAsync = (async (anyIterableItem, anyIterableItemIndex, anyIterable) => (undefined))) => ([(await forEachAsync(rangeInclusive(start, stop, step), callbackFunctionAsync)), undefined].at(-1));
     const catchAnyError = (asyncFunction, callbackFunction = ((anyResult) => (anyResult))) => (asyncFunction.then((anyResult) => ([null, callbackFunction(anyResult)])).catch((anyError) => ([anyError, null])));
-    const throwError = (anyErrorMessage) => {
-        throw new Error(anyErrorMessage);
-    };
     const getRandomString = (minLength = 2, maxLength = 10) => ((({ characters, lengthRandomString }) => (Array.from({ length: lengthRandomString }, () => (characters[Math.floor(Math.random() * characters.length)])).join("")))({ characters: "abcdefghijklmnopqrstuvwxyz", lengthRandomString: (Math.floor(Math.random() * (maxLength - 1)) + minLength) }));
 
     return {
         regexPattern,
+        createRecursiveFunctionNoCallStackLimitInner,
+        createRecursiveFunctionNoCallStackLimit,
         optionalChaining,
         getNumberDifferenceInNumeric,
         getMostFrequent,
@@ -203,8 +211,8 @@
         removeDuplicateListItem,
         rangeInclusive,
         rangeInclusiveOneLiner,
-        generatorExpression,
-        generatorExpressionOneLiner,
+        pythonLikeGeneratorExpression,
+        pythonLikeGeneratorExpressionOneLiner,
         listComprehension,
         getRgbHexColorFromString,
         getInvertedRgbHexColorFromString,
@@ -216,7 +224,9 @@
         checkIsRgbHexColorLight,
         getValidRgbHexColor,
         forEach,
+        forEachOneLiner,
         forEachAsync,
+        forEachAsyncOneLiner,
         forLoop,
         forLoopAsync,
         catchAnyError,
