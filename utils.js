@@ -29,8 +29,8 @@
             const nextFunctionResultNextState = (nextFunctionResult?.nextState ?? nextFunctionResultValue);
             const isGeneratorFunctionDone = (nextFunctionResult?.done ?? false);
             if (isGeneratorFunctionDone) return;
-            yield nextFunctionResultValue;
             currentState = nextFunctionResultNextState;
+            yield nextFunctionResultValue;
         }
     })());
     const createRecursiveFunctionNoCallStackLimitInner = (callbackFunction) => (...restArguments) => {
