@@ -1,5 +1,19 @@
-WillyHorizont.UtilsWeb = ((() => {
-    if (!WillyHorizont.Utils) return;
+((root, factory) => {
+    if ((typeof window !== "undefined") && (typeof document !== "undefined")) {
+        // Web Browser environment
+        root.WillyHorizont = (root.WillyHorizont || {});
+        root.WillyHorizont.UtilsWeb = factory(root);
+        return;
+    }
+    if ((typeof module !== "undefined") && ("exports" in module) && (typeof module.exports !== "undefined")) {
+        // Node.js CommonJS environment
+        return;
+    }
+    // Unknown / unsupported environment
+})(globalThis, (root) => {
+    if (!root.WillyHorizont) {
+        throw new Error("WillyHorizont.UtilsWeb requires WillyHorizont.Utils to be loaded first");
+    }
 
     const initializeLocalDatabase = (databaseNameInString) => {
         const COLLECTION_OR_STORE_NAME_IN_STRING = "data";
@@ -139,13 +153,6 @@ WillyHorizont.UtilsWeb = ((() => {
         return htmlElementNew;
     };
     const appendChildrenReturnParent = (htmlElementParent, ...htmlElementChildren) => ([(htmlElementChildren.forEach((htmlElementChild) => (htmlElementParent.appendChild(htmlElementChild)))), htmlElementParent].at(-1));
-    const fetchThrowErrorIfNotOk = async (anyUrl) => {
-        const anyFetchResponse = await fetch(anyUrl);
-        if (!anyFetchResponse.ok) {
-            throw new Error(`fetch ${anyUrl} not ok`);
-        }
-        return anyFetchResponse;
-    };
     const checkIsUserUsingChromiumBasedWebBrowser = () => (((typeof window !== "undefined") && ("chrome" in window) && (typeof window.chrome !== "undefined")) && ((typeof navigator !== "undefined") && ("userAgentData" in navigator) && (typeof navigator.userAgentData !== "undefined") && ("getHighEntropyValues" in navigator.userAgentData) && (typeof navigator.userAgentData.getHighEntropyValues === "function")));
     const getUserChromiumBasedWebBrowserData = async () => {
         const isUserUsingChromiumBasedWebBrowser = checkIsUserUsingChromiumBasedWebBrowser();
@@ -168,7 +175,7 @@ WillyHorizont.UtilsWeb = ((() => {
         });
     };
     const getLatestStableChromiumBasedWebBrowserLstData = async () => {
-        const getChromiumBasedWebBrowserLatestStableVersionResponse = await WillyHorizont.UtilsWeb.fetchThrowErrorIfNotOk("https://chromiumdash.appspot.com/fetch_releases?channel=Stable&num=1");
+        const getChromiumBasedWebBrowserLatestStableVersionResponse = await WillyHorizont.Utils.fetchThrowErrorIfNotOk("https://chromiumdash.appspot.com/fetch_releases?channel=Stable&num=1");
         const getChromiumBasedWebBrowserLatestStableVersionResponseJson = await getChromiumBasedWebBrowserLatestStableVersionResponse.json();
         // console.log({ getChromiumBasedWebBrowserLatestStableVersionResponseJson });
         return getChromiumBasedWebBrowserLatestStableVersionResponseJson;
@@ -719,7 +726,6 @@ WillyHorizont.UtilsWeb = ((() => {
         removeTemplateStringIndentation,
         htmlTemplateStringToHtmlElement,
         appendChildrenReturnParent,
-        fetchThrowErrorIfNotOk,
         checkIsUserUsingChromiumBasedWebBrowser,
         getUserChromiumBasedWebBrowserData,
         getLatestStableChromiumBasedWebBrowserLstData,
@@ -733,4 +739,4 @@ WillyHorizont.UtilsWeb = ((() => {
         getAspectRatio,
         getViewportWidthMultiplier,
     };
-})());
+});

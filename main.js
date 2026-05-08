@@ -1,12 +1,16 @@
-(function (root, factory) {
-    if ((typeof module === "object") && ("exports" in module) && (typeof module.exports !== "undefined")) {
-        // Node.js
-        module.exports = factory(root);
-    } else {
-        // Web Browser
+((root, factory) => {
+    if ((typeof window !== "undefined") && (typeof document !== "undefined")) {
+        // Web Browser environment
         root.WillyHorizont = factory(root);
+        return;
     }
-})(((typeof globalThis !== "undefined") ? globalThis : this), function (root) {
+    if ((typeof module !== "undefined") && ("exports" in module) && (typeof module.exports !== "undefined")) {
+        // Node.js CommonJS environment
+        module.exports = factory(root);
+        return;
+    }
+    // Unknown / unsupported environment
+})(globalThis, (root) => {
     const initializeApp = () => console.log("Hi!");
 
     return {

@@ -1,15 +1,19 @@
-(function (root, factory) {
-    if ((typeof module === "object") && ("exports" in module) && (typeof module.exports !== "undefined")) {
-        // Node.js
-        module.exports = factory(root);
-    } else {
-        // Web Browser
+((root, factory) => {
+    if ((typeof window !== "undefined") && (typeof document !== "undefined")) {
+        // Web Browser environment
         root.WillyHorizont = (root.WillyHorizont || {});
         root.WillyHorizont.UtilsZyx = factory(root);
+        return;
     }
-})(((typeof globalThis !== "undefined") ? globalThis : this), function (root) {
-    if (!(root.WillyHorizont && root.WillyHorizont.Utils && root.WillyHorizont.UtilsWeb)) {
-        throw new Error("WillyHorizont.UtilsZyx requires WillyHorizont.Utils and WillyHorizont.UtilsWeb to be loaded first");
+    if ((typeof module !== "undefined") && ("exports" in module) && (typeof module.exports !== "undefined")) {
+        // Node.js CommonJS environment
+        module.exports = factory(root);
+        return;
+    }
+    // Unknown / unsupported environment
+})(globalThis, (root) => {
+    if (!(root.WillyHorizont && root.WillyHorizont.Utils)) {
+        throw new Error("WillyHorizont.UtilsZyx requires WillyHorizont.Utils to be loaded first");
     }
 
     const pickStringChunkRandomly = (anyEvenLengthString, stringChunkLength) => ((({ stringChunkIndex }) => (anyEvenLengthString.slice((stringChunkIndex * stringChunkLength), ((stringChunkIndex * stringChunkLength) + stringChunkLength))))({ stringChunkIndex: WillyHorizont.Utils.randomIntInclusive({ lowerBound: 0, upperBound: ((anyEvenLengthString.length / stringChunkLength) - 1) }) }));
@@ -26,7 +30,7 @@
         const zyxPassvvordCalendar = getZyxPassvvordString(zyxPassvvordSuffixStringCalendar);
         // console.log({ zyxPassvvordCalendar });
         const getZyxCalendarEventHolidayIndonesiaUrl = (`https://www.googleapis.com/calendar/v3/calendars/${calendarIdIndonesiaHoliday}/events?key=${zyxPassvvordCalendar}&timeMin=${yearString}-01-01T00:00:00Z&timeMax=${yearPlusOneString}-01-01T00:00:00Z&singleEvents=true&orderBy=startTime`);
-        const getZyxCalendarEventHolidayIndonesiaResponse = await WillyHorizont.UtilsWeb.fetchThrowErrorIfNotOk(getZyxCalendarEventHolidayIndonesiaUrl);
+        const getZyxCalendarEventHolidayIndonesiaResponse = await WillyHorizont.Utils.fetchThrowErrorIfNotOk(getZyxCalendarEventHolidayIndonesiaUrl);
         const getZyxCalendarEventHolidayIndonesiaResponseJson = await getZyxCalendarEventHolidayIndonesiaResponse.json();
         // console.log({ getZyxCalendarEventHolidayIndonesiaResponseJson });
         if (!getZyxCalendarEventHolidayIndonesiaResponseJson?.["items"]?.length) return null;
@@ -36,7 +40,7 @@
         const zyxPassvvordCustomSearchJsonWithCx = getZyxPassvvordStringCustomSearchJsonWithCx(zyxPassvvordSuffixStringCustomSearchJsonWithCx);
         // console.log({ zyxPassvvordCustomSearchJsonWithCx });
         const getZyxCustomSearchJsonUrl = (`https://www.googleapis.com/customsearch/v1?key=${zyxPassvvordCustomSearchJsonWithCx}&q=${encodeURIComponent(anyString)}${queryParameterString}`);
-        const getZyxCustomSearchJsonResponse = await WillyHorizont.UtilsWeb.fetchThrowErrorIfNotOk(getZyxCustomSearchJsonUrl);
+        const getZyxCustomSearchJsonResponse = await WillyHorizont.Utils.fetchThrowErrorIfNotOk(getZyxCustomSearchJsonUrl);
         // console.log({ getZyxCustomSearchJsonResponse });
         const getZyxCustomSearchJsonResponseJson = await getZyxCustomSearchJsonResponse.json();
         // console.log({ getZyxCustomSearchJsonResponseJson });

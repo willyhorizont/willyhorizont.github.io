@@ -1,13 +1,17 @@
-(function (root, factory) {
-    if ((typeof module === "object") && ("exports" in module) && (typeof module.exports !== "undefined")) {
-        // Node.js
-        module.exports = factory(root);
-    } else {
-        // Web Browser
+((root, factory) => {
+    if ((typeof window !== "undefined") && (typeof document !== "undefined")) {
+        // Web Browser environment
         root.WillyHorizont = (root.WillyHorizont || {});
         root.WillyHorizont.UtilsDate = factory(root);
+        return;
     }
-})(((typeof globalThis !== "undefined") ? globalThis : this), function (root) {
+    if ((typeof module !== "undefined") && ("exports" in module) && (typeof module.exports !== "undefined")) {
+        // Node.js CommonJS environment
+        module.exports = factory(root);
+        return;
+    }
+    // Unknown / unsupported environment
+})(globalThis, (root) => {
     const ONE_SECOND_IN_MILLISECOND = 1000;
     const ONE_MINUTE_IN_SECOND = 60;
     const ONE_MINUTE_IN_MILLISECOND = (ONE_MINUTE_IN_SECOND * ONE_SECOND_IN_MILLISECOND);
@@ -326,7 +330,9 @@
     };
     const getCycleYear = (hijriahYear) => (((hijriahYear - 1) % HIJRIAH_TABULAR_CYCLE_YEAR_COUNT) + 1);
     const checkIsHijriahLeapYear = (hijriahYear, hijriahTabularCycleLeapPosition = HIJRIAH_TABULAR_CYCLE_LEAP_CONFIGURATION) => {
-        if (hijriahTabularCycleLeapPosition.length !== HIJRIAH_TABULAR_CYCLE_LEAP_YEAR_COUNT) throw new Error("Invalid Hijriah tabular cycle leap configuration.");
+        if (hijriahTabularCycleLeapPosition.length !== HIJRIAH_TABULAR_CYCLE_LEAP_YEAR_COUNT) {
+            throw new Error("Invalid Hijriah tabular cycle leap configuration.");
+        }
         return (hijriahTabularCycleLeapPosition.includes(getCycleYear(hijriahYear)));
     };
     const getHijriahYearLengthInDays = (hijriahYear) => (checkIsHijriahLeapYear(hijriahYear) ? 355 : 354);

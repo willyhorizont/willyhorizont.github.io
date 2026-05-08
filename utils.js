@@ -1,13 +1,17 @@
-(function (root, factory) {
-    if ((typeof module === "object") && ("exports" in module) && (typeof module.exports !== "undefined")) {
-        // Node.js
-        module.exports = factory(root);
-    } else {
-        // Web Browser
+((root, factory) => {
+    if ((typeof window !== "undefined") && (typeof document !== "undefined")) {
+        // Web Browser environment
         root.WillyHorizont = (root.WillyHorizont || {});
         root.WillyHorizont.Utils = factory(root);
+        return;
     }
-})(((typeof globalThis !== "undefined") ? globalThis : this), function (root) {
+    if ((typeof module !== "undefined") && ("exports" in module) && (typeof module.exports !== "undefined")) {
+        // Node.js CommonJS environment
+        module.exports = factory(root);
+        return;
+    }
+    // Unknown / unsupported environment
+})(globalThis, (root) => {
     const regexPattern = {
         "three_digit_grouping": (new RegExp(`\B(?=(\d{3})+(?!\d))`, "g")),
     };
@@ -33,6 +37,13 @@
             yield nextFunctionResultValue;
         }
     })());
+    const fetchThrowErrorIfNotOk = async (anyUrl) => {
+        const anyFetchResponse = await fetch(anyUrl);
+        if (!anyFetchResponse.ok) {
+            throw new Error(`fetch ${anyUrl} not ok`);
+        }
+        return anyFetchResponse;
+    };
     const createRecursiveFunctionNoCallStackLimitInner = (callbackFunction) => (...restArguments) => {
         let result = callbackFunction(...restArguments);
         while (Object.prototype.toString.call(result) === "[object Function]") {
@@ -60,7 +71,7 @@
         return mostFrequentResult;
     };
     const getMostFrequentOneLiner = (anyArray, callbackFunction = (anyArrayItem) => (anyArrayItem)) => (((frequencyMap) => (anyArray.reduce(((getMostFrequentOneLinerLocalVariableMap, anyArrayItem, anyArrayItemIndex) => (((currentCount) => ([frequencyMap.set(callbackFunction(anyArrayItem), currentCount), ((currentCount > getMostFrequentOneLinerLocalVariableMap.get("maxCount")) ? ([(getMostFrequentOneLinerLocalVariableMap.set("maxCount", currentCount)), (getMostFrequentOneLinerLocalVariableMap.set("mostFrequentResult", callbackFunction(anyArrayItem))), (undefined)].at(-1)) : undefined), ((anyArrayItemIndex === (anyArray.length - 1)) ? getMostFrequentOneLinerLocalVariableMap.get("mostFrequentResult") : getMostFrequentOneLinerLocalVariableMap)].at(-1)))((frequencyMap.get(callbackFunction(anyArrayItem)) || 0) + 1))), (new Map([["maxCount", 0], ["mostFrequentResult", null]])))))(new Map()));
-    const pickArrayItemRandomly = (anyArray) => (anyArray.at(WillyHorizont.Utils.randomIntInclusive({ lowerBound: 0, upperBound: (anyArray.length - 1) })));
+    const pickArrayItemRandomly = (anyArray) => (anyArray.at(randomIntInclusive({ lowerBound: 0, upperBound: (anyArray.length - 1) })));
     const parseEscapeSequence = (anyString) => (JSON.parse(`"${anyString}"`));
     const pythonLikeSleep = (anySeconds) => new Promise((anyResolveFunction) => setTimeout(anyResolveFunction, (anySeconds * 1 * (({ secondInMiliseconds }) => secondInMiliseconds)({ secondInMiliseconds: 1_000 }))));
     const runOnce = ((keySet) => (anyStringKey = "something", callbackFunction = (() => (undefined))) => (keySet.has(anyStringKey) ? undefined : ([(keySet.add(anyStringKey)), (callbackFunction())].at(-1))))(new Set()); /* runOnceV2 */
@@ -177,6 +188,7 @@
         createRecursiveFunctionNoCallStackLimit,
         optionalChaining,
         getNumberDifferenceInNumeric,
+        fetchThrowErrorIfNotOk,
         getMostFrequent,
         getMostFrequentOneLiner,
         pickArrayItemRandomly,
