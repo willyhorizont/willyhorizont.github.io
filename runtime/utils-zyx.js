@@ -8,6 +8,8 @@
     }
     if ((typeof module !== "undefined") && ("exports" in module) && (typeof module.exports !== "undefined")) {
         // Node.js CommonJS environment may also support Web Browser environment module script (script with type="module") and Node.js ES Module (ESM) environment
+        root.WillyHorizont = (root.WillyHorizont || {});
+        root.WillyHorizont.Utils = require("./utils.js");
         module.exports = factory(root);
         return;
     }

@@ -8,11 +8,17 @@
     }
     if ((typeof module !== "undefined") && ("exports" in module) && (typeof module.exports !== "undefined")) {
         // Node.js CommonJS environment may also support Web Browser environment module script (script with type="module") and Node.js ES Module (ESM) environment
+        root.WillyHorizont = (root.WillyHorizont || {});
+        root.WillyHorizont.Utils = require("./utils.js");
         module.exports = factory(root);
         return;
     }
     // Unknown / unsupported environment
 })(globalThis, (root) => {
+    if (!(root.WillyHorizont && root.WillyHorizont.Utils)) {
+        throw new Error("WillyHorizont.UtilsDate requires WillyHorizont.Utils to be loaded first");
+    }
+
     const ONE_SECOND_IN_MILLISECOND = 1000;
     const ONE_MINUTE_IN_SECOND = 60;
     const ONE_MINUTE_IN_MILLISECOND = (ONE_MINUTE_IN_SECOND * ONE_SECOND_IN_MILLISECOND);
@@ -162,28 +168,6 @@
         const [yearString, monthString, dayString] = yyyyMmDdString.split("-");
         return new Date(Date.UTC(Number(yearString), (Number(monthString) - 1), Number(dayString)));
     };
-    const extractDate = (anything) => {
-        const anythingType = WillyHorizont.Utils.getType(anything);
-        const dateObject = ((anythingType === WillyHorizont.Utils.AnyType["String"]) ? new Date(anything) : ((anythingType === WillyHorizont.Utils.AnyType["Date"]) ? anything : undefined));
-        if (dateObject === undefined) return undefined;
-        const [hourMinuteTwentyFourHourClockAllZeroPaddedJoinByColon, twelveHourClockLatinAbbreviation] = new Intl.DateTimeFormat("en-US", { hour: "2-digit", minute: "2-digit", hour12: true }).format(dateObject).split(" ");
-        const [zeroPaddedHourTwelveHourClock, _] = hourMinuteTwentyFourHourClockAllZeroPaddedJoinByColon.split(":");
-        const [zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute] = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false }).format(dateObject).split(":");
-        return ({
-            fullYear: (`${dateObject.getUTCFullYear()}`),
-            zeroPaddedMonth: ((`${dateObject.getUTCMonth() + 1}`).padStart(2, "0")),
-            monthThreeFirstLetter: (new Intl.DateTimeFormat("en-US", { month: "short" }).format(dateObject)),
-            zeroPaddedDay: ((`${dateObject.getUTCDate()}`).padStart(2, "0")),
-            dayThreeFirstLetter: (new Intl.DateTimeFormat("en-US", { weekday: "short" }).format(dateObject)),
-            zeroPaddedHourTwelveHourClock,
-            twelveHourClockLatinAbbreviation,
-            zeroPaddedHourTwentyFourHourClock,
-            zeroPaddedMinute,
-            zeroPaddedSecond: ((`${dateObject.getUTCSeconds()}`).padStart(2, "0")),
-            zeroPaddedMiliSecondThreeDigit: ((`${dateObject.getUTCMilliseconds()}`).padStart(3, "0")),
-        });
-    }; /* extractDateV3 */
-    const prettyFormatDate = ({ includeSecond = true, includeMiliSecond = false, fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit }) => (`(${zeroPaddedMonth}/12 month) | ${dayThreeFirstLetter}, ${zeroPaddedDay} ${monthThreeFirstLetter} ${fullYear} | ${zeroPaddedHourTwentyFourHourClock}:${zeroPaddedMinute}${includeSecond ? `:${zeroPaddedSecond}` : ``}${includeMiliSecond ? `.${zeroPaddedMiliSecondThreeDigit}` : ``} | ${zeroPaddedHourTwelveHourClock}:${zeroPaddedMinute} ${twelveHourClockLatinAbbreviation}`); /* prettyFormatDateV2 */
     const getDayDifferenceInNumeric = (dateDotToIsoStringDotSliceZeroCommaTenNewer, dateDotToIsoStringDotSliceZeroCommaTenOlder) => (((new Date(dateDotToIsoStringDotSliceZeroCommaTenNewer) - new Date(dateDotToIsoStringDotSliceZeroCommaTenOlder)) / ONE_DAY_IN_MILLISECOND) - 1);
     const getYyyyMinusMmMinusDdOfDateObject = (dateObject) => {
         const newDateObject = new Date(dateObject.getTime());
@@ -431,8 +415,6 @@
         getZeroPaddedMonthByMonthThreeFirstLetter,
         parseYyyyMmDdToUtcDate,
         addOrSubtractDay,
-        extractDate,
-        prettyFormatDate,
         getYyyyMinusMmMinusDdOfDateObject,
         updateDateDotToIsoStringDotSliceZeroCommaTenByNumericVariable,
         YEAR_ANNO_DOMINI_GREGORIAN_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN,
