@@ -2,10 +2,10 @@
     "name": "willyhorizont.github.io",
     "version": "1.0.0",
     "description": "willyhorizont.github.io",
-    "main": "main.js",
+    "main": "index.js",
     "files": [
+        "utils.js",
         "utils-date.js",
-        "utils-zyx.js",
-        "utils.js"
+        "utils-zyx.js"
     ]
 }

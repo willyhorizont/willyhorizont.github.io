@@ -1,12 +1,13 @@
 ((root, factory) => {
+    // UMD (Universal Module Definition)
     if ((typeof window !== "undefined") && (typeof document !== "undefined")) {
-        // Web Browser environment
+        // Web Browser environment non module script (script with no type="module")
         root.WillyHorizont = (root.WillyHorizont || {});
         root.WillyHorizont.UtilsDate = factory(root);
         return;
     }
     if ((typeof module !== "undefined") && ("exports" in module) && (typeof module.exports !== "undefined")) {
-        // Node.js CommonJS environment
+        // Node.js CommonJS environment may also support Web Browser environment module script (script with type="module") and Node.js ES Module (ESM) environment
         module.exports = factory(root);
         return;
     }
