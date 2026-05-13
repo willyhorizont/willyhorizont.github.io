@@ -171,7 +171,7 @@
     const getDayDifferenceInNumeric = (dateDotToIsoStringDotSliceZeroCommaTenNewer, dateDotToIsoStringDotSliceZeroCommaTenOlder) => (((new Date(dateDotToIsoStringDotSliceZeroCommaTenNewer) - new Date(dateDotToIsoStringDotSliceZeroCommaTenOlder)) / ONE_DAY_IN_MILLISECOND) - 1);
     const getYyyyMinusMmMinusDdOfDateObject = (dateObject) => {
         const newDateObject = new Date(dateObject.getTime());
-        const { fullYear, zeroPaddedMonth, zeroPaddedDay } = extractDate(newDateObject);
+        const { fullYear, zeroPaddedMonth, zeroPaddedDay } = WillyHorizont.Utils.extractDate(newDateObject);
         return (`${fullYear}-${zeroPaddedMonth}-${zeroPaddedDay}`);
     }
     const addOrSubtractDay = (dateObject, integerVariable) => {
@@ -323,7 +323,7 @@
     const getHijriahYearLengthInDays = (hijriahYear) => (checkIsHijriahLeapYear(hijriahYear) ? 355 : 354);
     const estimateHijriahHoliday = ({ hijriahHolidayName, targetGregorianYearInt }) => {
         const { gregorianDate: referenceGregorianDate, hijriahYear: referenceHijriahYear } = HIJRIAH_HOLIDAY[hijriahHolidayName]["references"][1];
-        const referenceGregorianDateData = extractDate(referenceGregorianDate);
+        const referenceGregorianDateData = WillyHorizont.Utils.extractDate(referenceGregorianDate);
         const referenceGregorianYearInt = parseInt(referenceGregorianDateData["fullYear"], 10);
         const gregorianYearDifference = WillyHorizont.Utils.getNumberDifferenceInNumeric(targetGregorianYearInt, referenceGregorianYearInt); 
         const hijriahYearEstimation = (referenceHijriahYear + gregorianYearDifference);
