@@ -20,12 +20,130 @@
         "String": "String",
         "Int": "Int",
         "Float": "Float",
-        "Array": "Array",
-        "Object": "Object",
+        "PythonLikeList": "PythonLikeList",
+        "PythonLikeDict": "PythonLikeDict",
         "Function": "Function",
-        "Error": "Error",
-        "Date": "Date",
     };
+    const getIsUndefined = (anything) => ((Object.prototype.toString.call(anything) === "[object Undefined]") && (anything === undefined));
+    const getIsNull = (anything) => ((Object.prototype.toString.call(anything) === "[object Null]") && (anything === null));
+    const getIsBoolean = (anything) => ((Object.prototype.toString.call(anything) === "[object Boolean]") && ((anything === true) || (anything === false)));
+    const getIsString = (anything) => (Object.prototype.toString.call(anything) === "[object String]");
+    const getIsNumeric = (anything) => ((Object.prototype.toString.call(anything) === "[object Number]") && (Number.isNaN(anything) === false) && (Number.isFinite(anything) === true));
+    const getIsInt = (anything) => (getIsNumeric(anything) && (Math.floor(anything) === anything) && (Number.isInteger(anything) === true));
+    const getIsFloat = (anything) => (getIsNumeric(anything) && (Math.floor(anything) !== anything) && (Number.isInteger(anything) === false));
+    const getIsPythonLikeList = (anything) => ((Object.prototype.toString.call(anything) === "[object Array]") && (Array.isArray(anything) === true));
+    const getIsPythonLikeDict = (anything) => (Object.prototype.toString.call(anything) === "[object Object]");
+    const getIsFunction = (anything) => (Object.prototype.toString.call(anything) === "[object Function]");
+    const getType = (anything) => ((getIsUndefined(anything) === true) ? AnyType["Undefined"] : (getIsNull(anything) === true) ? AnyType["Null"] : (getIsBoolean(anything) === true) ? AnyType["Boolean"] : (getIsString(anything) === true) ? AnyType["String"] : (getIsInt(anything) === true) ? AnyType["Int"] : (getIsFloat(anything) === true) ? AnyType["Float"] : (getIsPythonLikeList(anything) === true) ? AnyType["PythonLikeList"] : (getIsPythonLikeDict(anything) === true) ? AnyType["PythonLikeDict"] : (getIsFunction(anything) === true) ? AnyType["Function"] : Object.prototype.toString.call(anything));
+    const jsonStringify = (anything, { pretty = false } = {}) => {
+        const indentation = " ".repeat(4);
+        const tokenStack = [{ type: "value", value: anything, indentationLevel: 0 }];
+        let result = "";
+        while (tokenStack.length > 0) {
+            const current = tokenStack.pop();
+            if (current["type"] === "raw") {
+                result += current["value"];
+                continue;
+            }
+            const currentValue = current["value"];
+            const currentIndentationLevel = current["indentationLevel"];
+            const currentValueType = getType(currentValue);
+            if (currentValueType === AnyType["Undefined"]) {
+                result += "undefined";
+                continue;
+            }
+            if (currentValueType === AnyType["Null"]) {
+                result += "null";
+                continue;
+            }
+            if (currentValueType === AnyType["String"]) {
+                result += ["\"", String(currentValue), "\""].join("");
+                continue;
+            }
+            if ((currentValueType === AnyType["Int"]) || (currentValueType === AnyType["Float"]) || (currentValueType === AnyType["Boolean"])) {
+                result += String(currentValue);
+                continue;
+            }
+            if (currentValueType === AnyType["Function"]) {
+                result += currentValue.toString();
+                continue;
+            }
+            if (currentValueType === AnyType["PythonLikeList"]) {
+                if (currentValue.length === 0) {
+                    result += "[]";
+                    continue;
+                }
+                const childIndentationLevel = (currentIndentationLevel + 1);
+                tokenStack.push({
+                    type: "raw",
+                    value: ((pretty === true) ? ["\n", indentation.repeat(currentIndentationLevel), "]"].join("") : "]"),
+                    indentationLevel: currentIndentationLevel
+                });
+                for (let i = (currentValue.length - 1); (i >= 0); i -= 1) {
+                    tokenStack.push({
+                        type: "value",
+                        value: currentValue[i],
+                        indentationLevel: childIndentationLevel
+                    });
+                    if (i > 0) {
+                        tokenStack.push({
+                            type: "raw",
+                            value: ((pretty === true) ? [",\n", indentation.repeat(childIndentationLevel)].join("") : ", "),
+                            indentationLevel: childIndentationLevel
+                        });
+                    }
+                }
+                tokenStack.push({
+                    type: "raw",
+                    value: ((pretty === true) ? (["[\n", indentation.repeat(childIndentationLevel)].join("")) : "["),
+                    indentationLevel: childIndentationLevel
+                });
+                continue;
+            }
+            if (currentValueType === AnyType["PythonLikeDict"]) {
+                const objectEntries = Object.entries(currentValue);
+                if (objectEntries.length === 0) {
+                    result += "{}";
+                    continue;
+                }
+                const childIndentationLevel = (currentIndentationLevel + 1);
+                tokenStack.push({
+                    type: "raw",
+                    value: ((pretty === true) ? (["\n", indentation.repeat(currentIndentationLevel), "}"].join("")) : " }"),
+                    indentationLevel: currentIndentationLevel
+                });
+                for (let i = objectEntries.length - 1; i >= 0; i -= 1) {
+                    const [objectKey, objectValue] = objectEntries[i];
+                    tokenStack.push({
+                        type: "value",
+                        value: objectValue,
+                        indentationLevel: childIndentationLevel
+                    });
+                    tokenStack.push({
+                        type: "raw",
+                        value: ["\"", objectKey, "\": "].join(""),
+                        indentationLevel: childIndentationLevel
+                    });
+                    if (i > 0) {
+                        tokenStack.push({
+                            type: "raw",
+                            value: ((pretty === true) ? ([",\n", indentation.repeat(childIndentationLevel)].join("")) : ", "),
+                            indentationLevel: childIndentationLevel
+                        });
+                    }
+                }
+                tokenStack.push({
+                    type: "raw",
+                    value: ((pretty === true) ? (["{\n", indentation.repeat(childIndentationLevel)].join("")) : "{ "),
+                    indentationLevel: childIndentationLevel
+                });
+                continue;
+            }
+            result += String(currentValue);
+        }
+        return result;
+    };
+    const getIsStringIsoEightSixZeroOne = (anything) => ((getIsString(anything) === false) ? false : ((new RegExp(`^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$`, "g").test(anything) === false) ? false : ((dateParsedFromString) => ((getIsNumeric(dateParsedFromString.getTime()) === false) ? false : (dateParsedFromString.toISOString().replace(new RegExp(`\.000Z$`, "g"), "Z") === anything)))(new Date(anything))));
     const regexPattern = {
         "three_digit_grouping": (new RegExp(`\B(?=(\d{3})+(?!\d))`, "g")),
     };
@@ -66,6 +184,7 @@
         return result;
     };
     const createRecursiveFunctionNoCallStackLimit = (callbackFunctionWrapper) => ((self = (...restArguments) => () => callbackFunction(...restArguments), callbackFunction = callbackFunctionWrapper(self)) => createRecursiveFunctionNoCallStackLimitInner(callbackFunction))();
+    const factorial = (anything) => ((getIsInt(anything) === false) ? ["Error: Argument should be any non-negative integer", null] : (anything < 0) ? ["Error: Argument should be >= 0", null] : (anything === 0) ? [null, 1] : [null, (createRecursiveFunctionNoCallStackLimit((self) => ((anyInt, accumulator) => ((anyInt === 0) ? accumulator : self((anyInt - 1), (anyInt * accumulator))))))(anything, 1)]);
     const replaceAnyLineBreak = (inputString, separator = " ") => (inputString.replace(new RegExp("\\s*(?:\\r\\n|\\r|\\n|\\u2028|\\u2029)+\\s*", "g"), separator).trim());
     const safeGetObjectProperty = (rootObject, methodChain) => ((typeof rootObject === "undefined") ? false : (methodChain.split(".").slice(1).reduce((currentResult, currentProperty) => ((currentResult && (currentProperty in currentResult)) ? currentResult[currentProperty] : undefined), rootObject)))
     const getIsMethodAvailable = (rootObject, methodChain) => (typeof safeGetObjectProperty(rootObject, methodChain) === "function");
@@ -95,7 +214,7 @@
     const prettyFormatDate = ({ includeSecond = true, includeMiliSecond = false, fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit }) => (`(${zeroPaddedMonth}/12 month) | ${dayThreeFirstLetter}, ${zeroPaddedDay} ${monthThreeFirstLetter} ${fullYear} | ${zeroPaddedHourTwentyFourHourClock}:${zeroPaddedMinute}${includeSecond ? `:${zeroPaddedSecond}` : ``}${includeMiliSecond ? `.${zeroPaddedMiliSecondThreeDigit}` : ``} | ${zeroPaddedHourTwelveHourClock}:${zeroPaddedMinute} ${twelveHourClockLatinAbbreviation}`); /* prettyFormatDateV2 */
     const extractDate = (anything) => {
         const anythingType = getType(anything);
-        const dateObject = ((anythingType === AnyType["String"]) ? new Date(anything) : ((anythingType === AnyType["Date"]) ? anything : undefined));
+        const dateObject = ((anythingType === AnyType["String"]) ? new Date(anything) : anything);
         if (dateObject === undefined) return undefined;
         const [hourMinuteTwentyFourHourClockAllZeroPaddedJoinByColon, twelveHourClockLatinAbbreviation] = new Intl.DateTimeFormat("en-US", { hour: "2-digit", minute: "2-digit", hour12: true }).format(dateObject).split(" ");
         const [zeroPaddedHourTwelveHourClock, _] = hourMinuteTwentyFourHourClockAllZeroPaddedJoinByColon.split(":");
@@ -116,20 +235,6 @@
     }; /* extractDateV3 */
     const getClock = ({ includeSecond = true, includeMiliSecond = true } = {}) => ((({ fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit }) => (prettyFormatDate({ includeSecond, includeMiliSecond, fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit })))(extractDate(new Date().toISOString()))); /* getClockV2 */
     const getTimestamp = () => ((({ fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit }) => (`${fullYear}-${zeroPaddedMonth}-${zeroPaddedDay}-at-${zeroPaddedHourTwentyFourHourClock}.${zeroPaddedHourTwelveHourClock}.${zeroPaddedMinute}.${zeroPaddedMiliSecondThreeDigit}`))(extractDate(new Date().toISOString()))); /* getTimestampV2 */
-    const getIsUndefined = (anything) => ((Object.prototype.toString.call(anything) === "[object Undefined]") && (anything === undefined));
-    const getIsNull = (anything) => ((Object.prototype.toString.call(anything) === "[object Null]") && (anything === null));
-    const getIsBoolean = (anything) => ((Object.prototype.toString.call(anything) === "[object Boolean]") && ((anything === true) || (anything === false)));
-    const getIsString = (anything) => (Object.prototype.toString.call(anything) === "[object String]");
-    const getIsNumeric = (anything) => ((Object.prototype.toString.call(anything) === "[object Number]") && (Number.isNaN(anything) === false) && (Number.isFinite(anything) === true));
-    const getIsInt = (anything) => (getIsNumeric(anything) && (Math.floor(anything) === anything) && (Number.isInteger(anything) === true));
-    const getIsFloat = (anything) => (getIsNumeric(anything) && (Math.floor(anything) !== anything) && (Number.isInteger(anything) === false));
-    const getIsArray = (anything) => ((Object.prototype.toString.call(anything) === "[object Array]") && (Array.isArray(anything) === true));
-    const getIsObject = (anything) => (Object.prototype.toString.call(anything) === "[object Object]");
-    const getIsFunction = (anything) => (Object.prototype.toString.call(anything) === "[object Function]");
-    const getIsDate = (anything) => (Object.prototype.toString.call(anything) === "[object Date]");
-    const getIsError = (anything) => (Object.prototype.toString.call(anything) === "[object Error]");
-    const getIsStringIso8601 = (anything) => ((getIsString(anything) === false) ? false : ((new RegExp(`^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$`, "g").test(anything) === false) ? false : ((dateParsedFromString) => ((getIsNumeric(dateParsedFromString.getTime()) === false) ? false : (dateParsedFromString.toISOString().replace(new RegExp(`\.000Z$`, "g"), "Z") === anything)))(new Date(anything))));
-    const getType = (anything) => ((getIsUndefined(anything) === true) ? AnyType["Undefined"] : (getIsNull(anything) === true) ? AnyType["Null"] : (getIsBoolean(anything) === true) ? AnyType["Boolean"] : (getIsString(anything) === true) ? AnyType["String"] : (getIsInt(anything) === true) ? AnyType["Int"] : (getIsFloat(anything) === true) ? AnyType["Float"] : (getIsArray(anything) === true) ? AnyType["Array"] : (getIsObject(anything) === true) ? AnyType["Object"] : (getIsFunction(anything) === true) ? AnyType["Function"] : (getIsError(anything) === true) ? AnyType["Error"] : (getIsDate(anything) === true) ? AnyType["Date"] : Object.prototype.toString.call(anything));
     const pipe = (...restArguments) => {
         const pipeLastResultMap = new Map();
         const pipeResult = restArguments.reduce((currentResult, currentArgument) => {
@@ -142,7 +247,6 @@
         return pipeResult;
     };
     const pipeOneLiner = (...restArguments) => (((pipeLastResultMap) => (((pipeResult) => (getType(pipeResult) === AnyType["Function"] ? (pipeResult(pipeLastResultMap.get("result"))) : (pipeResult)))(restArguments.reduce((currentResult, currentArgument) => ([(pipeLastResultMap.set("result", currentResult)), ((getType(currentResult) === AnyType["Undefined"]) ? currentArgument : ((getType(currentArgument) === AnyType["Function"]) ? currentArgument(currentResult) : undefined))].at(-1)), undefined))))(new Map()));
-    const jsonStringify = (anything, { pretty = false } = {}) => ((temporaryMap) => ([(temporaryMap.set("f", ((anythingInner, { indent = " ".repeat(4), indentLevel = 0, argumentType = getType(anythingInner) } = {}) => ((getIsStringIso8601(anythingInner) === true) ? (temporaryMap.get("f")({ "pretty": getClock(anythingInner), "ISO8601": anythingInner }, { indentLevel })) : ((argumentType === AnyType["Undefined"]) ? ('"undefined"') : ((argumentType === AnyType["Null"]) ? ("null") : ((argumentType === AnyType["Error"]) ? (`"${anythingInner.toString()}"`) : ((argumentType === AnyType["Date"]) ? (temporaryMap.get("f")({ "pretty": getClock(anythingInner), "ISO8601": anythingInner.toISOString() }, { indentLevel })) : ((argumentType === AnyType["String"]) ? (`"${anythingInner}"`) : (((argumentType === AnyType["Numeric"]) || (argumentType === AnyType["Boolean"])) ? (`${anythingInner}`) : ((argumentType === AnyType["Object"]) ? ((Object.keys(anythingInner).length === 0) ? ("{}") : ((Object.keys(anythingInner).includes("ISO8601") === true) ? (`${((pretty === true) ? (`{\n${indent.repeat(indentLevel + 1)}`) : "{ ")}${(`"pretty": "${anythingInner["pretty"]}"${(pretty === true) ? (`,\n${indent.repeat(indentLevel + 1)}`) : ", "}"ISO8601": "${anythingInner["ISO8601"]}"${(pretty === true) ? "," : ""}`)}${((pretty === true) ? (`\n${indent.repeat(indentLevel)}}`) : " }")}`) : (`${((pretty === true) ? (`{\n${indent.repeat(indentLevel + 1)}`) : "{ ")}${Object.entries(anythingInner).reduce((currentResult, [objectKey, objectValue], objectEntryIndex) => (`${currentResult}"${objectKey}": ${temporaryMap.get("f")(objectValue, { indentLevel: (indentLevel + 1) })}${((objectEntryIndex + 1) !== Object.keys(anythingInner).length) ? ((pretty === true) ? (`,\n${indent.repeat(indentLevel + 1)}`) : ", ") : ""}`), "")}${((pretty === true) ? (`\n${indent.repeat(indentLevel)}}`) : " }")}`))) : ((argumentType === AnyType["Array"]) ? ((anythingInner.length === 0) ? ("[]") : (`${((pretty === true) ? (`[\n${indent.repeat(indentLevel + 1)}`) : "[")}${anythingInner.reduce((currentResult, arrayItem, arrayItemIndex) => (`${currentResult}${temporaryMap.get("f")(arrayItem, { indentLevel: (indentLevel + 1) })}${((arrayItemIndex + 1) !== anythingInner.length) ? ((pretty === true) ? (`,\n${indent.repeat(indentLevel + 1)}`) : ", ") : ""}`), "")}${((pretty === true) ? (`\n${indent.repeat(indentLevel)}]`) : "]")}`)) : ((argumentType === AnyType["Function"]) ? (`"${anythingInner.toString()}"`) : (`${anythingInner}`)))))))))))))), (temporaryMap.get("f")(anything))].at(-1)))(new Map()); /* custom JSON.stringify() function jsonStringifyV5 */
     const randomIntInclusive = ({ lowerBound, upperBound, multiplier = 1 } = {}) => ((({ min, max }) => ((Math.floor(Math.random() * (max - min + 1)) + min) * multiplier))({ min: Math.ceil(lowerBound / multiplier), max: Math.floor(upperBound / multiplier) }));
     const removeDuplicateListItem = (anyArray, callbackFunction = ((anyArrayItem) => (anyArrayItem))) => (anyArray.reduce(([uniqueKeyMap, uniqueArray], anyArrayItem) => ((newUniqueKeyString) => ((uniqueKeyMap.get(newUniqueKeyString) !== undefined) ? [uniqueKeyMap, uniqueArray] : ([(uniqueKeyMap.set(newUniqueKeyString, anyArrayItem)), (uniqueArray.push(anyArrayItem)), ([uniqueKeyMap, uniqueArray])].at(-1))))(callbackFunction(anyArrayItem)), [new Map(), []]).at(-1)); /* removeDuplicateListItemV2 */
     const fakeGenerator = () => {
@@ -218,9 +322,24 @@
     const getRandomString = (minLength = 2, maxLength = 10) => ((({ characters, lengthRandomString }) => (Array.from({ length: lengthRandomString }, () => (characters[Math.floor(Math.random() * characters.length)])).join("")))({ characters: "abcdefghijklmnopqrstuvwxyz", lengthRandomString: (Math.floor(Math.random() * (maxLength - 1)) + minLength) }));
 
     return {
+        AnyType,
+        getIsUndefined,
+        getIsNull,
+        getIsBoolean,
+        getIsString,
+        getIsNumeric,
+        getIsInt,
+        getIsFloat,
+        getIsPythonLikeList,
+        getIsPythonLikeDict,
+        getIsFunction,
+        getType,
+        jsonStringify,
+        getIsStringIsoEightSixZeroOne,
         regexPattern,
         createRecursiveFunctionNoCallStackLimitInner,
         createRecursiveFunctionNoCallStackLimit,
+        factorial,
         optionalChaining,
         getNumberDifferenceInNumeric,
         fetchThrowErrorIfNotOk,
@@ -237,24 +356,8 @@
         extractDate,
         getClock,
         getTimestamp,
-        AnyType,
-        getIsNull,
-        getIsUndefined,
-        getIsBoolean,
-        getIsString,
-        getIsNumeric,
-        getIsInt,
-        getIsFloat,
-        getIsObject,
-        getIsArray,
-        getIsFunction,
-        getIsError,
-        getIsStringIso8601,
-        getIsDate,
-        getType,
         pipe,
         pipeOneLiner,
-        jsonStringify,
         randomIntInclusive,
         replaceAnyLineBreak,
         removeDuplicateListItem,

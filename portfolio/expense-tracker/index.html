@@ -101,7 +101,7 @@
                             "price": (htmlElementExpense.getAttribute("data-price") || ""),
                             "items": (JSON.parse(htmlElementExpense.children[1].getAttribute("data-items")) || []),
                         });
-                        if (((newExpenseContainerContent?.price === "") && ((WillyHorizont.Utils.getIsArray(newExpenseContainerContent?.items) === true) && (newExpenseContainerContent?.items?.length === 0))) === false) dataFromImportExportTextAreaContentCurrentResult.push(newExpenseContainerContent);
+                        if (((newExpenseContainerContent?.price === "") && ((WillyHorizont.Utils.getIsPythonLikeList(newExpenseContainerContent?.items) === true) && (newExpenseContainerContent?.items?.length === 0))) === false) dataFromImportExportTextAreaContentCurrentResult.push(newExpenseContainerContent);
                         return dataFromImportExportTextAreaContentCurrentResult;
                     }), []));
                     return ((dataFromImportExportTextAreaContent.length === 0) ? null : dataFromImportExportTextAreaContent);
@@ -205,7 +205,7 @@
                     }
                     const htmlElementChipInputContainer = event.target.parentElement.parentElement.querySelector('[data-id="chip-input-container"]');
                     const datasetItems = JSON.parse(htmlElementChipInputContainer.getAttribute("data-items"));
-                    if ((WillyHorizont.Utils.getIsArray(datasetItems) === true) && (datasetItems.length === 0)) {
+                    if ((WillyHorizont.Utils.getIsPythonLikeList(datasetItems) === true) && (datasetItems.length === 0)) {
                         const htmlElementChipInput = htmlElementChipInputContainer.querySelector('[data-id="chip-input"]');
                         htmlElementChipInput.setAttribute("placeholder", chipInputPlaceholder);
                         htmlElementChipInput.focus();
