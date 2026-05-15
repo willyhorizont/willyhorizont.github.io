@@ -154,9 +154,9 @@
         return htmlElementNew;
     };
     const appendChildrenReturnParent = (htmlElementParent, ...htmlElementChildren) => ([(htmlElementChildren.forEach((htmlElementChild) => (htmlElementParent.appendChild(htmlElementChild)))), htmlElementParent].at(-1));
-    const checkIsUserUsingChromiumBasedWebBrowser = () => (((typeof window !== "undefined") && ("chrome" in window) && (typeof window.chrome !== "undefined")) && ((typeof navigator !== "undefined") && ("userAgentData" in navigator) && (typeof navigator.userAgentData !== "undefined") && ("getHighEntropyValues" in navigator.userAgentData) && (typeof navigator.userAgentData.getHighEntropyValues === "function")));
+    const getIsUserUsingChromiumBasedWebBrowser = () => (((typeof window !== "undefined") && ("chrome" in window) && (typeof window.chrome !== "undefined")) && ((typeof navigator !== "undefined") && ("userAgentData" in navigator) && (typeof navigator.userAgentData !== "undefined") && ("getHighEntropyValues" in navigator.userAgentData) && (typeof navigator.userAgentData.getHighEntropyValues === "function")));
     const getUserChromiumBasedWebBrowserData = async () => {
-        const isUserUsingChromiumBasedWebBrowser = checkIsUserUsingChromiumBasedWebBrowser();
+        const isUserUsingChromiumBasedWebBrowser = getIsUserUsingChromiumBasedWebBrowser();
         if (isUserUsingChromiumBasedWebBrowser === false) return null;
         const getHighEntropyValuesResult = await navigator.userAgentData.getHighEntropyValues([
             // "architecture",
@@ -181,7 +181,7 @@
         // console.log({ getChromiumBasedWebBrowserLatestStableVersionResponseJson });
         return getChromiumBasedWebBrowserLatestStableVersionResponseJson;
     };
-    const checkIsUserUsingMinimumStableChromiumBasedWebBrowser = async () => {
+    const getIsUserUsingMinimumStableChromiumBasedWebBrowser = async () => {
         const userChromiumBasedWebBrowserData = await WillyHorizont.UtilsWeb.getUserChromiumBasedWebBrowserData();
         if (!userChromiumBasedWebBrowserData) return false;
         const latestStableChromiumBasedWebBrowserListData = await WillyHorizont.UtilsWeb.getLatestStableChromiumBasedWebBrowserLstData();
@@ -231,7 +231,7 @@
 
         window.addEventListener("resize", updateViewportHeightFromViewportWidth);
         window.addEventListener("orientationchange", updateViewportHeightFromViewportWidth);
-        if (WillyHorizont.Utils.checkIsMethodAvailable(window, "window.visualViewport.addEventListener")) {
+        if (WillyHorizont.Utils.getIsMethodAvailable(window, "window.visualViewport.addEventListener")) {
             window.visualViewport.addEventListener("resize", updateViewportHeightFromViewportWidth);
         }
     };
@@ -274,7 +274,7 @@
             localStorage.removeItem(LOCAL_STORAGE_KEY_VIEWPORT_HEIGHT);
             updateRealViewportHeight();
         });
-        if (WillyHorizont.Utils.checkIsMethodAvailable(window, "window.visualViewport.addEventListener")) {
+        if (WillyHorizont.Utils.getIsMethodAvailable(window, "window.visualViewport.addEventListener")) {
             window.visualViewport.addEventListener("resize", updateRealViewportHeight);
         }
     };
@@ -339,7 +339,7 @@
         `);
 
     const initializeComponentPopup = ({ popupId, popupStackingOrder, titleString, htmlTemplateStringContentChildren }) => {
-        // if (!WillyHorizont.Utils.checkIsMethodAvailable(document, "document.body.appendChild")) return;
+        // if (!WillyHorizont.Utils.getIsMethodAvailable(document, "document.body.appendChild")) return;
         document.body.appendChild(WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(getHtmlTemplateStringPopupStyle(popupStackingOrder)));
         const htmlElementPopupOverlay = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
                 <div data-id="popup-overlay-${popupId}" class="popup-overlay">
@@ -727,10 +727,10 @@
         removeTemplateStringIndentation,
         htmlTemplateStringToHtmlElement,
         appendChildrenReturnParent,
-        checkIsUserUsingChromiumBasedWebBrowser,
+        getIsUserUsingChromiumBasedWebBrowser,
         getUserChromiumBasedWebBrowserData,
         getLatestStableChromiumBasedWebBrowserLstData,
-        checkIsUserUsingMinimumStableChromiumBasedWebBrowser,
+        getIsUserUsingMinimumStableChromiumBasedWebBrowser,
         initializeLocalDatabase,
         initializeComponentPopup,
         initializeComponentChipInput,

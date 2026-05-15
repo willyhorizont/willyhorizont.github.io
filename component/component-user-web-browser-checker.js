@@ -1,7 +1,7 @@
 (async () => {
     if (!WillyHorizont.UtilsWeb) return;
 
-    const isUserUsingChromiumBasedWebBrowser = WillyHorizont.UtilsWeb.checkIsUserUsingChromiumBasedWebBrowser();
+    const isUserUsingChromiumBasedWebBrowser = WillyHorizont.UtilsWeb.getIsUserUsingChromiumBasedWebBrowser();
     // console.log({ isUserUsingChromiumBasedWebBrowser });
 
     if (!isUserUsingChromiumBasedWebBrowser) {
@@ -23,7 +23,7 @@
         return;
     }
 
-    const isUserUsingLatestStableChromiumBasedWebBrowser = await WillyHorizont.UtilsWeb.checkIsUserUsingMinimumStableChromiumBasedWebBrowser();
+    const isUserUsingLatestStableChromiumBasedWebBrowser = await WillyHorizont.UtilsWeb.getIsUserUsingMinimumStableChromiumBasedWebBrowser();
     // console.log({ isUserUsingLatestStableChromiumBasedWebBrowser });
 
     if (!isUserUsingLatestStableChromiumBasedWebBrowser) {

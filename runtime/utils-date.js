@@ -314,13 +314,13 @@
         },
     };
     const getCycleYear = (hijriahYear) => (((hijriahYear - 1) % HIJRIAH_TABULAR_CYCLE_YEAR_COUNT) + 1);
-    const checkIsHijriahLeapYear = (hijriahYear, hijriahTabularCycleLeapPosition = HIJRIAH_TABULAR_CYCLE_LEAP_CONFIGURATION) => {
+    const getIsHijriahLeapYear = (hijriahYear, hijriahTabularCycleLeapPosition = HIJRIAH_TABULAR_CYCLE_LEAP_CONFIGURATION) => {
         if (hijriahTabularCycleLeapPosition.length !== HIJRIAH_TABULAR_CYCLE_LEAP_YEAR_COUNT) {
             throw new Error("Invalid Hijriah tabular cycle leap configuration.");
         }
         return (hijriahTabularCycleLeapPosition.includes(getCycleYear(hijriahYear)));
     };
-    const getHijriahYearLengthInDays = (hijriahYear) => (checkIsHijriahLeapYear(hijriahYear) ? 355 : 354);
+    const getHijriahYearLengthInDays = (hijriahYear) => (getIsHijriahLeapYear(hijriahYear) ? 355 : 354);
     const estimateHijriahHoliday = ({ hijriahHolidayName, targetGregorianYearInt }) => {
         const { gregorianDate: referenceGregorianDate, hijriahYear: referenceHijriahYear } = HIJRIAH_HOLIDAY[hijriahHolidayName]["references"][1];
         const referenceGregorianDateData = WillyHorizont.Utils.extractDate(referenceGregorianDate);

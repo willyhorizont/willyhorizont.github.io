@@ -330,7 +330,7 @@
 
             const eventNameDefault = "Rekomendasi Ambil Izin Libur";
 
-            const checkIsDayThreeFirstLetterSatSun = (dayThreeFirstLetterInput) => ([WillyHorizont.UtilsDate.dictionaryDay["ENG"]["short"]["Sat"], WillyHorizont.UtilsDate.dictionaryDay["ENG"]["short"]["Sun"]].some((dayThreeFirstLetter) => (dayThreeFirstLetterInput === dayThreeFirstLetter)));
+            const getIsDayThreeFirstLetterSatSun = (dayThreeFirstLetterInput) => ([WillyHorizont.UtilsDate.dictionaryDay["ENG"]["short"]["Sat"], WillyHorizont.UtilsDate.dictionaryDay["ENG"]["short"]["Sun"]].some((dayThreeFirstLetter) => (dayThreeFirstLetterInput === dayThreeFirstLetter)));
 
             const modifyZyxCalendarEventHolidayIndonesiaData = (zyxCalendarEventHolidayIndonesiaData) => {
                 // console.log({ zyxCalendarEventHolidayIndonesiaData });
@@ -345,7 +345,7 @@
                         const zyxCalendarEventHolidayIndonesiaEventShortDayNameNew = zyxCalendarEventHolidayIndonesiaEventDateNewDateData.dayThreeFirstLetter;
                         const zyxCalendarEventHolidayIndonesiaEventLongDayNameIdn = WillyHorizont.UtilsDate.dictionaryDay["IDN"]["long"][zyxCalendarEventHolidayIndonesiaEventShortDayNameNew];
                         const zyxCalendarEventHolidayIndonesiaEventShortMonthNameNew = zyxCalendarEventHolidayIndonesiaEventDateNewDateData.monthThreeFirstLetter;
-                        const zyxCalendarEventHolidayIndonesiaEventNameNew = ((checkIsDayThreeFirstLetterSatSun(zyxCalendarEventHolidayIndonesiaEventShortDayNameNew)) ? (`Hari ${zyxCalendarEventHolidayIndonesiaEventLongDayNameIdn}`) : eventNameDefault);
+                        const zyxCalendarEventHolidayIndonesiaEventNameNew = ((getIsDayThreeFirstLetterSatSun(zyxCalendarEventHolidayIndonesiaEventShortDayNameNew)) ? (`Hari ${zyxCalendarEventHolidayIndonesiaEventLongDayNameIdn}`) : eventNameDefault);
                         zyxCalendarEventHolidayIndonesiaDataNewMap.set(zyxCalendarEventHolidayIndonesiaEventDateNew, ({
                             "event_name": zyxCalendarEventHolidayIndonesiaEventNameNew,
                             "event_date": zyxCalendarEventHolidayIndonesiaEventDateNew,
@@ -523,7 +523,7 @@
                 if (firstHolidayIdulFitri) {
                     const firstHolidayIdulFitriDate = firstHolidayIdulFitri["start"]["date"];
                     const firstHolidayIdulFitriDateData = WillyHorizont.Utils.extractDate(firstHolidayIdulFitriDate);
-                    if (!checkIsDayThreeFirstLetterSatSun(firstHolidayIdulFitriDateData.dayThreeFirstLetter)) {
+                    if (!getIsDayThreeFirstLetterSatSun(firstHolidayIdulFitriDateData.dayThreeFirstLetter)) {
                         const firstHolidayIdulFitriDayIndex = Object.keys(WillyHorizont.UtilsDate.dictionaryDay["ENG"]["short"]).findIndex((dayThreeFirstLetter) => (dayThreeFirstLetter === firstHolidayIdulFitriDateData.dayThreeFirstLetter));
                         const distanceBetweenFirstHolidayIdulFitriAndLastSaturday = (firstHolidayIdulFitriDayIndex + 2);
                         addDayOffRecomendation(firstHolidayIdulFitriDate, { start: -distanceBetweenFirstHolidayIdulFitriAndLastSaturday, stop: 0 });
@@ -537,7 +537,7 @@
                     "event_month": hariNatalYearMinusOneDateData.monthThreeFirstLetter,
                 }));
 
-                if (!checkIsDayThreeFirstLetterSatSun(hariNatalYearMinusOneDateData.dayThreeFirstLetter)) {
+                if (!getIsDayThreeFirstLetterSatSun(hariNatalYearMinusOneDateData.dayThreeFirstLetter)) {
                     const hariNatalYearMinusOneDayIndex = Object.keys(WillyHorizont.UtilsDate.dictionaryDay["ENG"]["short"]).findIndex((dayThreeFirstLetter) => (dayThreeFirstLetter === hariNatalYearMinusOneDateData.dayThreeFirstLetter));
                     const distanceBetweenHariNatalYearMinusOneAndLastSaturday = (hariNatalYearMinusOneDayIndex + 2);
                     addDayOffRecomendation(hariNatalYearMinusOneDate, { start: -distanceBetweenHariNatalYearMinusOneAndLastSaturday, stop: 0 });
@@ -557,7 +557,7 @@
                     "event_month": hariNatalDateData.monthThreeFirstLetter,
                 }));
 
-                if (!checkIsDayThreeFirstLetterSatSun(hariNatalDateData.dayThreeFirstLetter)) {
+                if (!getIsDayThreeFirstLetterSatSun(hariNatalDateData.dayThreeFirstLetter)) {
                     const hariNatalDayIndex = Object.keys(WillyHorizont.UtilsDate.dictionaryDay["ENG"]["short"]).findIndex((dayThreeFirstLetter) => (dayThreeFirstLetter === hariNatalDateData.dayThreeFirstLetter));
                     const distanceBetweenHariNatalAndLastSaturday = (hariNatalDayIndex + 2);
                     addDayOffRecomendation(hariNatalDate, { start: -distanceBetweenHariNatalAndLastSaturday, stop: 0 });

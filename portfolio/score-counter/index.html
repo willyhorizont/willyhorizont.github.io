@@ -442,7 +442,7 @@
 
                 document.querySelectorAll(`[data-id="cell-input"][data-column-index="${columnIndex}"]`).forEach((htmlElementCurrentColumnCellInput) => {
                     const htmlElementCurrentColumnCellInputValue = parseInt(htmlElementCurrentColumnCellInput.value, 10);
-                    if (WillyHorizont.Utils.checkIsNumeric(htmlElementCurrentColumnCellInputValue)) currentCollumnScoreSummary += htmlElementCurrentColumnCellInputValue;
+                    if (WillyHorizont.Utils.getIsNumeric(htmlElementCurrentColumnCellInputValue) === true) currentCollumnScoreSummary += htmlElementCurrentColumnCellInputValue;
                 });
 
                 document.querySelector(`[data-id=current-column-score-summary][data-column-index="${columnIndex}"]`).textContent = currentCollumnScoreSummary;
@@ -518,7 +518,7 @@
                 const selectedColumn = document.getElementById("selected-column");
                 const selectedCellInputColumnIndex = parseInt(selectedColumn.getAttribute("data-column-index"), 10);
 
-                if (!WillyHorizont.Utils.checkIsNumeric(selectedCellInputColumnIndex)) return;
+                if (!WillyHorizont.Utils.getIsNumeric(selectedCellInputColumnIndex) === true) return;
 
                 const selectedRow = document.getElementById("selected-row");
                 const selectedCellInputRowNumber = parseInt(selectedRow.getAttribute("data-row-number"), 10);
@@ -586,14 +586,14 @@
                 const selectedRow = document.getElementById("selected-row");
                 const selectedCellInputRowNumber = parseInt(selectedRow.getAttribute("data-row-number"), 10);
 
-                if (!WillyHorizont.Utils.checkIsNumeric(selectedCellInputRowNumber)) return;
+                if (!WillyHorizont.Utils.getIsNumeric(selectedCellInputRowNumber) === true) return;
 
                 const selectedColumn = document.getElementById("selected-column");
                 const selectedCellInputColumnIndex = parseInt(selectedColumn.getAttribute("data-column-index"), 10);
 
                 const htmlElementSelectedCellInput = document.querySelector(`[data-id="cell-input"][data-column-index="${selectedCellInputColumnIndex}"][data-row-number="${selectedCellInputRowNumber}"]`);
                 const htmlElementCurrentColumnScoreSummary = document.querySelector(`[data-id=current-column-score-summary][data-column-index="${selectedCellInputColumnIndex}"]`);
-                const currentCollumnScoreSummaryNew = (parseInt(htmlElementCurrentColumnScoreSummary.textContent, 10) - (WillyHorizont.Utils.checkIsNumeric(parseInt(htmlElementSelectedCellInput.value, 10)) ? parseInt(htmlElementSelectedCellInput.value, 10) : 0));
+                const currentCollumnScoreSummaryNew = (parseInt(htmlElementCurrentColumnScoreSummary.textContent, 10) - ((WillyHorizont.Utils.getIsNumeric(parseInt(htmlElementSelectedCellInput.value, 10)) === true) ? parseInt(htmlElementSelectedCellInput.value, 10) : 0));
                 htmlElementCurrentColumnScoreSummary.textContent = currentCollumnScoreSummaryNew;
 
                 for (let rowIndexOneBased = selectedCellInputRowNumber; (rowIndexOneBased <= rowCount); rowIndexOneBased += 1) {

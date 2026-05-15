@@ -1,4 +1,4 @@
-function checkIsUserWebBrowserHasRequiredFeatures() {
+function getIsUserWebBrowserHasRequiredFeatures() {
     return (
         (typeof Promise !== "undefined") &&
         (typeof Set !== "undefined") &&
@@ -129,7 +129,7 @@ function blockUser() {
     window.location.href = url.toString();
 }
 
-function checkIsUserWebBrowserUnderstandRequiredSyntax() {
+function getIsUserWebBrowserUnderstandRequiredSyntax() {
     try {
         eval(`(function (k, v) { return ({ [k]: v }); })("asd", 123)`);
         eval(`(async function () { await ((async function () { return 0; })()); })()`);
@@ -141,37 +141,37 @@ function checkIsUserWebBrowserUnderstandRequiredSyntax() {
     }
 }
 
-function checkIsUserUsingInternetExplorerWebBrowser() {
+function getIsUserUsingInternetExplorerWebBrowser() {
     return !!document.documentMode;
 }
-function checkIsUserUsingWebKitWebBrowser() {
+function getIsUserUsingWebKitWebBrowser() {
     return (
         ((typeof navigator !== "undefined") && ("vendor" in navigator) && (navigator.vendor === "Apple Computer, Inc.")) &&
         true
     )
 }
-function checkIsUserUsingGeckoWebBrowser() {
+function getIsUserUsingGeckoWebBrowser() {
     return (
         (typeof InstallTrigger !== "undefined") &&
         true
     );
 }
-function checkIsUserUsingChromiumBasedWebBrowser() {
+function getIsUserUsingChromiumBasedWebBrowser() {
     return (
         ((typeof window !== "undefined") && ("chrome" in window) && (typeof window.chrome !== "undefined")) &&
         true
     );
 }
 function detectBrowser() {
-    if (checkIsUserUsingInternetExplorerWebBrowser()) return "InternetExplorer";
-    if (checkIsUserUsingWebKitWebBrowser()) return "WebKit";
-    if (checkIsUserUsingGeckoWebBrowser()) return "Gecko";
-    if (checkIsUserUsingChromiumBasedWebBrowser()) return "ChromiumBased";
+    if (getIsUserUsingInternetExplorerWebBrowser()) return "InternetExplorer";
+    if (getIsUserUsingWebKitWebBrowser()) return "WebKit";
+    if (getIsUserUsingGeckoWebBrowser()) return "Gecko";
+    if (getIsUserUsingChromiumBasedWebBrowser()) return "ChromiumBased";
     return "Unknown";
 }
-function checkIsUserWebBrowserSupported() {
+function getIsUserWebBrowserSupported() {
     if (window.location.pathname.includes("web-browser-detector")) return;
-    if (checkIsUserWebBrowserHasRequiredFeatures()) {
+    if (getIsUserWebBrowserHasRequiredFeatures()) {
         const ref = new URLSearchParams(window.location.search).get("ref");
         if (!ref) return;
         window.location.href = decodeURIComponent(ref);
@@ -179,4 +179,4 @@ function checkIsUserWebBrowserSupported() {
     }
     blockUser();
 }
-checkIsUserWebBrowserSupported();
+getIsUserWebBrowserSupported();

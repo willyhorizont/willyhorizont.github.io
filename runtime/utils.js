@@ -13,6 +13,19 @@
     }
     // Unknown / unsupported environment
 })(globalThis, (root) => {
+    const AnyType = {
+        "Undefined": "Undefined",
+        "Null": "Null",
+        "Boolean": "Boolean",
+        "String": "String",
+        "Int": "Int",
+        "Float": "Float",
+        "Array": "Array",
+        "Object": "Object",
+        "Function": "Function",
+        "Error": "Error",
+        "Date": "Date",
+    };
     const regexPattern = {
         "three_digit_grouping": (new RegExp(`\B(?=(\d{3})+(?!\d))`, "g")),
     };
@@ -52,10 +65,10 @@
         }
         return result;
     };
-    const createRecursiveFunctionNoCallStackLimit = (callbackFunctionWrapper) => (((self = (...restArguments) => () => callbackFunction(...restArguments), callbackFunction = callbackFunctionWrapper(self)) => createRecursiveFunctionNoCallStackLimitInner(callbackFunction))());
+    const createRecursiveFunctionNoCallStackLimit = (callbackFunctionWrapper) => ((self = (...restArguments) => () => callbackFunction(...restArguments), callbackFunction = callbackFunctionWrapper(self)) => createRecursiveFunctionNoCallStackLimitInner(callbackFunction))();
     const replaceAnyLineBreak = (inputString, separator = " ") => (inputString.replace(new RegExp("\\s*(?:\\r\\n|\\r|\\n|\\u2028|\\u2029)+\\s*", "g"), separator).trim());
     const safeGetObjectProperty = (rootObject, methodChain) => ((typeof rootObject === "undefined") ? false : (methodChain.split(".").slice(1).reduce((currentResult, currentProperty) => ((currentResult && (currentProperty in currentResult)) ? currentResult[currentProperty] : undefined), rootObject)))
-    const checkIsMethodAvailable = (rootObject, methodChain) => (typeof safeGetObjectProperty(rootObject, methodChain) === "function");
+    const getIsMethodAvailable = (rootObject, methodChain) => (typeof safeGetObjectProperty(rootObject, methodChain) === "function");
     const getNumberDifferenceInNumeric = (a, b) => ((a === b) ? 0 : ((a > b) ? (a - b) : (b - a)));
     const getMostFrequent = (anyArray, callbackFunction = (anyArrayItem) => (anyArrayItem)) => {
         const frequencyMap = new Map();
@@ -103,21 +116,20 @@
     }; /* extractDateV3 */
     const getClock = ({ includeSecond = true, includeMiliSecond = true } = {}) => ((({ fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit }) => (prettyFormatDate({ includeSecond, includeMiliSecond, fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit })))(extractDate(new Date().toISOString()))); /* getClockV2 */
     const getTimestamp = () => ((({ fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit }) => (`${fullYear}-${zeroPaddedMonth}-${zeroPaddedDay}-at-${zeroPaddedHourTwentyFourHourClock}.${zeroPaddedHourTwelveHourClock}.${zeroPaddedMinute}.${zeroPaddedMiliSecondThreeDigit}`))(extractDate(new Date().toISOString()))); /* getTimestampV2 */
-    const AnyType = { "Null": "Null", "Undefined": "Undefined", "Boolean": "Boolean", "String": "String", "Numeric": "Numeric", "Object": "Object", "Array": "Array", "Function": "Function", "Error": "Error", "Date": "Date" };
-    const checkIsNull = (anything) => ((Object.prototype.toString.call(anything) === "[object Null]") && (anything === null));
-    const checkIsUndefined = (anything) => ((Object.prototype.toString.call(anything) === "[object Undefined]") && (anything === undefined));
-    const checkIsBoolean = (anything) => ((Object.prototype.toString.call(anything) === "[object Boolean]") && ((anything === true) || (anything === false)));
-    const checkIsString = (anything) => (Object.prototype.toString.call(anything) === "[object String]");
-    const checkIsNumeric = (anything) => ((Object.prototype.toString.call(anything) === "[object Number]") && (Number.isNaN(anything) === false) && (Number.isFinite(anything) === true));
-    const checkIsInt = (anything) => (checkIsNumeric(anything) && (Math.floor(anything) === anything) && (Number.isInteger(anything) === true));
-    const checkIsFloat = (anything) => (checkIsNumeric(anything) && (Math.floor(anything) !== anything) && (Number.isInteger(anything) === false));
-    const checkIsObject = (anything) => (Object.prototype.toString.call(anything) === "[object Object]");
-    const checkIsArray = (anything) => ((Object.prototype.toString.call(anything) === "[object Array]") && (Array.isArray(anything) === true));
-    const checkIsFunction = (anything) => (Object.prototype.toString.call(anything) === "[object Function]");
-    const checkIsError = (anything) => (Object.prototype.toString.call(anything) === "[object Error]");
-    const checkIsStringIso8601 = (anything) => ((checkIsString(anything) === false) ? false : ((new RegExp(`^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$`, "g").test(anything) === false) ? false : ((dateParsedFromString) => ((checkIsNumeric(dateParsedFromString.getTime()) === false) ? false : (dateParsedFromString.toISOString().replace(new RegExp(`\.000Z$`, "g"), "Z") === anything)))(new Date(anything))));
-    const checkIsDate = (anything) => (Object.prototype.toString.call(anything) === "[object Date]");
-    const getType = (anything) => ((checkIsUndefined(anything) === true) ? AnyType["Undefined"] : ((checkIsNull(anything) === true) ? AnyType["Null"] : ((checkIsBoolean(anything) === true) ? AnyType["Boolean"] : ((checkIsString(anything) === true) ? AnyType["String"] : ((checkIsNumeric(anything) === true) ? AnyType["Numeric"] : ((checkIsObject(anything) === true) ? AnyType["Object"] : ((checkIsArray(anything) === true) ? AnyType["Array"] : ((checkIsFunction(anything) === true) ? AnyType["Function"] : ((checkIsDate(anything) === true) ? AnyType["Date"] : ((checkIsError(anything) === true) ? AnyType["Error"] : Object.prototype.toString.call(anything)))))))))));
+    const getIsUndefined = (anything) => ((Object.prototype.toString.call(anything) === "[object Undefined]") && (anything === undefined));
+    const getIsNull = (anything) => ((Object.prototype.toString.call(anything) === "[object Null]") && (anything === null));
+    const getIsBoolean = (anything) => ((Object.prototype.toString.call(anything) === "[object Boolean]") && ((anything === true) || (anything === false)));
+    const getIsString = (anything) => (Object.prototype.toString.call(anything) === "[object String]");
+    const getIsNumeric = (anything) => ((Object.prototype.toString.call(anything) === "[object Number]") && (Number.isNaN(anything) === false) && (Number.isFinite(anything) === true));
+    const getIsInt = (anything) => (getIsNumeric(anything) && (Math.floor(anything) === anything) && (Number.isInteger(anything) === true));
+    const getIsFloat = (anything) => (getIsNumeric(anything) && (Math.floor(anything) !== anything) && (Number.isInteger(anything) === false));
+    const getIsArray = (anything) => ((Object.prototype.toString.call(anything) === "[object Array]") && (Array.isArray(anything) === true));
+    const getIsObject = (anything) => (Object.prototype.toString.call(anything) === "[object Object]");
+    const getIsFunction = (anything) => (Object.prototype.toString.call(anything) === "[object Function]");
+    const getIsDate = (anything) => (Object.prototype.toString.call(anything) === "[object Date]");
+    const getIsError = (anything) => (Object.prototype.toString.call(anything) === "[object Error]");
+    const getIsStringIso8601 = (anything) => ((getIsString(anything) === false) ? false : ((new RegExp(`^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$`, "g").test(anything) === false) ? false : ((dateParsedFromString) => ((getIsNumeric(dateParsedFromString.getTime()) === false) ? false : (dateParsedFromString.toISOString().replace(new RegExp(`\.000Z$`, "g"), "Z") === anything)))(new Date(anything))));
+    const getType = (anything) => ((getIsUndefined(anything) === true) ? AnyType["Undefined"] : (getIsNull(anything) === true) ? AnyType["Null"] : (getIsBoolean(anything) === true) ? AnyType["Boolean"] : (getIsString(anything) === true) ? AnyType["String"] : (getIsInt(anything) === true) ? AnyType["Int"] : (getIsFloat(anything) === true) ? AnyType["Float"] : (getIsArray(anything) === true) ? AnyType["Array"] : (getIsObject(anything) === true) ? AnyType["Object"] : (getIsFunction(anything) === true) ? AnyType["Function"] : (getIsError(anything) === true) ? AnyType["Error"] : (getIsDate(anything) === true) ? AnyType["Date"] : Object.prototype.toString.call(anything));
     const pipe = (...restArguments) => {
         const pipeLastResultMap = new Map();
         const pipeResult = restArguments.reduce((currentResult, currentArgument) => {
@@ -130,7 +142,7 @@
         return pipeResult;
     };
     const pipeOneLiner = (...restArguments) => (((pipeLastResultMap) => (((pipeResult) => (getType(pipeResult) === AnyType["Function"] ? (pipeResult(pipeLastResultMap.get("result"))) : (pipeResult)))(restArguments.reduce((currentResult, currentArgument) => ([(pipeLastResultMap.set("result", currentResult)), ((getType(currentResult) === AnyType["Undefined"]) ? currentArgument : ((getType(currentArgument) === AnyType["Function"]) ? currentArgument(currentResult) : undefined))].at(-1)), undefined))))(new Map()));
-    const jsonStringify = (anything, { pretty = false } = {}) => ((temporaryMap) => ([(temporaryMap.set("f", ((anythingInner, { indent = " ".repeat(4), indentLevel = 0, argumentType = getType(anythingInner) } = {}) => ((checkIsStringIso8601(anythingInner) === true) ? (temporaryMap.get("f")({ "pretty": getClock(anythingInner), "ISO8601": anythingInner }, { indentLevel })) : ((argumentType === AnyType["Undefined"]) ? ('"undefined"') : ((argumentType === AnyType["Null"]) ? ("null") : ((argumentType === AnyType["Error"]) ? (`"${anythingInner.toString()}"`) : ((argumentType === AnyType["Date"]) ? (temporaryMap.get("f")({ "pretty": getClock(anythingInner), "ISO8601": anythingInner.toISOString() }, { indentLevel })) : ((argumentType === AnyType["String"]) ? (`"${anythingInner}"`) : (((argumentType === AnyType["Numeric"]) || (argumentType === AnyType["Boolean"])) ? (`${anythingInner}`) : ((argumentType === AnyType["Object"]) ? ((Object.keys(anythingInner).length === 0) ? ("{}") : ((Object.keys(anythingInner).includes("ISO8601") === true) ? (`${((pretty === true) ? (`{\n${indent.repeat(indentLevel + 1)}`) : "{ ")}${(`"pretty": "${anythingInner["pretty"]}"${(pretty === true) ? (`,\n${indent.repeat(indentLevel + 1)}`) : ", "}"ISO8601": "${anythingInner["ISO8601"]}"${(pretty === true) ? "," : ""}`)}${((pretty === true) ? (`\n${indent.repeat(indentLevel)}}`) : " }")}`) : (`${((pretty === true) ? (`{\n${indent.repeat(indentLevel + 1)}`) : "{ ")}${Object.entries(anythingInner).reduce((currentResult, [objectKey, objectValue], objectEntryIndex) => (`${currentResult}"${objectKey}": ${temporaryMap.get("f")(objectValue, { indentLevel: (indentLevel + 1) })}${((objectEntryIndex + 1) !== Object.keys(anythingInner).length) ? ((pretty === true) ? (`,\n${indent.repeat(indentLevel + 1)}`) : ", ") : ""}`), "")}${((pretty === true) ? (`\n${indent.repeat(indentLevel)}}`) : " }")}`))) : ((argumentType === AnyType["Array"]) ? ((anythingInner.length === 0) ? ("[]") : (`${((pretty === true) ? (`[\n${indent.repeat(indentLevel + 1)}`) : "[")}${anythingInner.reduce((currentResult, arrayItem, arrayItemIndex) => (`${currentResult}${temporaryMap.get("f")(arrayItem, { indentLevel: (indentLevel + 1) })}${((arrayItemIndex + 1) !== anythingInner.length) ? ((pretty === true) ? (`,\n${indent.repeat(indentLevel + 1)}`) : ", ") : ""}`), "")}${((pretty === true) ? (`\n${indent.repeat(indentLevel)}]`) : "]")}`)) : ((argumentType === AnyType["Function"]) ? (`"${anythingInner.toString()}"`) : (`${anythingInner}`)))))))))))))), (temporaryMap.get("f")(anything))].at(-1)))(new Map()); /* custom JSON.stringify() function jsonStringifyV5 */
+    const jsonStringify = (anything, { pretty = false } = {}) => ((temporaryMap) => ([(temporaryMap.set("f", ((anythingInner, { indent = " ".repeat(4), indentLevel = 0, argumentType = getType(anythingInner) } = {}) => ((getIsStringIso8601(anythingInner) === true) ? (temporaryMap.get("f")({ "pretty": getClock(anythingInner), "ISO8601": anythingInner }, { indentLevel })) : ((argumentType === AnyType["Undefined"]) ? ('"undefined"') : ((argumentType === AnyType["Null"]) ? ("null") : ((argumentType === AnyType["Error"]) ? (`"${anythingInner.toString()}"`) : ((argumentType === AnyType["Date"]) ? (temporaryMap.get("f")({ "pretty": getClock(anythingInner), "ISO8601": anythingInner.toISOString() }, { indentLevel })) : ((argumentType === AnyType["String"]) ? (`"${anythingInner}"`) : (((argumentType === AnyType["Numeric"]) || (argumentType === AnyType["Boolean"])) ? (`${anythingInner}`) : ((argumentType === AnyType["Object"]) ? ((Object.keys(anythingInner).length === 0) ? ("{}") : ((Object.keys(anythingInner).includes("ISO8601") === true) ? (`${((pretty === true) ? (`{\n${indent.repeat(indentLevel + 1)}`) : "{ ")}${(`"pretty": "${anythingInner["pretty"]}"${(pretty === true) ? (`,\n${indent.repeat(indentLevel + 1)}`) : ", "}"ISO8601": "${anythingInner["ISO8601"]}"${(pretty === true) ? "," : ""}`)}${((pretty === true) ? (`\n${indent.repeat(indentLevel)}}`) : " }")}`) : (`${((pretty === true) ? (`{\n${indent.repeat(indentLevel + 1)}`) : "{ ")}${Object.entries(anythingInner).reduce((currentResult, [objectKey, objectValue], objectEntryIndex) => (`${currentResult}"${objectKey}": ${temporaryMap.get("f")(objectValue, { indentLevel: (indentLevel + 1) })}${((objectEntryIndex + 1) !== Object.keys(anythingInner).length) ? ((pretty === true) ? (`,\n${indent.repeat(indentLevel + 1)}`) : ", ") : ""}`), "")}${((pretty === true) ? (`\n${indent.repeat(indentLevel)}}`) : " }")}`))) : ((argumentType === AnyType["Array"]) ? ((anythingInner.length === 0) ? ("[]") : (`${((pretty === true) ? (`[\n${indent.repeat(indentLevel + 1)}`) : "[")}${anythingInner.reduce((currentResult, arrayItem, arrayItemIndex) => (`${currentResult}${temporaryMap.get("f")(arrayItem, { indentLevel: (indentLevel + 1) })}${((arrayItemIndex + 1) !== anythingInner.length) ? ((pretty === true) ? (`,\n${indent.repeat(indentLevel + 1)}`) : ", ") : ""}`), "")}${((pretty === true) ? (`\n${indent.repeat(indentLevel)}]`) : "]")}`)) : ((argumentType === AnyType["Function"]) ? (`"${anythingInner.toString()}"`) : (`${anythingInner}`)))))))))))))), (temporaryMap.get("f")(anything))].at(-1)))(new Map()); /* custom JSON.stringify() function jsonStringifyV5 */
     const randomIntInclusive = ({ lowerBound, upperBound, multiplier = 1 } = {}) => ((({ min, max }) => ((Math.floor(Math.random() * (max - min + 1)) + min) * multiplier))({ min: Math.ceil(lowerBound / multiplier), max: Math.floor(upperBound / multiplier) }));
     const removeDuplicateListItem = (anyArray, callbackFunction = ((anyArrayItem) => (anyArrayItem))) => (anyArray.reduce(([uniqueKeyMap, uniqueArray], anyArrayItem) => ((newUniqueKeyString) => ((uniqueKeyMap.get(newUniqueKeyString) !== undefined) ? [uniqueKeyMap, uniqueArray] : ([(uniqueKeyMap.set(newUniqueKeyString, anyArrayItem)), (uniqueArray.push(anyArrayItem)), ([uniqueKeyMap, uniqueArray])].at(-1))))(callbackFunction(anyArrayItem)), [new Map(), []]).at(-1)); /* removeDuplicateListItemV2 */
     const fakeGenerator = () => {
@@ -164,24 +176,24 @@
     const listComprehension = (anyIterable, callbackFunction = ((anyIterableItem) => (anyIterableItem)), filterConditionFunction = ((anyIterableItem) => (true))) => Array.from(pythonLikeGeneratorExpression(anyIterable, callbackFunction, filterConditionFunction));
     const getRgbHexColorFromString = (anyString) => (Array.from({ length: 3 }, (_, i) => (((Array.from(anyString).reduce((currentNumericHash, currentCharacter) => (currentCharacter.charCodeAt(0) + ((currentNumericHash << 5) - currentNumericHash)), 0)) >> (i * 8)) & 0xff).toString(16).padStart(2, "0")).reduce((rgbHexColorCurrent, rgbHexColorPartCurrent) => (`${rgbHexColorCurrent}${rgbHexColorPartCurrent}`), "#"));
     const getSixDigitRgbStringFromThreeDigitRgbString = (anyString) => (pipe((anyString.replace(new RegExp("^#", "g"), "")), ((rgbStringInitial) => ((rgbStringInitial.length === 3) ? (rgbStringInitial.split("").map((rgbDigit) => (rgbDigit + rgbDigit)).join("")) : rgbStringInitial))));
-    const checkIsRgbHexColorLightLuminance = (anyString) => (pipe((getSixDigitRgbStringFromThreeDigitRgbString(anyString)), ((rgbString) => ([(parseInt(rgbString.slice(0, 2), 16) / 255), (parseInt(rgbString.slice(2, 4), 16) / 255), (parseInt(rgbString.slice(4, 6), 16) / 255)])), (([r, g, b]) => (pipe(((0.2126 * r) + (0.7152 * g) + (0.0722 * b)), ((luminance) => (luminance > 0.5)))))));
-    const checkIsRgbHexColorLightYiq = (anyString) => (pipe((getSixDigitRgbStringFromThreeDigitRgbString(anyString)), ((rgbString) => ([(parseInt(rgbString.slice(0, 2), 16)), (parseInt(rgbString.slice(2, 4), 16)), (parseInt(rgbString.slice(4, 6), 16))])), (([r, g, b]) => (pipe((((r * 299) + (g * 587) + (b * 114)) / 1000), ((yiq) => (yiq >= 128)))))));
-    const checkIsRgbHexColorLightAverage = (anyString) => (pipe((getSixDigitRgbStringFromThreeDigitRgbString(anyString)), ((rgbString) => ([(parseInt(rgbString.slice(0, 2), 16)), (parseInt(rgbString.slice(2, 4), 16)), parseInt(rgbString.slice(4, 6), 16)])), (([r, g, b]) => (pipe(((r + g + b) / 3), ((average) => (average > 127.5)))))));
-    const checkIsRgbHexColorLightHsl = (anyString) => (pipe((getSixDigitRgbStringFromThreeDigitRgbString(anyString)), ((rgbString) => ([(parseInt(rgbString.slice(0, 2), 16) / 255), (parseInt(rgbString.slice(2, 4), 16) / 255), (parseInt(rgbString.slice(4, 6), 16) / 255)])), (([r, g, b]) => ([(Math.max(r, g, b)), (Math.min(r, g, b))])), (([max, min]) => (pipe(((max + min) / 2), ((l) => (l > 0.5)))))));
+    const getIsRgbHexColorLightLuminance = (anyString) => (pipe((getSixDigitRgbStringFromThreeDigitRgbString(anyString)), ((rgbString) => ([(parseInt(rgbString.slice(0, 2), 16) / 255), (parseInt(rgbString.slice(2, 4), 16) / 255), (parseInt(rgbString.slice(4, 6), 16) / 255)])), (([r, g, b]) => (pipe(((0.2126 * r) + (0.7152 * g) + (0.0722 * b)), ((luminance) => (luminance > 0.5)))))));
+    const getIsRgbHexColorLightYiq = (anyString) => (pipe((getSixDigitRgbStringFromThreeDigitRgbString(anyString)), ((rgbString) => ([(parseInt(rgbString.slice(0, 2), 16)), (parseInt(rgbString.slice(2, 4), 16)), (parseInt(rgbString.slice(4, 6), 16))])), (([r, g, b]) => (pipe((((r * 299) + (g * 587) + (b * 114)) / 1000), ((yiq) => (yiq >= 128)))))));
+    const getIsRgbHexColorLightAverage = (anyString) => (pipe((getSixDigitRgbStringFromThreeDigitRgbString(anyString)), ((rgbString) => ([(parseInt(rgbString.slice(0, 2), 16)), (parseInt(rgbString.slice(2, 4), 16)), parseInt(rgbString.slice(4, 6), 16)])), (([r, g, b]) => (pipe(((r + g + b) / 3), ((average) => (average > 127.5)))))));
+    const getIsRgbHexColorLightHsl = (anyString) => (pipe((getSixDigitRgbStringFromThreeDigitRgbString(anyString)), ((rgbString) => ([(parseInt(rgbString.slice(0, 2), 16) / 255), (parseInt(rgbString.slice(2, 4), 16) / 255), (parseInt(rgbString.slice(4, 6), 16) / 255)])), (([r, g, b]) => ([(Math.max(r, g, b)), (Math.min(r, g, b))])), (([max, min]) => (pipe(((max + min) / 2), ((l) => (l > 0.5)))))));
     const ColorLightnessMethod = {
-        "Luminance": checkIsRgbHexColorLightLuminance,
-        "Yiq": checkIsRgbHexColorLightYiq,
-        "Average": checkIsRgbHexColorLightAverage,
-        "Hsl": checkIsRgbHexColorLightHsl,
-        "Default": checkIsRgbHexColorLightLuminance,
+        "Luminance": getIsRgbHexColorLightLuminance,
+        "Yiq": getIsRgbHexColorLightYiq,
+        "Average": getIsRgbHexColorLightAverage,
+        "Hsl": getIsRgbHexColorLightHsl,
+        "Default": getIsRgbHexColorLightLuminance,
     };
-    const checkIsRgbHexColorLight = (anyString) => (ColorLightnessMethod["Default"](anyString));
+    const getIsRgbHexColorLight = (anyString) => (ColorLightnessMethod["Default"](anyString));
     const getValidRgbHexColor = (anything) => ((!anything) ? null : (((rgbHexColor) => ((!(new RegExp("^#?[0-9a-fA-F]{3,6}$", "g").test(rgbHexColor))) ? null : ((!rgbHexColor.startsWith("#")) ? (`#${rgbHexColor}`) : rgbHexColor)))(anything.trim())));
     const getInvertedRgbHexColorByParsePerChannel = (anyString) => (pipe((getSixDigitRgbStringFromThreeDigitRgbString(anyString)), ((rgbString) => ([(255 - (parseInt(rgbString.slice(0, 2), 16))), (255 - (parseInt(rgbString.slice(2, 4), 16))), (255 - (parseInt(rgbString.slice(4, 6), 16)))])), (([r, g, b]) => (`#${[r, g, b].map((rgbDigit) => (rgbDigit).toString(16).padStart(2, "0")).join("")}`))));
     const getInvertedRgbHexColorByBitwiseXor = (anyString) => (pipe((getSixDigitRgbStringFromThreeDigitRgbString(anyString)), ((rgbString) => (`#${(0xFFFFFF ^ parseInt(rgbString, 16)).toString(16).padStart(6, "0")}`))));
     const getInvertedRgbHexColorByBigInt = (anyString) => (pipe((getSixDigitRgbStringFromThreeDigitRgbString(anyString)), ((rgbString) => (`#${(0xFFFFFFn ^ BigInt(rgbString)).toString(16).padStart(6, "0")}`))));
     const getInvertedRgbHexColorFromString = (anyString) => getInvertedRgbHexColorByParsePerChannel(anyString);
-    const getColorFromString = (anyString) => (((rgbHexColorBackground) => ({ backgroundColor: rgbHexColorBackground, textColor: getInvertedRgbHexColorFromString(rgbHexColorBackground), isBackgroundColorLight: checkIsRgbHexColorLight(rgbHexColorBackground) }))(getRgbHexColorFromString(anyString)));
+    const getColorFromString = (anyString) => (((rgbHexColorBackground) => ({ backgroundColor: rgbHexColorBackground, textColor: getInvertedRgbHexColorFromString(rgbHexColorBackground), isBackgroundColorLight: getIsRgbHexColorLight(rgbHexColorBackground) }))(getRgbHexColorFromString(anyString)));
     const forEach = (anyIterable, callbackFunction = ((anyIterableItem, anyIterableItemIndex, anyIterable) => (undefined))) => {
         let anyIterableItemIndex = 0;
         for (const anyIterableItem of anyIterable) {
@@ -226,19 +238,19 @@
         getClock,
         getTimestamp,
         AnyType,
-        checkIsNull,
-        checkIsUndefined,
-        checkIsBoolean,
-        checkIsString,
-        checkIsNumeric,
-        checkIsInt,
-        checkIsFloat,
-        checkIsObject,
-        checkIsArray,
-        checkIsFunction,
-        checkIsError,
-        checkIsStringIso8601,
-        checkIsDate,
+        getIsNull,
+        getIsUndefined,
+        getIsBoolean,
+        getIsString,
+        getIsNumeric,
+        getIsInt,
+        getIsFloat,
+        getIsObject,
+        getIsArray,
+        getIsFunction,
+        getIsError,
+        getIsStringIso8601,
+        getIsDate,
         getType,
         pipe,
         pipeOneLiner,
@@ -254,11 +266,11 @@
         getRgbHexColorFromString,
         getInvertedRgbHexColorFromString,
         getColorFromString,
-        checkIsRgbHexColorLightLuminance,
-        checkIsRgbHexColorLightYiq,
-        checkIsRgbHexColorLightAverage,
-        checkIsRgbHexColorLightHsl,
-        checkIsRgbHexColorLight,
+        getIsRgbHexColorLightLuminance,
+        getIsRgbHexColorLightYiq,
+        getIsRgbHexColorLightAverage,
+        getIsRgbHexColorLightHsl,
+        getIsRgbHexColorLight,
         getValidRgbHexColor,
         forEach,
         forEachOneLiner,
@@ -270,7 +282,7 @@
         throwError,
         getRandomString,
         safeGetObjectProperty,
-        checkIsMethodAvailable,
+        getIsMethodAvailable,
         increment,
     };
 });
