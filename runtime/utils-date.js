@@ -168,7 +168,7 @@
         const [yearString, monthString, dayString] = yyyyMmDdString.split("-");
         return new Date(Date.UTC(Number(yearString), (Number(monthString) - 1), Number(dayString)));
     };
-    const getDayDifferenceInNumeric = (dateDotToIsoStringDotSliceZeroCommaTenNewer, dateDotToIsoStringDotSliceZeroCommaTenOlder) => (((new Date(dateDotToIsoStringDotSliceZeroCommaTenNewer) - new Date(dateDotToIsoStringDotSliceZeroCommaTenOlder)) / ONE_DAY_IN_MILLISECOND) - 1);
+    const getDayDifferenceInNumeric = (stringDateNewer, stringDateOlder) => (((new Date(stringDateNewer) - new Date(stringDateOlder)) / ONE_DAY_IN_MILLISECOND) - 1);
     const getYyyyMinusMmMinusDdOfDateObject = (dateObject) => {
         const newDateObject = new Date(dateObject.getTime());
         const { fullYear, zeroPaddedMonth, zeroPaddedDay } = WillyHorizont.Utils.extractDate(newDateObject);
@@ -179,22 +179,22 @@
         newDateObject.setUTCDate(newDateObject.getUTCDate() + integerVariable);
         return newDateObject;
     };
-    const updateDateDotToIsoStringDotSliceZeroCommaTenByNumericVariable = (dateDotToIsoStringDotSliceZeroCommaTen = "2026-01-01", numericVariable) => {
-        const newDateObject = new Date(dateDotToIsoStringDotSliceZeroCommaTen);
-        const dateDotToIsoStringDotSliceZeroCommaTenUpdated = addOrSubtractDay(newDateObject, numericVariable);
-        return getYyyyMinusMmMinusDdOfDateObject(dateDotToIsoStringDotSliceZeroCommaTenUpdated);
+    const updateStringDateByNumericVariable = (stringDate = "2026-01-01", numericVariable) => {
+        const newDateObject = new Date(stringDate);
+        const stringDateUpdated = addOrSubtractDay(newDateObject, numericVariable);
+        return getYyyyMinusMmMinusDdOfDateObject(stringDateUpdated);
     };
     const YEAR_ANNO_DOMINI_GREGORIAN_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN = 2025; // Tahun Baru Masehi 2025
     const YEAR_SAKA_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN = 1947; // Hari Suci Nyepi (Tahun Baru Saka 1947)
     const YEAR_CHINESE_LUNAR_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN = 2576; // Tahun Baru Imlek 2576 Kongzili
     const YEAR_BUDDHIST_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN = 2569; // Hari Raya Waisak 2569 Buddhist Era
     const YEAR_INDONESIA_INDEPENDENCE_PROCLAMATION_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN = 80; // Hari Proklamasi Kemerdekaan R.I. ke - 80
-    const convertYearAnnoDominiGregorianToSaka = (yearAnnoDominiGregorianNumeric) => (YEAR_SAKA_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN + (yearAnnoDominiGregorianNumeric - YEAR_ANNO_DOMINI_GREGORIAN_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN));
-    const convertYearAnnoDominiGregorianToChineseLunar = (yearAnnoDominiGregorianNumeric) => (YEAR_CHINESE_LUNAR_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN + (yearAnnoDominiGregorianNumeric - YEAR_ANNO_DOMINI_GREGORIAN_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN));
-    const convertYearAnnoDominiGregorianToBuddhist = (yearAnnoDominiGregorianNumeric) => (YEAR_BUDDHIST_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN + (yearAnnoDominiGregorianNumeric - YEAR_ANNO_DOMINI_GREGORIAN_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN));
-    const convertYearAnnoDominiGregorianToIndonesiaIndependenceProclamation = (yearAnnoDominiGregorianNumeric) => (YEAR_INDONESIA_INDEPENDENCE_PROCLAMATION_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN + (yearAnnoDominiGregorianNumeric - YEAR_ANNO_DOMINI_GREGORIAN_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN));
-    const getChineseZodiacOrShio = (yearAnnoDominiGregorianNumeric) => (dictionaryZodiacsOrShios[yearAnnoDominiGregorianNumeric % 12]);
-    const getChineseZodiacOrShioWithElement = (yearAnnoDominiGregorianNumeric) => (dictionaryZodiacOrShioElements[yearAnnoDominiGregorianNumeric.toString().at(-1)]);
+    const convertYearGregorianToSaka = (yearGregorianNumeric) => (YEAR_SAKA_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN + (yearGregorianNumeric - YEAR_ANNO_DOMINI_GREGORIAN_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN));
+    const convertYearGregorianToChineseLunar = (yearGregorianNumeric) => (YEAR_CHINESE_LUNAR_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN + (yearGregorianNumeric - YEAR_ANNO_DOMINI_GREGORIAN_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN));
+    const convertYearGregorianToBuddhist = (yearGregorianNumeric) => (YEAR_BUDDHIST_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN + (yearGregorianNumeric - YEAR_ANNO_DOMINI_GREGORIAN_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN));
+    const convertYearGregorianToIndonesiaIndependenceProclamation = (yearGregorianNumeric) => (YEAR_INDONESIA_INDEPENDENCE_PROCLAMATION_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN + (yearGregorianNumeric - YEAR_ANNO_DOMINI_GREGORIAN_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN));
+    const getChineseZodiacOrShio = (yearGregorianNumeric) => (dictionaryZodiacsOrShios[yearGregorianNumeric % 12]);
+    const getChineseZodiacOrShioWithElement = (yearGregorianNumeric) => (dictionaryZodiacOrShioElements[yearGregorianNumeric.toString().at(-1)]);
 
     const HIJRIAH_TABULAR_CYCLE_YEAR_COUNT = 30;
     const HIJRIAH_TABULAR_CYCLE_LEAP_YEAR_COUNT = 11;
@@ -416,16 +416,16 @@
         parseYyyyMmDdToUtcDate,
         addOrSubtractDay,
         getYyyyMinusMmMinusDdOfDateObject,
-        updateDateDotToIsoStringDotSliceZeroCommaTenByNumericVariable,
+        updateStringDateByNumericVariable,
         YEAR_ANNO_DOMINI_GREGORIAN_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN,
         YEAR_SAKA_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN,
         YEAR_CHINESE_LUNAR_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN,
         YEAR_BUDDHIST_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN,
         YEAR_INDONESIA_INDEPENDENCE_PROCLAMATION_NUMERIC_IN_2025_ANNO_DOMINI_GREGORIAN,
-        convertYearAnnoDominiGregorianToSaka,
-        convertYearAnnoDominiGregorianToChineseLunar,
-        convertYearAnnoDominiGregorianToBuddhist,
-        convertYearAnnoDominiGregorianToIndonesiaIndependenceProclamation,
+        convertYearGregorianToSaka,
+        convertYearGregorianToChineseLunar,
+        convertYearGregorianToBuddhist,
+        convertYearGregorianToIndonesiaIndependenceProclamation,
         getChineseZodiacOrShio,
         getChineseZodiacOrShioWithElement,
         getDayDifferenceInNumeric,

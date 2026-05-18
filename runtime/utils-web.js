@@ -12,7 +12,7 @@
     }
     // Unknown / unsupported environment
 })(globalThis, (root) => {
-    if (!root.WillyHorizont) {
+    if (!(root.WillyHorizont && root.WillyHorizont.Utils)) {
         throw new Error("WillyHorizont.UtilsWeb requires WillyHorizont.Utils to be loaded first");
     }
 
@@ -168,7 +168,7 @@
             // "wow64",
         ]);
         // console.log({ getHighEntropyValuesResult });
-        const userChromiumBasedWebBrowserData = WillyHorizont.Utils.optionalChaining(() => (getHighEntropyValuesResult.brands.find((anyWebBrowserData) => ((anyWebBrowserData["brand"] === "Google Chrome") || (anyWebBrowserData["brand"] === "Chromium")))));
+        const userChromiumBasedWebBrowserData = getHighEntropyValuesResult?.brands?.find?.((anyWebBrowserData) => ((anyWebBrowserData?.["brand"] === "Google Chrome") || (anyWebBrowserData?.["brand"] === "Chromium")));
         if (!userChromiumBasedWebBrowserData) return null;
         return ({
             version: userChromiumBasedWebBrowserData?.["version"],
@@ -339,7 +339,6 @@
         `);
 
     const initializeComponentPopup = ({ popupId, popupStackingOrder, titleString, htmlTemplateStringContentChildren }) => {
-        // if (!WillyHorizont.Utils.getIsMethodAvailable(document, "document.body.appendChild")) return;
         document.body.appendChild(WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(getHtmlTemplateStringPopupStyle(popupStackingOrder)));
         const htmlElementPopupOverlay = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
                 <div data-id="popup-overlay-${popupId}" class="popup-overlay">

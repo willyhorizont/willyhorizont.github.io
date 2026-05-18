@@ -13,8 +13,7 @@
     }
     // Unknown / unsupported environment
 })(globalThis, (root) => {
-    const AnyType = {
-        "Undefined": "Undefined",
+    const JsonType = {
         "Null": "Null",
         "Boolean": "Boolean",
         "String": "String",
@@ -22,9 +21,7 @@
         "Float": "Float",
         "PythonLikeList": "PythonLikeList",
         "PythonLikeDict": "PythonLikeDict",
-        "Function": "Function",
     };
-    const getIsUndefined = (anything) => ((Object.prototype.toString.call(anything) === "[object Undefined]") && (anything === undefined));
     const getIsNull = (anything) => ((Object.prototype.toString.call(anything) === "[object Null]") && (anything === null));
     const getIsBoolean = (anything) => ((Object.prototype.toString.call(anything) === "[object Boolean]") && ((anything === true) || (anything === false)));
     const getIsString = (anything) => (Object.prototype.toString.call(anything) === "[object String]");
@@ -33,8 +30,7 @@
     const getIsFloat = (anything) => (getIsNumeric(anything) && (Math.floor(anything) !== anything) && (Number.isInteger(anything) === false));
     const getIsPythonLikeList = (anything) => ((Object.prototype.toString.call(anything) === "[object Array]") && (Array.isArray(anything) === true));
     const getIsPythonLikeDict = (anything) => (Object.prototype.toString.call(anything) === "[object Object]");
-    const getIsFunction = (anything) => (Object.prototype.toString.call(anything) === "[object Function]");
-    const getType = (anything) => ((getIsUndefined(anything) === true) ? AnyType["Undefined"] : (getIsNull(anything) === true) ? AnyType["Null"] : (getIsBoolean(anything) === true) ? AnyType["Boolean"] : (getIsString(anything) === true) ? AnyType["String"] : (getIsInt(anything) === true) ? AnyType["Int"] : (getIsFloat(anything) === true) ? AnyType["Float"] : (getIsPythonLikeList(anything) === true) ? AnyType["PythonLikeList"] : (getIsPythonLikeDict(anything) === true) ? AnyType["PythonLikeDict"] : (getIsFunction(anything) === true) ? AnyType["Function"] : Object.prototype.toString.call(anything));
+    const getType = (anything) => ((getIsNull(anything) === true) ? JsonType["Null"] : (getIsBoolean(anything) === true) ? JsonType["Boolean"] : (getIsString(anything) === true) ? JsonType["String"] : (getIsInt(anything) === true) ? JsonType["Int"] : (getIsFloat(anything) === true) ? JsonType["Float"] : (getIsPythonLikeList(anything) === true) ? JsonType["PythonLikeList"] : (getIsPythonLikeDict(anything) === true) ? JsonType["PythonLikeDict"] : Object.prototype.toString.call(anything));
     const jsonStringify = (anything, { pretty = false } = {}) => {
         const indentation = " ".repeat(4);
         const tokenStack = [{ type: "value", value: anything, indentationLevel: 0 }];
@@ -48,27 +44,19 @@
             const currentValue = current["value"];
             const currentIndentationLevel = current["indentationLevel"];
             const currentValueType = getType(currentValue);
-            if (currentValueType === AnyType["Undefined"]) {
-                result += "undefined";
-                continue;
-            }
-            if (currentValueType === AnyType["Null"]) {
+            if (currentValueType === JsonType["Null"]) {
                 result += "null";
                 continue;
             }
-            if (currentValueType === AnyType["String"]) {
+            if (currentValueType === JsonType["String"]) {
                 result += ["\"", String(currentValue), "\""].join("");
                 continue;
             }
-            if ((currentValueType === AnyType["Int"]) || (currentValueType === AnyType["Float"]) || (currentValueType === AnyType["Boolean"])) {
+            if ((currentValueType === JsonType["Int"]) || (currentValueType === JsonType["Float"]) || (currentValueType === JsonType["Boolean"])) {
                 result += String(currentValue);
                 continue;
             }
-            if (currentValueType === AnyType["Function"]) {
-                result += currentValue.toString();
-                continue;
-            }
-            if (currentValueType === AnyType["PythonLikeList"]) {
+            if (currentValueType === JsonType["PythonLikeList"]) {
                 if (currentValue.length === 0) {
                     result += "[]";
                     continue;
@@ -100,7 +88,7 @@
                 });
                 continue;
             }
-            if (currentValueType === AnyType["PythonLikeDict"]) {
+            if (currentValueType === JsonType["PythonLikeDict"]) {
                 const objectEntries = Object.entries(currentValue);
                 if (objectEntries.length === 0) {
                     result += "{}";
@@ -143,6 +131,8 @@
         }
         return result;
     };
+    const getIsUndefined = (anything) => ((Object.prototype.toString.call(anything) === "[object Undefined]") && (anything === undefined));
+    const getIsFunction = (anything) => (Object.prototype.toString.call(anything) === "[object Function]");
     const getIsStringIsoEightSixZeroOne = (anything) => ((getIsString(anything) === false) ? false : ((new RegExp(`^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$`, "g").test(anything) === false) ? false : ((dateParsedFromString) => ((getIsNumeric(dateParsedFromString.getTime()) === false) ? false : (dateParsedFromString.toISOString().replace(new RegExp(`\.000Z$`, "g"), "Z") === anything)))(new Date(anything))));
     const regexPattern = {
         "three_digit_grouping": (new RegExp(`\B(?=(\d{3})+(?!\d))`, "g")),
@@ -214,7 +204,7 @@
     const prettyFormatDate = ({ includeSecond = true, includeMiliSecond = false, fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit }) => (`(${zeroPaddedMonth}/12 month) | ${dayThreeFirstLetter}, ${zeroPaddedDay} ${monthThreeFirstLetter} ${fullYear} | ${zeroPaddedHourTwentyFourHourClock}:${zeroPaddedMinute}${includeSecond ? `:${zeroPaddedSecond}` : ``}${includeMiliSecond ? `.${zeroPaddedMiliSecondThreeDigit}` : ``} | ${zeroPaddedHourTwelveHourClock}:${zeroPaddedMinute} ${twelveHourClockLatinAbbreviation}`); /* prettyFormatDateV2 */
     const extractDate = (anything) => {
         const anythingType = getType(anything);
-        const dateObject = ((anythingType === AnyType["String"]) ? new Date(anything) : anything);
+        const dateObject = ((anythingType === JsonType["String"]) ? new Date(anything) : anything);
         if (dateObject === undefined) return undefined;
         const [hourMinuteTwentyFourHourClockAllZeroPaddedJoinByColon, twelveHourClockLatinAbbreviation] = new Intl.DateTimeFormat("en-US", { hour: "2-digit", minute: "2-digit", hour12: true }).format(dateObject).split(" ");
         const [zeroPaddedHourTwelveHourClock, _] = hourMinuteTwentyFourHourClockAllZeroPaddedJoinByColon.split(":");
@@ -239,14 +229,14 @@
         const pipeLastResultMap = new Map();
         const pipeResult = restArguments.reduce((currentResult, currentArgument) => {
             pipeLastResultMap.set("result", currentResult);
-            if (getType(currentResult) === AnyType["Undefined"]) return currentArgument;
-            if (getType(currentArgument) === AnyType["Function"]) return currentArgument?.(currentResult);
+            if (currentResult === undefined) return currentArgument;
+            if (getIsFunction(currentArgument) === true) return currentArgument?.(currentResult);
             return undefined;
         }, undefined);
-        if (getType(pipeResult) === AnyType["Function"]) return pipeResult?.(pipeLastResultMap.get("result"));
+        if (getIsFunction(pipeResult) === true) return pipeResult?.(pipeLastResultMap.get("result"));
         return pipeResult;
     };
-    const pipeOneLiner = (...restArguments) => (((pipeLastResultMap) => (((pipeResult) => (getType(pipeResult) === AnyType["Function"] ? (pipeResult(pipeLastResultMap.get("result"))) : (pipeResult)))(restArguments.reduce((currentResult, currentArgument) => ([(pipeLastResultMap.set("result", currentResult)), ((getType(currentResult) === AnyType["Undefined"]) ? currentArgument : ((getType(currentArgument) === AnyType["Function"]) ? currentArgument(currentResult) : undefined))].at(-1)), undefined))))(new Map()));
+    const pipeOneLiner = (...restArguments) => (((pipeLastResultMap) => (((pipeResult) => ((getIsFunction(pipeResult) === true) ? (pipeResult(pipeLastResultMap.get("result"))) : (pipeResult)))(restArguments.reduce((currentResult, currentArgument) => ([(pipeLastResultMap.set("result", currentResult)), ((currentResult === undefined) ? currentArgument : ((getIsFunction(currentArgument) === true) ? currentArgument(currentResult) : undefined))].at(-1)), undefined))))(new Map()));
     const randomIntInclusive = ({ lowerBound, upperBound, multiplier = 1 } = {}) => ((({ min, max }) => ((Math.floor(Math.random() * (max - min + 1)) + min) * multiplier))({ min: Math.ceil(lowerBound / multiplier), max: Math.floor(upperBound / multiplier) }));
     const removeDuplicateListItem = (anyArray, callbackFunction = ((anyArrayItem) => (anyArrayItem))) => (anyArray.reduce(([uniqueKeyMap, uniqueArray], anyArrayItem) => ((newUniqueKeyString) => ((uniqueKeyMap.get(newUniqueKeyString) !== undefined) ? [uniqueKeyMap, uniqueArray] : ([(uniqueKeyMap.set(newUniqueKeyString, anyArrayItem)), (uniqueArray.push(anyArrayItem)), ([uniqueKeyMap, uniqueArray])].at(-1))))(callbackFunction(anyArrayItem)), [new Map(), []]).at(-1)); /* removeDuplicateListItemV2 */
     const fakeGenerator = () => {
@@ -331,7 +321,7 @@
     const getRandomString = (minLength = 2, maxLength = 10) => ((({ characters, lengthRandomString }) => (Array.from({ length: lengthRandomString }, () => (characters[Math.floor(Math.random() * characters.length)])).join("")))({ characters: "abcdefghijklmnopqrstuvwxyz", lengthRandomString: (Math.floor(Math.random() * (maxLength - 1)) + minLength) }));
 
     return {
-        AnyType,
+        JsonType,
         getIsUndefined,
         getIsNull,
         getIsBoolean,
