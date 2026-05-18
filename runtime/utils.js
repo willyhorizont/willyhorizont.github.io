@@ -298,21 +298,30 @@
     const getInvertedRgbHexColorByBigInt = (anyString) => (pipe((getSixDigitRgbStringFromThreeDigitRgbString(anyString)), ((rgbString) => (`#${(0xFFFFFFn ^ BigInt(rgbString)).toString(16).padStart(6, "0")}`))));
     const getInvertedRgbHexColorFromString = (anyString) => getInvertedRgbHexColorByParsePerChannel(anyString);
     const getColorFromString = (anyString) => (((rgbHexColorBackground) => ({ backgroundColor: rgbHexColorBackground, textColor: getInvertedRgbHexColorFromString(rgbHexColorBackground), isBackgroundColorLight: getIsRgbHexColorLight(rgbHexColorBackground) }))(getRgbHexColorFromString(anyString)));
+    const infinityLoop = (callbackFunction = (() => (undefined))) => {
+        while (true) {
+            const { isBreak, isContinue } = (callbackFunction() || {});
+            if (isBreak === true) break;
+            if (isContinue === true) continue;
+        }
+    };
     const forEach = (anyIterable, callbackFunction = ((anyIterableItem, anyIterableItemIndex, anyIterable) => (undefined))) => {
         let anyIterableItemIndex = 0;
         for (const anyIterableItem of anyIterable) {
-            const isBreak = callbackFunction(anyIterableItem, anyIterableItemIndex, anyIterable);
+            const { isBreak, isContinue } = (callbackFunction(anyIterableItem, anyIterableItemIndex, anyIterable) || {});
             if (isBreak === true) break;
             anyIterableItemIndex += 1;
+            if (isContinue === true) continue;
         }
     };
     const forEachOneLiner = (anyIterable, callbackFunction = ((anyIterableItem, anyIterableItemIndex, anyIterable) => (undefined))) => (((anyIterator, innerFunction = ((anyIterableItemIndex = 0) => (((step) => (((!step.done) ? ((callbackFunction(step.value, anyIterableItemIndex, anyIterable) === true) ? undefined : innerFunction(anyIterableItemIndex + 1)) : undefined)))(anyIterator.next())))) => (innerFunction(0)))(anyIterable[Symbol.iterator]()));
     const forEachAsync = async (anyIterable, callbackFunctionAsync = (async (anyIterableItem, anyIterableItemIndex, anyIterable) => (undefined))) => {
         let anyIterableItemIndex = 0;
         for (const anyIterableItem of anyIterable) {
-            const isBreak = await callbackFunctionAsync(anyIterableItem, anyIterableItemIndex, anyIterable);
+            const { isBreak, isContinue } = (await callbackFunctionAsync(anyIterableItem, anyIterableItemIndex, anyIterable) || {});
             if (isBreak === true) break;
             anyIterableItemIndex += 1;
+            if (isContinue === true) continue;
         }
     };
     const forEachAsyncOneLiner = async (anyIterable, callbackFunctionAsync = (async (anyIterableItem, anyIterableItemIndex, anyIterable) => (undefined))) => (((anyIterator, innerFunction = ((anyIterableItemIndex = 0) => ((async (step) => (((!step.done) ? (((await callbackFunctionAsync(step.value, anyIterableItemIndex, anyIterable)) === true) ? undefined : innerFunction(anyIterableItemIndex + 1)) : undefined)))(anyIterator.next())))) => (innerFunction(0)))(anyIterable[Symbol.iterator]()));
@@ -375,6 +384,7 @@
         getIsRgbHexColorLightHsl,
         getIsRgbHexColorLight,
         getValidRgbHexColor,
+        infinityLoop,
         forEach,
         forEachOneLiner,
         forEachAsync,
