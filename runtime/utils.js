@@ -127,7 +127,7 @@
                 });
                 continue;
             }
-            result += currentValueType;
+            result += ["\"", currentValueType, "\""].join("");
         }
         return result;
     };
