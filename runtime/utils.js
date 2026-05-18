@@ -127,7 +127,7 @@
                 });
                 continue;
             }
-            result += String(currentValue);
+            result += currentValueType;
         }
         return result;
     };
