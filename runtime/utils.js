@@ -37,11 +37,11 @@
         let result = "";
         while (tokenStack.length > 0) {
             const current = tokenStack.pop();
+            const currentValue = current["value"];
             if (current["type"] === "raw") {
-                result += current["value"];
+                result += currentValue;
                 continue;
             }
-            const currentValue = current["value"];
             const currentIndentationLevel = current["indentationLevel"];
             const currentValueType = getType(currentValue);
             if (currentValueType === JsonType["Null"]) {
@@ -89,8 +89,8 @@
                 continue;
             }
             if (currentValueType === JsonType["PythonLikeDict"]) {
-                const objectEntries = Object.entries(currentValue);
-                if (objectEntries.length === 0) {
+                const pythonLikeDictEntries = Object.entries(currentValue);
+                if (pythonLikeDictEntries.length === 0) {
                     result += "{}";
                     continue;
                 }
@@ -100,16 +100,16 @@
                     value: ((pretty === true) ? (["\n", indentation.repeat(currentIndentationLevel), "}"].join("")) : " }"),
                     indentationLevel: currentIndentationLevel
                 });
-                for (let i = objectEntries.length - 1; i >= 0; i -= 1) {
-                    const [objectKey, objectValue] = objectEntries[i];
+                for (let i = (pythonLikeDictEntries.length - 1); (i >= 0); i -= 1) {
+                    const [pythonLikeDictKey, pythonLikeDictValue] = pythonLikeDictEntries[i];
                     tokenStack.push({
                         type: "value",
-                        value: objectValue,
+                        value: pythonLikeDictValue,
                         indentationLevel: childIndentationLevel
                     });
                     tokenStack.push({
                         type: "raw",
-                        value: ["\"", objectKey, "\": "].join(""),
+                        value: ["\"", pythonLikeDictKey, "\": "].join(""),
                         indentationLevel: childIndentationLevel
                     });
                     if (i > 0) {
