@@ -136,7 +136,7 @@
                 // "Malam Natal",
                 "1 Ramadan",
             ];
-            const localDatabase = WillyHorizont.UtilsWeb.initializeLocalDatabase("kalender-libur-advisor");
+            const localDatabase = WillyHorizont.UtilsWeb.setupLocalDatabase("kalender-libur-advisor");
             const currentYear = new Date().getUTCFullYear();
             const getPrefixSuffixOfText = (anyString, textToFind) => (anyString.split(textToFind).map((textSplit) => (textSplit.trim())));
             const getYearFromUrl = () => ((({ yearStringNew }) => ((({ yearNumericNew }) => ([yearNumericNew.toString(), yearNumericNew]))({ yearNumericNew: ((yearStringNew === null) ? new Date().getUTCFullYear() : parseInt(yearStringNew, 10)) })))({ yearStringNew: new URLSearchParams(window.location.search).get("year") }));
@@ -762,26 +762,6 @@
                 }
             })();
         </script>
-        <script>
-            if ("serviceWorker" in navigator) {
-                window.addEventListener("load", () => {
-                    navigator.serviceWorker.register("/sw.js").then((reg) => {
-                        console.log("Service Worker registration success:", reg.scope);
-
-                        reg.addEventListener("updatefound", () => {
-                            const newWorker = reg.installing;
-                            newWorker.addEventListener("statechange", () => {
-                                if ((newWorker.state === "installed") && navigator.serviceWorker.controller) {
-                                    alert("Website has been updated! The page will be reloaded to the newest version.");
-                                    window.location.reload();
-                                }
-                            });
-                        });
-                    }).catch((err) => {
-                        console.log("Service Worker registration failed:", err);
-                    });
-                });
-            }
-        </script>
+        <script src="../../component/component-sw.js"></script>
     </body>
 </html>

@@ -6,7 +6,7 @@
 
     if (!isUserUsingChromiumBasedWebBrowser) {
         // window.location.href = "/unsupported-web-browser-detected";
-        const { openPopup } = WillyHorizont.UtilsWeb.initializeComponentPopup({
+        const { openPopup } = WillyHorizont.UtilsWeb.setupComponentPopup({
             popupId: "component-user-web-browser-checker-not-chrome",
             popupStackingOrder: 1,
             titleString: "Warning!",
@@ -27,7 +27,7 @@
     // console.log({ isUserUsingLatestStableChromiumBasedWebBrowser });
 
     if (!isUserUsingLatestStableChromiumBasedWebBrowser) {
-        const { openPopup } = WillyHorizont.UtilsWeb.initializeComponentPopup({
+        const { openPopup } = WillyHorizont.UtilsWeb.setupComponentPopup({
             popupId: "component-user-web-browser-checker-chrome-need-update",
             popupStackingOrder: 1,
             titleString: "Warning!",

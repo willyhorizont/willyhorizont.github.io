@@ -16,7 +16,7 @@
         throw new Error("WillyHorizont.UtilsWeb requires WillyHorizont.Utils to be loaded first");
     }
 
-    const initializeLocalDatabase = (databaseNameInString) => {
+    const setupLocalDatabase = (databaseNameInString) => {
         const COLLECTION_OR_STORE_NAME_IN_STRING = "data";
 
         function connect() {
@@ -135,7 +135,11 @@
     };
 
     const IS_IN_DEVELOPMENT_MODE = (window.location.hostname === "127.0.0.1");
-    const removeTemplateStringIndentation = ({ indentation = 0, trimmer } = {}, projectBodyString = "") => (projectBodyString[(trimmer === "start") ? "trimStart" : ((trimmer === "end") ? "trimEnd" : "trim")]().replaceAll(" ".repeat(4).repeat(indentation), ""));
+    const getLeadingWhiteSpaceVersionOne = (anyString) => ((stringMatchList) => (stringMatchList ? stringMatchList[0].length : 0))(anyString.match(new RegExp(`^\s+`, "g")));
+    const getLeadingWhiteSpaceVersionTwo = (anyString) => ((stringMatchList) => (stringMatchList ? stringMatchList[0].length : 0))(anyString.match(new RegExp(`^\s*`, "g")));
+    const getLeadingWhiteSpaceVersionThree = (anyString) => (anyString.search(new RegExp(`\S`, "g")));
+    const getLeadingWhiteSpaceVersionFour = (anyString) => (anyString.length - anyString.trimStart().length);
+    const removeTemplateStringIndentation = (htmlTemplateString = "") => (htmlTemplateString.split("\n").filter((htmlTemplateStringLine) => (htmlTemplateStringLine.trim() !== "")).join("\n"));
     const createSetHtmlElementPropertyValues = (htmlElement) => ((arrayOfEntryProperty) => ([(arrayOfEntryProperty.forEach(([htmlElementProperty, htmlElementPropertyValue]) => (Reflect.set(htmlElement, htmlElementProperty, htmlElementPropertyValue)))), htmlElement].at(-1)));
     const createSetHtmlElementEventStuffs = (htmlElement) => ((arrayOfElementEventStuff) => ([(arrayOfElementEventStuff.forEach(({ handlerRefName, eventType, elementHandler, eventHandler }) => (((handlerFunction) => ([(Reflect.set(htmlElement, handlerRefName, handlerFunction)), (htmlElement.addEventListener(eventType, handlerFunction)), undefined].at(-1)))(eventHandler || elementHandler(htmlElement))))), htmlElement].at(-1)));
     const createSetHtmlElementAttributes = (htmlElement) => ((arrayOfEntryAttribute) => ([(arrayOfEntryAttribute.forEach(([htmlElementAttribute, htmlElementAttributeValue]) => (htmlElement.setAttribute(htmlElementAttribute, String(htmlElementAttributeValue))))), htmlElement].at(-1)));
@@ -338,7 +342,7 @@
             </style>
         `);
 
-    const initializeComponentPopup = ({ popupId, popupStackingOrder, titleString, htmlTemplateStringContentChildren }) => {
+    const setupComponentPopup = ({ popupId, popupStackingOrder, titleString, htmlTemplateStringContentChildren }) => {
         document.body.appendChild(WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(getHtmlTemplateStringPopupStyle(popupStackingOrder)));
         const htmlElementPopupOverlay = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
                 <div data-id="popup-overlay-${popupId}" class="popup-overlay">
@@ -397,7 +401,7 @@
         };
     };
 
-    const initializeComponentChipInput = ({ chipInputPlaceholder, getDataFromLocalDatabase, syncWithMainContent }) => {
+    const setupComponentChipInput = ({ chipInputPlaceholder, getDataFromLocalDatabase, syncWithMainContent }) => {
         document.body.appendChild(WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
                 <style>
                     .chip-input {
@@ -662,7 +666,7 @@
         };
     };
 
-    const initializeComponentImportExport = ({ saveDataToLocalDatabase, getDataFromLocalDatabase, renderMainContent, getDataFromMainContent }) => {
+    const setupComponentImportExport = ({ saveDataToLocalDatabase, getDataFromLocalDatabase, renderMainContent, getDataFromMainContent }) => {
         document.getElementById("placeholder-import-export").innerHTML = (/*html*/`
             <div id="import-export-container" style="padding: 4px; width: 100%; display: flex; flex-direction: column;">
                 <h2 style="margin-top: 8px;">Import & Export:</h2>
@@ -721,6 +725,34 @@
         }
     };
 
+    const setupDataThemeObserver = (callbackFunction) => {
+        const htmlElement = document.documentElement;
+
+        const dataThemeObserver = new MutationObserver((mutationList) => {
+            for (const mutation of mutationList) {
+                if (mutation.attributeName === "data-theme") {
+                    const currentTheme = htmlElement.getAttribute("data-theme");
+                    callbackFunction(currentTheme);
+                    /*
+                    if (currentTheme === "dark") {
+                        htmlElementTestDataThemeObserverContainer.style.backgroundColor = "yellow";
+                        htmlElementTestDataThemeObserverContainer.style.color = "black";
+                    } else {
+                        htmlElementTestDataThemeObserverContainer.style.backgroundColor = "blue";
+                        htmlElementTestDataThemeObserverContainer.style.color = "white";
+                    }
+                    */
+                    break;
+                }
+            }
+        });
+
+        dataThemeObserver.observe(htmlElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+        // dataThemeObserver.disconnect();
+        return dataThemeObserver;
+    };
+
     return {
         IS_IN_DEVELOPMENT_MODE,
         removeTemplateStringIndentation,
@@ -730,13 +762,14 @@
         getUserChromiumBasedWebBrowserData,
         getLatestStableChromiumBasedWebBrowserLstData,
         getIsUserUsingMinimumStableChromiumBasedWebBrowser,
-        initializeLocalDatabase,
-        initializeComponentPopup,
-        initializeComponentChipInput,
-        initializeComponentImportExport,
+        setupLocalDatabase,
+        setupComponentPopup,
+        setupComponentChipInput,
+        setupComponentImportExport,
         setupViewportHeightListener,
         setupViewportHeightFromViewportWidthListener,
         getAspectRatio,
         getViewportWidthMultiplier,
+        setupDataThemeObserver,
     };
 });

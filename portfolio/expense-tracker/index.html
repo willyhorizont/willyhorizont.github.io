@@ -83,14 +83,14 @@
         <script src="../../component/component-donation-platforms.js"></script>
 
         <script>
-            const localDatabase = WillyHorizont.UtilsWeb.initializeLocalDatabase("expense-tracker");
+            const localDatabase = WillyHorizont.UtilsWeb.setupLocalDatabase("expense-tracker");
             const chipInputPlaceholder = ("item a 2, item b 1, item c 4, ...");
             const collectionOrStoreKey = "expense-data";
             
             const saveDataToLocalDatabase = async (newData) => await localDatabase.setItem(collectionOrStoreKey, newData);
             const getDataFromLocalDatabase = async () => await localDatabase.getItem(collectionOrStoreKey);
 
-            const componentImportExport = WillyHorizont.UtilsWeb.initializeComponentImportExport({
+            const componentImportExport = WillyHorizont.UtilsWeb.setupComponentImportExport({
                 saveDataToLocalDatabase,
                 getDataFromLocalDatabase,
                 renderMainContent,
@@ -109,7 +109,7 @@
             });
             // console.log({ componentImportExport });
 
-            const componentChipInput = WillyHorizont.UtilsWeb.initializeComponentChipInput({ chipInputPlaceholder, getDataFromLocalDatabase: async () => await getDataFromLocalDatabase(), syncWithMainContent: componentImportExport.syncWithMainContent });
+            const componentChipInput = WillyHorizont.UtilsWeb.setupComponentChipInput({ chipInputPlaceholder, getDataFromLocalDatabase: async () => await getDataFromLocalDatabase(), syncWithMainContent: componentImportExport.syncWithMainContent });
             // console.log({ componentChipInput });
 
             function createHtmlElementExpenseContainer(arrayOfEntryAttribute) {
@@ -290,26 +290,7 @@
                 document.getElementById("placeholder-error").innerHTML = "";
             })();
         </script>
-        <script>
-            if ("serviceWorker" in navigator) {
-                window.addEventListener("load", () => {
-                    navigator.serviceWorker.register("/sw.js").then((reg) => {
-                        console.log("Service Worker registration success:", reg.scope);
 
-                        reg.addEventListener("updatefound", () => {
-                            const newWorker = reg.installing;
-                            newWorker.addEventListener("statechange", () => {
-                                if ((newWorker.state === "installed") && navigator.serviceWorker.controller) {
-                                    alert("Website has been updated! The page will be reloaded to the newest version.");
-                                    window.location.reload();
-                                }
-                            });
-                        });
-                    }).catch((err) => {
-                        console.log("Service Worker registration failed:", err);
-                    });
-                });
-            }
-        </script>
+        <script src="../../component/component-sw.js"></script>
     </body>
 </html>
