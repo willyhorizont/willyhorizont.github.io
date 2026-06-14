@@ -1,4 +1,4 @@
 git add .
-git commit -m "fix navbar"
-git tag -a v2.2.0 -m "fix navbar"
+git commit -m "update language percentage"
+git tag -a v2.3.0 -m "update language percentage"
 git push github main --tags

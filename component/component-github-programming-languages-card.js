@@ -7,6 +7,11 @@
     const getProgrammingLanguagesJsonResponse = await WillyHorizont.Utils.fetchThrowErrorIfNotOk(getProgrammingLanguagesJsonUrl);
     const getProgrammingLanguagesJsonResponseJson = await getProgrammingLanguagesJsonResponse.json();
 
+    const totalProgrammingLanguages = getProgrammingLanguagesJsonResponseJson.length;
+    const programmingLanguagePercentage = ((1 / totalProgrammingLanguages) * 100);
+    const otherPercentage = parseFloat((programmingLanguagePercentage % 1).toFixed(2)).toString();
+    const programmingLanguagePercentageRounded = Math.floor(programmingLanguagePercentage);
+
     const [programmingLanguageBarChartContainerInnerHtml, programmingLanguagesTextContainerInnerHtml] = (getProgrammingLanguagesJsonResponseJson.reduce((([programmingLanguageBarChartContainerInnerHtmlCurrent, programmingLanguagesTextContainerInnerHtmlCurrent], programmingLanguage, programmingLanguageIndex) => {
         const styles = window.getComputedStyle(document.documentElement);
         const darkBackgroundColor = styles.getPropertyValue('--dark-background-color').trim();
@@ -18,19 +23,35 @@
         const darkBorderColor = ((howCloseRgbHexColorPercentageInDarkMode > 80) ? "var(--light-border-color)" : programmingLanguage["color"]);
         const lightBorderColor = ((howCloseRgbHexColorPercentageInLightMode > 70) ? "var(--dark-border-color)" : programmingLanguage["color"]);
 
-        return ([
-            WillyHorizont.UtilsWeb.removeTemplateStringIndentation(programmingLanguageBarChartContainerInnerHtmlCurrent.trimStart() + /*html*/`
-                                            <div data-id="programming-language-percentage" data-dark-border-color="${darkBorderColor}" data-light-border-color="${lightBorderColor}" style="border-radius: ${(programmingLanguageIndex === 0) ? '6px 0 0 6px' : (programmingLanguageIndex === (getProgrammingLanguagesJsonResponseJson.length - 1)) ? '0 6px 6px 0' : 0}; min-width: 28px; flex: 1; height: 8px; background-color: ${programmingLanguage["color"]}; border: 1px solid ${isInDarkMode ? darkBorderColor : lightBorderColor};">
+        const isLastProgrammingLanguage = (programmingLanguageIndex === (getProgrammingLanguagesJsonResponseJson.length - 1));
+
+        let programmingLanguageBarChartContainerInnerHtmlNewItem =  WillyHorizont.UtilsWeb.removeTemplateStringIndentation(programmingLanguageBarChartContainerInnerHtmlCurrent.trimStart() + (/*html*/`
+                                            <div data-id="programming-language-percentage" data-dark-border-color="${darkBorderColor}" data-light-border-color="${lightBorderColor}" style="border-radius: ${(programmingLanguageIndex === 0) ? '6px 0 0 6px' : 0}; min-width: 28px; flex: 1; height: 8px; background-color: ${programmingLanguage["color"]}; border: 1px solid ${isInDarkMode ? darkBorderColor : lightBorderColor};">
                                             </div>
-            `),
-            WillyHorizont.UtilsWeb.removeTemplateStringIndentation(programmingLanguagesTextContainerInnerHtmlCurrent.trimStart() + /*html*/`
+        `));
+        let programmingLanguagesTextContainerInnerHtmlNewItem = WillyHorizont.UtilsWeb.removeTemplateStringIndentation(programmingLanguagesTextContainerInnerHtmlCurrent.trimStart() + (/*html*/`
                                             <a data-id="programming-language-text" href="https://github.com/willyhorizont/cross-language-programming-concepts/tree/main/languages/${programmingLanguage["id"]}" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit; display: flex; flex-direction: row; align-items: center; margin-right: 16px;">
                                                 <div data-id="github-programming-language-color-code" data-dark-border-color="${darkBorderColor}" data-light-border-color="${lightBorderColor}" style="width: 0.5em; height: 0.5em; border-radius: 50%; margin-right: 8px; aspect-ratio: 1; background-color: ${programmingLanguage["color"]}; border: 1px solid ${isInDarkMode ? darkBorderColor : lightBorderColor};"></div>
                                                 <p style="font-size: 0.75em; font-weight: 600; margin-right: 8px; word-break: break-word;">${programmingLanguage["stack"].map((programmingLanguageStack) => (programmingLanguageStack["name"])).join(" / ")}</p>
-                                                <p style="font-size: 0.75em;">${(100 / getProgrammingLanguagesJsonResponseJson.length).toFixed(2)}%</p>
+                                                <p style="font-size: 0.75em;">${programmingLanguagePercentageRounded}%</p>
                                             </a>
-            `),
-        ]);
+        `));
+        const otherColor = "#ededed";
+        if (isLastProgrammingLanguage === true) {
+            programmingLanguageBarChartContainerInnerHtmlNewItem += (/*html*/`
+                                            <div data-id="programming-language-percentage" data-dark-border-color="${darkBorderColor}" data-light-border-color="${lightBorderColor}" style="border-radius:0 6px 6px 0; min-width: 28px; flex: 1; height: 8px; background-color: ${otherColor}; border: 1px solid ${isInDarkMode ? darkBorderColor : lightBorderColor};">
+                                            </div>
+            `);
+            programmingLanguagesTextContainerInnerHtmlNewItem += (/*html*/`
+                                            <a data-id="programming-language-text" href="https://github.com/willyhorizont" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit; display: flex; flex-direction: row; align-items: center; margin-right: 16px;">
+                                                <div data-id="github-programming-language-color-code" data-dark-border-color="${darkBorderColor}" data-light-border-color="${lightBorderColor}" style="width: 0.5em; height: 0.5em; border-radius: 50%; margin-right: 8px; aspect-ratio: 1; background-color: ${otherColor}; border: 1px solid ${isInDarkMode ? darkBorderColor : lightBorderColor};"></div>
+                                                <p style="font-size: 0.75em; font-weight: 600; margin-right: 8px; word-break: break-word;">Other</p>
+                                                <p style="font-size: 0.75em;">${otherPercentage}%</p>
+                                            </a>
+            `);
+        }
+
+        return ([ programmingLanguageBarChartContainerInnerHtmlNewItem, programmingLanguagesTextContainerInnerHtmlNewItem ]);
     }), ["", ""]));
 
     document.getElementById("placeholder-github-programming-languages-card").innerHTML = WillyHorizont.UtilsWeb.removeTemplateStringIndentation(/*html*/`
