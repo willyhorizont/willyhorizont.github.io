@@ -268,6 +268,28 @@
     };
     const pythonLikeGeneratorExpressionOneLiner = (anyIterable, callbackFunction = ((anyIterableItem) => (anyIterableItem)), filterConditionFunction = ((anyIterableItem) => (true))) => (createGenerator(((currentIterator) => (((nextIterator) => ((({ nextIteratorValue, isGeneratorFunctionDone }) => (isGeneratorFunctionDone ? ({ done: true }) : ((filterConditionFunction(nextIteratorValue) === true) ? ({ value: callbackFunction(nextIteratorValue), nextState: currentIterator }) : ({ nextState: currentIterator }))))({ nextIteratorValue: nextIterator?.value, isGeneratorFunctionDone: nextIterator?.done })))(currentIterator.next()))), (anyIterable[Symbol.iterator]())));
     const listComprehension = (anyIterable, callbackFunction = ((anyIterableItem) => (anyIterableItem)), filterConditionFunction = ((anyIterableItem) => (true))) => Array.from(pythonLikeGeneratorExpression(anyIterable, callbackFunction, filterConditionFunction));
+    const parseHex = (anyRgbHexColorString) => {
+        let hex = anyRgbHexColorString.replace("#", "").toLowerCase();
+        if (hex.length === 3) {
+            hex = hex.split("").map((rgbCharacter) => (rgbCharacter + rgbCharacter)).join("");
+        }
+        if ((hex.length !== 6) || (!new RegExp(`^[0-9a-fA-F]{6}$`, "g").test(hex))) {
+            throw new Error(`Invalid RGB Hex: ${anyRgbHexColorString}`);
+        }
+        return [
+            parseInt(hex.substring(0, 2), 16),
+            parseInt(hex.substring(2, 4), 16),
+            parseInt(hex.substring(4, 6), 16),
+        ];
+    };
+    const getHowCloseRgbHexColor = (anyRgbHexColorStringTarget, anyRgbHexColorStringSource) => {
+        const [rrTarget, ggTarget, bbTarget] = parseHex(anyRgbHexColorStringTarget);
+        const [rrSource, ggSource, bbSource] = parseHex(anyRgbHexColorStringSource);
+        const rgbColorDistanceFromTargetToSource = Math.sqrt(Math.pow(rrTarget - rrSource, 2) + Math.pow(ggTarget - ggSource, 2) + Math.pow(bbTarget - bbSource, 2));
+        const rgbColorMaxDistance = Math.sqrt(Math.pow(255, 2) * 3);
+        const howCloseRgbHexColorPercentage = ((1 - (rgbColorDistanceFromTargetToSource / rgbColorMaxDistance)) * 100);
+        return howCloseRgbHexColorPercentage.toFixed(2);
+    };
     const getRgbHexColorFromString = (anyString) => (Array.from({ length: 3 }, (_, i) => (((Array.from(anyString).reduce((currentNumericHash, currentCharacter) => (currentCharacter.charCodeAt(0) + ((currentNumericHash << 5) - currentNumericHash)), 0)) >> (i * 8)) & 0xff).toString(16).padStart(2, "0")).reduce((rgbHexColorCurrent, rgbHexColorPartCurrent) => (`${rgbHexColorCurrent}${rgbHexColorPartCurrent}`), "#"));
     const getSixDigitRgbStringFromThreeDigitRgbString = (anyString) => (pipe((anyString.replace(new RegExp("^#", "g"), "")), ((rgbStringInitial) => ((rgbStringInitial.length === 3) ? (rgbStringInitial.split("").map((rgbDigit) => (rgbDigit + rgbDigit)).join("")) : rgbStringInitial))));
     const getIsRgbHexColorLightLuminance = (anyString) => (pipe((getSixDigitRgbStringFromThreeDigitRgbString(anyString)), ((rgbString) => ([(parseInt(rgbString.slice(0, 2), 16) / 255), (parseInt(rgbString.slice(2, 4), 16) / 255), (parseInt(rgbString.slice(4, 6), 16) / 255)])), (([r, g, b]) => (pipe(((0.2126 * r) + (0.7152 * g) + (0.0722 * b)), ((luminance) => (luminance > 0.5)))))));
@@ -387,5 +409,7 @@
         safeGetObjectProperty,
         getIsMethodAvailable,
         increment,
+        parseHex,
+        getHowCloseRgbHexColor,
     };
 });
