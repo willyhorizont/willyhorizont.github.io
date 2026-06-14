@@ -23,8 +23,6 @@
         const darkBorderColor = ((howCloseRgbHexColorPercentageInDarkMode > 80) ? "var(--light-border-color)" : programmingLanguage["color"]);
         const lightBorderColor = ((howCloseRgbHexColorPercentageInLightMode > 70) ? "var(--dark-border-color)" : programmingLanguage["color"]);
 
-        const isLastProgrammingLanguage = (programmingLanguageIndex === (getProgrammingLanguagesJsonResponseJson.length - 1));
-
         let programmingLanguageBarChartContainerInnerHtmlNewItem =  WillyHorizont.UtilsWeb.removeTemplateStringIndentation(programmingLanguageBarChartContainerInnerHtmlCurrent.trimStart() + (/*html*/`
                                             <div data-id="programming-language-percentage" data-dark-border-color="${darkBorderColor}" data-light-border-color="${lightBorderColor}" style="border-radius: ${(programmingLanguageIndex === 0) ? '6px 0 0 6px' : 0}; min-width: 28px; flex: 1; height: 8px; background-color: ${programmingLanguage["color"]}; border: 1px solid ${isInDarkMode ? darkBorderColor : lightBorderColor};">
                                             </div>
@@ -36,15 +34,18 @@
                                                 <p style="font-size: 0.75em;">${programmingLanguagePercentageRounded}%</p>
                                             </a>
         `));
+
         const otherColor = "#ededed";
+        const isLastProgrammingLanguage = (programmingLanguageIndex === (getProgrammingLanguagesJsonResponseJson.length - 1));
+
         if (isLastProgrammingLanguage === true) {
             programmingLanguageBarChartContainerInnerHtmlNewItem += (/*html*/`
-                                            <div data-id="programming-language-percentage" data-dark-border-color="${darkBorderColor}" data-light-border-color="${lightBorderColor}" style="border-radius:0 6px 6px 0; min-width: 28px; flex: 1; height: 8px; background-color: ${otherColor}; border: 1px solid ${isInDarkMode ? darkBorderColor : lightBorderColor};">
+                                            <div data-id="programming-language-percentage" data-dark-border-color="${darkBorderColor}" data-light-border-color="${lightBorderColor}" style="border-radius:0 6px 6px 0; min-width: 28px; flex: 1; height: 8px; background-color: ${otherColor}; border: 1px solid var(--light-border-color);">
                                             </div>
             `);
             programmingLanguagesTextContainerInnerHtmlNewItem += (/*html*/`
                                             <a data-id="programming-language-text" href="https://github.com/willyhorizont" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit; display: flex; flex-direction: row; align-items: center; margin-right: 16px;">
-                                                <div data-id="github-programming-language-color-code" data-dark-border-color="${darkBorderColor}" data-light-border-color="${lightBorderColor}" style="width: 0.5em; height: 0.5em; border-radius: 50%; margin-right: 8px; aspect-ratio: 1; background-color: ${otherColor}; border: 1px solid ${isInDarkMode ? darkBorderColor : lightBorderColor};"></div>
+                                                <div data-id="github-programming-language-color-code" data-dark-border-color="${darkBorderColor}" data-light-border-color="${lightBorderColor}" style="width: 0.5em; height: 0.5em; border-radius: 50%; margin-right: 8px; aspect-ratio: 1; background-color: ${otherColor}; border: 1px solid var(--light-border-color);"></div>
                                                 <p style="font-size: 0.75em; font-weight: 600; margin-right: 8px; word-break: break-word;">Other</p>
                                                 <p style="font-size: 0.75em;">${otherPercentage}%</p>
                                             </a>
