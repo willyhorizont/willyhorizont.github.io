@@ -1,4 +1,4 @@
 git add .
-git commit -m "finish sync programming languages with cross-language-programming-concepts"
-git tag -a v2.1.0 -m "finish sync programming languages with cross-language-programming-concepts"
+git commit -m "fix navbar"
+git tag -a v2.2.0 -m "fix navbar"
 git push github main --tags

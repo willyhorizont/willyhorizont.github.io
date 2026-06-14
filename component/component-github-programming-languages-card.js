@@ -38,7 +38,7 @@
                             <div style="display: flex; justify-content: center; align-items: center;">
                                 <div style="display: flex; flex-direction: column; width: calc(100vw - 68px);">
                                     <p style="margin-bottom: 16px; font-weight: 600;">Programming Languages</p>
-                                    <div data-id="programming-languages-bar-chart-container" class="programming-languages-bar-chart-container" style="display: flex; min-width: calc(100vw - 68px); width: max-content; border-radius: 6px; column-gap: 4px; background-color: ${isInDarkMode ? 'var(--dark-background-color)' : 'var(--light-background-color)'};">
+                                    <div data-id="programming-languages-bar-chart-container" class="programming-languages-bar-chart-container" style="display: flex; min-width: calc(100vw - 68px); width: max-content; overflow-x: auto; border-radius: 6px; column-gap: 4px; background-color: ${isInDarkMode ? 'var(--dark-background-color)' : 'var(--light-background-color)'};">
                                         ${programmingLanguageBarChartContainerInnerHtml}
                                     </div>
                                     <div id="programming-languages-text-container" style="display: flex; flex-direction: row; margin-top: 8px; flex-wrap: wrap; row-gap: 8px; padding: 4px; width: calc(100vw - 48px);">
