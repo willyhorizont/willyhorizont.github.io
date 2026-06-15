@@ -54,6 +54,7 @@
                     <p style="overflow-wrap: break-word; text-wrap: wrap; text-align: justify;">
                         &nbsp;&nbsp;&nbsp;&nbsp;I'm a Polyglot AND/OR Programmer (I loves Programming AND/OR Languages) with programming experience since September 2021, working across diverse technologies and domains.
                     </p>
+                    <br>
                     <p style="overflow-wrap: break-word; text-wrap: wrap; text-align: justify;">
                         I have experience working with:
                     </p>
@@ -77,10 +78,84 @@
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</p>
                         <p>Python (automation, scripting, web scraping)</p>
                     </div>
+                    <br>
                     <p style="overflow-wrap: break-word; text-wrap: wrap; text-align: justify;">
                         I have worked with a wide range of programming languages, including:
                     </p>
-                    <div id="placeholder-programming-languages"></div>
+                    <div id="placeholder-programming-languages-vertical-list">
+                        <div style="display: flex; flex-direction: row;">
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;1.&nbsp;&nbsp;</p>
+                            <p>JavaScript</p>
+                        </div>
+                        <div style="display: flex; flex-direction: row;">
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;2.&nbsp;&nbsp;</p>
+                            <p>Python</p>
+                        </div>
+                        <div style="display: flex; flex-direction: row;">
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;3.&nbsp;&nbsp;</p>
+                            <p>PHP</p>
+                        </div>
+                        <div style="display: flex; flex-direction: row;">
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;4.&nbsp;&nbsp;</p>
+                            <p>Go</p>
+                        </div>
+                        <div style="display: flex; flex-direction: row;">
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;5.&nbsp;&nbsp;</p>
+                            <p>Perl</p>
+                        </div>
+                        <div style="display: flex; flex-direction: row;">
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;6.&nbsp;&nbsp;</p>
+                            <p>Julia</p>
+                        </div>
+                        <div style="display: flex; flex-direction: row;">
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;7.&nbsp;&nbsp;</p>
+                            <p>Lua</p>
+                        </div>
+                        <div style="display: flex; flex-direction: row;">
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;8.&nbsp;&nbsp;</p>
+                            <p>Ruby</p>
+                        </div>
+                        <div style="display: flex; flex-direction: row;">
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;9.&nbsp;&nbsp;</p>
+                            <p>R</p>
+                        </div>
+                        <div style="display: flex; flex-direction: row;">
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;10.&nbsp;</p>
+                            <p>Kotlin</p>
+                        </div>
+                        <div style="display: flex; flex-direction: row;">
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;11.&nbsp;</p>
+                            <p>Swift</p>
+                        </div>
+                        <div style="display: flex; flex-direction: row;">
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;12.&nbsp;</p>
+                            <p>Dart</p>
+                        </div>
+                        <div style="display: flex; flex-direction: row;">
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;13.&nbsp;</p>
+                            <p>Visual Basic .NET (VB.NET)</p>
+                        </div>
+                        <div style="display: flex; flex-direction: row;">
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;14.&nbsp;</p>
+                            <p>C#</p>
+                        </div>
+                        <div style="display: flex; flex-direction: row;">
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;15.&nbsp;</p>
+                            <p>MATLAB / Octave</p>
+                        </div>
+                        <div style="display: flex; flex-direction: row;">
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;16.&nbsp;</p>
+                            <p>Wolfram Language Script</p>
+                        </div>
+                        <div style="display: flex; flex-direction: row;">
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;17.&nbsp;</p>
+                            <p>Raku</p>
+                        </div>
+                        <div style="display: flex; flex-direction: row;">
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;18.&nbsp;</p>
+                            <p>Scala</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -97,13 +172,14 @@
                 const getProgrammingLanguagesJsonUrl = "https://raw.githubusercontent.com/willyhorizont/cross-language-programming-concepts/refs/heads/main/languages.json";
                 const getProgrammingLanguagesJsonResponse = await WillyHorizont.Utils.fetchThrowErrorIfNotOk(getProgrammingLanguagesJsonUrl);
                 const getProgrammingLanguagesJsonResponseJson = await getProgrammingLanguagesJsonResponse.json();
+                const programmingLanguageIndexStringLength = getProgrammingLanguagesJsonResponseJson.length.toString().length;
 
-                document.getElementById("placeholder-programming-languages").innerHTML = getProgrammingLanguagesJsonResponseJson.map((programmingLanguage, programmingLanguageIndex) => WillyHorizont.UtilsWeb.removeTemplateStringIndentation(/*html*/`
-                        <div style="display: flex; flex-direction: row;">
-                            <p>&nbsp;&nbsp;&nbsp;&nbsp;${programmingLanguageIndex + 1}.&nbsp;</p>
-                            <p>${programmingLanguage["stack"].map((programmingLanguageStack) => (programmingLanguageStack["name"])).join(" / ")}</p>
-                        </div>
-                `)).join("\n");
+                document.getElementById("placeholder-programming-languages-vertical-list").innerHTML = getProgrammingLanguagesJsonResponseJson.map((programmingLanguage, programmingLanguageIndex) => (WillyHorizont.UtilsWeb.removeTemplateStringIndentation(/*html*/`
+                                <div style="display: flex; flex-direction: row;">
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;${programmingLanguageIndex + 1}.${WillyHorizont.UtilsWeb.getWhiteSpaceStringAlignmnt(programmingLanguageIndexStringLength, (programmingLanguageIndex + 1).toString().length, "&nbsp;")}&nbsp;</p>
+                                    <p>${programmingLanguage["stack"].map((programmingLanguageStack) => (programmingLanguageStack["name"])).join(" / ")}</p>
+                                </div>
+                `))).join("\n");
             })();
         </script>
     </body>

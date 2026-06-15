@@ -1,4 +1,4 @@
 git add .
-git commit -m "small update on component-github-programming-languages-card"
-git tag -a v2.5.0 -m "small update on component-github-programming-languages-card"
+git commit -m "update cv"
+git tag -a v2.6.0 -m "update cv"
 git push github main --tags

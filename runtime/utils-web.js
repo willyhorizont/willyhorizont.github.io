@@ -186,9 +186,9 @@
         return getChromiumBasedWebBrowserLatestStableVersionResponseJson;
     };
     const getIsUserUsingMinimumStableChromiumBasedWebBrowser = async () => {
-        const userChromiumBasedWebBrowserData = await WillyHorizont.UtilsWeb.getUserChromiumBasedWebBrowserData();
+        const userChromiumBasedWebBrowserData = await getUserChromiumBasedWebBrowserData();
         if (!userChromiumBasedWebBrowserData) return false;
-        const latestStableChromiumBasedWebBrowserListData = await WillyHorizont.UtilsWeb.getLatestStableChromiumBasedWebBrowserLstData();
+        const latestStableChromiumBasedWebBrowserListData = await getLatestStableChromiumBasedWebBrowserLstData();
         const latestStableChromiumBasedWebBrowserMatchUserPlatformData = latestStableChromiumBasedWebBrowserListData?.find?.((latestStableChromiumBasedWebBrowserData) => (latestStableChromiumBasedWebBrowserData?.["platform"] === userChromiumBasedWebBrowserData?.["platform"]));
         const userChromiumBasedWebBrowserVersion = userChromiumBasedWebBrowserData["version"];
         const latestStableChromiumBasedWebBrowserMatchUserPlatformVersion = latestStableChromiumBasedWebBrowserMatchUserPlatformData?.["version"];
@@ -198,6 +198,7 @@
         const minimumStableChromiumBasedWebBrowserMatchUserPlatformMajorVersion = (latestStableChromiumBasedWebBrowserMatchUserPlatformMajorVersion - 2);
         return (userChromiumBasedWebBrowserMajorVersion >= minimumStableChromiumBasedWebBrowserMatchUserPlatformMajorVersion);
     };
+    const getWhiteSpaceStringAlignmnt = (targetStringLength, sourceStringLength, stringAligner) => (stringAligner.repeat(targetStringLength - sourceStringLength));
 
     const getAspectRatio = () => {
         const currentViewportWidth = (WillyHorizont.Utils.safeGetObjectProperty(window, "window.visualViewport.width") || window.innerWidth);
@@ -207,10 +208,7 @@
         return [(currentViewportWidth / greatestCommonFactor), (currentViewportHeight / greatestCommonFactor)];
     };
 
-    const getViewportWidthMultiplier = () => {
-        const [rw, rh] = getAspectRatio();
-        return (rh / rw);
-    };
+    const getViewportWidthMultiplier = () => (((rw, rh) => (rh / rw))(getAspectRatio()));
 
     const setupViewportHeightFromViewportWidthListener = () => {
         let requestAnimationFrameId;
@@ -219,8 +217,8 @@
             cancelAnimationFrame(requestAnimationFrameId);
 
             requestAnimationFrameId = requestAnimationFrame(() => {
-                const [ratioWidth, ratioHeight] = WillyHorizont.UtilsWeb.getAspectRatio();
-                const viewportWidthMultiplier = WillyHorizont.UtilsWeb.getViewportWidthMultiplier();
+                const [ratioWidth, ratioHeight] = getAspectRatio();
+                const viewportWidthMultiplier = getViewportWidthMultiplier();
                 const maxHeight = ((ratioWidth > ratioHeight) ? (`calc(100vw * ${viewportWidthMultiplier} * (20 / 100))`) : (`calc(calc(100vw * ${viewportWidthMultiplier}) * calc(${viewportWidthMultiplier} * (40 / 100)))`));
                 document.documentElement.style.setProperty("--max-height", maxHeight);
                 // console.log({
@@ -343,32 +341,32 @@
         `);
 
     const setupComponentPopup = ({ popupId, popupStackingOrder, titleString, htmlTemplateStringContentChildren }) => {
-        document.body.appendChild(WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(getHtmlTemplateStringPopupStyle(popupStackingOrder)));
-        const htmlElementPopupOverlay = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+        document.body.appendChild(htmlTemplateStringToHtmlElement(getHtmlTemplateStringPopupStyle(popupStackingOrder)));
+        const htmlElementPopupOverlay = htmlTemplateStringToHtmlElement(/*html*/`
                 <div data-id="popup-overlay-${popupId}" class="popup-overlay">
                 </div>
             `);
-        const htmlElementPopupBox = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+        const htmlElementPopupBox = htmlTemplateStringToHtmlElement(/*html*/`
                 <div data-id="popup-box-${popupId}" class="popup-box">
                 </div>
             `);
-        const htmlElementPopupHeader = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+        const htmlElementPopupHeader = htmlTemplateStringToHtmlElement(/*html*/`
                 <div data-id="popup-header-${popupId}" class="popup-header">
                 </div>
             `);
-        htmlElementPopupHeader.appendChild(WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+        htmlElementPopupHeader.appendChild(htmlTemplateStringToHtmlElement(/*html*/`
                 <h3 style="flex: 1; line-height: 1; text-align: center;">${titleString}</h3>
             `));
-        const popupCloseButton = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+        const popupCloseButton = htmlTemplateStringToHtmlElement(/*html*/`
                 <button data-id="popup-close-button-${popupId}" class="popup-close-button">&times;</button>
             `);
         htmlElementPopupHeader.appendChild(popupCloseButton);
-        const htmlElementPopupBody = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+        const htmlElementPopupBody = htmlTemplateStringToHtmlElement(/*html*/`
                 <div data-id="popup-body-${popupId}" class="popup-body">
                 </div>
             `);
         htmlTemplateStringContentChildren.forEach((htmlTemplateStringContent) => {
-            htmlElementPopupBody.appendChild(WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(htmlTemplateStringContent));
+            htmlElementPopupBody.appendChild(htmlTemplateStringToHtmlElement(htmlTemplateStringContent));
         })
         htmlElementPopupBox.appendChild(htmlElementPopupHeader);
         htmlElementPopupBox.appendChild(htmlElementPopupBody);
@@ -402,7 +400,7 @@
     };
 
     const setupComponentChipInput = ({ chipInputPlaceholder, getDataFromLocalDatabase, syncWithMainContent }) => {
-        document.body.appendChild(WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+        document.body.appendChild(htmlTemplateStringToHtmlElement(/*html*/`
                 <style>
                     .chip-input {
                         background-color: var(--light-background-color); color: var(--light-text-color);
@@ -423,7 +421,7 @@
             `));
         
         function createHtmlElementChipTextContainer(arrayOfEntryProperty) {
-            const htmlElementChipText = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+            const htmlElementChipText = htmlTemplateStringToHtmlElement(/*html*/`
                     <span data-id="chip-text" style="white-space: nowrap;">
                     </span>
                 `);
@@ -435,7 +433,7 @@
         }
 
         function createHtmlElementChipRemoveButton() {
-            const htmlElementChipRemoveButton = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+            const htmlElementChipRemoveButton = htmlTemplateStringToHtmlElement(/*html*/`
                     <div data-id="chip-remove-button" style="display: flex; align-items: center; justify-content: center; line-height: 1.2em; background-color: var(--accent-color-4); color: var(--dark-text-color); width: 1.6em; aspect-ratio: 1 / 1; border-radius: 50%;">
                         <span data-id="chip-remove-button-content" style="cursor: pointer; font-weight: bold;">×</span>
                     </div>
@@ -447,7 +445,7 @@
         }
 
         function createHtmlElementChip(chipTextTrimmed) {
-            const htmlElementChipContainer = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+            const htmlElementChipContainer = htmlTemplateStringToHtmlElement(/*html*/`
                     <div data-id="chip-container" style="cursor: pointer; padding: 4px 6px; border-radius: 0.2em; display: flex; align-items: center; gap: 12px; flex: 0 0 auto; border: 1px solid var(--light-border-color); color: var(--light-text-color); background-color: #ffdddd;">
                     </div>
                 `);
@@ -458,7 +456,7 @@
         }
 
         function createHtmlElementChipInput(placeholderValue = "") {
-            const htmlElementChipInput = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+            const htmlElementChipInput = htmlTemplateStringToHtmlElement(/*html*/`
                     <input autocomplete="off" data-id="chip-input" class="chip-input" style="flex: 1 1 auto; padding: 8px 8px 8px 0px; border: none; outline: none;" name="chip-input" type="text" />
                 `);
             htmlElementChipInput.setEventStuffs([
@@ -470,7 +468,7 @@
         }
 
         function createHtmlElementChipUpdateInput(chipTextTrimmed = "") {
-            const htmlElementChipUpdateInput = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+            const htmlElementChipUpdateInput = htmlTemplateStringToHtmlElement(/*html*/`
                     <input autocomplete="off" data-id="chip-update-input" class="chip-input" style="flex: 1 1 auto; padding: 8px; border: 1px solid var(--light-border-color); outline: none;" name="chip-update-input" type="text" />
                 `);
             htmlElementChipUpdateInput.setEventStuffs([
@@ -482,7 +480,7 @@
         }
 
         async function createHtmlElementChipInputContainer(itemList) {
-            const htmlElementChipInputContainer = WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
+            const htmlElementChipInputContainer = htmlTemplateStringToHtmlElement(/*html*/`
                     <div data-id="chip-input-container" style="cursor: text; display: flex; gap: 8px; padding: 8px; flex-wrap: wrap; flex: 1; overflow-x: auto; border: 1px solid var(--light-border-color);">
                     </div>
                 `);
@@ -857,6 +855,7 @@
         getUserChromiumBasedWebBrowserData,
         getLatestStableChromiumBasedWebBrowserLstData,
         getIsUserUsingMinimumStableChromiumBasedWebBrowser,
+        getWhiteSpaceStringAlignmnt,
         setupLocalDatabase,
         setupComponentPopup,
         setupComponentChipInput,

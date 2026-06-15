@@ -43,33 +43,804 @@
         <title>CV (Curriculum Vitae) | Willy Horizont</title>
 
         <!-- google-adsense-placeholder -->
+
+        <style>
+            .pdf-container {
+                background: #ddd;
+                padding: 20px;
+            }
+            .print-area {
+                width: 210mm;
+                margin: 0 auto;
+                display: flex;
+                flex-direction: column;
+            }
+            .pdf-page {
+                padding: 20mm;
+                width: 210mm;
+                min-height: 257mm; /* (a4-height - (padding-top + padding-bottom)) = 297mm - 40mm = 257mm */
+                background: var(--light-background-color);
+                box-sizing: border-box;
+                line-height: 1;
+            }
+
+            .pdf-page .pdf-page-attachment {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .pdf-page .pdf-page-attachment img {
+                height: 257mm;
+                outline: 1px solid var(--light-border-color);
+            }
+
+            .bordered {
+                border: 1px solid var(--light-border-color);
+                margin-bottom: -1px;
+                padding: 0 2px;
+            }
+
+            html[data-theme="dark"] {
+                .pdf-container {
+                    background: #000;
+                }
+                .pdf-page {
+                    background: var(--dark-background-color);
+                }
+                .bordered {
+                    border: 1px solid var(--dark-border-color);
+                }
+                .pdf-page .pdf-page-attachment img {
+                    outline: 1px solid var(--dark-border-color);
+                }
+            }
+
+            @media print {
+                header,
+                footer,
+                .my-cv > .page-menu {
+                    display: none !important;
+                }
+
+                @page {
+                    size: A4;
+                    margin: 0;
+                }
+
+                body, main, .my-cv {
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    background: none !important;
+                }
+
+                .pdf-container {
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    background: none !important;
+                }
+
+                .print-area {
+                    width: 100%;
+                    display: block !important;
+                    row-gap: unset !important;
+                }
+
+                .pdf-page {
+                    break-after: page; /* or break-before: page; */
+                    padding: 20mm;
+                    box-sizing: border-box;
+                    background: #fff !important;
+                    color: #000 !important;
+                    box-decoration-break: clone;
+                }
+
+                .pdf-page .pdf-page-attachment {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .pdf-page .pdf-page-attachment img {
+                    height: 257mm;
+                    outline: 1px solid var(--light-border-color);
+                }
+
+                .pdf-container p {
+                    break-inside: avoid;
+                    color: #000 !important;
+                }
+
+                .bordered {
+                    border: 1px solid var(--light-border-color);
+                }
+
+                html[data-theme="dark"] {
+                    .pdf-page {
+                        color: #000 !important;
+                    }
+                }
+            }
+        </style>
     </head>
     <body>
         <header>
         </header>
         <main>
             <div class="my-cv" style="display: flex; flex-direction: column; justify-content: center;">
-                <h1 style="text-align: center;">Willy Horizont's CV (Curriculum Vitae)</h1>
-                <div style="display: flex; flex-direction: row; padding: 8px; gap: 8px; justify-content: center;">
-                    <div class="link-container">
-                        <a target="_blank" rel="noopener noreferrer" href="../CV-Curriculum-Vitae-Christian-Willy-Horizont-Programmer.pdf" aria-label="Full screen">
-                            <div class="link-fragment-provider" style="padding: 8px; gap: 8px;">
-                                <p style="text-align: center;">⛶</p>
-                                <p style="text-align: center;">Full screen</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="link-container">
-                        <a href="../CV-Curriculum-Vitae-Christian-Willy-Horizont-Programmer.pdf" download="Christian-Willy-Horizont-Programmer-CV-Curriculum-Vitae.pdf" aria-label="Download">
-                            <div class="link-fragment-provider" style="padding: 8px; gap: 8px;">
-                            <p style="text-align: center;">⬇️</p>
-                            <p style="text-align: center;">Download</p>
-                            </div>
-                        </a>
+                <div class="page-menu" style="display: flex; flex-direction: column; padding: 8px;">
+                    <h1 style="text-align: center;">Willy Horizont's CV (Curriculum Vitae)</h1>
+                    <div class="button-group" style="display: flex; flex-direction: row; padding: 8px; gap: 8px; justify-content: center;">
+                        <div class="link-container">
+                            <button onclick="printPdfCv()" style="display: flex; flex-direction: row; flex: 1; background-color: inherit;">
+                                <div class="link-fragment-provider" style="padding: 8px; gap: 8px;">
+                                    <p style="text-align: center;">🖨️</p>
+                                    <p style="text-align: center;">Print PDF</p>
+                                </div>
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <iframe src="../CV-Curriculum-Vitae-Christian-Willy-Horizont-Programmer.pdf#toolbar=0" width="80%" height="400px" style="border: 1px solid var(--light-border-color); margin-left: auto; margin-right: auto;">
-                </iframe>
+                <div class="pdf-container">
+                    <div class="print-area">
+                        <div class="pdf-page">
+                            <p style="font-weight: bold; font-size: 1.5em;">Name&nbsp;&nbsp;:&nbsp;Christian Willy Horizont</p>
+                            <p style="font-weight: bold; font-size: 1.5em;">Title&nbsp;:&nbsp;Programmer</p>
+                            <br>
+                            <br>
+                            <br>
+                            <p>Photo:</p>
+                            <img alt="Willy Horizont's photo" src="../photo.jpg" width="330px" style="border-radius: 0.5em;" />
+                            <br>
+                            <br>
+                            <br>
+                            <p>Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<a href="mailto:willyhorizont@gmail.com" class="cv-link">willyhorizont@gmail.com</a></p>
+                            <p>WhatsApp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<a href="https://wa.me/6289698938368" class="cv-link">wa.me/6289698938368</a></p>
+                            <p>LinkedIn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<a href="https://www.linkedin.com/in/willy-horizont" class="cv-link">linkedin.com/in/willy-horizont</a></p>
+                            <p>Website&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<a href="https://willyhorizont.github.io" class="cv-link">willyhorizont.github.io</a></p>
+                            <p>Location&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<a href="https://maps.app.goo.gl/wCAZwbnUb3bwymXk6" class="cv-link">Bekasi, Indonesia</a></p>
+                            <br>
+                            <br>
+                            <br>
+                            <p style="font-weight: bold; font-size: 1.5em; text-align: center;">About</p>
+                            <br>
+                            <br>
+                            <p style="overflow-wrap: break-word; text-wrap: wrap; text-align: justify;">
+                                &nbsp;&nbsp;&nbsp;&nbsp;I am a programmer with programming experience since September 2021, working across diverse technologies and domains.
+                            </p>
+                            <br>
+                            <p style="overflow-wrap: break-word; text-wrap: wrap; text-align: justify;">
+                                I have experience working with:
+                            </p>
+                            <div style="display: flex; flex-direction: row;">
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</p>
+                                <p>Full-Stack web applications (MongoDB, Express.js, React.js, Node.js)</p>
+                            </div>
+                            <div style="display: flex; flex-direction: row;">
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</p>
+                                <p>Back-End RESTful APIs (Node.js, Express.js)</p>
+                            </div>
+                            <div style="display: flex; flex-direction: row;">
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</p>
+                                <p>Front-End web applications (React.js)</p>
+                            </div>
+                            <div style="display: flex; flex-direction: row;">
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</p>
+                                <p>Front-End hybrid mobile applications (React Native)</p>
+                            </div>
+                            <div style="display: flex; flex-direction: row;">
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</p>
+                                <p>Python (automation, scripting, web scraping)</p>
+                            </div>
+                            <br>
+                            <p style="overflow-wrap: break-word; text-wrap: wrap; text-align: justify;">
+                                I have worked with a wide range of programming languages, including:
+                            </p>
+                            <div id="placeholder-programming-languages-vertical-list">
+                                <div style="display: flex; flex-direction: row;">
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;1.&nbsp;&nbsp;</p>
+                                    <p>JavaScript</p>
+                                </div>
+                                <div style="display: flex; flex-direction: row;">
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;2.&nbsp;&nbsp;</p>
+                                    <p>Python</p>
+                                </div>
+                                <div style="display: flex; flex-direction: row;">
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;3.&nbsp;&nbsp;</p>
+                                    <p>PHP</p>
+                                </div>
+                                <div style="display: flex; flex-direction: row;">
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;4.&nbsp;&nbsp;</p>
+                                    <p>Go</p>
+                                </div>
+                                <div style="display: flex; flex-direction: row;">
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;5.&nbsp;&nbsp;</p>
+                                    <p>Perl</p>
+                                </div>
+                                <div style="display: flex; flex-direction: row;">
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;6.&nbsp;&nbsp;</p>
+                                    <p>Julia</p>
+                                </div>
+                                <div style="display: flex; flex-direction: row;">
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;7.&nbsp;&nbsp;</p>
+                                    <p>Lua</p>
+                                </div>
+                                <div style="display: flex; flex-direction: row;">
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;8.&nbsp;&nbsp;</p>
+                                    <p>Ruby</p>
+                                </div>
+                                <div style="display: flex; flex-direction: row;">
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;9.&nbsp;&nbsp;</p>
+                                    <p>R</p>
+                                </div>
+                                <div style="display: flex; flex-direction: row;">
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;10.&nbsp;</p>
+                                    <p>Kotlin</p>
+                                </div>
+                                <div style="display: flex; flex-direction: row;">
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;11.&nbsp;</p>
+                                    <p>Swift</p>
+                                </div>
+                                <div style="display: flex; flex-direction: row;">
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;12.&nbsp;</p>
+                                    <p>Dart</p>
+                                </div>
+                                <div style="display: flex; flex-direction: row;">
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;13.&nbsp;</p>
+                                    <p>Visual Basic .NET (VB.NET)</p>
+                                </div>
+                                <div style="display: flex; flex-direction: row;">
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;14.&nbsp;</p>
+                                    <p>C#</p>
+                                </div>
+                                <div style="display: flex; flex-direction: row;">
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;15.&nbsp;</p>
+                                    <p>MATLAB / Octave</p>
+                                </div>
+                                <div style="display: flex; flex-direction: row;">
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;16.&nbsp;</p>
+                                    <p>Wolfram Language Script</p>
+                                </div>
+                                <div style="display: flex; flex-direction: row;">
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;17.&nbsp;</p>
+                                    <p>Raku</p>
+                                </div>
+                                <div style="display: flex; flex-direction: row;">
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;18.&nbsp;</p>
+                                    <p>Scala</p>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <br>
+                            <p style="font-weight: bold; font-size: 1.5em; text-align: center;">Professional Experience</p>
+                            <br>
+                            <div id="placeholder-professional-experience">
+                                <br>
+                                <p class="bordered" style="overflow-wrap: break-word; text-wrap: wrap; text-align: justify;">
+                                    Built and maintained automated daily business reporting workflows across multiple systems
+                                </p>
+                                <div class="bordered" style="display: flex; flex-direction: column; margin-left: 1cm;">
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Organization&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>PT Asia Tran Sinergi Farma (ATS Farma)</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Role&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>IT Support</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Period&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>Q4 2023 — Present</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Team Size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>1</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Contributions&nbsp;:&nbsp;</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Automated report retrieval from email using Python, Selenium and BeautifulSoup</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Processed Excel data using OpenPyXL</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Distributed reports via FTP, WhatsApp, and email</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Sent system notifications via Telegram Bot API</p>
+                                    </div>
+                                </div>
+                                <br>
+                                <p class="bordered" style="overflow-wrap: break-word; text-wrap: wrap; text-align: justify;">
+                                    Built web scraping tools
+                                </p>
+                                <div class="bordered" style="display: flex; flex-direction: column; margin-left: 1cm;">
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Organization&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>PT Asia Tran Sinergi Farma (ATS Farma)</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Role&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>IT Support</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Period&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>Q4 2023 — Present</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Team Size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>1</p>
+                                    </div>
+                                </div>
+                                <br>
+                                <p class="bordered" style="overflow-wrap: break-word; text-wrap: wrap; text-align: justify;">
+                                    Built scripting tools to support and automate data processing workflows
+                                </p>
+                                <div class="bordered" style="display: flex; flex-direction: column; margin-left: 1cm;">
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Organization&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>PT Asia Tran Sinergi Farma (ATS Farma)</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Role&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>IT Support</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Period&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>Q4 2023 — Present</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Team Size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>1</p>
+                                    </div>
+                                </div>
+                                <br>
+                                <p class="bordered" style="overflow-wrap: break-word; text-wrap: wrap; text-align: justify;">
+                                    Developed cosmetics e-commerce Back-End RESTful API api.ludido.id
+                                </p>
+                                <div class="bordered" style="display: flex; flex-direction: column; margin-left: 1cm;">
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Organization&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>PT Asia Tran Sinergi Farma (ATS Farma)</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Role&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>Full-Stack Developer</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Period&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>Q1 2023 — Q1 2024</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Team Size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>1</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Contributions&nbsp;:&nbsp;</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Developed e-commerce Back-End RESTful API using Node.js, Express.js, and MongoDB</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Developed role-based authentication and authorization using Firebase and JSON Web Token (JWT)</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Built real-time chat feature using Socket.IO</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Integrated Midtrans API for payment processing</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Integrated SiCepat API for delivery service</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Integrated Google Maps API for location-based features</p>
+                                    </div>
+                                </div>
+                                <br>
+                                <p class="bordered" style="overflow-wrap: break-word; text-wrap: wrap; text-align: justify;">
+                                    Developed cosmetics e-commerce Front-End web application ludido.id
+                                </p>
+                                <div class="bordered" style="display: flex; flex-direction: column; margin-left: 1cm;">
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Organization&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>PT Asia Tran Sinergi Farma (ATS Farma)</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Role&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>Full-Stack Developer</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Period&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>Q1 2023 — Q1 2024</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Team Size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>1</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Contributions&nbsp;:&nbsp;</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Developed e-commerce Front-End web application using React.js</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Developed role-based authentication and authorization using Firebase and JSON Web Token (JWT)</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Integrated Back-End RESTful API</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Built real-time chat feature using Socket.IO</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Integrated Midtrans API for payment processing</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Integrated SiCepat API for delivery service</p>
+                                    </div>
+                                </div>
+                                <br>
+                                <p class="bordered" style="overflow-wrap: break-word; text-wrap: wrap; text-align: justify;">
+                                    Performed IT support
+                                </p>
+                                <div class="bordered" style="display: flex; flex-direction: column; margin-left: 1cm;">
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Organization&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>PT Asia Tran Sinergi Farma (ATS Farma)</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Role&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>IT Support</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Period&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>Sep 2021 — Present</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Team Size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>1</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Contributions&nbsp;:&nbsp;</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Performed video and image editing</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Created Microsoft PowerPoint presentations</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Designed and prototyped interfaces using Figma</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Installed and configured Microsoft Windows systems</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Troubleshot hardware and software issues</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Installed and maintained software applications</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Contributed in developing and maintaining internal web applications, including implementing new features and resolving bugs</p>
+                                    </div>
+                                </div>
+                                <br>
+                                <p class="bordered" style="overflow-wrap: break-word; text-wrap: wrap; text-align: justify;">
+                                    Developed herbal products e-commerce Front-End hybrid mobile application (iOS and Android) ATS-Mart
+                                </p>
+                                <div class="bordered" style="display: flex; flex-direction: column; margin-left: 1cm;">
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Organization&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>PT Asia Tran Sinergi Farma (ATS Farma)</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Role&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>Full-Stack Developer</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Period&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>Sep 2022 — Oct 2022</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Team Size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>1</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Contributions&nbsp;:&nbsp;</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Developed e-commerce Front-End hybrid mobile application (iOS and Android) using React Native</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Developed role-based authentication and authorization using Firebase and JSON Web Token (JWT)</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Integrated Back-End RESTful API</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Built real-time chat feature using Socket.IO</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Integrated Midtrans API for payment processing</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Integrated MAS Kargo API and Paxel API for delivery service</p>
+                                    </div>
+                                </div>
+                                <br>
+                                <p class="bordered" style="overflow-wrap: break-word; text-wrap: wrap; text-align: justify;">
+                                    Developed herbal products e-commerce Back-End RESTful API api.ats-mart.com
+                                </p>
+                                <div class="bordered" style="display: flex; flex-direction: column; margin-left: 1cm;">
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Organization&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>PT Asia Tran Sinergi Farma (ATS Farma)</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Role&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>Full-Stack Developer</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Period&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>Sep 2021 — Sep 2022</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Team Size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>1</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Contributions&nbsp;:&nbsp;</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Developed e-commerce Back-End RESTful API using Node.js, Express.js, and MongoDB</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Developed role-based authentication and authorization using Firebase and JSON Web Token (JWT)</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Built real-time chat feature using Socket.IO</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Integrated Midtrans API for payment processing</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Integrated MAS Kargo API and Paxel API for delivery service</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Integrated Google Maps API for location-based features</p>
+                                    </div>
+                                </div>
+                                <br>
+                                <p class="bordered" style="overflow-wrap: break-word; text-wrap: wrap; text-align: justify;">
+                                    Developed herbal products e-commerce Front-End web application ats-mart.com
+                                </p>
+                                <div class="bordered" style="display: flex; flex-direction: column; margin-left: 1cm;">
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Organization&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>PT Asia Tran Sinergi Farma (ATS Farma)</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Role&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>Full-Stack Developer</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Period&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>Sep 2021 — Sep 2022</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Team Size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>1</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Contributions&nbsp;:&nbsp;</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Developed e-commerce Front-End web application using React.js</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Developed role-based authentication and authorization using Firebase and JSON Web Token (JWT)</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Integrated Back-End RESTful API</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Built real-time chat feature using Socket.IO</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Integrated Midtrans API for payment processing</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Integrated MAS Kargo API and Paxel API for delivery service</p>
+                                    </div>
+                                </div>
+                                <br>
+                                <p class="bordered" style="overflow-wrap: break-word; text-wrap: wrap; text-align: justify;">
+                                    Developed Front-End web tool
+                                </p>
+                                <div class="bordered" style="display: flex; flex-direction: column; margin-left: 1cm;">
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Organization&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>Universitas 17 Agustus 1945 Surabaya and Perum DAMRI Cabang Surabaya</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Role&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>College (Thesis)</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Period&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>Nov 2019 — Mar 2021</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Team Size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                        <p>1</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>Highlights&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>Developed a Front-End web tool to determines the closest Damri bus routes in Surabaya with the Dijkstra Algorithm using HTML, CSS, JavaScript, PHP, MySQL, jQuery, Bootstrap and Google Maps API</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <br>
+                            <p style="font-weight: bold; font-size: 1.5em; text-align: center;">Education</p>
+                            <br>
+                            <br>
+                            <p class="bordered" style="overflow-wrap: break-word; text-wrap: wrap; text-align: justify;">
+                                Sep 2016 — Mar 2021
+                            </p>
+                            <div class="bordered" style="display: flex; flex-direction: column; margin-left: 1cm;">
+                                <p style="overflow-wrap: break-word; text-wrap: wrap;">
+                                    Sarjana (S1), Teknik Informatika (Bachelor’s Degree, Informatics Engineering) at Universitas 17 Agustus 1945 Surabaya with GPA/IPK (3.26/4.00)
+                                </p>
+                            </div>
+                            <br>
+                            <p class="bordered" style="overflow-wrap: break-word; text-wrap: wrap; text-align: justify;">
+                                2012 — 2015
+                            </p>
+                            <div class="bordered" style="display: flex; flex-direction: column; margin-left: 1cm;">
+                                <p style="overflow-wrap: break-word; text-wrap: wrap;">
+                                    SMK, Rekayasa Perangkat Lunak (Vocational High School, Software Engineering) at SMK PGRI 2 Sidoarjo
+                                </p>
+                            </div>
+                            <br>
+                            <p class="bordered" style="overflow-wrap: break-word; text-wrap: wrap; text-align: justify;">
+                                2009 — 2012
+                            </p>
+                            <div class="bordered" style="display: flex; flex-direction: column; margin-left: 1cm;">
+                                <p style="overflow-wrap: break-word; text-wrap: wrap;">
+                                    SMP (Junior High School) at SMPN 2 Taman Sidoarjo
+                                </p>
+                            </div>
+                            <br>
+                            <p class="bordered" style="overflow-wrap: break-word; text-wrap: wrap; text-align: justify;">
+                                2003 — 2009
+                            </p>
+                            <div class="bordered" style="display: flex; flex-direction: column; margin-left: 1cm;">
+                                <p style="overflow-wrap: break-word; text-wrap: wrap;">
+                                    SD (Elementary School) at SDN Wage 2 Sidoarjo
+                                </p>
+                            </div>
+                            <br>
+                            <br>
+                            <br>
+                            <p style="font-weight: bold; font-size: 1.5em; text-align: center;">Areas of Expertise</p>
+                            <br>
+                            <br>
+                            <p>Programming Languages:</p>
+                            <p id="placeholder-programming-languages-horizontal-list">
+                                JavaScript, Python, PHP, Go, Perl, Julia, Lua, Ruby, R, Kotlin, Swift, Dart, Visual Basic .NET, C#, MATLAB, GNU Octave, Wolfram, Raku, Scala
+                            </p>
+                            <br>
+                            <p>Technologies & Frameworks:</p>
+                            <p>
+                                HTML5, CSS3, MongoDB, Express.js, React.js, Node.js, Bash, Docker, Firebase, Cloud Firestore
+                            </p>
+                            <br>
+                            <p>Tools & Concepts:</p>
+                            <p>
+                                RESTful API, API integration, Automation, Scripting, Web Scraping, Git, XPath, Regular Expression, JSON Web Token (JWT), Socket.IO, Google Maps API, SQL, NoSQL
+                            </p>
+                            <br>
+                            <p>Other Skills:</p>
+                            <p>
+                                Figma, Microsoft Office, Video & Image Editing
+                            </p>
+                            <br>
+                            <br>
+                            <br>
+                            <p style="font-weight: bold; font-size: 1.5em; text-align: center;">License & Certification</p>
+                            <br>
+                            <br>
+                            <p class="bordered" style="overflow-wrap: break-word; text-wrap: wrap; text-align: justify;">
+                                Surat Pencatatan Ciptaan / Sertifikat Hak Kekayaan Intelektual / HAKI (Copyright Registration Certificate / Intellectual Property Rights Certificate)
+                            </p>
+                            <div class="bordered" style="display: flex; flex-direction: column; margin-left: 1cm;">
+                                <div style="display: flex; flex-direction: row;">
+                                    <p>Organization&nbsp;&nbsp;:&nbsp;</p>
+                                    <p>Kementrian Hukum dan Hak Asasi Manusia RI (Ministry of Law and Human Rights of the Republic of Indonesia)</p>
+                                </div>
+                                <div style="display: flex; flex-direction: row;">
+                                    <p>Period&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                    <p>Mar 2021 — Mar 2071</p>
+                                </div>
+                                <div style="display: flex; flex-direction: row;">
+                                    <p>Description&nbsp;&nbsp;&nbsp;:&nbsp;</p>
+                                    <p>Sistem Informasi Manajemen Penentuan Rute Terpendek Bus Damri Kota Surabaya Dengan Algoritma Dijkstra (Management Information System for Determining the Shortest Route of DAMRI Buses in Surabaya Using Dijkstra's algorithm)</p>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <br>
+                            <p style="font-weight: bold; font-size: 1.5em; text-align: center;">Attachment</p>
+                            <br>
+                            <br>
+                            <div class="pdf-page-attachment">
+                                <img alt="Willy Horizont's Intellectual Property Rights Certificate Page 1" src="../sertifikat_HAKI_EC00202116985_Page1.jpg" />
+                            </div>
+                            <div class="pdf-page-attachment">
+                                <img alt="Willy Horizont's Intellectual Property Rights Certificate Page 2" src="../sertifikat_HAKI_EC00202116985_Page2.jpg" />
+                            </div>
+                            <br>
+                            <br>
+                            <br>
+                            <p style="text-align: center;">Document CV (Curriculum Vitae) Christian Willy Horizont Programmer v2.0.0 15 Jun 2026 05:32 AM</p>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
         <footer>
@@ -78,5 +849,216 @@
         <script src="../component/component-footer.js"></script>
         <!-- <script src="../component/component-user-web-browser-checker.js"></script> -->
         <script src="../component/component-sw.js"></script>
+        <script>
+            const professionalExperiences = [
+                {
+                    "title": "Built and maintained automated daily business reporting workflows across multiple systems",
+                    "detail": {
+                        "Organization": "PT Asia Tran Sinergi Farma (ATS Farma)",
+                        "Role": "IT Support",
+                        "Period": "Q4 2023 — Present",
+                        "Team Size": "1",
+                        "Contributions": [
+                            "Automated report retrieval from email using Python, Selenium and BeautifulSoup",
+                            "Processed Excel data using OpenPyXL",
+                            "Distributed reports via FTP, WhatsApp, and email",
+                            "Sent system notifications via Telegram Bot API",
+                        ],
+                    },
+                },
+                {
+                    "title": "Built web scraping tools",
+                    "detail": {
+                        "Organization": "PT Asia Tran Sinergi Farma (ATS Farma)",
+                        "Role": "IT Support",
+                        "Period": "Q4 2023 — Present",
+                        "Team Size": "1",
+                    },
+                },
+                {
+                    "title": "Built scripting tools to support and automate data processing workflows",
+                    "detail": {
+                        "Organization": "PT Asia Tran Sinergi Farma (ATS Farma)",
+                        "Role": "IT Support",
+                        "Period": "Q4 2023 — Present",
+                        "Team Size": "1",
+                    },
+                },
+                {
+                    "title": "Developed cosmetics e-commerce Back-End RESTful API api.ludido.id",
+                    "detail": {
+                        "Organization": "PT Asia Tran Sinergi Farma (ATS Farma)",
+                        "Role": "Full-Stack Developer",
+                        "Period": "Q1 2023 — Q1 2024",
+                        "Team Size": "1",
+                        "Contributions": [
+                            "Developed e-commerce Back-End RESTful API using Node.js, Express.js, and MongoDB",
+                            "Developed role-based authentication and authorization using Firebase and JSON Web Token (JWT)",
+                            "Built real-time chat feature using Socket.IO",
+                            "Integrated Midtrans API for payment processing",
+                            "Integrated SiCepat API for delivery service",
+                            "Integrated Google Maps API for location-based features",
+                        ],
+                    },
+                },
+                {
+                    "title": "Developed cosmetics e-commerce Front-End web application ludido.id",
+                    "detail": {
+                        "Organization": "PT Asia Tran Sinergi Farma (ATS Farma)",
+                        "Role": "Full-Stack Developer",
+                        "Period": "Q1 2023 — Q1 2024",
+                        "Team Size": "1",
+                        "Contributions": [
+                            "Developed e-commerce Front-End web application using React.js",
+                            "Developed role-based authentication and authorization using Firebase and JSON Web Token (JWT)",
+                            "Integrated Back-End RESTful API",
+                            "Built real-time chat feature using Socket.IO",
+                            "Integrated Midtrans API for payment processing",
+                            "Integrated SiCepat API for delivery service",
+                        ],
+                    },
+                },
+                {
+                    "title": "Performed IT support",
+                    "detail": {
+                        "Organization": "PT Asia Tran Sinergi Farma (ATS Farma)",
+                        "Role": "IT Support",
+                        "Period": "Sep 2021 — Present",
+                        "Team Size": "1",
+                        "Contributions": [
+                            "Performed video and image editing",
+                            "Created Microsoft PowerPoint presentations",
+                            "Designed and prototyped interfaces using Figma",
+                            "Installed and configured Microsoft Windows systems",
+                            "Troubleshot hardware and software issues",
+                            "Installed and maintained software applications",
+                            "Contributed in developing and maintaining internal web applications, including implementing new features and resolving bugs",
+                        ],
+                    },
+                },
+                {
+                    "title": "Developed herbal products e-commerce Front-End hybrid mobile application (iOS and Android) ATS-Mart",
+                    "detail": {
+                        "Organization": "PT Asia Tran Sinergi Farma (ATS Farma)",
+                        "Role": "Full-Stack Developer",
+                        "Period": "Sep 2022 — Oct 2022",
+                        "Team Size": "1",
+                        "Contributions": [
+                            "Developed e-commerce Front-End hybrid mobile application (iOS and Android) using React Native",
+                            "Developed role-based authentication and authorization using Firebase and JSON Web Token (JWT)",
+                            "Integrated Back-End RESTful API",
+                            "Built real-time chat feature using Socket.IO",
+                            "Integrated Midtrans API for payment processing",
+                            "Integrated MAS Kargo API and Paxel API for delivery service",
+                        ],
+                    },
+                },
+                {
+                    "title": "Developed herbal products e-commerce Back-End RESTful API api.ats-mart.com",
+                    "detail": {
+                        "Organization": "PT Asia Tran Sinergi Farma (ATS Farma)",
+                        "Role": "Full-Stack Developer",
+                        "Period": "Sep 2021 — Sep 2022",
+                        "Team Size": "1",
+                        "Contributions": [
+                            "Developed e-commerce Back-End RESTful API using Node.js, Express.js, and MongoDB",
+                            "Developed role-based authentication and authorization using Firebase and JSON Web Token (JWT)",
+                            "Built real-time chat feature using Socket.IO",
+                            "Integrated Midtrans API for payment processing",
+                            "Integrated MAS Kargo API and Paxel API for delivery service",
+                            "Integrated Google Maps API for location-based features",
+                        ],
+                    },
+                },
+                {
+                    "title": "Developed herbal products e-commerce Front-End web application ats-mart.com",
+                    "detail": {
+                        "Organization": "PT Asia Tran Sinergi Farma (ATS Farma)",
+                        "Role": "Full-Stack Developer",
+                        "Period": "Sep 2021 — Sep 2022",
+                        "Team Size": "1",
+                        "Contributions": [
+                            "Developed e-commerce Front-End web application using React.js",
+                            "Developed role-based authentication and authorization using Firebase and JSON Web Token (JWT)",
+                            "Integrated Back-End RESTful API",
+                            "Built real-time chat feature using Socket.IO",
+                            "Integrated Midtrans API for payment processing",
+                            "Integrated MAS Kargo API and Paxel API for delivery service",
+                        ],
+                    },
+                },
+                {
+                    "title": "Developed Front-End web tool",
+                    "detail": {
+                        "Organization": "Universitas 17 Agustus 1945 Surabaya and Perum DAMRI Cabang Surabaya",
+                        "Role": "College (Thesis)",
+                        "Period": "Nov 2019 — Mar 2021",
+                        "Team Size": "1",
+                        "Highlights": [
+                            "Developed a Front-End web tool to determines the closest Damri bus routes in Surabaya with the Dijkstra Algorithm using HTML, CSS, JavaScript, PHP, MySQL, jQuery, Bootstrap and Google Maps API",
+                        ],
+                    },
+                },
+            ];
+            function printPdfCv() {
+                const originalTitle = document.title;
+                document.title = "CV-Curriculum-Vitae-Christian-Willy-Horizont-Programmer";
+                window.print();
+                document.title = originalTitle;
+            }
+            (() => {
+                const professionalExperienceItemDetailKeyStringLongestLength = professionalExperiences.reduce((professionalExperienceItemDetailKeyStringLongestLengthCurrent, professionalExperienceItem) => (((professionalExperienceItemDetailKeyStringLongestLengthInner) => ((professionalExperienceItemDetailKeyStringLongestLengthCurrent > professionalExperienceItemDetailKeyStringLongestLengthInner) ? professionalExperienceItemDetailKeyStringLongestLengthCurrent : professionalExperienceItemDetailKeyStringLongestLengthInner))(Object.keys(professionalExperienceItem["detail"]).reduce((professionalExperienceItemDetailKeyCurrent, professionalExperienceItemDetailKey) => ((professionalExperienceItemDetailKey.length > professionalExperienceItemDetailKeyCurrent) ? professionalExperienceItemDetailKey.length : professionalExperienceItemDetailKeyCurrent), 0))), 0);
+                document.getElementById("placeholder-professional-experience").innerHTML = professionalExperiences.map((professionalExperienceItem) => {
+                    const professionalExperienceItemDetailEntries = Object.entries(professionalExperienceItem["detail"]);
+                    const professionalExperienceItemDetail = (professionalExperienceItemDetailEntries.map(([professionalExperienceItemDetailKey, professionalExperienceItemDetailValue]) => {
+                        if (WillyHorizont.Utils.getIsPythonLikeList(professionalExperienceItemDetailValue)) {
+                            return (WillyHorizont.UtilsWeb.removeTemplateStringIndentation(/*html*/`
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>${professionalExperienceItemDetailKey}${WillyHorizont.UtilsWeb.getWhiteSpaceStringAlignmnt(professionalExperienceItemDetailKeyStringLongestLength, professionalExperienceItemDetailKey.length, "&nbsp;")}&nbsp;:&nbsp;</p>
+                                    </div>`) + (professionalExperienceItemDetailValue.map((professionalExperienceItemDetailContribution) => {
+                                    return (WillyHorizont.UtilsWeb.removeTemplateStringIndentation(/*html*/`
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>*&nbsp;</p>
+                                        <p>${professionalExperienceItemDetailContribution}</p>
+                                    </div>
+                                `));
+                            })).join("\n"));
+                        }
+                        return (WillyHorizont.UtilsWeb.removeTemplateStringIndentation(/*html*/`
+                                    <div style="display: flex; flex-direction: row;">
+                                        <p>${professionalExperienceItemDetailKey}${WillyHorizont.UtilsWeb.getWhiteSpaceStringAlignmnt(professionalExperienceItemDetailKeyStringLongestLength, professionalExperienceItemDetailKey.length, "&nbsp;")}&nbsp;:&nbsp;</p>
+                                        <p>${professionalExperienceItemDetailValue}</p>
+                                    </div>
+                        `));
+                    }).join("\n"));
+                    return (WillyHorizont.UtilsWeb.removeTemplateStringIndentation(/*html*/`
+                                <br>
+                                <p class="bordered" style="overflow-wrap: break-word; text-wrap: wrap; text-align: justify;">
+                                    ${professionalExperienceItem["title"]}
+                                </p>
+                                <div class="bordered" style="display: flex; flex-direction: column; margin-left: 1cm;">
+                                    ${professionalExperienceItemDetail}
+                                </div>
+                    `))
+                }).join("\n");
+            })();
+            (async () => {
+                if (!WillyHorizont.UtilsWeb || !WillyHorizont.Utils) return;
+
+                const getProgrammingLanguagesJsonUrl = "https://raw.githubusercontent.com/willyhorizont/cross-language-programming-concepts/refs/heads/main/languages.json";
+                const getProgrammingLanguagesJsonResponse = await WillyHorizont.Utils.fetchThrowErrorIfNotOk(getProgrammingLanguagesJsonUrl);
+                const getProgrammingLanguagesJsonResponseJson = await getProgrammingLanguagesJsonResponse.json();
+                const programmingLanguageIndexStringLength = getProgrammingLanguagesJsonResponseJson.length.toString().length;
+
+                document.getElementById("placeholder-programming-languages-vertical-list").innerHTML = getProgrammingLanguagesJsonResponseJson.map((programmingLanguage, programmingLanguageIndex) => (WillyHorizont.UtilsWeb.removeTemplateStringIndentation(/*html*/`
+                                <div style="display: flex; flex-direction: row;">
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;${programmingLanguageIndex + 1}.${WillyHorizont.UtilsWeb.getWhiteSpaceStringAlignmnt(programmingLanguageIndexStringLength, (programmingLanguageIndex + 1).toString().length, "&nbsp;")}&nbsp;</p>
+                                    <p>${programmingLanguage["stack"].map((programmingLanguageStack) => (programmingLanguageStack["name"])).join(" / ")}</p>
+                                </div>
+                `))).join("\n");
+
+                document.getElementById("placeholder-programming-languages-horizontal-list").innerHTML = getProgrammingLanguagesJsonResponseJson.map((programmingLanguage) => (programmingLanguage["stack"].map((programmingLanguageStack) => (programmingLanguageStack["name"])).join(" / "))).join(", ");
+            })();
+        </script>
     </body>
 </html>

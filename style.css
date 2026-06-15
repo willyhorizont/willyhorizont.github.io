@@ -205,7 +205,7 @@ header {
 }
 
 .navbar.navbar-menu-small-screen .navbar-hamburger-menu-button {
-  display: none;
+    display: none;
 }
 
 .navbar-hamburger-menu-button:hover {
@@ -273,18 +273,14 @@ main {
 }
 
 h1 {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    /*
     margin: 0;
     padding: 0;
-    font-size: inherit;
+    /* font-size: inherit; */
     font-weight: inherit;
-    line-height: 1.1;
+    line-height: inherit;
+    text-transform: none;
+    /* line-height: 1.1; */
     text-wrap: balance;
-    */
 }
 
 footer {
