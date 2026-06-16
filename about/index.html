@@ -164,17 +164,16 @@
         <script src="../component/component-navbar.js"></script>
         <script src="../component/component-footer.js"></script>
         <!-- <script src="../component/component-user-web-browser-checker.js"></script> -->
+        <script src="../component/component-github-programming-languages-card.js"></script>
         <script src="../component/component-sw.js"></script>
         <script>
             (async () => {
-                if (!WillyHorizont.UtilsWeb || !WillyHorizont.Utils) return;
+                if (!WillyHorizont.Utils || !WillyHorizont.UtilsWeb || !ComponentGithubProgrammingLanguagesCard) return;
+                const programmingLanguagesDataJson = await ComponentGithubProgrammingLanguagesCard.getJsonData()
+                if (!programmingLanguagesDataJson) return;
+                const programmingLanguageIndexStringLength = programmingLanguagesDataJson.length.toString().length;
 
-                const getProgrammingLanguagesJsonUrl = "https://raw.githubusercontent.com/willyhorizont/cross-language-programming-concepts/refs/heads/main/languages.json";
-                const getProgrammingLanguagesJsonResponse = await WillyHorizont.Utils.fetchThrowErrorIfNotOk(getProgrammingLanguagesJsonUrl);
-                const getProgrammingLanguagesJsonResponseJson = await getProgrammingLanguagesJsonResponse.json();
-                const programmingLanguageIndexStringLength = getProgrammingLanguagesJsonResponseJson.length.toString().length;
-
-                document.getElementById("placeholder-programming-languages-vertical-list").innerHTML = getProgrammingLanguagesJsonResponseJson.map((programmingLanguage, programmingLanguageIndex) => (WillyHorizont.UtilsWeb.removeTemplateStringIndentation(/*html*/`
+                document.getElementById("placeholder-programming-languages-vertical-list").innerHTML = programmingLanguagesDataJson.map((programmingLanguage, programmingLanguageIndex) => (WillyHorizont.UtilsWeb.removeTemplateStringIndentation(/*html*/`
                                 <div style="display: flex; flex-direction: row;">
                                     <p>&nbsp;&nbsp;&nbsp;&nbsp;${programmingLanguageIndex + 1}.${WillyHorizont.UtilsWeb.getWhiteSpaceStringAlignmnt(programmingLanguageIndexStringLength, (programmingLanguageIndex + 1).toString().length, "&nbsp;")}&nbsp;</p>
                                     <p>${programmingLanguage["stack"].map((programmingLanguageStack) => (programmingLanguageStack["name"])).join(" / ")}</p>

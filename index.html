@@ -100,5 +100,13 @@
         <!-- <script src="component/component-user-web-browser-checker.js"></script> -->
         <script src="component/component-github-programming-languages-card.js"></script>
         <script src="component/component-sw.js"></script>
+        <script>
+            (async () => {
+                if (!WillyHorizont.Utils || !WillyHorizont.UtilsWeb || !ComponentGithubProgrammingLanguagesCard) return;
+                const programmingLanguagesDataJson = await ComponentGithubProgrammingLanguagesCard.getJsonData()
+                if (!programmingLanguagesDataJson) return
+                WillyHorizont.UtilsWeb.setupComponentGithubProgrammingLanguagesCard(programmingLanguagesDataJson);
+            })()
+        </script>
     </body>
 </html>

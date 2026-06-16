@@ -1,4 +1,4 @@
 git add .
-git commit -m "update cv, remove static cv.pdf"
-git tag -a v2.6.1 -m "update cv, remove static cv.pdf"
+git commit -m "cache languages.json"
+git tag -a v2.7.0 -m "cache languages.json"
 git push github main --tags

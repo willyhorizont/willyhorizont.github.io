@@ -1,4 +1,4 @@
-const CACHE_NAME = "willyhorizont.github.io:2.6.1"; 
+const CACHE_NAME = "willyhorizont.github.io:2.7.0"; 
 const BASE_ASSETS = [
     "./",
     "./index.html"
