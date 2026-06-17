@@ -1010,9 +1010,23 @@
                     },
                 },
             ];
+            window.addEventListener("beforeprint", () => {
+                // 1. Ambil semua elemen halaman PDF
+                const pages = document.querySelectorAll('.pdf-page');
+                const totalPages = pages.length;
+
+                // 2. Isi nomor halaman secara dinamis ke setiap footer
+                pages.forEach((page, index) => {
+                    const footerSpan = page.querySelector('.page-num');
+                    if (footerSpan) {
+                        footerSpan.textContent = `${index + 1}/${totalPages}`;
+                    }
+                });
+            });
             function printPdfCv() {
                 const originalTitle = document.title;
-                document.title = "CV-Curriculum-Vitae-Christian-Willy-Horizont-Programmer" + "-" + new Date().getTime().toString();
+                // document.title = "CV-Curriculum-Vitae-Christian-Willy-Horizont-Programmer" + "-" + new Date().getTime().toString();
+                document.title = "CV-Curriculum-Vitae-Christian-Willy-Horizont-Programmer";
                 window.print();
                 document.title = originalTitle;
             }
