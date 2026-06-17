@@ -40,7 +40,7 @@
 
         <meta name="description" content="Willy Horizont's CV (Curriculum Vitae)" />
         <meta name="keywords" content="Willy Horizont's CV (Curriculum Vitae)" />
-        <title>CV (Curriculum Vitae) | Willy Horizont</title>
+        <title>CV-Curriculum-Vitae-Christian-Willy-Horizont-Programmer</title>
 
         <!-- google-adsense-placeholder -->
 
@@ -860,7 +860,6 @@
         <script src="../component/component-github-programming-languages-card.js"></script>
         <script src="../component/component-sw.js"></script>
         <script>
-            let originalTitle = document.title;
             const professionalExperiences = [
                 {
                     "title": "Built and maintained automated daily business reporting workflows across multiple systems",
@@ -1011,12 +1010,14 @@
                     },
                 },
             ];
+            window.addEventListener("DOMContentLoaded", () => {
+                document.title = "CV (Curriculum Vitae) | Willy Horizont";
+            });
             window.addEventListener("beforeprint", () => {
-                originalTitle = document.title;
-                document.title = "CV-Curriculum-Vitae-Christian-Willy-Horizont-Programmer" + "-" + new Date().getTime().toString();
+                document.title = "CV-Curriculum-Vitae-Christian-Willy-Horizont-Programmer";
             });
             window.addEventListener("afterprint", () => {
-                document.title = originalTitle;
+                document.title = "CV (Curriculum Vitae) | Willy Horizont";
             });
             (() => {
                 const professionalExperienceItemDetailKeyStringLongestLength = professionalExperiences.reduce((professionalExperienceItemDetailKeyStringLongestLengthCurrent, professionalExperienceItem) => (((professionalExperienceItemDetailKeyStringLongestLengthInner) => ((professionalExperienceItemDetailKeyStringLongestLengthCurrent > professionalExperienceItemDetailKeyStringLongestLengthInner) ? professionalExperienceItemDetailKeyStringLongestLengthCurrent : professionalExperienceItemDetailKeyStringLongestLengthInner))(Object.keys(professionalExperienceItem["detail"]).reduce((professionalExperienceItemDetailKeyCurrent, professionalExperienceItemDetailKey) => ((professionalExperienceItemDetailKey.length > professionalExperienceItemDetailKeyCurrent) ? professionalExperienceItemDetailKey.length : professionalExperienceItemDetailKeyCurrent), 0))), 0);

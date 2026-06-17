@@ -1,5 +1,5 @@
 git add .
-git commit -m "re update cv pdf name when download"
-git tag -a v3.2.3 -m "re update cv pdf name when download"
+git commit -m "re re update cv pdf name when download"
+git tag -a v3.2.4 -m "re re update cv pdf name when download"
 git push github main
 git push github --tags
