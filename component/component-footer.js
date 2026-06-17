@@ -4,7 +4,7 @@
     const htmlElementFooter = document.body.querySelector("footer");
 
     htmlElementFooter.appendChild(WillyHorizont.UtilsWeb.htmlTemplateStringToHtmlElement(/*html*/`
-            <div style="display: flex; flex-direction: column; align-items: center; border-top: 1px solid var(--light-border-color); margin-top: 16px;">
+            <div style="display: flex; flex-direction: column; align-items: center; border-top: 1px solid var(--light-border-color);">
                 <p>Made with ❤️ by Willy Horizont</p>
                 <div id="footer" style="width: 100%; display: flex; flex-direction: row; justify-content: center; flex-wrap: wrap; background-color: var(--accent-color-2); color: var(--dark-text-color);">
                 </div>

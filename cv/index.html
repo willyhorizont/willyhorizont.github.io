@@ -48,6 +48,7 @@
             .pdf-container {
                 background: #ddd;
                 padding: 20px;
+                overflow: scroll;
             }
             .print-area {
                 width: 210mm;
@@ -106,7 +107,16 @@
 
                 @page {
                     size: A4;
-                    margin: 0;
+                    width: 210mm;
+                    height: 297mm;
+                    margin: 0mm 0mm 10mm 0mm;
+
+                    @bottom-center {
+                        content: "Document CV (Curriculum Vitae) • Christian Willy Horizont • Programmer • v2.0.0 • 15 Jun 2026 05:32 AM • page " counter(page) " / " counter(pages);
+                        font-size: 8pt;
+                        color: #555;
+                        padding-bottom: 0;
+                    }
                 }
 
                 body, main, .my-cv {
@@ -119,6 +129,7 @@
                     margin: 0 !important;
                     padding: 0 !important;
                     background: none !important;
+                    overflow: initial !important;
                 }
 
                 .print-area {
@@ -128,12 +139,16 @@
                 }
 
                 .pdf-page {
+                    width: 210mm;
+                    min-height: 297mm;
                     break-after: page; /* or break-before: page; */
                     padding: 20mm;
                     box-sizing: border-box;
                     background: #fff !important;
                     color: #000 !important;
                     box-decoration-break: clone;
+                    margin-bottom: -10mm;
+                    padding-bottom: 15mm;
                 }
 
                 .pdf-page .pdf-page-attachment {
@@ -832,12 +847,6 @@
                             <div class="pdf-page-attachment">
                                 <img alt="Willy Horizont's Intellectual Property Rights Certificate Page 2" src="../sertifikat_HAKI_EC00202116985_Page2.jpg" />
                             </div>
-                            <br>
-                            <br>
-                            <br>
-                            <p style="text-align: center;">Document CV (Curriculum Vitae) Christian Willy Horizont Programmer v2.0.0 15 Jun 2026 05:32 AM</p>
-                            <br>
-                            <br>
                         </div>
                     </div>
                 </div>
@@ -1003,7 +1012,7 @@
             ];
             function printPdfCv() {
                 const originalTitle = document.title;
-                document.title = "CV-Curriculum-Vitae-Christian-Willy-Horizont-Programmer";
+                document.title = "CV-Curriculum-Vitae-Christian-Willy-Horizont-Programmer" + "-" + new Date().getTime().toString();
                 window.print();
                 document.title = originalTitle;
             }

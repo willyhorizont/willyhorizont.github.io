@@ -76,7 +76,7 @@
         <script>
             const myProjects = [
                 {
-                    "title": "api.ludido.id | Cosmetics e-commerce Back-End RESTful API",
+                    "title": "api.ludido.id • Cosmetics e-commerce Back-End RESTful API",
                     "href": "api.ludido.id",
                     "target": "_blank",
                     "rel": "noopener noreferrer",
@@ -125,7 +125,7 @@
                         `),
                 },
                 {
-                    "title": "ludido.id | Cosmetics e-commerce Front-End web application",
+                    "title": "ludido.id • Cosmetics e-commerce Front-End web application",
                     "href": "ludido.id",
                     "target": "_blank",
                     "rel": "noopener noreferrer",
@@ -174,7 +174,7 @@
                         `),
                 },
                 {
-                    "title": "ATS-Mart | Herbal products e-commerce Front-End hybrid mobile application (iOS and Android)",
+                    "title": "ATS-Mart • Herbal products e-commerce Front-End hybrid mobile application (iOS and Android)",
                     "href": "/portfolio",
                     "target": "_self",
                     "rel": null,
@@ -223,7 +223,7 @@
                         `),
                 },
                 {
-                    "title": "api.ats-mart.com | Herbal products e-commerce Back-End RESTful API",
+                    "title": "api.ats-mart.com • Herbal products e-commerce Back-End RESTful API",
                     "href": "api.ats-mart.com",
                     "target": "_blank",
                     "rel": "noopener noreferrer",
@@ -276,7 +276,7 @@
                         `),
                 },
                 {
-                    "title": "ats-mart.com | Herbal products e-commerce Front-End web application",
+                    "title": "ats-mart.com • Herbal products e-commerce Front-End web application",
                     "href": "ats-mart.com",
                     "target": "_blank",
                     "rel": "noopener noreferrer",
@@ -321,7 +321,7 @@
                         `),
                 },
                 {
-                    "title": "Replace Any Line Break | Front-End web tool",
+                    "title": "Replace Any Line Break • Front-End web tool",
                     "href": "/portfolio/replace-any-line-break",
                     "target": "_self",
                     "rel": null,
@@ -338,7 +338,7 @@
                         `),
                 },
                 {
-                    "title": "Remove Duplicate List Item | Front-End web tool",
+                    "title": "Remove Duplicate List Item • Front-End web tool",
                     "href": "/portfolio/remove-duplicate-list-item",
                     "target": "_self",
                     "rel": null,
@@ -355,7 +355,7 @@
                         `),
                 },
                 // {
-                //     "title": "Compare Tool | Front-End web tool",
+                //     "title": "Compare Tool • Front-End web tool",
                 //     "href": "/portfolio/compare-tool",
                 //     "target": "_self",
                 //     "rel": null,
@@ -372,7 +372,7 @@
                 //         `),
                 // },
                 {
-                    "title": "Score Counter | Front-End web tool",
+                    "title": "Score Counter • Front-End web tool",
                     "href": "/portfolio/score-counter",
                     "target": "_self",
                     "rel": null,
@@ -389,7 +389,7 @@
                         `),
                 },
                 {
-                    "title": "Expense Tracker | Front-End web tool",
+                    "title": "Expense Tracker • Front-End web tool",
                     "href": "/portfolio/expense-tracker",
                     "target": "_self",
                     "rel": null,
@@ -406,7 +406,7 @@
                         `),
                 },
                 {
-                    "title": "Kalender Libur Advisor | Front-End web tool",
+                    "title": "Kalender Libur Advisor • Front-End web tool",
                     "href": "/portfolio/kalender-libur-advisor",
                     "target": "_self",
                     "rel": null,
@@ -424,9 +424,14 @@
                 },
             ];
 
+            const styles = window.getComputedStyle(document.documentElement);
+            const darkTextColor = styles.getPropertyValue("--dark-text-color").trim();
+            const lightTextColor = styles.getPropertyValue("--light-text-color").trim();
             document.getElementById("portfolio-container").innerHTML = ((myProjects.map((myProjectsItem) => {
-                const { backgroundColor, isBackgroundColorLight } = WillyHorizont.Utils.getColorFromString(myProjectsItem['title']);
-                const textColor = (isBackgroundColorLight ? "var(--light-text-color)" : "var(--dark-text-color)");
+                const { backgroundColor } = WillyHorizont.Utils.getColorFromString(myProjectsItem['title']);
+                const howCloseRgbHexColorPercentageInDarkMode = WillyHorizont.Utils.getHowCloseRgbHexColor(backgroundColor, darkTextColor);
+                const howCloseRgbHexColorPercentageInLightMode = WillyHorizont.Utils.getHowCloseRgbHexColor(backgroundColor, lightTextColor);
+                const textColor = ((howCloseRgbHexColorPercentageInDarkMode > howCloseRgbHexColorPercentageInLightMode) ? "var(--light-text-color)" : "var(--dark-text-color)");
                 return (/*html*/`
                     <div style="width: 100%; border: 1px solid var(--light-border-color); border-radius: 8px; display: flex; flex-direction: column; overflow: hidden;">
                         <a href="${myProjectsItem['href']}" target="${myProjectsItem['target']}"${myProjectsItem['rel'] ? ' rel="noopener noreferrer"' : ''} aria-label="${myProjectsItem['title']}">

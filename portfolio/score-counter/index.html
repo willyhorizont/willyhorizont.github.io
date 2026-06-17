@@ -51,7 +51,7 @@
             .grid-table-container {
                 width: calc(100% - var(--scroll-width));
                 min-height: 10vw;
-                max-height: var(--max-height, 10vw);
+                /* max-height: var(--max-height, 10vw); */
                 overflow: auto;
                 position: relative;
             }
@@ -380,11 +380,17 @@
                 htmlElementGrid.style.setProperty("grid-template-columns", getStyleGridTemplateColumns());
             };
 
+            const styles = window.getComputedStyle(document.documentElement);
+            const darkTextColor = styles.getPropertyValue("--dark-text-color").trim();
+            const lightTextColor = styles.getPropertyValue("--light-text-color").trim();
             function handleElementInputUpdatePlayerName(htmlElementHeaderCellInput) {
                 const { backgroundColor, isBackgroundColorLight } = WillyHorizont.Utils.getColorFromString(htmlElementHeaderCellInput.value);
-                const textColor = (isBackgroundColorLight ? "var(--light-text-color)" : "var(--dark-text-color)");
+                const howCloseRgbHexColorPercentageInDarkMode = WillyHorizont.Utils.getHowCloseRgbHexColor(backgroundColor, darkTextColor);
+                const howCloseRgbHexColorPercentageInLightMode = WillyHorizont.Utils.getHowCloseRgbHexColor(backgroundColor, lightTextColor);
+                const textColor = ((howCloseRgbHexColorPercentageInDarkMode > howCloseRgbHexColorPercentageInLightMode) ? "var(--light-text-color)" : "var(--dark-text-color)");
                 htmlElementHeaderCellInput.style.setProperty("background-color", backgroundColor);
                 htmlElementHeaderCellInput.style.setProperty("color", textColor);
+                htmlElementHeaderCellInput.style.setProperty("font-weight", "bold");
             }
 
             function handleElementClickAddVerticalCellButton(htmlElementAddHorizontalCellPlusButton) {

@@ -5,7 +5,7 @@
 }
 
 :root {
-    --scroll-width: calc(60px - 8px);
+    --scroll-width: calc(80px - 8px);
 
     --light-border-color: #cccccc;
     --dark-border-color: #333;
@@ -375,7 +375,7 @@ footer {
 /* start of links style */
 
 .link-section {
-    display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 16px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 16px; margin-bottom: 16px;
     width: 100%; flex-wrap: wrap; gap: 16px;
 }
 
