@@ -189,7 +189,7 @@
                     <h1 style="text-align: center;">Willy Horizont's CV (Curriculum Vitae)</h1>
                     <div class="button-group" style="display: flex; flex-direction: row; padding: 8px; gap: 8px; justify-content: center;">
                         <div class="link-container">
-                            <button onclick="printPdfCv()" style="display: flex; flex-direction: row; flex: 1; background-color: inherit;">
+                            <button onclick="window.print()" style="display: flex; flex-direction: row; flex: 1; background-color: inherit;">
                                 <div class="link-fragment-provider" style="padding: 8px; gap: 8px;">
                                     <p style="text-align: center;">🖨️</p>
                                     <p style="text-align: center;">Print PDF</p>
@@ -860,6 +860,7 @@
         <script src="../component/component-github-programming-languages-card.js"></script>
         <script src="../component/component-sw.js"></script>
         <script>
+            let originalTitle = document.title;
             const professionalExperiences = [
                 {
                     "title": "Built and maintained automated daily business reporting workflows across multiple systems",
@@ -1011,25 +1012,12 @@
                 },
             ];
             window.addEventListener("beforeprint", () => {
-                // 1. Ambil semua elemen halaman PDF
-                const pages = document.querySelectorAll('.pdf-page');
-                const totalPages = pages.length;
-
-                // 2. Isi nomor halaman secara dinamis ke setiap footer
-                pages.forEach((page, index) => {
-                    const footerSpan = page.querySelector('.page-num');
-                    if (footerSpan) {
-                        footerSpan.textContent = `${index + 1}/${totalPages}`;
-                    }
-                });
+                originalTitle = document.title;
+                document.title = "CV-Curriculum-Vitae-Christian-Willy-Horizont-Programmer" + "-" + new Date().getTime().toString();
             });
-            function printPdfCv() {
-                const originalTitle = document.title;
-                // document.title = "CV-Curriculum-Vitae-Christian-Willy-Horizont-Programmer" + "-" + new Date().getTime().toString();
-                document.title = "CV-Curriculum-Vitae-Christian-Willy-Horizont-Programmer";
-                window.print();
+            window.addEventListener("afterprint", () => {
                 document.title = originalTitle;
-            }
+            });
             (() => {
                 const professionalExperienceItemDetailKeyStringLongestLength = professionalExperiences.reduce((professionalExperienceItemDetailKeyStringLongestLengthCurrent, professionalExperienceItem) => (((professionalExperienceItemDetailKeyStringLongestLengthInner) => ((professionalExperienceItemDetailKeyStringLongestLengthCurrent > professionalExperienceItemDetailKeyStringLongestLengthInner) ? professionalExperienceItemDetailKeyStringLongestLengthCurrent : professionalExperienceItemDetailKeyStringLongestLengthInner))(Object.keys(professionalExperienceItem["detail"]).reduce((professionalExperienceItemDetailKeyCurrent, professionalExperienceItemDetailKey) => ((professionalExperienceItemDetailKey.length > professionalExperienceItemDetailKeyCurrent) ? professionalExperienceItemDetailKey.length : professionalExperienceItemDetailKeyCurrent), 0))), 0);
                 document.getElementById("placeholder-professional-experience").innerHTML = professionalExperiences.map((professionalExperienceItem) => {
