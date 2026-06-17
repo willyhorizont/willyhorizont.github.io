@@ -1,5 +1,5 @@
 git add .
-git commit -m "update cv, add pdf footer and page, pdf in cv now responsive; update languages bar chart, now responsive;"
-git tag -a v3.2.0 -m "update cv, add pdf footer and page, pdf in cv now responsive; update languages bar chart, now responsive;"
+git commit -m "re update cv, change to scroll auto, add pdf footer and page, pdf in cv now responsive; update languages bar chart, now responsive;"
+git tag -a v3.2.1 -m "re update cv, change to scroll auto, add pdf footer and page, pdf in cv now responsive; update languages bar chart, now responsive;"
 git push github main
 git push github --tags
