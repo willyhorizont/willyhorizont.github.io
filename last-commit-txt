@@ -1,4 +1,4 @@
 git add .
-git commit -m "cache languages.json"
-git tag -a v2.7.0 -m "cache languages.json"
+git commit -m "update component-github-programming-languages-card.js"
+git tag -a v2.8.0 -m "update component-github-programming-languages-card.js"
 git push github main --tags

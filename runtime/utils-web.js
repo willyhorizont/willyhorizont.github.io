@@ -755,6 +755,7 @@
         const isInDarkMode = (document.documentElement.getAttribute("data-theme") === "dark");
 
         const totalProgrammingLanguages = programmingLanguages.length;
+        console.log(totalProgrammingLanguages);
         const programmingLanguagePercentage = ((1 / totalProgrammingLanguages) * 100);
         const otherPercentage = parseFloat((programmingLanguagePercentage % 1).toFixed(2)).toString();
         const programmingLanguagePercentageRounded = Math.floor(programmingLanguagePercentage);
@@ -771,7 +772,7 @@
             const lightBorderColor = ((howCloseRgbHexColorPercentageInLightMode > 70) ? "var(--dark-border-color)" : programmingLanguage["color"]);
 
             let programmingLanguageBarChartContainerInnerHtmlNewItem =  removeTemplateStringIndentation(programmingLanguageBarChartContainerInnerHtmlCurrent.trimStart() + (/*html*/`
-                                                <div data-id="programming-language-percentage" data-dark-border-color="${darkBorderColor}" data-light-border-color="${lightBorderColor}" style="border-radius: ${(programmingLanguageIndex === 0) ? '6px 0 0 6px' : 0}; min-width: 20px; flex: 1; height: 8px; background-color: ${programmingLanguage["color"]}; border: 1px solid ${isInDarkMode ? darkBorderColor : lightBorderColor};">
+                                                <div data-id="programming-language-percentage" data-dark-border-color="${darkBorderColor}" data-light-border-color="${lightBorderColor}" style="border-radius: ${(programmingLanguageIndex === 0) ? '6px 0 0 6px' : 0}; width: ${programmingLanguagePercentageRounded}%; flex: 1; height: 8px; background-color: ${programmingLanguage["color"]}; border: 1px solid ${isInDarkMode ? darkBorderColor : lightBorderColor};">
                                                 </div>
             `));
             let programmingLanguagesTextContainerInnerHtmlNewItem = removeTemplateStringIndentation(programmingLanguagesTextContainerInnerHtmlCurrent.trimStart() + (/*html*/`
@@ -787,7 +788,7 @@
 
             if (isLastProgrammingLanguage === true) {
                 programmingLanguageBarChartContainerInnerHtmlNewItem += (/*html*/`
-                                                <div data-id="programming-language-percentage" data-dark-border-color="${otherColor}" data-light-border-color="${darkBackgroundColor}" style="border-radius:0 6px 6px 0; min-width: 20px; flex: 1; height: 8px; background-color: ${otherColor}; border: 1px solid ${isInDarkMode ? otherColor : darkBackgroundColor};">
+                                                <div data-id="programming-language-percentage" data-dark-border-color="${otherColor}" data-light-border-color="${darkBackgroundColor}" style="border-radius:0 6px 6px 0; width: ${otherPercentage}%; flex: 1; height: 8px; background-color: ${otherColor}; border: 1px solid ${isInDarkMode ? otherColor : darkBackgroundColor};">
                                                 </div>
                 `);
                 programmingLanguagesTextContainerInnerHtmlNewItem += (/*html*/`
@@ -803,14 +804,14 @@
         }), ["", ""]));
 
         document.getElementById("placeholder-github-programming-languages-card").innerHTML = removeTemplateStringIndentation(/*html*/`
-                            <div data-id="programming-languages-card" class="programming-languages-card" style="display: flex; flex-direction: column; flex-wrap: wrap; row-gap: 8px; border: 1px solid var(--light-border-color); border-radius: 6px; padding: 8px; width: calc(100vw - 48px);">
+                            <div data-id="programming-languages-card" class="programming-languages-card" style="display: flex; flex-direction: column; flex-wrap: wrap; row-gap: 8px; border: 1px solid var(--light-border-color); border-radius: 6px; padding: 8px; width: 100%;">
                                 <div style="display: flex; justify-content: center; align-items: center;">
-                                    <div style="display: flex; flex-direction: column; width: calc(100vw - 68px);">
+                                    <div style="display: flex; flex-direction: column; width: 100%;">
                                         <p style="margin-bottom: 16px; font-weight: 600;">Programming Languages</p>
-                                        <div data-id="programming-languages-bar-chart-container" class="programming-languages-bar-chart-container" style="display: flex; min-width: calc(100vw - 68px); width: max-content; overflow-x: auto; border-radius: 6px; column-gap: 2px; background-color: ${isInDarkMode ? 'var(--dark-background-color)' : 'var(--light-background-color)'};">
+                                        <div data-id="programming-languages-bar-chart-container" class="programming-languages-bar-chart-container" style="display: flex; min-width: 100%; width: max-content; overflow-x: auto; border-radius: 6px; column-gap: 1px; background-color: ${isInDarkMode ? 'var(--dark-background-color)' : 'var(--light-background-color)'};">
                                             ${programmingLanguageBarChartContainerInnerHtml}
                                         </div>
-                                        <div id="programming-languages-text-container" style="display: flex; flex-direction: row; margin-top: 8px; flex-wrap: wrap; row-gap: 8px; padding: 4px; width: calc(100vw - 48px);">
+                                        <div id="programming-languages-text-container" style="display: flex; flex-direction: row; margin-top: 8px; flex-wrap: wrap; row-gap: 8px; padding: 4px; width: 100%;">
                                             ${programmingLanguagesTextContainerInnerHtml}
                                         </div>
                                     </div>
