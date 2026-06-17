@@ -1,4 +1,5 @@
 git add .
-git commit -m "force github page rebuild"
-git tag -a v3.0.0 -m "force github page rebuild"
-git push github main --tags
+git commit -m "re force github page rebuild"
+git tag -a v3.1.0 -m "re force github page rebuild"
+git push github main
+git push github --tags
