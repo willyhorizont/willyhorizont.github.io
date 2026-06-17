@@ -2,7 +2,7 @@
     if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
             navigator.serviceWorker.register("/sw.js").then((reg) => {
-                console.log("Service Worker registration success:", reg.scope);
+                console.log("Offline Mode setup success:", reg.scope);
 
                 reg.addEventListener("updatefound", () => {
                     const newWorker = reg.installing;
@@ -20,7 +20,7 @@
                     });
                 });
             }).catch((err) => {
-                console.log("Service Worker registration failed:", err);
+                console.log("Offline Mode setup failed:", err);
             });
         });
     }

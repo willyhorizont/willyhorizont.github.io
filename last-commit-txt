@@ -1,4 +1,4 @@
 git add .
-git commit -m "update component-github-programming-languages-card.js"
-git tag -a v2.8.0 -m "update component-github-programming-languages-card.js"
+git commit -m "force github page rebuild"
+git tag -a v3.0.0 -m "force github page rebuild"
 git push github main --tags
