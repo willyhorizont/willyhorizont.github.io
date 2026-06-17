@@ -755,16 +755,17 @@
         const isInDarkMode = (document.documentElement.getAttribute("data-theme") === "dark");
 
         const totalProgrammingLanguages = programmingLanguages.length;
-        console.log(totalProgrammingLanguages);
         const programmingLanguagePercentage = ((1 / totalProgrammingLanguages) * 100);
         const otherPercentage = parseFloat((programmingLanguagePercentage % 1).toFixed(2)).toString();
         const programmingLanguagePercentageRounded = Math.floor(programmingLanguagePercentage);
 
-        const [programmingLanguageBarChartContainerInnerHtml, programmingLanguagesTextContainerInnerHtml] = (programmingLanguages.reduce((([programmingLanguageBarChartContainerInnerHtmlCurrent, programmingLanguagesTextContainerInnerHtmlCurrent], programmingLanguage, programmingLanguageIndex) => {
-            const styles = window.getComputedStyle(document.documentElement);
-            const darkBackgroundColor = styles.getPropertyValue("--dark-background-color").trim();
-            const lightBackgroundColor = styles.getPropertyValue("--light-background-color").trim();
+        const programmingLanguagesBarChartContainerWidth = ((totalProgrammingLanguages * 20) + "px")
+        const styles = window.getComputedStyle(document.documentElement);
+        const darkBackgroundColor = styles.getPropertyValue("--dark-background-color").trim();
+        const lightBackgroundColor = styles.getPropertyValue("--light-background-color").trim();
+        const otherColor = "#ededed";
 
+        const [programmingLanguageBarChartContainerInnerHtml, programmingLanguagesTextContainerInnerHtml] = (programmingLanguages.reduce((([programmingLanguageBarChartContainerInnerHtmlCurrent, programmingLanguagesTextContainerInnerHtmlCurrent], programmingLanguage, programmingLanguageIndex) => {
             const howCloseRgbHexColorPercentageInDarkMode = WillyHorizont.Utils.getHowCloseRgbHexColor(darkBackgroundColor, programmingLanguage["color"]);
             const howCloseRgbHexColorPercentageInLightMode = WillyHorizont.Utils.getHowCloseRgbHexColor(lightBackgroundColor, programmingLanguage["color"]);
 
@@ -783,7 +784,6 @@
                                                 </a>
             `));
 
-            const otherColor = "#ededed";
             const isLastProgrammingLanguage = (programmingLanguageIndex === (programmingLanguages.length - 1));
 
             if (isLastProgrammingLanguage === true) {
@@ -808,7 +808,7 @@
                                 <div style="display: flex; justify-content: center; align-items: center;">
                                     <div style="display: flex; flex-direction: column; width: 100%;">
                                         <p style="margin-bottom: 16px; font-weight: 600;">Programming Languages</p>
-                                        <div data-id="programming-languages-bar-chart-container" class="programming-languages-bar-chart-container" style="display: flex; min-width: 100%; width: max-content; overflow-x: auto; border-radius: 6px; column-gap: 1px; background-color: ${isInDarkMode ? 'var(--dark-background-color)' : 'var(--light-background-color)'};">
+                                        <div data-id="programming-languages-bar-chart-container" class="programming-languages-bar-chart-container" style="display: flex; flex-direction: row; 100%; width: 100%; border-radius: 6px; column-gap: 1px; background-color: ${isInDarkMode ? 'var(--dark-background-color)' : 'var(--light-background-color)'};">
                                             ${programmingLanguageBarChartContainerInnerHtml}
                                         </div>
                                         <div id="programming-languages-text-container" style="display: flex; flex-direction: row; margin-top: 8px; flex-wrap: wrap; row-gap: 8px; padding: 4px; width: 100%;">
