@@ -252,7 +252,7 @@
             requestAnimationFrameId = requestAnimationFrame(() => {
                 const currentViewportHeight = (WillyHorizont.Utils.safeGetObjectProperty(window, "window.visualViewport.height") || window.innerHeight);
 
-                if (!localStorage.getItem(LOCAL_STORAGE_KEY_VIEWPORT_HEIGHT)) {
+                if (localStorage.getItem(LOCAL_STORAGE_KEY_VIEWPORT_HEIGHT) === null) {
                     localStorage.setItem(LOCAL_STORAGE_KEY_VIEWPORT_HEIGHT, currentViewportHeight);
                     overrideStyleVariableRealViewportHeight(currentViewportHeight);
                     return;

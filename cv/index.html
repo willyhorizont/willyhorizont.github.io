@@ -192,7 +192,7 @@
                             <button onclick="window.print()" style="display: flex; flex-direction: row; flex: 1; background-color: inherit;">
                                 <div class="link-fragment-provider" style="padding: 8px; gap: 8px;">
                                     <p style="text-align: center;">🖨️</p>
-                                    <p style="text-align: center;">Print PDF</p>
+                                    <p style="text-align: center;">Print to PDF</p>
                                 </div>
                             </button>
                         </div>
@@ -1010,15 +1010,6 @@
                     },
                 },
             ];
-            window.addEventListener("DOMContentLoaded", () => {
-                document.title = "CV (Curriculum Vitae) | Willy Horizont";
-            });
-            window.addEventListener("beforeprint", () => {
-                document.title = "CV-Curriculum-Vitae-Christian-Willy-Horizont-Programmer";
-            });
-            window.addEventListener("afterprint", () => {
-                document.title = "CV (Curriculum Vitae) | Willy Horizont";
-            });
             (() => {
                 const professionalExperienceItemDetailKeyStringLongestLength = professionalExperiences.reduce((professionalExperienceItemDetailKeyStringLongestLengthCurrent, professionalExperienceItem) => (((professionalExperienceItemDetailKeyStringLongestLengthInner) => ((professionalExperienceItemDetailKeyStringLongestLengthCurrent > professionalExperienceItemDetailKeyStringLongestLengthInner) ? professionalExperienceItemDetailKeyStringLongestLengthCurrent : professionalExperienceItemDetailKeyStringLongestLengthInner))(Object.keys(professionalExperienceItem["detail"]).reduce((professionalExperienceItemDetailKeyCurrent, professionalExperienceItemDetailKey) => ((professionalExperienceItemDetailKey.length > professionalExperienceItemDetailKeyCurrent) ? professionalExperienceItemDetailKey.length : professionalExperienceItemDetailKeyCurrent), 0))), 0);
                 document.getElementById("placeholder-professional-experience").innerHTML = professionalExperiences.map((professionalExperienceItem) => {

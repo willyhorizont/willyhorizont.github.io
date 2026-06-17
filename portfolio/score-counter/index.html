@@ -242,8 +242,8 @@
             const LOCAL_STORAGE_KEY_ROW = "score-counter-row";
             const initialColumnCount = 1;
             const initialRowCount = 1;
-            const getColumnCount = () => (parseInt(localStorage.getItem(LOCAL_STORAGE_KEY_COLUMN), 10) || initialColumnCount);
-            const getRowCount = () => (parseInt(localStorage.getItem(LOCAL_STORAGE_KEY_ROW), 10) || initialRowCount);
+            const getColumnCount = () => (parseInt(((cc) => ((cc === null) ? initialColumnCount : cc))(localStorage.getItem(LOCAL_STORAGE_KEY_COLUMN)), 10));
+            const getRowCount = () => (parseInt(((rr) => ((rr === null) ? initialRowCount : rr))(localStorage.getItem(LOCAL_STORAGE_KEY_ROW)), 10));
             const setColumnCount = (newColumnCount) => localStorage.setItem(LOCAL_STORAGE_KEY_COLUMN, newColumnCount);
             const setRowCount = (newRowCount) => localStorage.setItem(LOCAL_STORAGE_KEY_ROW, newRowCount);
             const getStyleGridTemplateColumns = () => (`60px repeat(${getColumnCount()}, 120px) 80px`);

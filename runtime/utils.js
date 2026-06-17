@@ -202,6 +202,7 @@
     const printOnce = ((keySet) => (anything, { key, title, formatter = ((anythingInner) => anythingInner) } = {}) => (((anyStringKey) => (keySet.has(anyStringKey) ? anything : ([(keySet.add(anyStringKey)), (console.log(`${title ? `${title}: ` : ""}${formatter(anything)}`)), anything].at(-1))))(key || title || "first")))(new Set()); /* printOnceV2 */
     const printAndReturn = (anything, { title, formatter = ((anythingInner) => anythingInner) } = {}) => ([(console.log(`${title ? `${title}: ` : ""}${formatter(anything)}`)), anything].at(-1));
     const prettyFormatDate = ({ includeSecond = true, includeMiliSecond = false, fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit }) => (`(${zeroPaddedMonth}/12 month) | ${dayThreeFirstLetter}, ${zeroPaddedDay} ${monthThreeFirstLetter} ${fullYear} | ${zeroPaddedHourTwentyFourHourClock}:${zeroPaddedMinute}${includeSecond ? `:${zeroPaddedSecond}` : ``}${includeMiliSecond ? `.${zeroPaddedMiliSecondThreeDigit}` : ``} | ${zeroPaddedHourTwelveHourClock}:${zeroPaddedMinute} ${twelveHourClockLatinAbbreviation}`); /* prettyFormatDateV2 */
+    const getMinutesDifference = (timeStrAa, timeStrBb) => ((msDiff) => (Math.floor(msDiff / (1000 * 60))))(Math.abs(parseInt(timeStrBb, 10) - parseInt(timeStrAa, 10)));
     const extractDate = (anything) => {
         const anythingType = getType(anything);
         const dateObject = ((anythingType === JsonType["String"]) ? new Date(anything) : anything);
@@ -375,6 +376,7 @@
         printAndReturn,
         prettyFormatDate,
         extractDate,
+        getMinutesDifference,
         getClock,
         getTimestamp,
         pipe,

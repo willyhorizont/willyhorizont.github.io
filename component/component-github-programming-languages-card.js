@@ -16,11 +16,6 @@
     }
 
     const getJsonData = async () => {
-        const LOCAL_DATABASE_KEY_PROGRAMMING_LANGUAGES_DATA = "programming-languages";
-        const localDatabase = WillyHorizont.UtilsWeb.setupLocalDatabase(LOCAL_DATABASE_KEY_PROGRAMMING_LANGUAGES_DATA);
-
-        const LOCAL_STORAGE_KEY_PROGRAMMING_LANGUAGES_SHA = "programming-languages-sha";
-
         const repoOwner = "willyhorizont";
         const repoName = "cross-language-programming-concepts";
         const filePath = "languages.json";
@@ -31,18 +26,30 @@
         let programmingLanguagesDataJson = null;
 
         try {
+            const LOCAL_STORAGE_KEY_PROGRAMMING_LANGUAGES_SHA = "programming-languages-sha";
+            const LOCAL_DATABASE_KEY_PROGRAMMING_LANGUAGES_DATA = "programming-languages";
+
+            const cachedSha = localStorage.getItem(LOCAL_STORAGE_KEY_PROGRAMMING_LANGUAGES_SHA);
+            const localDatabase = WillyHorizont.UtilsWeb.setupLocalDatabase(LOCAL_DATABASE_KEY_PROGRAMMING_LANGUAGES_DATA);
+            const cachedData = await localDatabase.getItem(LOCAL_DATABASE_KEY_PROGRAMMING_LANGUAGES_DATA);
+
+            const LOCAL_STORAGE_KEY_LAST_SYNC_PROGRAMMING_LANGUAGES_DATE = "site-last-sync-programming-languages-date";
+            const lastSyncProgrammingLanguagesDate = localStorage.getItem(LOCAL_STORAGE_KEY_LAST_SYNC_PROGRAMMING_LANGUAGES_DATE);
+
+            if ((lastSyncProgrammingLanguagesDate !== null) && (WillyHorizont.Utils.getMinutesDifference(new Date().getTime().toString(), lastSyncProgrammingLanguagesDate) <= 5)) {
+                programmingLanguagesDataJson = cachedData;
+                return programmingLanguagesDataJson;
+            }
+
             const apiResponse = await WillyHorizont.Utils.fetchThrowErrorIfNotOk(githubApiUrl);
             const commitData = await apiResponse.json();
 
             const latestSha = ((commitData.length > 0) ? commitData[0].sha : null); 
 
-            const cachedSha = localStorage.getItem(LOCAL_STORAGE_KEY_PROGRAMMING_LANGUAGES_SHA);
-            const cachedData = await localDatabase.getItem(LOCAL_DATABASE_KEY_PROGRAMMING_LANGUAGES_DATA);
-
             if ((latestSha || false) && (cachedSha === latestSha) && (cachedData || false)) {
                 programmingLanguagesDataJson = cachedData;
                 // console.log({ programmingLanguagesDataJson });
-                console.log("using data from cache.");
+                console.log("using cached data.");
             } else {
                 const jsonResponse = await WillyHorizont.Utils.fetchThrowErrorIfNotOk(rawJsonUrl);
                 programmingLanguagesDataJson = await jsonResponse.json();
@@ -57,7 +64,7 @@
             const fallbackData = localDatabase.getItem(LOCAL_DATABASE_KEY_PROGRAMMING_LANGUAGES_DATA);
             if (fallbackData) {
                 programmingLanguagesDataJson = fallbackData;
-                console.log("Menggunakan data cache lama sebagai cadangan.");
+                console.log("using old cached data as fallback.");
             }
         }
         return programmingLanguagesDataJson;
