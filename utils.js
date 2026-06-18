@@ -2,6 +2,22 @@ window.Utils = ((() => {
     const regexPattern = {
         "three_digit_grouping": (/\B(?=(\d{3})+(?!\d))/g),
     };
+    const getMostFrequent = (anyArray, callbackFunction = (anyArrayItem) => (anyArrayItem)) => {
+        const frequencyMap = new Map();
+        let maxCount = 0;
+        let mostFrequentResult = null;
+
+        for (const anyArrayItem of anyArray) {
+            const currentCount = ((frequencyMap.get(callbackFunction(anyArrayItem)) || 0) + 1);
+            frequencyMap.set(callbackFunction(anyArrayItem), currentCount);
+
+            if (currentCount > maxCount) {
+                maxCount = currentCount;
+                mostFrequentResult = callbackFunction(anyArrayItem);
+            }
+        }
+        return mostFrequentResult;
+    };
     const parseEscapeSequence = (anyString) => JSON.parse(`"${anyString}"`);
     const pythonLikeSleep = (anySeconds) => new Promise((anyResolveFunction) => setTimeout(anyResolveFunction, (anySeconds * 1 * (({ secondInMiliseconds }) => secondInMiliseconds)({ secondInMiliseconds: 1_000 }))));
     const runOnce = ((keySet) => (anyStringKey = "something", callbackFunction = (() => (undefined))) => (keySet.has(anyStringKey) ? undefined : ([(keySet.add(anyStringKey)), (callbackFunction())].at(-1))))(new Set()); /* runOnceV2 */
@@ -88,6 +104,7 @@ window.Utils = ((() => {
 
     return {
         regexPattern,
+        getMostFrequent,
         parseEscapeSequence,
         pythonLikeSleep,
         runOnce,

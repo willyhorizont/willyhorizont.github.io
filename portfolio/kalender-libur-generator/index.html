@@ -69,6 +69,12 @@
                 border: 1px solid var(--accent-color-4);
                 font-weight: 900;
             }
+            .event-detail-text {
+                color: var(--accent-color-4);
+                background-color: var(--light-accent-color-3);
+                border: 1px solid var(--accent-color-4);
+                font-weight: 900;
+            }
             .event-card-footer {
                 border-top: 1px solid var(--light-border-color); 
             }
@@ -83,6 +89,11 @@
                     border: 1px solid var(--dark-border-color);
                 }
                 .event-detail-text-vacation {
+                    color: var(--dark-text-color);
+                    background-color: var(--dark-accent-color-17);
+                    border: 1px solid var(--dark-border-color);
+                }
+                .event-detail-text {
                     color: var(--dark-text-color);
                     background-color: var(--dark-accent-color-17);
                     border: 1px solid var(--dark-border-color);
@@ -111,67 +122,12 @@
             <p>Made with ❤️ by Willy Horizont</p>
         </footer>
         <script src="../../component/component-navbar.js"></script>
-        <script src="../../component/component-loading-spinner.js"></script>
+        <!-- <script src="../../component/component-loading-spinner.js"></script> -->
         <script src="../../component/component-link.js"></script>
         <script>
+            let oneMuharram = null;
             const localDatabase = new LocalDatabase("kalender-libur-generator");
             const currentYear = new Date().getFullYear();
-            const getZyxCalendarEventHolidayIndonesiaDataInitial = () => ([
-                {
-                    "summary": "Hari Tahun Baru",
-                    "start": {
-                        "date": `${currentYear}-01-01`
-                    },
-                    "end": {
-                        "date": `${currentYear}-01-02`
-                    }
-                },
-                {
-                    "summary": "Hari Buruh Internasional / Pekerja",
-                    "start": {
-                        "date": `${currentYear}-05-01`
-                    },
-                    "end": {
-                        "date": `${currentYear}-05-02`
-                    }
-                },
-                {
-                    "summary": "Hari Lahir Pancasila",
-                    "start": {
-                        "date": `${currentYear}-06-01`
-                    },
-                    "end": {
-                        "date": `${currentYear}-06-02`
-                    }
-                },
-                {
-                    "summary": "Hari Proklamasi Kemerdekaan R.I.",
-                    "start": {
-                        "date": `${currentYear}-08-17`
-                    },
-                    "end": {
-                        "date": `${currentYear}-08-18`
-                    }
-                },
-                {
-                    "summary": "Malam Natal",
-                    "start": {
-                        "date": `${currentYear}-12-24`
-                    },
-                    "end": {
-                        "date": `${currentYear}-12-25`
-                    }
-                },
-                {
-                    "summary": "Malam Tahun Baru",
-                    "start": {
-                        "date": `${currentYear}-12-31`
-                    },
-                    "end": {
-                        "date": `${currentYear}-01-01`
-                    }
-                }
-            ]);
             const getPrefixSuffixOfText = (anyString, textToFind) => (((indexOfTextToFind) => ([(anyString.substring(0, indexOfTextToFind)), (anyString.substring((indexOfTextToFind + textToFind.length), anyString.length))]))(anyString.indexOf(textToFind)));
             const getYearFromUrl = () => ((({ yearStringNew }) => ((({ yearNumericNew }) => ([yearNumericNew.toString(), yearNumericNew]))({ yearNumericNew: ((yearStringNew === null) ? new Date().getFullYear() : parseInt(yearStringNew, 10)) })))({ yearStringNew: new URLSearchParams(window.location.search).get("year") }));
             const getShortDayNameOfDateDotToIsoStringDotSliceZeroCommaTen = (dateDotToIsoStringDotSliceZeroCommaTen = "2026-01-01") => (new Intl.DateTimeFormat("id-ID", { weekday: "short" }).format(new Date(dateDotToIsoStringDotSliceZeroCommaTen)));
@@ -185,6 +141,62 @@
             const yearNewYearDateDotToIsoStringDotSliceZeroCommaTen = (`${yearString}-01-01`);
             const yearPlusOneNewYearEveDateDotToIsoStringDotSliceZeroCommaTen = (`${yearString}-12-31`);
             const yearPlusOneNewYearDateDotToIsoStringDotSliceZeroCommaTen = (`${yearPlusOneString}-01-01`);
+            const getZyxCalendarEventHolidayIndonesiaDataInitial = () => ([
+                {
+                    "summary": "Hari Tahun Baru",
+                    "start": {
+                        "date": `${yearNumeric}-01-01`
+                    },
+                    "end": {
+                        "date": `${yearNumeric}-01-02`
+                    }
+                },
+                {
+                    "summary": "Hari Buruh Internasional / Pekerja",
+                    "start": {
+                        "date": `${yearNumeric}-05-01`
+                    },
+                    "end": {
+                        "date": `${yearNumeric}-05-02`
+                    }
+                },
+                {
+                    "summary": "Hari Lahir Pancasila",
+                    "start": {
+                        "date": `${yearNumeric}-06-01`
+                    },
+                    "end": {
+                        "date": `${yearNumeric}-06-02`
+                    }
+                },
+                {
+                    "summary": "Hari Proklamasi Kemerdekaan R.I.",
+                    "start": {
+                        "date": `${yearNumeric}-08-17`
+                    },
+                    "end": {
+                        "date": `${yearNumeric}-08-18`
+                    }
+                },
+                {
+                    "summary": "Malam Natal",
+                    "start": {
+                        "date": `${yearNumeric}-12-24`
+                    },
+                    "end": {
+                        "date": `${yearNumeric}-12-25`
+                    }
+                },
+                {
+                    "summary": "Malam Tahun Baru",
+                    "start": {
+                        "date": `${yearNumeric}-12-31`
+                    },
+                    "end": {
+                        "date": `${yearNumeric}-01-01`
+                    }
+                },
+            ]);
 
             const dataTimestamp = ("(01/12 month) | Mon, 05 Jan 2026 | 05:12:44.150 | 05:12 AM");
             console.log(Utils.generateTimestamp({ precise: true }));
@@ -271,7 +283,7 @@
                     const eventNameEidAlFitr = "Idul Fitri";
                     if (zyxCalendarEventHolidayIndonesiaEventName.includes(eventNameEidAlFitr)) {
                         const [zyxCalendarEventHolidayIndonesiaEventNamePrefix, zyxCalendarEventHolidayIndonesiaEventNameSuffix] = getPrefixSuffixOfText(zyxCalendarEventHolidayIndonesiaEventName, eventNameEidAlFitr);
-                        const zyxCalendarEventHolidayIndonesiaEventNameNew = (`${zyxCalendarEventHolidayIndonesiaEventNamePrefix}Idul Fitri 1 Syawal ${UtilsDate.convertYearAnnoDominiGregorianToHijriah(yearNumeric - 1)} Hijriah${zyxCalendarEventHolidayIndonesiaEventNameSuffix}`);
+                        const zyxCalendarEventHolidayIndonesiaEventNameNew = (`${zyxCalendarEventHolidayIndonesiaEventNamePrefix}Idul Fitri 1 Syawal x Hijriah${zyxCalendarEventHolidayIndonesiaEventNameSuffix}`);
                         zyxCalendarEventHolidayIndonesiaDataNewMap.set(zyxCalendarEventHolidayIndonesiaEventDate, createNewZyxCalendarEventHolidayIndonesia({ "event_name": zyxCalendarEventHolidayIndonesiaEventNameNew }));
                         return;
                     }
@@ -285,7 +297,7 @@
                     const eventNameHijriahNewYear = "Satu Muharam / Tahun Baru Hijriah";
                     if (zyxCalendarEventHolidayIndonesiaEventName.includes(eventNameHijriahNewYear)) {
                         const [zyxCalendarEventHolidayIndonesiaEventNamePrefix, zyxCalendarEventHolidayIndonesiaEventNameSuffix] = getPrefixSuffixOfText(zyxCalendarEventHolidayIndonesiaEventName, eventNameHijriahNewYear);
-                        const zyxCalendarEventHolidayIndonesiaEventNameNew = (`${zyxCalendarEventHolidayIndonesiaEventNamePrefix}${eventNameHijriahNewYear} 1 Muharam ${UtilsDate.convertYearAnnoDominiGregorianToHijriah(yearNumeric)} Hijriah${zyxCalendarEventHolidayIndonesiaEventNameSuffix}`);
+                        const zyxCalendarEventHolidayIndonesiaEventNameNew = (`${zyxCalendarEventHolidayIndonesiaEventNamePrefix}${eventNameHijriahNewYear}${zyxCalendarEventHolidayIndonesiaEventNameSuffix}`);
                         zyxCalendarEventHolidayIndonesiaDataNewMap.set(zyxCalendarEventHolidayIndonesiaEventDate, createNewZyxCalendarEventHolidayIndonesia({ "event_name": zyxCalendarEventHolidayIndonesiaEventNameNew }));
                         return;
                     }
@@ -377,7 +389,7 @@
                         const zyxCalendarEventHolidayIndonesiaDataGroupedEventShortDayName = getShortDayNameOfDateDotToIsoStringDotSliceZeroCommaTen(currentEvent["event_date"]);
                         const zyxCalendarEventHolidayIndonesiaDataGroupedEventShortMonthName = getShortMonthNameOfDateDotToIsoStringDotSliceZeroCommaTen(currentEvent["event_date"]);
                         const zyxCalendarEventHolidayIndonesiaDataGroupedEvent = (`${zyxCalendarEventHolidayIndonesiaDataGroupedEventShortDayName} ${zyxCalendarEventHolidayIndonesiaDataGroupedEventDate} ${zyxCalendarEventHolidayIndonesiaDataGroupedEventShortMonthName} : ${currentEvent["event_name"]}`);
-                        return (/*html*/`<p class="${((currentEvent["event_name"] === eventNameDefault) ? ("event-detail-text-day-off-recommendation") : ("event-detail-text-vacation"))}" style="font-family: monospace; white-space: pre; padding: 4px 8px; margin-left: 4px; margin-right: 4px; margin-top: 4px; margin-bottom: ${(currentItemIndex === (zyxCalendarEventHolidayIndonesiaDataGrouped.length - 1)) ? 4 : 1}px; text-wrap: wrap;">${zyxCalendarEventHolidayIndonesiaDataGroupedEvent}</p>`);
+                        return (/*html*/`<p data-id="event-detail-text" class="${((currentEvent["event_name"] === eventNameDefault) ? ("event-detail-text") : ("event-detail-text"))}" style="font-family: monospace; white-space: pre; padding: 4px 8px; margin-left: 4px; margin-right: 4px; margin-top: 4px; margin-bottom: ${(currentItemIndex === (zyxCalendarEventHolidayIndonesiaDataGrouped.length - 1)) ? 4 : 1}px; text-wrap: wrap;">${zyxCalendarEventHolidayIndonesiaDataGroupedEvent}</p>`);
                     }).join(""));
 
                     const zyxCalendarEventHolidayIndonesiaDataGroupedSummaryDetailString = ((amountDayOffRecomendation > 0) ? (` (Tanggal Merah ${amountVacation} Hari + Ambil Izin Libur ${amountDayOffRecomendation} Hari)`) : (" Tanpa Ambil Izin Libur"));
@@ -401,7 +413,17 @@
                 localStorage.setItem(localStorageKeyKalenderLiburGeneratorTimestamp, JSON.stringify(dataTimestamp));
             };
 
-            const initializeApp = async () => {
+            const updateOneMuharramHtmlElementTextContent = () => {
+                if (oneMuharram !== null) {
+                    document.querySelectorAll('[data-id="event-detail-text"]').forEach((htmlElementEventDetailText) => {
+                        if (htmlElementEventDetailText.textContent.includes("Satu Muharam / Tahun Baru Hijriah")) {
+                            htmlElementEventDetailText.textContent = htmlElementEventDetailText.textContent.replace("Satu Muharam / Tahun Baru Hijriah", `Satu Muharam / Tahun Baru Hijriah 1 Muharam ${oneMuharram?.hijriDate} Hijriah`);
+                        }
+                    });
+                }
+            };
+
+            const initializeApp = () => {
                 const isDemoFinished = (JSON.parse(localStorage.getItem(localStorageKeyKalenderLiburGeneratorDemoFinished)) || false);
                 if (isDemoFinished) return;
 
@@ -412,21 +434,22 @@
                 rerenderMainContent(zyxCalendarEventHolidayIndonesiaDataInitialGrouped);
                 localStorage.setItem(localStorageKeyKalenderLiburGeneratorDemoFinished, JSON.stringify(true));
 
-                ComponentLoadingSpinner.toggleLoadingSpinner(false, [document.getElementById("kalender-libur-generator-container")]);
-
-                await Utils.pythonLikeSleep(3);
-
-                ComponentLoadingSpinner.toggleLoadingSpinner(true, [document.getElementById("kalender-libur-generator-container")]);
+                // ComponentLoadingSpinner.toggleLoadingSpinner(false, [document.getElementById("kalender-libur-generator-container")]);
+                // await Utils.pythonLikeSleep(3);
+                // ComponentLoadingSpinner.toggleLoadingSpinner(true, [document.getElementById("kalender-libur-generator-container")]);
             };
 
             (async () => {
                 try {
-                    ComponentLoadingSpinner.toggleLoadingSpinner(true, [document.getElementById("kalender-libur-generator-container")]);
-
-                    await initializeApp();
+                    // ComponentLoadingSpinner.toggleLoadingSpinner(false, [document.getElementById("kalender-libur-generator-container")]);
+                    // ComponentLoadingSpinner.toggleLoadingSpinner(true, [document.getElementById("kalender-libur-generator-container")]);
 
                     document.getElementById("placeholder-error").innerHTML = "";
                     document.getElementById("placeholder-year").textContent = yearString;
+
+                    initializeApp();
+
+                    if (currentYear > new Date().getFullYear()) return;
 
                     const dataFromLocalStorageKalenderLiburGeneratorTimestamp = JSON.parse(localStorage.getItem(localStorageKeyKalenderLiburGeneratorTimestamp));
                     if (UtilsWeb.IS_IN_DEVELOPMENT_MODE || (dataFromLocalStorageKalenderLiburGeneratorTimestamp !== dataTimestamp)) {
@@ -447,7 +470,7 @@
 
                     while (dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw === null) {
                         dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw = await UtilsZyx.getZyxCalendarEventHolidayIndonesia();
-                        await Utils.pythonLikeSleep((dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw === null) ? 10 : 1);
+                        await Utils.pythonLikeSleep((dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw === null) ? Utils.randomIntInclusive(10, 15) : 1);
                     }
                     // console.log({ dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw });
                     await localDatabase.setItem(localStorageKeyZyxCalendarEventHolidayIndonesiaRawData, dataFromLocalStorageZyxCalendarEventHolidayIndonesiaRaw);
@@ -464,14 +487,60 @@
 
                     const zyxCalendarEventHolidayIndonesiaDataGrouped = groupZyxCalendarEventHolidayIndonesiaData(dataFromLocalStorageZyxCalendarEventHolidayIndonesiaData);
                     // console.log({ zyxCalendarEventHolidayIndonesiaDataGrouped });
+
+                    if (zyxCalendarEventHolidayIndonesiaDataGrouped.length < 3) {
+                        while (true) {
+                            const [getOneMuharramByYearAnnoDominiGregorianError, getOneMuharramByYearAnnoDominiGregorianResult] = await Utils.catchAnyError(UtilsZyx.getOneMuharramByYearAnnoDominiGregorian(yearNumeric));
+                            if (getOneMuharramByYearAnnoDominiGregorianError) {
+                                await Utils.pythonLikeSleep(Utils.randomIntInclusive(10, 15));
+                                continue;
+                            }
+                            if (!getOneMuharramByYearAnnoDominiGregorianResult) {
+                                await Utils.pythonLikeSleep(Utils.randomIntInclusive(10, 15));
+                                continue;
+                            }
+                            oneMuharram = getOneMuharramByYearAnnoDominiGregorianResult;
+                            break;
+                        }
+                        if (oneMuharram !== null) {
+                            const zyxCalendarEventHolidayIndonesiaDataInitial = getZyxCalendarEventHolidayIndonesiaDataInitial();
+                            zyxCalendarEventHolidayIndonesiaDataInitial.push({
+                                "summary": "Satu Muharam / Tahun Baru Hijriah",
+                                "start": {
+                                    "date": oneMuharram?.annoDominiGregorianDate
+                                },
+                                "end": {
+                                    "date": oneMuharram?.annoDominiGregorianDate
+                                }
+                            })
+                            const zyxCalendarEventHolidayIndonesiaDataInitialModified = modifyZyxCalendarEventHolidayIndonesiaData(zyxCalendarEventHolidayIndonesiaDataInitial);
+                            const zyxCalendarEventHolidayIndonesiaDataInitialGrouped = groupZyxCalendarEventHolidayIndonesiaData(zyxCalendarEventHolidayIndonesiaDataInitialModified);
+
+                            rerenderMainContent(zyxCalendarEventHolidayIndonesiaDataInitialGrouped);
+                            updateOneMuharramHtmlElementTextContent();
+                        }
+                        return;
+                    }
                     await localDatabase.setItem(localStorageKeyKalenderLiburGeneratorData, zyxCalendarEventHolidayIndonesiaDataGrouped);
 
                     rerenderMainContent(zyxCalendarEventHolidayIndonesiaDataGrouped);
+
+                    while (true) {
+                        const [getOneMuharramByYearAnnoDominiGregorianError, getOneMuharramByYearAnnoDominiGregorianResult] = await Utils.catchAnyError(UtilsZyx.getOneMuharramByYearAnnoDominiGregorian(yearNumeric));
+                        if (getOneMuharramByYearAnnoDominiGregorianError) {
+                            await Utils.pythonLikeSleep(Utils.randomIntInclusive(10, 15));
+                            continue;
+                        }
+                        oneMuharram = getOneMuharramByYearAnnoDominiGregorianResult;
+                        break;
+                    }
+
+                    updateOneMuharramHtmlElementTextContent();
                 } catch (anyError) {
-                    console.error(anyError);
+                    // console.error(anyError);
                     document.getElementById("placeholder-error").innerHTML = (/*html*/`<p style="color: red; text-align: center;">Something went wrong.</p>`);
                 } finally {
-                    ComponentLoadingSpinner.toggleLoadingSpinner(false, [document.getElementById("kalender-libur-generator-container")]);
+                    // ComponentLoadingSpinner.toggleLoadingSpinner(false, [document.getElementById("kalender-libur-generator-container")]);
                 }
             })();
         </script>
