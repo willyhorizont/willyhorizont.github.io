@@ -103,7 +103,7 @@
         <script>
             (async () => {
                 if (!WillyHorizont.Utils || !WillyHorizont.UtilsWeb || !ComponentGithubProgrammingLanguagesCard) return;
-                const programmingLanguagesDataJson = await ComponentGithubProgrammingLanguagesCard.getJsonData()
+                const programmingLanguagesDataJson = await ComponentGithubProgrammingLanguagesCard.getJsonData();
                 if (!programmingLanguagesDataJson) return
                 WillyHorizont.UtilsWeb.setupComponentGithubProgrammingLanguagesCard(programmingLanguagesDataJson);
             })()

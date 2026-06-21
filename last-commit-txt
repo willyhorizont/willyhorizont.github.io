@@ -1,5 +1,5 @@
 git add .
-git commit -m "version 3.2.7: l update"
-git tag -a v3.2.7 -m "version 3.2.7: l update"
+git commit -m "version 3.2.8: update languages color"
+git tag -a v3.2.8 -m "version 3.2.8: update languages color"
 git push github main
 git push github --tags
