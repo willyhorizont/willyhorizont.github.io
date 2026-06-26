@@ -46,7 +46,7 @@
 
             const latestSha = ((commitData.length > 0) ? commitData[0].sha : null); 
 
-            if ((latestSha || false) && (cachedSha === latestSha) && (cachedData || false)) {
+            if (latestSha && (cachedSha === latestSha) && cachedData) {
                 programmingLanguagesDataJson = cachedData;
                 // console.log({ programmingLanguagesDataJson });
                 console.log("using cached data.");
