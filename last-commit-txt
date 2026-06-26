@@ -1,5 +1,5 @@
 git add .
-git commit -m "version 3.2.8: update languages color"
-git tag -a v3.2.8 -m "version 3.2.8: update languages color"
-git push github main
-git push github --tags
+git commit -m "version 2.0.2: small fix in component-github-programming-languages-card.js"
+git tag -a 2.0.2 -m "version 2.0.2: small fix in component-github-programming-languages-card.js"
+git push github main -f
+git push github --tags -f
