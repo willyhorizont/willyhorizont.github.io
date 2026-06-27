@@ -28,7 +28,7 @@
     const { zeroPaddedDay, monthThreeFirstLetter, fullYear, zeroPaddedHourTwelveHourClock, zeroPaddedMinute, twelveHourClockLatinAbbreviation } = WillyHorizont.Utils.extractDate(siteUpdatedDateIsoString);
     const siteUpdatedDatePrettyString = `${zeroPaddedDay} ${monthThreeFirstLetter} ${fullYear} @ ${zeroPaddedHourTwelveHourClock}:${zeroPaddedMinute} ${twelveHourClockLatinAbbreviation}`;
 
-    const siteVersion = "2.0.3";
+    const siteVersion = "2.0.4";
 
     const htmlElementFooter = document.body.querySelector("footer");
 
