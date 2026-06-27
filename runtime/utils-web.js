@@ -770,8 +770,8 @@
             const howCloseRgbHexColorPercentageInDarkMode = WillyHorizont.Utils.getHowCloseRgbHexColor(darkBackgroundColor, programmingLanguageColor);
             const howCloseRgbHexColorPercentageInLightMode = WillyHorizont.Utils.getHowCloseRgbHexColor(lightBackgroundColor, programmingLanguageColor);
 
-            const darkBorderColor = ((howCloseRgbHexColorPercentageInDarkMode > 80) ? "var(--light-border-color)" : (programmingLanguage["stack"].length > 1) ? "var(--light-border-color)" : programmingLanguageColor);
-            const lightBorderColor = ((howCloseRgbHexColorPercentageInLightMode > 70) ? "var(--dark-border-color)" : (programmingLanguage["stack"].length > 1) ? "var(--dark-border-color)" : programmingLanguageColor);
+            const darkBorderColor = ((howCloseRgbHexColorPercentageInDarkMode > 80) ? "var(--light-border-color, #cccccc)" : (programmingLanguage["stack"].length > 1) ? "var(--light-border-color, #cccccc)" : programmingLanguageColor);
+            const lightBorderColor = ((howCloseRgbHexColorPercentageInLightMode > 70) ? "var(--dark-border-color, #333)" : (programmingLanguage["stack"].length > 1) ? "var(--dark-border-color, #333)" : programmingLanguageColor);
 
             let programmingLanguageBarChartContainerInnerHtmlNewItem =  removeTemplateStringIndentation(programmingLanguageBarChartContainerInnerHtmlCurrent.trimStart() + (/*html*/`
                                                 <div data-id="programming-language-percentage" data-dark-border-color="${darkBorderColor}" data-light-border-color="${lightBorderColor}" style="border-radius: ${(programmingLanguageIndex === 0) ? '6px 0 0 6px' : 0}; width: ${programmingLanguagePercentageRounded}%; flex: 1; height: 8px; background-color: ${programmingLanguageColor}; border: 1px solid ${isInDarkMode ? darkBorderColor : lightBorderColor};">
@@ -822,11 +822,11 @@
         }), ["", ""]));
 
         document.getElementById("placeholder-github-programming-languages-card").innerHTML = removeTemplateStringIndentation(/*html*/`
-                            <div data-id="programming-languages-card" class="programming-languages-card" style="display: flex; flex-direction: column; flex-wrap: wrap; row-gap: 8px; border: 1px solid var(--light-border-color); border-radius: 6px; padding: 8px; width: 100%;">
+                            <div data-id="programming-languages-card" class="programming-languages-card" style="line-height: inherit; font-family: 'Courier New', Courier, 'Liberation Mono', 'DejaVu Sans Mono', monospace; display: flex; flex-direction: column; flex-wrap: wrap; row-gap: 8px; border: 1px solid var(--light-border-color, #cccccc); border-radius: 6px; padding: 8px;">
                                 <div style="display: flex; justify-content: center; align-items: center;">
                                     <div style="display: flex; flex-direction: column; width: 100%;">
-                                        <p style="margin-bottom: 16px; font-weight: 600;">Programming Languages</p>
-                                        <div data-id="programming-languages-bar-chart-container" class="programming-languages-bar-chart-container" style="display: flex; flex-direction: row; 100%; width: 100%; border-radius: 6px; column-gap: 1px; background-color: ${isInDarkMode ? 'var(--dark-background-color)' : 'var(--light-background-color)'};">
+                                        <p style="font-weight: 600;">Programming Languages</p>
+                                        <div data-id="programming-languages-bar-chart-container" class="programming-languages-bar-chart-container" style="margin-top: 16px; display: flex; flex-direction: row; width: 100%; border-radius: 6px; column-gap: 1px; background-color: ${isInDarkMode ? 'var(--dark-background-color, #fff)' : 'var(--light-background-color, #121212)'};">
                                             ${programmingLanguageBarChartContainerInnerHtml}
                                         </div>
                                         <div id="programming-languages-text-container" style="display: flex; flex-direction: row; margin-top: 8px; flex-wrap: wrap; row-gap: 8px; padding: 4px; width: 100%;">
@@ -841,8 +841,8 @@
             const htmlElementProgrammingLanguagesCard = document.querySelector(`[data-id="programming-languages-card"]`);
             const htmlElementProgrammingLanguagesBarChartContainer = htmlElementProgrammingLanguagesCard.querySelector(`[data-id="programming-languages-bar-chart-container"]`);
             if (currentTheme === "dark") {
-                htmlElementProgrammingLanguagesCard.style.border = "1px solid var(--dark-border-color)";
-                htmlElementProgrammingLanguagesBarChartContainer.style.backgroundColor = "var(--dark-background-color)";
+                htmlElementProgrammingLanguagesCard.style.border = "1px solid var(--dark-border-color, #333)";
+                htmlElementProgrammingLanguagesBarChartContainer.style.backgroundColor = "var(--dark-background-color, #fff)";
                 document.querySelectorAll(`[data-id="github-programming-language-color-code"]`).forEach((htmlElementGithubProgrammingLanguageColorCode) => {
                     htmlElementGithubProgrammingLanguageColorCode.style.borderColor = htmlElementGithubProgrammingLanguageColorCode.getAttribute("data-dark-border-color");
                 });
@@ -852,8 +852,8 @@
                 return;
             }
             if (currentTheme === "light") {
-                htmlElementProgrammingLanguagesCard.style.border = "1px solid var(--light-border-color)";
-                htmlElementProgrammingLanguagesBarChartContainer.style.backgroundColor = "var(--light-background-color)";
+                htmlElementProgrammingLanguagesCard.style.border = "1px solid var(--light-border-color, #cccccc)";
+                htmlElementProgrammingLanguagesBarChartContainer.style.backgroundColor = "var(--light-background-color, #121212)";
                 document.querySelectorAll(`[data-id="github-programming-language-color-code"]`).forEach((htmlElementGithubProgrammingLanguageColorCode) => {
                     htmlElementGithubProgrammingLanguageColorCode.style.borderColor = htmlElementGithubProgrammingLanguageColorCode.getAttribute("data-light-border-color");
                 });

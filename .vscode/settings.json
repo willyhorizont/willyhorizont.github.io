@@ -71,6 +71,6 @@
     "editor.insertSpaces": true,
     "[html]": {
         // "editor.defaultFormatter": "vscode.html-language-features",
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
+        "editor.defaultFormatter": "mohd-akram.vscode-html-format"
     },
 }

@@ -28,24 +28,7 @@
     const { zeroPaddedDay, monthThreeFirstLetter, fullYear, zeroPaddedHourTwelveHourClock, zeroPaddedMinute, twelveHourClockLatinAbbreviation } = WillyHorizont.Utils.extractDate(siteUpdatedDateIsoString);
     const siteUpdatedDatePrettyString = `${zeroPaddedDay} ${monthThreeFirstLetter} ${fullYear} @ ${zeroPaddedHourTwelveHourClock}:${zeroPaddedMinute} ${twelveHourClockLatinAbbreviation}`;
 
-    const getSiteVersion = async () => {
-        let getSiteVersionResult = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_SITE_LAST_CHECKED_VERSION));
-
-        if ((lastCheckVersionDate !== null) && (WillyHorizont.Utils.getMinutesDifference(new Date().getTime().toString(), lastCheckVersionDate) <= 5)) return getSiteVersionResult;
-
-        try {
-            const apiResponseTag = await WillyHorizont.Utils.fetchThrowErrorIfNotOk(`https://api.github.com/repos/${repoOwner}/${repoName}/tags?per_page=1`);
-            const tagData = await apiResponseTag.json();
-            console.log("getting site version...");
-            getSiteVersionResult = ((tagData.length > 0) ? tagData[0].name : null);
-            localStorage.setItem(LOCAL_STORAGE_KEY_SITE_LAST_CHECKED_VERSION, JSON.stringify(getSiteVersionResult));
-            localStorage.setItem(LOCAL_STORAGE_KEY_LAST_CHECK_VERSION_DATE, new Date().getTime().toString());
-        } catch (error) {
-            // console.error("Failed checking for version:", error);
-        }
-        return getSiteVersionResult;
-    };
-    const siteVersion = await getSiteVersion();
+    const siteVersion = "2.0.3";
 
     const htmlElementFooter = document.body.querySelector("footer");
 
