@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" spellcheck="false">
     <head>
-        <script src="requirement.js"></script>
         <!-- start of Google tag (gtag.js) -->
         <!-- tagmanager.google.com -->
         <!-- analytics.google.com/analytics/web -->
@@ -23,6 +22,10 @@
         <meta name="googlebot" content="notranslate" />
         <meta name="google" content="nopagereadaloud" />
         <!-- end of Google Search Console Ownership verification -->
+
+        <script src="requirement.js"></script>
+
+        <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -106,7 +109,17 @@
                 const programmingLanguagesDataJson = await ComponentGithubProgrammingLanguagesCard.getJsonData();
                 if (!programmingLanguagesDataJson) return
                 WillyHorizont.UtilsWeb.setupComponentGithubProgrammingLanguagesCard(programmingLanguagesDataJson);
-            })()
+            })();
+
+            window.GithubProgrammingLanguagesCard = (window.GithubProgrammingLanguagesCard || {});
+            window.GithubProgrammingLanguagesCard.downloadImage = () => {
+                const el = document.getElementById("placeholder-github-programming-languages-card");
+                el.style.padding = "8px";
+                html2canvas(el).then((canvas) => {
+                    document.body.appendChild(canvas);
+                    el.style.padding = "0";
+                });
+            };
         </script>
     </body>
 </html>

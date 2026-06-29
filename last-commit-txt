@@ -1,5 +1,5 @@
 git add .
-git commit -m "version 2.0.4: update github-programming-languages.svg"
-git tag -a 2.0.4 -m "version 2.0.4: update github-programming-languages.svg"
+git commit -m "version 2.1.0: update footer check version and updatedAt; add window.GithubProgrammingLanguagesCard.downloadImage(); using html2canvas"
+git tag -a 2.1.0 -m "version 2.1.0: update footer check version and updatedAt; add window.GithubProgrammingLanguagesCard.downloadImage(); using html2canvas"
 git push github main -f
 git push github --tags -f
