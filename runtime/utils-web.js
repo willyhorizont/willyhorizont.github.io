@@ -774,7 +774,7 @@
             const lightBorderColor = ((howCloseRgbHexColorPercentageInLightMode > 70) ? "var(--dark-border-color, #333)" : (programmingLanguage["stack"].length > 1) ? "var(--dark-border-color, #333)" : programmingLanguageColor);
 
             let programmingLanguageBarChartContainerInnerHtmlNewItem =  removeTemplateStringIndentation(programmingLanguageBarChartContainerInnerHtmlCurrent.trimStart() + (/*html*/`
-                                                <div data-id="programming-language-percentage" data-dark-border-color="${darkBorderColor}" data-light-border-color="${lightBorderColor}" style="border-radius: ${(programmingLanguageIndex === 0) ? '6px 0 0 6px' : 0}; width: ${programmingLanguagePercentageRounded}%; flex: 1; height: 8px; background-color: ${programmingLanguageColor}; border: 1px solid ${isInDarkMode ? darkBorderColor : lightBorderColor};">
+                                                <div data-id="programming-language-percentage" data-dark-border-color="${darkBorderColor}" data-light-border-color="${lightBorderColor}" style="border-radius: ${(programmingLanguageIndex === 0) ? '6px 0 0 6px' : 0}; width: 100%; flex: ${programmingLanguagePercentageRounded}%; height: 8px; background-color: ${programmingLanguageColor}; border: 1px solid ${isInDarkMode ? darkBorderColor : lightBorderColor};">
                                                 </div>
             `));
             if (programmingLanguage["stack"].length > 1) {
@@ -783,7 +783,7 @@
                                                     </div>
                                                     `)).join("\n                                                    ");
                 programmingLanguageBarChartContainerInnerHtmlNewItem =  removeTemplateStringIndentation(programmingLanguageBarChartContainerInnerHtmlCurrent.trimStart() + (/*html*/`
-                                                <div data-id="programming-language-percentage" data-dark-border-color="${darkBorderColor}" data-light-border-color="${lightBorderColor}" style="display: flex; flex-direction: column; overflow: hidden; border-radius: ${(programmingLanguageIndex === 0) ? '6px 0 0 6px' : 0}; width: ${programmingLanguagePercentageRounded}%; flex: 1; height: 8px; border: 1px solid ${isInDarkMode ? darkBorderColor : lightBorderColor};">
+                                                <div data-id="programming-language-percentage" data-dark-border-color="${darkBorderColor}" data-light-border-color="${lightBorderColor}" style="display: flex; flex-direction: column; overflow: hidden; border-radius: ${(programmingLanguageIndex === 0) ? '6px 0 0 6px' : 0}; width: 100%; flex: ${programmingLanguagePercentageRounded}%; height: 8px; border: 1px solid ${isInDarkMode ? darkBorderColor : lightBorderColor};">
                                                     ${programmingLanguagePercentageInnerHtml}
                                                 </div>
                 `));
@@ -806,7 +806,7 @@
 
             if (isLastProgrammingLanguage === true) {
                 programmingLanguageBarChartContainerInnerHtmlNewItem += (/*html*/`
-                                                <div data-id="programming-language-percentage" data-dark-border-color="${otherColor}" data-light-border-color="${darkBackgroundColor}" style="border-radius:0 6px 6px 0; width: ${otherPercentage}%; flex: 1; height: 8px; background-color: ${otherColor}; border: 1px solid ${isInDarkMode ? otherColor : darkBackgroundColor};">
+                                                <div data-id="programming-language-percentage" data-dark-border-color="${otherColor}" data-light-border-color="${darkBackgroundColor}" style="border-radius:0 6px 6px 0; width: 100%; flex: ${otherPercentage}%; height: 8px; background-color: ${otherColor}; border: 1px solid ${isInDarkMode ? otherColor : darkBackgroundColor};">
                                                 </div>
                 `);
                 programmingLanguagesTextContainerInnerHtmlNewItem += (/*html*/`

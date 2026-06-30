@@ -1,5 +1,5 @@
 git add .
-git commit -m "version 2.1.1: remove GithubProgrammingLanguagesCard.png"
-git tag -a 2.1.1 -m "version 2.1.1: remove GithubProgrammingLanguagesCard.png"
+git commit -m "version 2.1.2: fix cv blank page; fix bar chart percentage width;"
+git tag -a 2.1.2 -m "version 2.1.2: fix cv blank page; fix bar chart percentage width;"
 git push github main -f
 git push github --tags -f
