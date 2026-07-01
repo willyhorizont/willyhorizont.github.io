@@ -1,4 +1,4 @@
-const CACHE_NAME = "willyhorizont.github.io#2.2.4"; 
+const CACHE_NAME = "willyhorizont.github.io#2.2.5"; 
 const ASSETS = [
     "./style.css",
 
@@ -10,47 +10,36 @@ const ASSETS = [
     "./",
     "./index.html",
 
-    "./portfolio",
     "./portfolio/",
     "./portfolio/index.html",
 
-    "./cv",
     "./cv/",
     "./cv/index.html",
 
-    "./about",
     "./about/",
     "./about/index.html",
 
-    "./links",
     "./links/",
     "./links/index.html",
 
-    "./support",
     "./support/",
     "./support/index.html",
 
-    "./contact",
     "./contact/",
     "./contact/index.html",
 
-    "./portfolio/expense-tracker",
     "./portfolio/expense-tracker/",
     "./portfolio/expense-tracker/index.html",
 
-    "./portfolio/kalender-libur-advisor",
     "./portfolio/kalender-libur-advisor/",
     "./portfolio/kalender-libur-advisor/index.html",
 
-    "./portfolio/remove-duplicate-list-item",
     "./portfolio/remove-duplicate-list-item/",
     "./portfolio/remove-duplicate-list-item/index.html",
 
-    "./portfolio/replace-any-line-break",
     "./portfolio/replace-any-line-break/",
     "./portfolio/replace-any-line-break/index.html",
 
-    "./portfolio/score-counter",
     "./portfolio/score-counter/",
     "./portfolio/score-counter/index.html",
 
@@ -68,9 +57,12 @@ self.addEventListener("install", (event) => {
     if (IS_IN_DEVELOPMENT_MODE) return;
 
     event.waitUntil(caches.open(CACHE_NAME).then((cache) => {
-        return Promise.all(ASSETS.map((url) => cache.add(url).catch((e) => {
-            console.error("Failed to cache:", url, e);
-        })));
+        const secureRequests = ASSETS.map(url => new Request(url, { redirect: "follow" }));
+        return Promise.all(secureRequests.map((request) => {
+            return cache.add(request).catch((err) => {
+                console.error(`Failed to cache: ${request.url}`, err);
+            });
+        }));
     }));
 });
 

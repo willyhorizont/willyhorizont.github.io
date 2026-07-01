@@ -1,5 +1,5 @@
 git add .
-git commit -m "version 2.2.4: fix assets to cache;"
-git tag -a 2.2.4 -m "version 2.2.4: fix assets to cache;"
+git commit -m "version 2.2.5: update sw.js;"
+git tag -a 2.2.5 -m "version 2.2.5: update sw.js;"
 git push github main -f
 git push github --tags -f
