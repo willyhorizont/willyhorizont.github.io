@@ -1,5 +1,5 @@
 git add .
-git commit -m "version 2.1.2: fix cv blank page; fix bar chart percentage width;"
-git tag -a 2.1.2 -m "version 2.1.2: fix cv blank page; fix bar chart percentage width;"
+git commit -m "version 2.2.2: update offline mode; update contact;"
+git tag -a 2.2.2 -m "version 2.2.2: update offline mode; update contact;"
 git push github main -f
 git push github --tags -f

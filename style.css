@@ -383,6 +383,33 @@ footer {
     max-width: 50%; display: flex; flex-direction: row; justify-content: center; align-items: center; flex-wrap: wrap; gap: 16px;
 }
 
+.button {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); border: 1px solid var(--light-border-color); border-radius: 8px; display: flex; flex-direction: column; overflow: hidden; flex-wrap: wrap;
+    width: fit-content;
+}
+.button:hover {
+    background-color: var(--light-accent-color-1);
+}
+
+.icon-button {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid var(--light-border-color);
+    line-height: 1;
+    width: fit-content;
+    padding: 8px 6px;
+}
+.icon-button:hover {
+    opacity: 0.5;
+}
+
 .link-container {
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -414,7 +441,7 @@ footer {
 }
 
 .link-fragment-provider-image {
-    width: 16px; height: 16px;
+    width: 1.2em; height: 1.2em;
 }
 
 .link-fragment-provider-name {
@@ -422,6 +449,10 @@ footer {
 }
 
 html[data-theme="dark"] .link-container:hover {
+    background-color: var(--dark-accent-color-10);
+}
+
+html[data-theme="dark"] .button:hover {
     background-color: var(--dark-accent-color-10);
 }
 

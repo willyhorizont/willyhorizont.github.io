@@ -683,7 +683,7 @@
                     if (currentYear > new Date().getUTCFullYear()) return;
 
                     const dataFromLocalStorageKalenderLiburAdvisorClock = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_KALENDER_LIBUR_ADVISOR_CLOCK));
-                    if (WillyHorizont.UtilsWeb.IS_IN_DEVELOPMENT_MODE || (dataFromLocalStorageKalenderLiburAdvisorClock !== clockId)) {
+                    if (navigator.onLine && (WillyHorizont.UtilsWeb.IS_IN_DEVELOPMENT_MODE || (dataFromLocalStorageKalenderLiburAdvisorClock !== clockId))) {
                         localStorage.setItem(LOCAL_STORAGE_KEY_KALENDER_LIBUR_ADVISOR_DEMO_FINISHED, JSON.stringify(false));
                         await localDatabase.clear();
                     }
@@ -697,7 +697,7 @@
 
                     let dataFromLocalDatabaseZyxCalendarEventHolidayIndonesiaRaw = await localDatabase.getItem(LOCAL_DATABASE_KEY_ZYX_CALENDAR_EVENT_HOLIDAY_INDONESIA_RAW_DATA);
 
-                    if (dataFromLocalDatabaseZyxCalendarEventHolidayIndonesiaRaw === null) {
+                    if (navigator.onLine && dataFromLocalDatabaseZyxCalendarEventHolidayIndonesiaRaw === null) {
                         let zyxCalendarEventHolidayIndonesiaRawNew = null;
                         while (true) {
                             // break; // uncomment to test initial data

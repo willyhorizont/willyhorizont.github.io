@@ -60,12 +60,7 @@
                 console.log("cache updated from source.");
             }
         } catch (error) {
-            // console.error("Failed checking for update:", error);
-            const fallbackData = localDatabase.getItem(LOCAL_DATABASE_KEY_PROGRAMMING_LANGUAGES_DATA);
-            if (fallbackData) {
-                programmingLanguagesDataJson = fallbackData;
-                console.log("using old cached data as fallback.");
-            }
+            console.error("Failed checking for update:", error);
         }
         return programmingLanguagesDataJson;
     };
