@@ -1,4 +1,4 @@
-const CACHE_NAME = "willyhorizont.github.io#2.2.3"; 
+const CACHE_NAME = "willyhorizont.github.io#2.2.4"; 
 const ASSETS = [
     "./style.css",
 
@@ -54,7 +54,7 @@ const ASSETS = [
     "./portfolio/score-counter/",
     "./portfolio/score-counter/index.html",
 
-    "./photo.js",
+    "./photo.jpg",
 
     "./component/component-navbar.js",
     "./component/component-footer.js",

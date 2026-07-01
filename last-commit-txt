@@ -1,5 +1,5 @@
 git add .
-git commit -m "version 2.2.3: handle cache fail;"
-git tag -a 2.2.3 -m "version 2.2.3: handle cache fail;"
+git commit -m "version 2.2.4: fix assets to cache;"
+git tag -a 2.2.4 -m "version 2.2.4: fix assets to cache;"
 git push github main -f
 git push github --tags -f
