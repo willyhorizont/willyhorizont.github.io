@@ -1,4 +1,4 @@
-const CACHE_NAME = "willyhorizont.github.io#2.2.2"; 
+const CACHE_NAME = "willyhorizont.github.io#2.2.3"; 
 const ASSETS = [
     "./style.css",
 
@@ -67,7 +67,11 @@ self.addEventListener("install", (event) => {
     self.skipWaiting(); 
     if (IS_IN_DEVELOPMENT_MODE) return;
 
-    event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS)));
+    event.waitUntil(caches.open(CACHE_NAME).then((cache) => {
+        return Promise.all(ASSETS.map((url) => cache.add(url).catch((e) => {
+            console.error("Failed to cache:", url, e);
+        })));
+    }));
 });
 
 self.addEventListener("activate", (event) => {
