@@ -1,4 +1,101 @@
 {
+    "extensions.ignoreRecommendations": true,
+    // 1. turn off VS Code IntelliSense
+    "editor.suggestOnTriggerCharacters": false,
+    "editor.quickSuggestions": {
+        "other": "off",
+        "comments": "off",
+        "strings": "off"
+    },
+    "editor.acceptSuggestionOnEnter": "off",
+    "editor.parameterHints.enabled": false,
+    "editor.codeActionsOnSave": {},
+    
+    // 2. Turn off Error Checking
+    "editor.showUnused": false,
+    "editor.showDeprecated": false,
+    "problems.decorations.enabled": false,
+
+    // 3. Turn off Language Server
+    "javascript.validate.enable": false,
+    "javascript.suggest.enabled": false,
+
+    "typescript.validate.enable": false,
+    "typescript.suggest.enabled": false,
+
+    "python.languageServer": "None",
+    "python.analysis.diagnosticMode": "openFilesOnly",
+
+    "editor.semanticHighlighting.enabled": true,
+
+    "workbench.editor.showTabs": "multiple",
+    "workbench.tree.indent": 24,
+
+    "views.customizations": {
+        "viewContainerLocations": {
+            "workbench.views.service.auxiliarybar.d8075f6a-32ff-4930-b609-1ce17888bc4e": 0
+        },
+        "viewLocations": {
+            "workbench.explorer.openEditorsView": "workbench.views.service.auxiliarybar.d8075f6a-32ff-4930-b609-1ce17888bc4e"
+        },
+        "viewContainerBadgeEnablementStates": {}
+    },
+    "workbench.views.service.auxiliarybar.d8075f6a-32ff-4930-b609-1ce17888bc4e.state.hidden": [
+        {
+            "id": "workbench.explorer.openEditorsView",
+            "isHidden": false
+        }
+    ],
+    "workbench.explorer.views.state.hidden": [
+        {
+            "id": "workbench.explorer.openEditorsView",
+            "isHidden": false
+        },
+    ],
+    "workbench.activity.pinnedViewlets2": [
+        {
+            "id": "workbench.view.explorer",
+            "pinned": true,
+            "visible": true,
+            "order": 0
+        },
+        {
+            "id": "workbench.views.service.auxiliarybar.d8075f6a-32ff-4930-b609-1ce17888bc4e",
+            "pinned": true,
+            "visible": true,
+            "order": 1
+        },
+        {
+            "id": "workbench.view.search",
+            "pinned": true,
+            "visible": true,
+            "order": 2
+        },
+        {
+            "id": "workbench.view.scm",
+            "pinned": true,
+            "visible": true,
+            "order": 3
+        },
+        {
+            "id": "workbench.view.extensions",
+            "pinned": true,
+            "visible": true,
+            "order": 4
+        },
+        {
+            "id": "workbench.view.editSessions",
+            "pinned": true,
+            "visible": true,
+            "order": 5
+        },
+        {
+            "id": "userDataProfiles",
+            "pinned": true,
+            "visible": true,
+            "order": 6
+        }
+    ],
     "workbench.preferredDarkColorTheme": "Visual Studio 2017 Dark - C++",
     "workbench.colorTheme": "Visual Studio 2017 Dark - C++",
     // "workbench.colorTheme": "Visual Studio Dark - C++",
@@ -50,7 +147,115 @@
         "editorOverviewRuler.border": "#29161d",
         "panel.background": "#29161d",
     },
+    "editor.tokenColorCustomizations": {
+        "[Visual Studio 2017 Dark - C++]": {
+            "variables": "#dfc570",
+            "textMateRules": [
+                {
+                    "scope": "keyword.operator",
+                    "settings": {
+                        "foreground": "#f33535"
+                    }
+                },
+                {
+                    "scope": "punctuation.definition.string.begin",
+                    "settings": {
+                        "foreground": "#f33535"
+                    }
+                },
+                {
+                    "scope": "punctuation.definition.string.end",
+                    "settings": {
+                        "foreground": "#f33535"
+                    }
+                },
+                {
+                    "scope": "punctuation.separator",
+                    "settings": {
+                        "foreground": "#f33535"
+                    }
+                },
+                {
+                    "scope": "punctuation.terminator",
+                    "settings": {
+                        "foreground": "#f33535"
+                    }
+                },
+                {
+                    "scope": "punctuation.separator.continuation",
+                    "settings": {
+                        "foreground": "#f33535"
+                    }
+                },
+            ]
+        }
+    },
+    // "editor.semanticTokenColorCustomizations": {
+    //     "enabled": true, // enable for all themes
+    //     "[Visual Studio 2017 Dark - C++]": {
+    //         "enabled": true,
+    //         "rules": {
+    //             // "type":  "#969696",
+    //             // "namespace": "#00897B",
+    //             // "function": "#ffc5ff",
+    //             "variable": "#dfc570",
+    //             "operator": "#f33535",
+    //             "punctuation": "#ff5517",
+    //             // "string": "#ffe07c"
+    //         }
+    //     }
+    // },
+    "editor.semanticTokenColorCustomizations": {
+        "enabled": true, // enable for all themes
+        "[Default Dark+]": {
+            "enabled": true // enable for a particular theme
+        }
+    },
+    // "files.defaultLanguage": "javascript",
+    // "files.defaultLanguage": "typescriptreact",
+    "files.associations": {
+        // "*.*": "typescriptreact",
+        // "*.*": "typescript",
+        // "*.*": "javascriptreact",
+        // "*.*": "snippets",
+        // "*.*": "cuda-cpp",
+        // "*.*": "sql",
+        // "*.*": "objective-c",
 
+        // "*.elv": "raku",
+        // "*.gd": "python",
+        // "*.kt": "java",
+        // "*.nix": "fsharp",
+        // "*.nu": "python",
+        // "*.r": "javascript",
+        // "*.scala": "java",
+        // "*.tcl": "shellscript",
+        // "*.vim": "csharp",
+        
+        "*.m": "objective-c",
+        "*.st": "smalltalk",
+        // "stdlib.h": "c",
+        // "cstdlib": "c",
+        // "type_traits": "c",
+        // "stdio.h": "c"
+    },
+    "terminal.integrated.cursorStyle": "line",
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.cursorStyleInactive": "line",
+    "[typst]": {
+        "editor.wordWrap": "off",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false
+    },
+    // "files.exclude": {
+    //     "**/*.pdf": true
+    // },
+    // "workbench.editorAssociations": {
+    //     "**/*.pdf": "default"
+    // },
+
+    "explorer.compactFolders": false,
     "workbench.editor.tabSizing": "fixed",
     "workbench.editor.tabSizingFixedMinWidth": 38,
     "workbench.editor.pinnedTabSizing": "normal",
@@ -58,7 +263,7 @@
     "workbench.editor.pinnedTabsOnSeparateRow": true,
     "workbench.editor.titleScrollbarSizing": "large",
     "workbench.editor.wrapTabs": true,
-    "workbench.iconTheme": "vscode-icons",
+    "workbench.iconTheme": "vscode-great-icons",
     "editor.fontFamily": "'Source Code Pro', Consolas, 'Courier New', monospace",
     "editor.maxTokenizationLineLength": 9999999999999999999999999999999999999999999999999999999,
     "editor.rulers": [],
@@ -71,6 +276,300 @@
     "editor.insertSpaces": true,
     "[html]": {
         // "editor.defaultFormatter": "vscode.html-language-features",
-        "editor.defaultFormatter": "mohd-akram.vscode-html-format"
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
+    "code-runner.showRunIconInEditorTitleMenu": true,
+
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "php.suggest.basic": false,
+    "window.title": "${rootName}${separator}${activeEditorLong}${dirty}",
+    "terminal.integrated.gpuAcceleration": "off",
+    "json.maxItemsComputed": 500000,
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "editor.lineHeight": 27,
+    "editor.detectIndentation": false,
+    "[json]": {
+        "editor.quickSuggestions": {
+            "strings": true
+        },
+        "editor.suggest.insertMode": "replace",
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "diffEditor.ignoreTrimWhitespace": false,
+    "javascript.validate.enable": false,
+    "editor.guides.bracketPairs": "active",
+    "editor.bracketPairColorization.enabled": true,
+    "material-icon-theme.activeIconPack": "react",
+    "prettier.singleQuote": true,
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "editor.inlineSuggest.enabled": true,
+    "security.workspace.trust.untrustedFiles": "open",
+    "tabnine.experimentalAutoImports": true,
+    "editor.foldingMaximumRegions": 50000,
+    "rapidapi.terminalLink.enabled": false,
+    "eslint.alwaysShowStatus": true,
+    "prettier.trailingComma": "es5",
+    "javascript.suggest.paths": false,
+    "editor.showFoldingControls": "always",
+    "[javascriptreact]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "python.formatting.provider": "none",
+    "python.formatting.autopep8Args": [
+        "--max-line-length",
+        "1000",
+        "--ignore=E731"
+    ],
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.autopep8",
+        "editor.formatOnType": true
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[css]": {
+        "editor.defaultFormatter": "vscode.css-language-features"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "go.toolsManagement.autoUpdate": true,
+    "C_Cpp.default.cppStandard": "c++17",
+    "cmake.configureOnOpen": true,
+    "terminal.integrated.commandsToSkipShell": [
+        "language-julia.interrupt",
+        "matlab.interrupt"
+    ],
+    "julia.symbolCacheDownload": true,
+    "julia.enableTelemetry": true,
+    "window.commandCenter": false,
+    "[ruby]": {
+        // All of these settings are scoped only to the Ruby language
+        "editor.defaultFormatter": "Shopify.ruby-lsp", // Use the Ruby LSP as the default formatter
+        "editor.formatOnSave": false, // Format files automatically when saving
+        "editor.tabSize": 4, // Use 2 spaces for indentation
+        "editor.insertSpaces": true, // Use spaces and not tabs for indentantion
+        "editor.semanticHighlighting.enabled": true, // Enable semantic highlighting
+        "editor.formatOnType": false // Enable formatting while typing
+    },
+    "[dart]": {
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+    },
+    "d.dubCompiler": "dmd.EXE",
+    "r.rpath.windows": "C:\\\\Users\\\\willy\\\\AppData\\\\Local\\\\Programs\\\\R-4.3.2\\\\bin\\\\x64\\\\R.exe",
+    "r.rterm.windows": "C:\\\\Users\\\\willy\\\\AppData\\\\Local\\\\Programs\\\\R-4.3.2\\\\bin\\\\x64\\\\Rterm.exe",
+    "code-runner.ignoreSelection": true,
+    "code-runner.runInTerminal": true,
+    "code-runner.executorMapByFileExtension": {
+        ".kt": "bash $workspaceRoot/languages/kotlin/run.sh $dirWithoutTrailingSlash/$fileName",
+        ".scala": "bash $workspaceRoot/languages/scala/run.sh $dirWithoutTrailingSlash/$fileName",
+        ".nu": "bash $workspaceRoot/languages/nu/run.sh $dirWithoutTrailingSlash/$fileName",
+        ".elv": "bash $workspaceRoot/languages/elvish/run.sh $dirWithoutTrailingSlash/$fileName",
+        ".vim": "bash $workspaceRoot/languages/vim-script/run.sh $dirWithoutTrailingSlash/$fileName",
+        ".nix": "bash $workspaceRoot/languages/nix/run.sh $dirWithoutTrailingSlash/$fileName",
+        ".tcl": "bash $workspaceRoot/languages/tcl/run.sh $dirWithoutTrailingSlash/$fileName",
+        ".gd": "bash $workspaceRoot/languages/gdscript/run.sh $dirWithoutTrailingSlash/$fileName",
+        ".typ": "bash $workspaceRoot/languages/typst/run.sh $dirWithoutTrailingSlash/$fileName",
+        ".exs": "bash $workspaceRoot/languages/elixir/run.sh $dirWithoutTrailingSlash/$fileName",
+        ".ml": "bash $workspaceRoot/languages/ocaml/run.sh $dirWithoutTrailingSlash/$fileName",
+        ".erl": "bash $workspaceRoot/languages/erlang/run.sh $dirWithoutTrailingSlash/$fileName",
+        ".gleam": "bash $workspaceRoot/languages/gleam/run.sh $dirWithoutTrailingSlash/$fileName",
+        ".zig": "bash $workspaceRoot/languages/zig/run.sh $dirWithoutTrailingSlash/$fileName",
+        ".nim": "bash $workspaceRoot/languages/nim/run.sh $dirWithoutTrailingSlash/$fileName",
+        ".odin": "bash $workspaceRoot/languages/odin/run.sh $dirWithoutTrailingSlash/$fileName",
+        ".cpp": "bash $workspaceRoot/languages/c-plus-plus/run.sh $dirWithoutTrailingSlash/$fileName",
+        ".st": "bash $workspaceRoot/languages/smalltalk-dialect-pharo/run.sh $dirWithoutTrailingSlash/$fileName",
+        ".as": "bash $workspaceRoot/languages/actionscript/run.sh $dirWithoutTrailingSlash/$fileName",
+
+        // ".mojo": "bash ./languages/mojo/run.sh $fileName",
+        // ".rs": "bash ./languages/rust/run.sh $fileName",
+    },
+    "code-runner.executorMap": {
+        "shellscript": "bash $fullFileName",
+        "javascript": "bash $workspaceRoot/languages/javascript-or-typescript/run.sh $dirWithoutTrailingSlash/$fileName",
+        "python": "bash $workspaceRoot/languages/python/run.sh $dirWithoutTrailingSlash/$fileName",
+        "php": "bash $workspaceRoot/languages/php/run.sh $dirWithoutTrailingSlash/$fileName",
+        "go": "bash $workspaceRoot/languages/go/run.sh $dirWithoutTrailingSlash/$fileName",
+        "perl": "bash $workspaceRoot/languages/perl/run.sh $dirWithoutTrailingSlash/$fileName",
+        "julia": "bash $workspaceRoot/languages/julia/run.sh $dirWithoutTrailingSlash/$fileName",
+        "lua": "bash $workspaceRoot/languages/lua/run.sh $dirWithoutTrailingSlash/$fileName",
+        "ruby": "bash $workspaceRoot/languages/ruby/run.sh $dirWithoutTrailingSlash/$fileName",
+        "r": "bash $workspaceRoot/languages/r/run.sh $dirWithoutTrailingSlash/$fileName",
+        "kotlin": "bash $workspaceRoot/languages/kotlin/run.sh $dirWithoutTrailingSlash/$fileName",
+        "swift": "cd $dir && swiftc $fileName && $dir$fileNameWithoutExt && rm -f $dir$fileNameWithoutExt",
+        "dart": "cd $dir && dart run $fileName",
+        "vb": "cd $dir && vbc $fileName && $dir$fileNameWithoutExt.exe && del \"$dir$fileNameWithoutExt.exe\"",
+        "csharp": "cd $dir && csc $fileName && $dir$fileNameWithoutExt.exe && del \"$dir$fileNameWithoutExt.exe\"",
+        "matlab": "cd \"$dir..\\..\\utils\" && python run_matlab_gnu_octave_file.py $dir$fileName",
+        "wolfram": "cd $dir && wolframscript -file $fileName",
+        "raku": "cd $dir && raku $fileName",
+        // "scala": "cd $dir && scala $fileName", // run .scala file using scala interpreter
+        "scala": "bash $workspaceRoot/languages/scala/run.sh $dirWithoutTrailingSlash/$fileName",
+        "java": "bash $workspaceRoot/languages/java/run.sh $dirWithoutTrailingSlash/$fileName",
+        "gdscript": "bash $workspaceRoot/languages/gdscript/run.sh $dirWithoutTrailingSlash/$fileName",
+        "rust": "bash $workspaceRoot/languages/rust/run.sh $dirWithoutTrailingSlash/$fileName",
+        "powershell": "bash $workspaceRoot/languages/powershell/run.sh $dirWithoutTrailingSlash/$fileName",
+        "elixir": "bash $workspaceRoot/languages/elixir/run.sh $dirWithoutTrailingSlash/$fileName",
+        "ocaml": "bash $workspaceRoot/languages/ocaml/run.sh $dirWithoutTrailingSlash/$fileName",
+        "erlang": "bash $workspaceRoot/languages/erlang/run.sh $dirWithoutTrailingSlash/$fileName",
+        "gleam": "bash $workspaceRoot/languages/gleam/run.sh $dirWithoutTrailingSlash/$fileName",
+        "zig": "bash $workspaceRoot/languages/zig/run.sh $dirWithoutTrailingSlash/$fileName",
+        "nim": "bash $workspaceRoot/languages/nim/run.sh $dirWithoutTrailingSlash/$fileName",
+        "odin": "bash $workspaceRoot/languages/odin/run.sh $dirWithoutTrailingSlash/$fileName",
+        "cpp": "bash $workspaceRoot/languages/c-plus-plus/run.sh $dirWithoutTrailingSlash/$fileName",
+        "objective-c": "bash $workspaceRoot/languages/objective-c/run.sh $dirWithoutTrailingSlash/$fileName",
+        "smalltalk": "bash $workspaceRoot/languages/smalltalk-dialect-pharo/run.sh $dirWithoutTrailingSlash/$fileName",
+        "actionscript": "bash $workspaceRoot/languages/actionscript/run.sh $dirWithoutTrailingSlash/$fileName",
+        "groovy": "bash $workspaceRoot/languages/groovy/run.sh $dirWithoutTrailingSlash/$fileName",
+
+        "mojo": "bash $workspaceRoot/languages/mojo/run.sh $dirWithoutTrailingSlash/$fileName",
+        "scala2": "cd $dir && scalac $fileName && scala $fileNameWithoutExt && del \"$dir*.class\"", // compile .scala file to .class and run the .class
+        "scala3": "cd $dir && scalac $fileName && scala $fileNameWithoutExt && del \"$dir*.class\"  && del \"$dir*.tasty\"", // compile .scala file to .class and run the .class
+        // "c": "gcc --version",
+        "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt && rm -f \"$dir$fileNameWithoutExt\"",
+        // "java": "cd $dir && javac $fileName && java $fileNameWithoutExt && del \"$dir*.class\"",
+        "perl6": "cd $dir && perl6 $fileName",
+        "crystal": "cd $dir && crystal $fileName",
+        "v": "cd $dir && v run $fileName",
+        // "odin": "cd $dir && odin run $fileName -file",
+        // "cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+        // "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+        "bat": "cmd /c",
+        "fsharp": "fsi",
+        "typescript": "ts-node",
+        "coffeescript": "coffee",
+        "applescript": "osascript",
+        "clojure": "lein exec",
+        "haxe": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt",
+        "racket": "racket",
+        "scheme": "csi -script",
+        "ahk": "autohotkey",
+        "autoit": "autoit3",
+        "pascal": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
+        "d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt",
+        "haskell": "runghc",
+        // "nim": "nim compile --verbosity:0 --hints:off --run",
+        "lisp": "sbcl --script",
+        "kit": "kitc --run",
+        "sass": "sass --style expanded",
+        "scss": "scss --style expanded",
+        "less": "cd $dir && lessc $fileName $fileNameWithoutExt.css",
+        "FortranFreeForm": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+        "fortran-modern": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+        "fortran_fixed-form": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+        "fortran": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+        "sml": "cd $dir && sml $fileName"
+    },
+    "java.project.resourceFilters": [
+        "node_modules",
+        ".git",
+        "codes",
+        "codes_trial"
+    ],
+    // "java.import.exclusions": [
+    //     "**/node_modules/**",
+    //     "**/codes/**",
+    //     "**/codes_trial/**"
+    // ],
+    "java.project.sourcePaths": [
+        "output\\java"
+    ],
+    "rubyLsp.rubyVersionManager": {
+        "identifier": "none"
+    },
+    "[go]": {
+        "editor.formatOnSave": false
+    },
+    "MATLAB.matlabConnectionTiming": "never",
+    "MATLAB.telemetry": false,
+    "lldb.library": "/mnt/c/WSL_Documents/Swift/swift-5.9.1-RELEASE-ubuntu22.04/usr/lib/liblldb.so",
+    "lldb.launch.expressions": "native",
+    "terminal.integrated.env.windows": {},
+    "console-ninja.featureSet": "Community",
+    "editor.stickyScroll.enabled": false,
+    "godotTools.editorPath.godot3": "\"D:\\Programs_Portable\\Godot_v3.5.3-stable_win64.exe\\godot.exe\"",
+    "godotTools.editorPath.godot4": "\"D:\\Programs_Portable\\Godot_v4.2.1-stable_win64\\godot.exe\"",
+    "Lua.diagnostics.disable": [
+        "lowercase-global",
+        "assign-type-mismatch"
+    ],
+    "editor.multiCursorLimit": 100000,
+    "editor.minimap.enabled": true,
+    "java.project.referencedLibraries": [],
+    "tclLsp.dialect": "tcl9.0",
+    "[*]": {
+        "editor.wordWrap": "off",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false
+    },
+    "[gdscript]": {
+        "editor.wordWrap": "off",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false
+    },
+    "[elixir]": {
+        "editor.wordWrap": "off",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false
+    },
+    "[ocaml]": {
+        "editor.wordWrap": "off",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false
+    },
+    "[nix]": {
+        "editor.wordWrap": "off",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false
+    },
+    "[markdown]": {
+        "editor.wordWrap": "off",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false
+    },
+    "liveServer.settings.donotVerifyTags": true,
+    "lldb.suppressUpdateNotifications": true,
+    "liveServer.settings.CustomBrowser": "chrome",
+    "editor.selectionClipboard": false,
+    "diffEditor.maxComputationTime": 0,
+    "diffEditor.experimental.showMoves": true,
+    "diffEditor.renderSideBySide": true,
+    "editor.unicodeHighlight.invisibleCharacters": false,
+    "application.shellEnvironmentResolutionTimeout": 100,
+    "chat.disableAIFeatures": true,
+    "tclLsp.features.signatureHelp": false,
+    "tclLsp.features.inlayHints": null,
+    "tclLsp.formatting.spaceBetweenBraces": false,
+    "tclLsp.ai.enabled": false,
+    "window.newWindowProfile": "Default",
+    "julia.juliaup.install.hint": false,
+    "[plaintext]": {
+        "editor.unicodeHighlight.ambiguousCharacters": false,
+        "editor.unicodeHighlight.invisibleCharacters": false
+    },
+    "kotlin.languageServer.enabled": false,
+    "kotlin.debugAdapter.enabled": false,
+    "window.titleSeparator": " | ",
+    "zig.zls.enabled": "off",
+    "groovyLint.enable": false,
+    "groovyLint.fix.enable": false,
+    "groovyLint.format.enable": false,
+    "groovyLint.format.useDocumentIndentSize": false,
+    "groovyLint.lint.trigger": "user",
+    "perlnavigator.perlCompileEnabled": false,
+    "julia.juliaup.customDepot": false,
+    "julia.promptToInstall": false,
+    "julia.executablePath": "/usr/local/julia/bin/julia",
+    "workbench.notifications.position": "bottom-left"
 }
