@@ -1,4 +1,4 @@
-const CACHE_NAME = "willyhorizont.github.io#2.2.7"; 
+const CACHE_NAME = "willyhorizont.github.io#2.2.8"; 
 const ASSETS = [
     "./style.css",
 

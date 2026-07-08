@@ -39,8 +39,8 @@
     //     updatedAt,
     // } = await getRepoCommitData();
 
-    const { zeroPaddedDay, monthThreeFirstLetter, fullYear, zeroPaddedHourTwelveHourClock, zeroPaddedMinute, twelveHourClockLatinAbbreviation } = WillyHorizont.Utils.extractDate(updatedAt);
-    const updatedAtPretty = `${zeroPaddedDay} ${monthThreeFirstLetter} ${fullYear} @ ${zeroPaddedHourTwelveHourClock}:${zeroPaddedMinute} ${twelveHourClockLatinAbbreviation}`;
+    // const { zeroPaddedDay, monthThreeFirstLetter, fullYear, zeroPaddedHourTwelveHourClock, zeroPaddedMinute, twelveHourClockLatinAbbreviation } = WillyHorizont.Utils.extractDate(updatedAt);
+    // const updatedAtPretty = `${zeroPaddedDay} ${monthThreeFirstLetter} ${fullYear} @ ${zeroPaddedHourTwelveHourClock}:${zeroPaddedMinute} ${twelveHourClockLatinAbbreviation}`;
 
     const htmlElementFooter = document.body.querySelector("footer");
 
@@ -48,7 +48,7 @@
             <div style="display: flex; flex-direction: column; align-items: center; border-top: 1px solid var(--light-border-color);">
                 <p style="margin-top: 8px;">Made with ❤️ by Willy Horizont</p>
                 <div style="width: 100%; display: flex; flex-direction: row; justify-content: center; flex-wrap: wrap;">
-                    <p style="text-align: center;">Version: 2.2.7 • Last updated: 2.2.7</p>
+                    <p style="text-align: center;">Version: 2.2.8 • Last updated: 08 Jul 2026 @ 03:56 PM</p>
                 </div>
                 <div id="footer" style="width: 100%; display: flex; flex-direction: row; justify-content: center; flex-wrap: wrap; background-color: var(--accent-color-2); color: var(--dark-text-color);">
                 </div>
