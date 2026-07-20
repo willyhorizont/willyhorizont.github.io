@@ -1,4 +1,4 @@
-const CACHE_NAME = "willyhorizont.github.io#2.2.8"; 
+const CACHE_NAME = "willyhorizont.github.io#2.3.0"; 
 const ASSETS = [
     "./style.css",
 
@@ -87,29 +87,25 @@ self.addEventListener("fetch", (event) => {
         return;
     }
 
-    event.respondWith(caches.match(event.request).then((cachedResponse) => {
-        if (cachedResponse) return cachedResponse;
-        if (event.request.mode === "navigate") {
-            let urlPath = new URL(event.request.url).pathname;
-            if (!urlPath.endsWith("index.html")) {
-                let exactCacheKey = urlPath.endsWith("/") ? `${urlPath}index.html` : `${urlPath}/index.html`;
-                return caches.match(exactCacheKey).then((fallbackResponse) => {
-                    if (fallbackResponse) return fallbackResponse;
-                    return fetch(event.request);
-                });
-            }
-        }
-
-        return fetch(event.request).then((networkResponse) => {
-            if (!networkResponse || (networkResponse.status !== 200)) {
+    event.respondWith(caches.open(CACHE_NAME).then((cache) => {
+        return cache.match(event.request).then((cachedResponse) => {
+            const fetchPromise = fetch(event.request).then((networkResponse) => {
+                if (networkResponse && networkResponse.status === 200) {
+                    cache.put(event.request, networkResponse.clone());
+                }
                 return networkResponse;
-            }
-            const responseToCache = networkResponse.clone();
-            caches.open(CACHE_NAME).then((cache) => {
-                cache.put(event.request, responseToCache);
+            }).catch(() => {
+                console.log("Failed to fetch new data");
             });
-            return networkResponse;
-        }).catch((e) => {
+            return cachedResponse || fetchPromise;
+        }).catch(() => {
+            if (event.request.mode === "navigate") {
+                let urlPath = new URL(event.request.url).pathname;
+                if (!urlPath.endsWith("index.html")) {
+                    let exactCacheKey = urlPath.endsWith("/") ? `${urlPath}index.html` : `${urlPath}/index.html`;
+                    return cache.match(exactCacheKey);
+                }
+            }
         });
     }));
 });

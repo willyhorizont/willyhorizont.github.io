@@ -22,6 +22,7 @@
 
         const githubApiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/commits?path=${filePath}&per_page=1`;
         const rawJsonUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/refs/heads/main/${filePath}`;
+        // const rawJsonUrl = `http://127.0.0.1:5500/languages.json`;
 
         let programmingLanguagesDataJson = null;
 
@@ -46,7 +47,7 @@
 
             const latestSha = ((commitData.length > 0) ? commitData[0].sha : null); 
 
-            if (latestSha && (cachedSha === latestSha) && cachedData) {
+            if (latestSha && (cachedSha === latestSha) && cachedData && !WillyHorizont.UtilsWeb.IS_IN_DEVELOPMENT_MODE) {
                 programmingLanguagesDataJson = cachedData;
                 // console.log({ programmingLanguagesDataJson });
                 console.log("using cached data.");
