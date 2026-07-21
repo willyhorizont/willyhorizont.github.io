@@ -1,6 +1,6 @@
 {
     "name": "willyhorizont.github.io",
-    "version": "2.3.0",
+    "version": "2.3.1",
     "description": "willyhorizont.github.io",
     "main": "runtime/index.js",
     "files": [

@@ -44,6 +44,22 @@
         <title>Contact | Willy Horizont</title>
 
         <!-- google-adsense-placeholder -->
+
+        <style>
+            .svg-icon {
+                stroke: var(--light-text-color);
+            }
+
+            html[data-theme="dark"] .svg-icon {
+                stroke: var(--dark-text-color);
+            }
+
+            @media screen and (max-width: 533px) {
+                .contact-title {
+                    width: 100%;
+                }
+            }
+        </style>
     </head>
     <body>
         <header>
@@ -52,52 +68,80 @@
             <div style="display: flex; flex-direction: column; align-items: center; padding: 8px;">
                 <h1 style="text-align: center;">Willy Horizont's Contact</h1>
                 <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 16px; margin-bottom: 16px; width: 100%; flex-wrap: wrap; gap: 16px;">
-                <div style="max-width: 600px; display: flex; flex-direction: row; width: 100%; align-items: center; justify-content: space-between;">
-                    <p style="padding-left: 8px; padding-right: 8px; margin: 0; word-break: break-all;">📩 Email&nbsp;&nbsp;&nbsp; : willyhorizont@gmail.com</p>
+                <div style="max-width: 600px; display: flex; flex-direction: row; width: 100%; align-items: flex-start; justify-content: space-between;">
+                    <div style="display: flex; flex-direction: row; gap: 8px; flex-wrap: wrap;">
+                        <p class="contact-title">📩&nbsp;Email&nbsp;&nbsp;&nbsp;&nbsp;:</p>
+                        <p style="word-break: break-all;">willyhorizont@gmail.com</p>
+                    </div>
                     <div style="display: flex; flex-direction: row; gap: 8px;">
                         <a class="icon-button" target="_blank" rel="noopener noreferrer" href="mailto:willyhorizont@gmail.com" aria-label="Email">
                             <p style="text-align: center; margin: 0;">↗️</p>
                         </a>
-                        <a class="icon-button" target="_blank" rel="noopener noreferrer" href="mailto:willyhorizont@gmail.com" aria-label="Email">
-                            <p style="text-align: center; margin: 0;">⮺</p>
-                        </a>
+                        <button class="icon-button" onclick="copyText(this)" data-copy="willyhorizont@gmail.com" aria-label="Copy Email" style="background: none; cursor: pointer;">
+                            <p style="text-align: center; margin: 0;">
+                                <svg class="svg-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            </p>
+                        </button>
                     </div>
                 </div>
-                <div style="max-width: 600px; display: flex; flex-direction: row; width: 100%; align-items: center; justify-content: space-between;">
-                    <p style="padding-left: 8px; padding-right: 8px; margin: 0; word-break: break-all;">📞 Phone&nbsp;&nbsp;&nbsp; : +62 896-9893-8368</p>
+                <div style="max-width: 600px; display: flex; flex-direction: row; width: 100%; align-items: flex-start; justify-content: space-between;">
+                    <div style="display: flex; flex-direction: row; gap: 8px; flex-wrap: wrap;">
+                        <p class="contact-title">📞&nbsp;Phone&nbsp;&nbsp;&nbsp;&nbsp;:</p>
+                        <p style="word-break: break-all;">+62 896-9893-8368</p>
+                    </div>
                     <div style="display: flex; flex-direction: row; gap: 8px;">
                         <a class="icon-button" target="_blank" rel="noopener noreferrer" href="tel:+6289698938368" aria-label="Phone">
                             <p style="text-align: center; margin: 0;">↗️</p>
                         </a>
-                        <a class="icon-button" target="_blank" rel="noopener noreferrer" href="tel:+6289698938368" aria-label="Phone">
-                            <p style="text-align: center; margin: 0;">⮺</p>
-                        </a>
+                        <button class="icon-button" onclick="copyText(this)" data-copy="+6289698938368" aria-label="Copy Phone" style="background: none; cursor: pointer;">
+                            <p style="text-align: center; margin: 0;">
+                                <svg class="svg-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            </p>
+                        </button>
                     </div>
                 </div>
-                <div style="max-width: 600px; display: flex; flex-direction: row; width: 100%; align-items: center; justify-content: space-between;">
-                    <p style="padding-left: 8px; padding-right: 8px; margin: 0; word-break: break-all; display: inline-flex; align-items: center; gap: 4px;">
-                        <img style="width: 1.2em; height: 1.2em;" src="https://static.licdn.com/aero-v1/sc/h/akt4ae504epesldzj74dzred8" alt="LinkedIn's logo">&nbsp;LinkedIn : linkedin.com/in/willy-horizont
-                    </p>
+                <div style="max-width: 600px; display: flex; flex-direction: row; width: 100%; align-items: flex-start; justify-content: space-between;">
+                    <div style="display: flex; flex-direction: row; gap: 8px; flex-wrap: wrap;">
+                        <p class="contact-title" style="display: inline-flex; align-items: center;"><img style="width: 1.2em; height: 1.2em;" src="https://static.licdn.com/aero-v1/sc/h/akt4ae504epesldzj74dzred8" alt="LinkedIn's logo">&nbsp;LinkedIn&nbsp;:</p>
+                        <p style="word-break: break-all;">linkedin.com/in/willy-horizont</p>
+                    </div>
                     <div style="display: flex; flex-direction: row; gap: 8px;">
                         <a class="icon-button" target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/willy-horizont" aria-label="LinkedIn">
                             <p style="text-align: center; margin: 0;">↗️</p>
                         </a>
-                        <a class="icon-button" target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/willy-horizont" aria-label="LinkedIn">
-                            <p style="text-align: center; margin: 0;">⮺</p>
-                        </a>
+                        <button class="icon-button" onclick="copyText(this)" data-copy="https://www.linkedin.com/in/willy-horizont" aria-label="Copy LinkedIn" style="background: none; cursor: pointer;">
+                            <p style="text-align: center; margin: 0;">
+                                <svg class="svg-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            </p>
+                        </button>
                     </div>
                 </div>
-                <div style="max-width: 600px; display: flex; flex-direction: row; width: 100%; align-items: center; justify-content: space-between;">
-                    <p style="padding-left: 8px; padding-right: 8px; margin: 0; word-break: break-all; display: inline-flex; align-items: center; gap: 4px;">
-                        <img style="width: 1.2em; height: 1.2em;" src="https://github.githubassets.com/favicons/favicon.svg" alt="Github's logo">&nbsp;Github&nbsp;&nbsp; : github.com/willyhorizont
-                    </p>
+                <div style="max-width: 600px; display: flex; flex-direction: row; width: 100%; align-items: flex-start; justify-content: space-between;">
+                    <div style="display: flex; flex-direction: row; gap: 8px; flex-wrap: wrap;">
+                        <p class="contact-title" style="display: inline-flex; align-items: center;"><img style="width: 1.2em; height: 1.2em;" src="https://github.githubassets.com/favicons/favicon.svg" alt="Github's logo">&nbsp;Github&nbsp;&nbsp;:</p>
+                        <p style="word-break: break-all;">github.com/willyhorizont</p>
+                    </div>
                     <div style="display: flex; flex-direction: row; gap: 8px;">
                         <a class="icon-button" target="_blank" rel="noopener noreferrer" href="https://github.com/willyhorizont" aria-label="Github">
                             <p style="text-align: center; margin: 0;">↗️</p>
                         </a>
-                        <a class="icon-button" target="_blank" rel="noopener noreferrer" href="https://github.com/willyhorizont" aria-label="Github">
-                            <p style="text-align: center; margin: 0;">⮺</p>
-                        </a>
+                        <button class="icon-button" onclick="copyText(this)" data-copy="https://github.com/willyhorizont" aria-label="Copy Github" style="background: none; cursor: pointer;">
+                            <p style="text-align: center; margin: 0;">
+                                <svg class="svg-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            </p>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -109,5 +153,15 @@
         <script src="../component/component-footer.js"></script>
         <!-- <script src="../component/component-user-web-browser-checker.js"></script> -->
         <script src="../component/component-sw.js"></script>
+        <script>
+            function copyText(btnEl) {
+                const textToCopy = btnEl.getAttribute("data-copy");
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    alert(`"${textToCopy}" copied to clipboard!`);
+                }).catch((err) => {
+                    console.error("Error copying text: ", err);
+                });
+            }
+        </script>
     </body>
 </html>

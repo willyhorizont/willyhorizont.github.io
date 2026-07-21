@@ -66,14 +66,18 @@
                 line-height: 1;
             }
 
-            .pdf-page .pdf-page-attachment {
+            .pdf-page-attachment {
+                padding-top: 0;
+            }
+
+            .pdf-page .attachment {
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
             }
 
-            .pdf-page .pdf-page-attachment img {
+            .pdf-page .attachment img {
                 height: 257mm;
                 outline: 1px solid var(--light-border-color);
             }
@@ -94,7 +98,7 @@
                 .bordered {
                     border: 1px solid var(--dark-border-color);
                 }
-                .pdf-page .pdf-page-attachment img {
+                .pdf-page .attachment img {
                     outline: 1px solid var(--dark-border-color);
                 }
             }
@@ -161,14 +165,18 @@
                     padding-bottom: 15mm;
                 }
 
-                .pdf-page .pdf-page-attachment {
+                .pdf-page-attachment {
+                    padding-top: 20mm;
+                }
+
+                .pdf-page .attachment {
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
                     align-items: center;
                 }
 
-                .pdf-page .pdf-page-attachment img {
+                .pdf-page .attachment img {
                     height: 257mm;
                     outline: 1px solid var(--light-border-color);
                 }
@@ -848,13 +856,13 @@
                             <br>
                             <br>
                             <br>
-                            <p style="font-weight: bold; font-size: 1.5em; text-align: center;">Attachment</p>
-                            <br>
-                            <br>
-                            <div class="pdf-page-attachment">
+                            <p style="font-weight: bold; font-size: 1.5em; text-align: center; margin-bottom: -40px;">Attachment</p>
+                        </div>
+                        <div class="pdf-page pdf-page-attachment">
+                            <div class="attachment">
                                 <img alt="Willy Horizont's Intellectual Property Rights Certificate Page 1" src="../sertifikat_HAKI_EC00202116985_Page1.jpg" />
                             </div>
-                            <div class="pdf-page-attachment">
+                            <div class="attachment">
                                 <img alt="Willy Horizont's Intellectual Property Rights Certificate Page 2" src="../sertifikat_HAKI_EC00202116985_Page2.jpg" />
                             </div>
                         </div>
