@@ -48,7 +48,7 @@
             <div style="display: flex; flex-direction: column; align-items: center; border-top: 1px solid var(--light-border-color);">
                 <p style="margin-top: 8px;">Made with ❤️ by Willy Horizont</p>
                 <div style="width: 100%; display: flex; flex-direction: row; justify-content: center; flex-wrap: wrap;">
-                    <p style="text-align: center;">Version: 2.3.1 • Last updated: 21 Jul 2026 @ 03:53 PM</p>
+                    <p style="text-align: center;">Version: 2.3.2 • Last updated: 21 Jul 2026 @ 04:00 PM</p>
                 </div>
                 <div id="footer" style="width: 100%; display: flex; flex-direction: row; justify-content: center; flex-wrap: wrap; background-color: var(--accent-color-2); color: var(--dark-text-color);">
                 </div>
