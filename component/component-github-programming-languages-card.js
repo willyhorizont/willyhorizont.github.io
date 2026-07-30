@@ -21,8 +21,9 @@
         const filePath = "languages.json";
 
         const githubApiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/commits?path=${filePath}&per_page=1`;
-        const rawJsonUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/refs/heads/main/${filePath}`;
-        // const rawJsonUrl = `http://127.0.0.1:5500/languages.json`;
+        let rawJsonUrl;
+        rawJsonUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/refs/heads/main/${filePath}`;
+        // rawJsonUrl = `http://127.0.0.1:5500/languages.json`;
 
         let programmingLanguagesDataJson = null;
 

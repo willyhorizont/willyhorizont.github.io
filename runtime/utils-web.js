@@ -771,31 +771,17 @@
             const howCloseRgbHexColorPercentageInLightMode = WillyHorizont.Utils.getHowCloseRgbHexColor(lightBackgroundColor, programmingLanguageColor);
 
             const darkBorderColor = ((howCloseRgbHexColorPercentageInDarkMode > 80) ? "var(--light-border-color, #cccccc)" : (programmingLanguage["stack"].length > 1) ? "var(--light-border-color, #cccccc)" : programmingLanguageColor);
-            const lightBorderColor = ((howCloseRgbHexColorPercentageInLightMode > 70) ? "var(--dark-border-color, #333)" : (programmingLanguage["stack"].length > 1) ? "var(--dark-border-color, #333)" : programmingLanguageColor);
+            const lightBorderColor = ((howCloseRgbHexColorPercentageInLightMode > 90) ? "var(--dark-border-color, #333)" : (programmingLanguage["stack"].length > 1) ? "var(--dark-border-color, #333)" : programmingLanguageColor);
 
             let programmingLanguageBarChartContainerInnerHtmlNewItem =  removeTemplateStringIndentation(programmingLanguageBarChartContainerInnerHtmlCurrent.trimStart() + (/*html*/`
                                                 <div data-id="programming-language-percentage" data-dark-border-color="${darkBorderColor}" data-light-border-color="${lightBorderColor}" style="border-radius: ${(programmingLanguageIndex === 0) ? '6px 0 0 6px' : 0}; width: 100%; flex: ${programmingLanguagePercentageRounded}%; height: 8px; background-color: ${programmingLanguageColor}; border: 1px solid ${isInDarkMode ? darkBorderColor : lightBorderColor};">
                                                 </div>
             `));
-            if (programmingLanguage["stack"].length > 1) {
-                const programmingLanguagePercentageInnerHtml = programmingLanguage["stack"].map((programmingLanguageStack) => removeTemplateStringIndentation(/*html*/`
-                                                    <div style="width: 100%; height: 100%; background-color: ${programmingLanguageStack['color']};">
-                                                    </div>
-                                                    `)).join("\n                                                    ");
-                programmingLanguageBarChartContainerInnerHtmlNewItem =  removeTemplateStringIndentation(programmingLanguageBarChartContainerInnerHtmlCurrent.trimStart() + (/*html*/`
-                                                <div data-id="programming-language-percentage" data-dark-border-color="${darkBorderColor}" data-light-border-color="${lightBorderColor}" style="display: flex; flex-direction: column; overflow: hidden; border-radius: ${(programmingLanguageIndex === 0) ? '6px 0 0 6px' : 0}; width: 100%; flex: ${programmingLanguagePercentageRounded}%; height: 8px; border: 1px solid ${isInDarkMode ? darkBorderColor : lightBorderColor};">
-                                                    ${programmingLanguagePercentageInnerHtml}
-                                                </div>
-                `));
-            }
-            const githubProgrammingLanguageColorCodeInnerHtml = programmingLanguage["stack"].map((programmingLanguageStack) => removeTemplateStringIndentation(/*html*/`
-                                                        <div style="width: 100%; height: 100%; background-color: ${programmingLanguageStack['color']};">
-                                                        </div>
-                                                    `)).join("\n                                                        ");
             let programmingLanguagesTextContainerInnerHtmlNewItem = removeTemplateStringIndentation(programmingLanguagesTextContainerInnerHtmlCurrent.trimStart() + (/*html*/`
                                                 <a data-id="programming-language-text" href="https://github.com/willyhorizont/cross-language-programming-concepts/tree/main/languages/${programmingLanguage["id"]}" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit; display: flex; flex-direction: row; align-items: center; margin-right: 16px;">
                                                     <div data-id="github-programming-language-color-code" data-dark-border-color="${darkBorderColor}" data-light-border-color="${lightBorderColor}" style="display: flex; flex-direction: column; overflow: hidden; width: 0.5em; height: 0.5em; border-radius: 50%; margin-right: 8px; aspect-ratio: 1; border: 1px solid ${isInDarkMode ? darkBorderColor : lightBorderColor};">
-                                                        ${githubProgrammingLanguageColorCodeInnerHtml}
+                                                        <div style="width: 100%; height: 100%; background-color: ${programmingLanguage["stack"][0]["color"]};">
+                                                        </div>
                                                     </div>
                                                     <p style="font-size: 0.75em; font-weight: 600; margin-right: 8px; word-break: break-word;">${programmingLanguage["stack"].map((programmingLanguageStack) => (programmingLanguageStack["name"])).join(" / ")}</p>
                                                     <p style="font-size: 0.75em;">${programmingLanguagePercentageRounded}%</p>
@@ -821,11 +807,14 @@
             return ([ programmingLanguageBarChartContainerInnerHtmlNewItem, programmingLanguagesTextContainerInnerHtmlNewItem ]);
         }), ["", ""]));
 
+        let githubProgammingLanguagesCardTitle;
+        githubProgammingLanguagesCardTitle = "Programming Languages";
+        // githubProgammingLanguagesCardTitle = "Languages";
         document.getElementById("placeholder-github-programming-languages-card").innerHTML = removeTemplateStringIndentation(/*html*/`
                             <div data-id="programming-languages-card" class="programming-languages-card" style="line-height: inherit; font-family: 'Courier New', Courier, 'Liberation Mono', 'DejaVu Sans Mono', monospace; display: flex; flex-direction: column; flex-wrap: wrap; row-gap: 8px; border: 1px solid var(--light-border-color, #cccccc); border-radius: 6px; padding: 8px;">
                                 <div style="display: flex; justify-content: center; align-items: center;">
                                     <div style="display: flex; flex-direction: column; width: 100%;">
-                                        <p style="font-weight: 600;">Programming Languages</p>
+                                        <p style="font-weight: 600;">${githubProgammingLanguagesCardTitle}</p>
                                         <div data-id="programming-languages-bar-chart-container" class="programming-languages-bar-chart-container" style="margin-top: 16px; display: flex; flex-direction: row; width: 100%; border-radius: 6px; column-gap: 1px; background-color: ${isInDarkMode ? 'var(--dark-background-color, #fff)' : 'var(--light-background-color, #121212)'};">
                                             ${programmingLanguageBarChartContainerInnerHtml}
                                         </div>
