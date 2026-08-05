@@ -211,20 +211,20 @@
         const [zeroPaddedHourTwelveHourClock, _] = hourMinuteTwentyFourHourClockAllZeroPaddedJoinByColon.split(":");
         const [zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute] = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false }).format(dateObject).split(":");
         return ({
-            fullYear: (`${dateObject.getUTCFullYear()}`),
-            zeroPaddedMonth: ((`${dateObject.getUTCMonth() + 1}`).padStart(2, "0")),
+            fullYear: (`${dateObject.getFullYear()}`),
+            zeroPaddedMonth: ((`${dateObject.getMonth() + 1}`).padStart(2, "0")),
             monthThreeFirstLetter: (new Intl.DateTimeFormat("en-US", { month: "short" }).format(dateObject)),
-            zeroPaddedDay: ((`${dateObject.getUTCDate()}`).padStart(2, "0")),
+            zeroPaddedDay: ((`${dateObject.getDate()}`).padStart(2, "0")),
             dayThreeFirstLetter: (new Intl.DateTimeFormat("en-US", { weekday: "short" }).format(dateObject)),
             zeroPaddedHourTwelveHourClock,
             twelveHourClockLatinAbbreviation,
             zeroPaddedHourTwentyFourHourClock,
             zeroPaddedMinute,
-            zeroPaddedSecond: ((`${dateObject.getUTCSeconds()}`).padStart(2, "0")),
-            zeroPaddedMiliSecondThreeDigit: ((`${dateObject.getUTCMilliseconds()}`).padStart(3, "0")),
+            zeroPaddedSecond: ((`${dateObject.getSeconds()}`).padStart(2, "0")),
+            zeroPaddedMiliSecondThreeDigit: ((`${dateObject.getMilliseconds()}`).padStart(3, "0")),
         });
     }; /* extractDateV3 */
-    const getClock = ({ includeSecond = true, includeMiliSecond = true } = {}) => ((({ fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit }) => (prettyFormatDate({ includeSecond, includeMiliSecond, fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit })))(extractDate(new Date().toISOString()))); /* getClockV2 */
+    const getClock = ({ includeSecond = true, includeMiliSecond = true } = {}) => ((({ fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit }) => (prettyFormatDate({ includeSecond, includeMiliSecond, fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit })))(extractDate(new Date()))); /* getClockV2 */
     const getTimestamp = () => ((({ fullYear, zeroPaddedMonth, monthThreeFirstLetter, zeroPaddedDay, dayThreeFirstLetter, zeroPaddedHourTwelveHourClock, twelveHourClockLatinAbbreviation, zeroPaddedHourTwentyFourHourClock, zeroPaddedMinute, zeroPaddedSecond, zeroPaddedMiliSecondThreeDigit }) => (`${fullYear}-${zeroPaddedMonth}-${zeroPaddedDay}-at-${zeroPaddedHourTwentyFourHourClock}.${zeroPaddedHourTwelveHourClock}.${zeroPaddedMinute}.${zeroPaddedMiliSecondThreeDigit}`))(extractDate(new Date().toISOString()))); /* getTimestampV2 */
     const pipe = (...restArguments) => {
         const pipeLastResultMap = new Map();
