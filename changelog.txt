@@ -1,3 +1,13 @@
+[Last updated: 10 Aug 2026 @ 12:17 AM]
+version 2.3.5:
+update footer;
+upadting in fedora 44 kde wayland btw :)
+
+[Last updated: 10 Aug 2026 @ 12:16 AM]
+version 2.3.5:
+update footer;
+upadting in fedora 44 kde wayland btw :)
+
 [Last updated: 06 Aug 2026 @ 02:17 AM]
 version 2.3.4:
 small fix in utils, fix getClock and extractDate;
