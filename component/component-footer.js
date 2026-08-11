@@ -8,7 +8,7 @@
             <div style="display: flex; flex-direction: column; align-items: center; border-top: 1px solid var(--light-border-color);">
                 <p style="margin-top: 8px;">Made with ❤️ by Willy Horizont</p>
                 <div style="width: 100%; display: flex; flex-direction: row; justify-content: center; flex-wrap: wrap;">
-                    <p style="text-align: center;">Version: 2.3.5 • Last updated: 10 Aug 2026 @ 12:17 AM</p>
+                    <p style="text-align: center;">Version: 2.3.6 • Last updated: 11 Aug 2026 @ 01:49 PM</p>
                 </div>
                 <div id="footer" style="width: 100%; display: flex; flex-direction: row; justify-content: center; flex-wrap: wrap; background-color: var(--accent-color-2); color: var(--dark-text-color);">
                 </div>
