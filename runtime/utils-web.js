@@ -754,10 +754,66 @@
     const setupComponentGithubProgrammingLanguagesCard = (programmingLanguages) => {
         const isInDarkMode = (document.documentElement.getAttribute("data-theme") === "dark");
 
-        const totalProgrammingLanguages = programmingLanguages.length;
-        const programmingLanguagePercentage = ((1 / totalProgrammingLanguages) * 100);
-        const otherPercentage = parseFloat((programmingLanguagePercentage % 1).toFixed(2)).toString();
-        const programmingLanguagePercentageRounded = Math.floor(programmingLanguagePercentage);
+        let totalProgrammingLanguages = programmingLanguages.length;
+        // totalProgrammingLanguages = 18;
+        // totalProgrammingLanguages = 49;
+        // totalProgrammingLanguages = 50;
+        // totalProgrammingLanguages = 51;
+        // totalProgrammingLanguages = 52;
+        const totalElements = (totalProgrammingLanguages + 1);
+        const eachPercentage = (1 / totalElements) * 100;
+        const totalProgrammingLanguagesPercentage = (eachPercentage * totalProgrammingLanguages);
+        const otherPercentage = 100 - totalProgrammingLanguagesPercentage;
+        const totalPercentage = otherPercentage + totalProgrammingLanguagesPercentage;
+
+        const otherPercentageVersionOne = 1;
+        const otherPercentageVersionOneRemainder = otherPercentage - otherPercentageVersionOne;
+        const eachPercentageVersionOne = eachPercentage + (otherPercentageVersionOneRemainder / totalProgrammingLanguages);
+        const totalProgrammingLanguagesPercentageVersionOne = (eachPercentageVersionOne * totalProgrammingLanguages);
+        const totalPercentageVersionOne = Number((otherPercentageVersionOne + totalProgrammingLanguagesPercentageVersionOne).toFixed(2));
+
+        const programmingLanguagePercentageDisplayVersionOne = eachPercentageVersionOne;
+        const otherPercentageDisplayVersionOne = otherPercentageVersionOne;
+
+        const programmingLanguagePercentageDisplayVersionTwo = Math.trunc(eachPercentageVersionOne);
+        const otherPercentageDisplayVersionTwo = ((eachPercentageVersionOne - Math.trunc(eachPercentageVersionOne)) * totalProgrammingLanguages) + otherPercentageVersionOne;
+
+        let programmingLanguagePercentageDisplay;
+        let otherPercentageDisplay;
+
+        // if (otherPercentageDisplayVersionTwo >= programmingLanguagePercentageDisplayVersionTwo) {
+        //     programmingLanguagePercentageDisplay = Number(programmingLanguagePercentageDisplayVersionOne.toFixed(2));
+        //     otherPercentageDisplay = otherPercentageDisplayVersionOne;
+        // } else {
+        //     programmingLanguagePercentageDisplay = Math.trunc(programmingLanguagePercentageDisplayVersionTwo);
+        //     otherPercentageDisplay = Number((100 - (programmingLanguagePercentageDisplay * totalProgrammingLanguages)).toFixed(2));
+        // }
+        programmingLanguagePercentageDisplay = Number(programmingLanguagePercentageDisplayVersionOne.toFixed(2));
+        otherPercentageDisplay = Number((100 - (programmingLanguagePercentageDisplay * totalProgrammingLanguages)).toFixed(2));
+
+        // console.log({
+        //     totalProgrammingLanguages,
+        //     totalElements,
+        //     eachPercentage,
+        //     totalProgrammingLanguagesPercentage,
+        //     otherPercentage,
+        //     totalPercentage,
+            
+        //     otherPercentageVersionOne,
+        //     otherPercentageVersionOneRemainder,
+        //     eachPercentageVersionOne,
+        //     totalProgrammingLanguagesPercentageVersionOne,
+        //     totalPercentageVersionOne,
+
+        //     programmingLanguagePercentageDisplayVersionOne,
+        //     otherPercentageDisplayVersionOne,
+
+        //     programmingLanguagePercentageDisplayVersionTwo,
+        //     otherPercentageDisplayVersionTwo,
+
+        //     programmingLanguagePercentageDisplay,
+        //     otherPercentageDisplay,
+        // });
 
         const programmingLanguagesBarChartContainerWidth = ((totalProgrammingLanguages * 20) + "px")
         const styles = window.getComputedStyle(document.documentElement);
@@ -774,7 +830,7 @@
             const lightBorderColor = ((howCloseRgbHexColorPercentageInLightMode > 90) ? "var(--dark-border-color, #333)" : (programmingLanguage["stack"].length > 1) ? "var(--dark-border-color, #333)" : programmingLanguageColor);
 
             let programmingLanguageBarChartContainerInnerHtmlNewItem =  removeTemplateStringIndentation(programmingLanguageBarChartContainerInnerHtmlCurrent.trimStart() + (/*html*/`
-                                                <div data-id="programming-language-percentage" data-dark-border-color="${darkBorderColor}" data-light-border-color="${lightBorderColor}" style="border-radius: ${(programmingLanguageIndex === 0) ? '6px 0 0 6px' : 0}; width: 100%; flex: ${programmingLanguagePercentageRounded}%; height: 8px; background-color: ${programmingLanguageColor}; border: 1px solid ${isInDarkMode ? darkBorderColor : lightBorderColor};">
+                                                <div data-id="programming-language-percentage" data-dark-border-color="${darkBorderColor}" data-light-border-color="${lightBorderColor}" style="border-radius: ${(programmingLanguageIndex === 0) ? '6px 0 0 6px' : 0}; width: 100%; flex: ${programmingLanguagePercentageDisplay}%; height: 8px; background-color: ${programmingLanguageColor}; border: 1px solid ${isInDarkMode ? darkBorderColor : lightBorderColor};">
                                                 </div>
             `));
             let programmingLanguagesTextContainerInnerHtmlNewItem = removeTemplateStringIndentation(programmingLanguagesTextContainerInnerHtmlCurrent.trimStart() + (/*html*/`
@@ -784,7 +840,7 @@
                                                         </div>
                                                     </div>
                                                     <p style="font-size: 0.75em; font-weight: 600; margin-right: 8px; word-break: break-word;">${programmingLanguage["stack"].map((programmingLanguageStack) => (programmingLanguageStack["name"])).join(" / ")}</p>
-                                                    <p style="font-size: 0.75em;">${programmingLanguagePercentageRounded}%</p>
+                                                    <p style="font-size: 0.75em;">${programmingLanguagePercentageDisplay}%</p>
                                                 </a>
             `));
 
@@ -792,14 +848,14 @@
 
             if (isLastProgrammingLanguage === true) {
                 programmingLanguageBarChartContainerInnerHtmlNewItem += (/*html*/`
-                                                <div data-id="programming-language-percentage" data-dark-border-color="${otherColor}" data-light-border-color="${darkBackgroundColor}" style="border-radius:0 6px 6px 0; width: 100%; flex: ${otherPercentage}%; height: 8px; background-color: ${otherColor}; border: 1px solid ${isInDarkMode ? otherColor : darkBackgroundColor};">
+                                                <div data-id="programming-language-percentage" data-dark-border-color="${otherColor}" data-light-border-color="${darkBackgroundColor}" style="border-radius:0 6px 6px 0; width: 100%; flex: ${otherPercentageDisplay}%; height: 8px; background-color: ${otherColor}; border: 1px solid ${isInDarkMode ? otherColor : darkBackgroundColor};">
                                                 </div>
                 `);
                 programmingLanguagesTextContainerInnerHtmlNewItem += (/*html*/`
                                                 <a data-id="programming-language-text" href="https://github.com/willyhorizont" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit; display: flex; flex-direction: row; align-items: center; margin-right: 16px;">
                                                     <div data-id="github-programming-language-color-code" data-dark-border-color="${otherColor}" data-light-border-color="${darkBackgroundColor}" style="width: 0.5em; height: 0.5em; border-radius: 50%; margin-right: 8px; aspect-ratio: 1; background-color: ${otherColor}; border: 1px solid ${isInDarkMode ? otherColor : darkBackgroundColor};"></div>
                                                     <p style="font-size: 0.75em; font-weight: 600; margin-right: 8px; word-break: break-word;">Other</p>
-                                                    <p style="font-size: 0.75em;">${otherPercentage}%</p>
+                                                    <p style="font-size: 0.75em;">${otherPercentageDisplay}%</p>
                                                 </a>
                 `);
             }

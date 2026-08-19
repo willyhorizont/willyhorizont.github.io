@@ -1,0 +1,1831 @@
+[
+    {
+        "id": "javascript-or-typescript",
+        "stack": [
+            {
+                "name": "JavaScript",
+                "url": "https://nodejs.org/",
+                "color": "#f1e05a"
+            },
+            {
+                "name": "TypeScript",
+                "url": "https://www.typescriptlang.org/",
+                "color": "#3178c6"
+            }
+        ],
+        "file_extension": ".js",
+        "syntax_highlighters": [
+            "javascript-or-typescript"
+        ],
+        "concept_definition": {
+            "list": "Array",
+            "dict": "Object",
+            "lambda": "Anonymous Function"
+        },
+        "vscode_extensions": [],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "node:26.5.0-trixie",
+                "docker_images": [
+                    "node:26.5.0-trixie"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "python",
+        "stack": [
+            {
+                "name": "Python",
+                "url": "https://www.python.org/",
+                "color": "#3572A5"
+            }
+        ],
+        "file_extension": ".py",
+        "syntax_highlighters": [
+            "python"
+        ],
+        "concept_definition": {
+            "list": "list",
+            "dict": "dict",
+            "lambda": "lambda"
+        },
+        "vscode_extensions": [
+            "ms-python.vscode-pylance"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "python:3.14.6-trixie",
+                "docker_images": [
+                    "python:3.14.6-trixie"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "php",
+        "stack": [
+            {
+                "name": "PHP",
+                "url": "https://www.php.net/",
+                "color": "#4F5D95"
+            }
+        ],
+        "file_extension": ".php",
+        "syntax_highlighters": [
+            "php"
+        ],
+        "concept_definition": {
+            "list": "array",
+            "dict": "associative array",
+            "lambda": "Anonymous Function"
+        },
+        "vscode_extensions": [
+            "bmewburn.vscode-intelephense-client"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "php:8.5.6-cli",
+                "docker_images": [
+                    "php:8.5.6-cli"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "go",
+        "stack": [
+            {
+                "name": "Go",
+                "url": "https://go.dev/",
+                "color": "#00ADD8"
+            }
+        ],
+        "file_extension": ".go",
+        "syntax_highlighters": [
+            "go"
+        ],
+        "concept_definition": {
+            "list": "Slice",
+            "dict": "Map",
+            "lambda": "Anonymous Function"
+        },
+        "vscode_extensions": [
+            "golang.go"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "golang:1.26.3",
+                "docker_images": [
+                    "golang:1.26.3"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "perl",
+        "stack": [
+            {
+                "name": "Perl",
+                "url": "https://www.perl.org/",
+                "color": "#0298c3"
+            }
+        ],
+        "file_extension": ".pl",
+        "syntax_highlighters": [
+            "perl"
+        ],
+        "concept_definition": {
+            "list": "ARRAY",
+            "dict": "HASH",
+            "lambda": "Anonymous Subroutine"
+        },
+        "vscode_extensions": [
+            "bscan.perlnavigator"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "perl:5.42.2",
+                "docker_images": [
+                    "perl:5.42.2"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "julia",
+        "stack": [
+            {
+                "name": "Julia",
+                "url": "https://julialang.org/",
+                "color": "#a270ba"
+            }
+        ],
+        "file_extension": ".jl",
+        "syntax_highlighters": [
+            "julia"
+        ],
+        "concept_definition": {
+            "list": "Vector",
+            "dict": "Dict",
+            "lambda": "Anonymous Function"
+        },
+        "vscode_extensions": [
+            "julialang.language-julia"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "julia:1.12.6",
+                "docker_images": [
+                    "julia:1.12.6"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "lua",
+        "stack": [
+            {
+                "name": "Lua",
+                "url": "https://www.lua.org/",
+                "color": "#000080"
+            }
+        ],
+        "file_extension": ".lua",
+        "syntax_highlighters": [
+            "lua"
+        ],
+        "concept_definition": {
+            "list": "table",
+            "dict": "table",
+            "lambda": "Anonymous Function"
+        },
+        "vscode_extensions": [
+            "sumneko.lua"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "nickblah/lua:5.5.0-luarocks",
+                "docker_images": [
+                    "nickblah/lua:5.5.0-luarocks"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "ruby",
+        "stack": [
+            {
+                "name": "Ruby",
+                "url": "https://www.ruby-lang.org/",
+                "color": "#701516"
+            }
+        ],
+        "file_extension": ".rb",
+        "syntax_highlighters": [
+            "ruby"
+        ],
+        "concept_definition": {
+            "list": "Array",
+            "dict": "Hash",
+            "lambda": "Lambda and Proc"
+        },
+        "vscode_extensions": [
+            
+        ],
+        "vscode_extensions_archive": [
+            "Shopify.ruby-lsp"
+        ],
+        "docker": [
+            {
+                "language_version_notes": "ruby:4.0.5",
+                "docker_images": [
+                    "ruby:4.0.5"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "r",
+        "stack": [
+            {
+                "name": "R",
+                "url": "https://www.r-project.org/",
+                "color": "#198CE7"
+            }
+        ],
+        "file_extension": ".r",
+        "syntax_highlighters": [
+            "r"
+        ],
+        "concept_definition": {
+            "list": "list",
+            "dict": "environtment",
+            "lambda": "Anonymous Function"
+        },
+        "vscode_extensions": [
+            "reditorsupport.r",
+            "reditorsupport.r-syntax"
+        ],
+        "vscode_extensions_archive": [
+            "hridoy.r-development"
+        ],
+        "docker": [
+            {
+                "language_version_notes": "r-base:4.6.0",
+                "docker_images": [
+                    "r-base:4.6.0"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "kotlin",
+        "stack": [
+            {
+                "name": "Kotlin",
+                "url": "https://kotlinlang.org/",
+                "color": "#A97BFF"
+            }
+        ],
+        "file_extension": ".kt",
+        "syntax_highlighters": [
+            "rust",
+            "groovy",
+            "swift",
+            
+            "kotlin"
+        ],
+        "concept_definition": {
+            "list": "ArrayList",
+            "dict": "HashMap",
+            "lambda": null
+        },
+        "vscode_extensions": [
+            "mathiasfrohlich.Kotlin"
+        ],
+        "vscode_extensions_archive": [
+            "fwcd.kotlin",
+            "JetBrains.kotlin-server",
+            "esafirm.kotlin-formatter"
+        ],
+        "docker": [
+            {
+                "language_version_notes": "danysk/kotlin:2.3.21-jdk23",
+                "docker_images": [
+                    "danysk/kotlin:2.3.21-jdk23"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "swift",
+        "stack": [
+            {
+                "name": "Swift",
+                "url": "https://www.swift.org/",
+                "color": "#f15c44"
+            }
+        ],
+        "file_extension": ".swift",
+        "syntax_highlighters": [
+            "swift"
+        ],
+        "concept_definition": {
+            "list": "Array",
+            "dict": "Dictionary",
+            "lambda": "Closure"
+        },
+        "vscode_extensions": [
+            "swiftlang.swift-vscode"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "swift:6.3.3-bookworm",
+                "docker_images": [
+                    "swift:6.3.3-bookworm"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "dart",
+        "stack": [
+            {
+                "name": "Dart",
+                "url": "https://dart.dev/",
+                "color": "#009089"
+            }
+        ],
+        "file_extension": ".dart",
+        "syntax_highlighters": [
+            "dart"
+        ],
+        "concept_definition": {
+            "list": "List",
+            "dict": "Map",
+            "lambda": "Anonymous Function"
+        },
+        "vscode_extensions": [
+
+        ],
+        "vscode_extensions_archive": [
+            "dart-code.dart-code",
+            "oscarcs.dart-syntax-highlighting-only"
+        ],
+        "docker": [
+            {
+                "language_version_notes": "dart:3.12.2-sdk",
+                "docker_images": [
+                    "dart:3.12.2-sdk"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "visual-basic-dot-net",
+        "stack": [
+            {
+                "name": "VB.NET (Visual Basic dotNET)",
+                "url": "https://learn.microsoft.com/en-us/dotnet/visual-basic/",
+                "color": "#945db7"
+            }
+        ],
+        "file_extension": ".vb",
+        "syntax_highlighters": [
+            "visual-basic-dot-net"
+        ],
+        "concept_definition": {
+            "list": "List",
+            "dict": "Dictionary",
+            "lambda": "Delegate"
+        },
+        "vscode_extensions": [
+            "dnakode.vbnet-language-support"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "willyhorizont/microsoft/dotnet/sdk:10.0.302",
+                "docker_images": [
+                    "willyhorizont/microsoft/dotnet/sdk:10.0.302"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "c-sharp",
+        "stack": [
+            {
+                "name": "C# (C Sharp)",
+                "url": "https://learn.microsoft.com/en-us/dotnet/csharp/",
+                "color": "#178600"
+            }
+        ],
+        "file_extension": ".cs",
+        "syntax_highlighters": [
+            "c-sharp"
+        ],
+        "concept_definition": {
+            "list": "List",
+            "dict": "Dictionary",
+            "lambda": "Delegate"
+        },
+        "vscode_extensions": [
+            "ms-dotnettools.csharp"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "willyhorizont/microsoft/dotnet/sdk:10.0.302",
+                "docker_images": [
+                    "willyhorizont/microsoft/dotnet/sdk:10.0.302"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "matlab-or-octave",
+        "stack": [
+            {
+                "name": "MATLAB",
+                "url": "https://www.mathworks.com/products/matlab.html",
+                "color": "#e16737"
+            },
+            {
+                "name": "Octave",
+                "url": "https://octave.org/",
+                "color": "#e16737"
+            }
+        ],
+        "file_extension": ".m",
+        "syntax_highlighters": [
+            "objective-c",
+            "rust",
+            "go",
+            "c-plus-plus",
+            "c-sharp",
+            
+            "lua",
+            "visual-basic-dot-net",
+            
+            "matlab-or-octave"
+        ],
+        "concept_definition": {
+            "list": "Cell Array",
+            "dict": "Map",
+            "lambda": "Anonymous Function"
+        },
+        "vscode_extensions": [
+            "MathWorks.language-matlab"
+        ],
+        "vscode_extensions_archive": [
+            "gimly81.matlab"
+        ],
+        "docker": [
+            {
+                "language_version_notes": "gnuoctave/octave:11.3.0 or mathworks/matlab:r2026a",
+                "docker_images": [
+                    "gnuoctave/octave:11.3.0"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "wolfram-language-mathematica",
+        "stack": [
+            {
+                "name": "Wolfram Language (Mathematica)",
+                "url": "https://www.wolfram.com/wolframscript/",
+                "color": "#ff4131"
+            }
+        ],
+        "file_extension": ".wl",
+        "syntax_highlighters": [
+            "c-plus-plus",
+            
+            "c",
+            
+            "visual-basic-dot-net",
+            
+            "java",
+            "rust",
+            "groovy",
+            
+            "wolfram-language-mathematica"
+        ],
+        "concept_definition": {
+            "list": "List",
+            "dict": "Association",
+            "lambda": "Anonymous Function"
+        },
+        "vscode_extensions": [
+            "WolframResearch.wolfram"
+        ],
+        "vscode_extensions_archive": [
+            "shigma.vscode-wl"
+        ],
+        "docker": [
+            {
+                "language_version_notes": "wolframresearch/wolframengine:15.0.0",
+                "docker_images": [
+                    "wolframresearch/wolframengine:15.0.0"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "raku",
+        "stack": [
+            {
+                "name": "Raku",
+                "url": "https://raku.org/",
+                "color": "#357fff"
+            }
+        ],
+        "file_extension": ".raku",
+        "syntax_highlighters": [
+            "java",
+            "objective-c",
+            
+            "r",
+            
+            "swift",
+            
+            "raku"
+        ],
+        "concept_definition": {
+            "list": "Positional",
+            "dict": "Associative",
+            "lambda": "Anonymous Subroutine"
+        },
+        "vscode_extensions": [
+            "bscan.raku-navigator"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "rakudo-star:2026.06-trixie",
+                "docker_images": [
+                    "rakudo-star:2026.06-trixie"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "scala",
+        "stack": [
+            {
+                "name": "Scala",
+                "url": "https://www.scala-lang.org/",
+                "color": "#c22d40"
+            }
+        ],
+        "file_extension": ".scala",
+        "syntax_highlighters": [
+            "swift",
+            
+            "lua",
+            "visual-basic-dot-net",
+            
+            "scala"
+        ],
+        "concept_definition": {
+            "list": "ArrayBuffer",
+            "dict": "Map",
+            "lambda": "Lambda Expression"
+        },
+        "vscode_extensions": [
+            "scala-lang.scala"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "(virtuslab/scala-cli:1.13.0 and virtuslab/scala-cli:1.14.0) == scala:3.8.3",
+                "docker_images": [
+                    "virtuslab/scala-cli:1.13.0",
+                    "virtuslab/scala-cli:1.14.0"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "java",
+        "stack": [
+            {
+                "name": "Java",
+                "url": "https://www.oracle.com/java/",
+                "color": "#b07219"
+            }
+        ],
+        "file_extension": ".java",
+        "syntax_highlighters": [
+            "java"
+        ],
+        "concept_definition": {
+            "list": "ArrayList",
+            "dict": "HashMap",
+            "lambda": "Lambda Expression"
+        },
+        "vscode_extensions": [
+            "redhat.java",
+            "Oracle.oracle-java"
+        ],
+        "vscode_extensions_archive": [
+            "georgewfraser.vscode-javac"
+        ],
+        "docker": [
+            {
+                "language_version_notes": "eclipse-temurin:26.0.1_8-jdk",
+                "docker_images": [
+                    "eclipse-temurin:26.0.1_8-jdk"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "nu",
+        "stack": [
+            {
+                "name": "Nu",
+                "url": "https://www.nushell.sh/",
+                "color": "#c9df40"
+            }
+        ],
+        "file_extension": ".nu",
+        "syntax_highlighters": [
+            "julia",
+            "powershell",
+            "raku",
+            "perl",
+
+            "nu"
+        ],
+        "concept_definition": {
+            "list": "List",
+            "dict": "Record",
+            "lambda": "Closure"
+        },
+        "vscode_extensions": [
+            "TheNuProjectContributors.vscode-nushell-lang"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "ghcr.io/nushell/nushell:0.113.0-bookworm",
+                "docker_images": [
+                    "ghcr.io/nushell/nushell:0.113.0-bookworm"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "elvish",
+        "stack": [
+            {
+                "name": "Elvish",
+                "url": "https://elv.sh/",
+                "color": "#55BB55"
+            }
+        ],
+        "file_extension": ".elv",
+        "syntax_highlighters": [
+            "python",
+            "julia",
+            "raku",
+            "r",
+
+            "elvish"
+        ],
+        "concept_definition": {
+            "list": "List",
+            "dict": "Map",
+            "lambda": "Lambda Expression"
+        },
+        "vscode_extensions": [
+            "elves.elvish"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "ghcr.io/elves/elvish:v0.21.0",
+                "docker_images": [
+                    "ghcr.io/elves/elvish:v0.21.0"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "vim-script",
+        "stack": [
+            {
+                "name": "Vim Script",
+                "url": "https://vimhelp.org/vim9.txt.html",
+                "color": "#199f4b"
+            }
+        ],
+        "file_extension": ".vim",
+        "syntax_highlighters": [
+            "c-sharp",
+            "rust",
+            "go",
+            "c-plus-plus",
+            
+            "javascript-or-typescript",
+            
+            "lua",
+            "visual-basic-dot-net",
+            
+            "vim-script"
+        ],
+        "concept_definition": {
+            "list": "List",
+            "dict": "Dictionary",
+            "lambda": "Anonymous Function"
+        },
+        "vscode_extensions": [
+            "https://github.com/willyhorizont/vim9script-vscode-syntax-highlighter-extension/releases/latest/download/willyhorizont.vim9script-vscode-syntax-highlighter-extension.vsix"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "thinca/vim:v9.2.0555-basic-ubuntu",
+                "docker_images": [
+                    "thinca/vim:v9.2.0555-basic-ubuntu"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "rust",
+        "stack": [
+            {
+                "name": "Rust",
+                "url": "https://rust-lang.org/",
+                "color": "#dea584"
+            }
+        ],
+        "file_extension": ".rs",
+        "syntax_highlighters": [
+            "rust"
+        ],
+        "concept_definition": {
+            "list": "Vec",
+            "dict": "Map",
+            "lambda": "Closure"
+        },
+        "vscode_extensions": [
+            "dustypomerleau.rust-syntax",
+            "rust-lang.rust-analyzer"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "rust:1.96.0",
+                "docker_images": [
+                    "rust:1.96.0"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "nix",
+        "stack": [
+            {
+                "name": "Nix",
+                "url": "https://nixos.org/",
+                "color": "#7e7eff"
+            }
+        ],
+        "file_extension": ".nix",
+        "syntax_highlighters": [
+            "lua",
+            
+            "ruby",
+            
+            "visual-basic-dot-net",
+            
+            "powershell",
+            "julia",
+            
+            "nix"
+        ],
+        "concept_definition": {
+            "list": "List",
+            "dict": "Attribute Set",
+            "lambda": "Lambda"
+        },
+        "vscode_extensions": [
+            "jnoortheen.nix-ide"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "nixos/nix:2.34.7",
+                "docker_images": [
+                    "nixos/nix:2.34.7"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "tcl",
+        "stack": [
+            {
+                "name": "Tcl",
+                "url": "https://www.tcl-lang.org/",
+                "color": "#e4cc98"
+            }
+        ],
+        "file_extension": ".tcl",
+        "syntax_highlighters": [
+            "lua",
+            
+            "rust",
+            "go",
+            "c-plus-plus",
+            "c-sharp",
+            
+            "tcl"
+        ],
+        "concept_definition": {
+            "list": "list",
+            "dict": "dict",
+            "lambda": null
+        },
+        "vscode_extensions": [
+            "sleutho.tcl"
+        ],
+        "vscode_extensions_archive": [
+            "rashwell.tcl",
+            "bitwisecook.tcl-lsp"
+        ],
+        "docker": [
+            {
+                "language_version_notes": "siqsuruq/tcl:9.0.3-debian",
+                "docker_images": [
+                    "siqsuruq/tcl:9.0.3-debian"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "gdscript",
+        "stack": [
+            {
+                "name": "GDScript",
+                "url": "https://docs.godotengine.org/en/4.6/tutorials/scripting/gdscript/gdscript_basics.html",
+                "color": "#355570"
+            }
+        ],
+        "file_extension": ".gd",
+        "syntax_highlighters": [
+            "go",
+            "java",
+            "dart",
+            
+            "javascript-or-typescript",
+            
+            "gdscript"
+        ],
+        "concept_definition": {
+            "list": "Array",
+            "dict": "Dictionary",
+            "lambda": "Anonymous Function"
+        },
+        "vscode_extensions": [
+            "geequlim.godot-tools"
+        ],
+        "vscode_extensions_archive": [
+            "EddieDover.gdscript-formatter-linter",
+            "DoHe.godot-format",
+            "poeticAndroid.pretty-gd-vs"
+        ],
+        "docker": [
+            {
+                "language_version_notes": "prijindal/godot:4.6.3-stable-standard",
+                "docker_images": [
+                    "prijindal/godot:4.6.3-stable-standard"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "typst",
+        "stack": [
+            {
+                "name": "Typst",
+                "url": "https://typst.app/",
+                "color": "#239dad"
+            }
+        ],
+        "file_extension": ".typ",
+        "syntax_highlighters": [
+            "dart",
+            "groovy",
+            "java",
+            
+            "typst"
+        ],
+        "concept_definition": {
+            "list": "Array",
+            "dict": "Dictionary",
+            "lambda": "Anonymous Function"
+        },
+        "vscode_extensions": [
+            "myriad-dreamin.tinymist",
+            "mathematic.vscode-pdf"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "123marvin123/typst:0.14.2",
+                "docker_images": [
+                    "123marvin123/typst:0.14.2"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "powershell",
+        "stack": [
+            {
+                "name": "PowerShell",
+                "url": "https://github.com/powershell/powershell",
+                "color": "#012456"
+            }
+        ],
+        "file_extension": ".ps1",
+        "syntax_highlighters": [
+            "powershell"
+        ],
+        "concept_definition": {
+            "list": "Array",
+            "dict": "HashTable",
+            "lambda": "Block"
+        },
+        "vscode_extensions": [
+            "ms-vscode.PowerShell"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "heywoodlh/powershell:7.6.2",
+                "docker_images": [
+                    "heywoodlh/powershell:7.6.2"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "elixir",
+        "stack": [
+            {
+                "name": "Elixir",
+                "url": "https://elixir-lang.org/",
+                "color": "#6e4a7e"
+            }
+        ],
+        "file_extension": ".exs",
+        "syntax_highlighters": [
+            "ruby",
+            "julia",
+            "powershell",
+            
+            "elixir"
+        ],
+        "concept_definition": {
+            "list": "List",
+            "dict": "Map",
+            "lambda": "Anonymous Function"
+        },
+        "vscode_extensions": [
+            "JakeBecker.elixir-ls"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "elixir:1.20.0 and erlang:29.0.1",
+                "docker_images": [
+                    "elixir:1.20.0-otp-29"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "ocaml",
+        "stack": [
+            {
+                "name": "OCaml",
+                "url": "https://ocaml.org/",
+                "color": "#ef7a08"
+            }
+        ],
+        "file_extension": ".ml",
+        "syntax_highlighters": [
+            "rust",
+            "c-plus-plus",
+            
+            "julia",
+            
+            "lua",
+            
+            "ocaml"
+        ],
+        "concept_definition": {
+            "list": "List",
+            "dict": "Hash Table",
+            "lambda": "Closure"
+        },
+        "vscode_extensions": [
+            "ocamllabs.ocaml-platform"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "ocaml/opam:ubuntu-25.04-ocaml-5.4",
+                "docker_images": [
+                    "ocaml/opam:ubuntu-25.04-ocaml-5.4"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "erlang",
+        "stack": [
+            {
+                "name": "Erlang",
+                "url": "https://www.erlang.org/",
+                "color": "#B83998"
+            }
+        ],
+        "file_extension": ".erl",
+        "syntax_highlighters": [
+            "rust",
+            "go",
+            "groovy",
+            
+            "erlang"
+        ],
+        "concept_definition": {
+            "list": "list",
+            "dict": "map",
+            "lambda": "Anonymous Function"
+        },
+        "vscode_extensions": [
+            "pgourlain.erlang"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "erlang:29.0.2",
+                "docker_images": [
+                    "erlang:29.0.2"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "gleam",
+        "stack": [
+            {
+                "name": "Gleam",
+                "url": "https://gleam.run/",
+                "color": "#ffaff3"
+            }
+        ],
+        "file_extension": ".gleam",
+        "syntax_highlighters": [
+            "rust",
+            "swift",
+            
+            "gleam"
+        ],
+        "concept_definition": {
+            "list": "List",
+            "dict": "Dict",
+            "lambda": "Anonymous Function"
+        },
+        "vscode_extensions": [
+            "Gleam.gleam"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "ghcr.io/gleam-lang/gleam:v1.17.0-erlang",
+                "docker_images": [
+                    "ghcr.io/gleam-lang/gleam:v1.17.0-erlang"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "zig",
+        "stack": [
+            {
+                "name": "Zig",
+                "url": "https://ziglang.org/",
+                "color": "#ec915c"
+            }
+        ],
+        "file_extension": ".zig",
+        "syntax_highlighters": [
+            "java",
+            "dart",
+            "c-plus-plus",
+            "objective-c",
+            
+            "python",
+            
+            "lua",
+            "visual-basic-dot-net",
+            
+            "zig"
+        ],
+        "concept_definition": {
+            "list": "Slice",
+            "dict": "HashMap",
+            "lambda": null
+        },
+        "vscode_extensions": [
+            "ziglang.vscode-zig"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "willyhorizont/zig:0.16.0",
+                "docker_images": [
+                    "willyhorizont/zig:0.16.0"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "nim",
+        "stack": [
+            {
+                "name": "Nim",
+                "url": "https://nim-lang.org/",
+                "color": "#ffc200"
+            }
+        ],
+        "file_extension": ".nim",
+        "syntax_highlighters": [
+            "rust",
+            
+            "nim"
+        ],
+        "concept_definition": {
+            "list": "Sequence",
+            "dict": "Table",
+            "lambda": "Closure"
+        },
+        "vscode_extensions": [
+            "NimLang.nimlang"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "nimlang/nim:2.2.10",
+                "docker_images": [
+                    "nimlang/nim:2.2.10"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "odin",
+        "stack": [
+            {
+                "name": "Odin",
+                "url": "https://odin-lang.org/",
+                "color": "#60AFFE"
+            }
+        ],
+        "file_extension": ".odin",
+        "syntax_highlighters": [
+            "rust",
+            "go",
+            
+            "lua",
+            
+            "c",
+            "javascript-or-typescript",
+            
+            "odin"
+        ],
+        "concept_definition": {
+            "list": "Slice",
+            "dict": "Map",
+            "lambda": null
+        },
+        "vscode_extensions": [
+            "DanielGavin.ols"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "willyhorizont/odin:dev-2026-06",
+                "docker_images": [
+                    "willyhorizont/odin:dev-2026-06"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "c-plus-plus",
+        "stack": [
+            {
+                "name": "C++ (C Plus Plus)",
+                "url": "https://isocpp.org/",
+                "color": "#f34b7d"
+            }
+        ],
+        "file_extension": ".cpp",
+        "syntax_highlighters": [
+            "c-plus-plus"
+        ],
+        "concept_definition": {
+            "list": "Vector",
+            "dict": "Unordered Map",
+            "lambda": "Lambda Expression"
+        },
+        "vscode_extensions": [
+            "jeff-hykin.better-cpp-syntax"
+        ],
+        "vscode_extensions_archive": [
+            "ms-vscode.cpptools"
+        ],
+        "docker": [
+            {
+                "language_version_notes": "gcc:16.1.0-trixie and cpp:23",
+                "docker_images": [
+                    "gcc:16.1.0-trixie"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "objective-c",
+        "stack": [
+            {
+                "name": "Objective C",
+                "url": "https://developer.apple.com/documentation/objectivec/",
+                "color": "#438eff"
+            }
+        ],
+        "file_extension": ".m",
+        "syntax_highlighters": [
+            "objective-c"
+        ],
+        "concept_definition": {
+            "list": "Array",
+            "dict": "Dictionary",
+            "lambda": "Block"
+        },
+        "vscode_extensions": [
+            "jeff-hykin.better-objc-syntax"
+        ],
+        "vscode_extensions_archive": [
+
+        ],
+        "docker": [
+            {
+                "language_version_notes": "willyhorizont/pascalecu/clang-objc2-gnustep:2.0.0",
+                "docker_images": [
+                    "willyhorizont/pascalecu/clang-objc2-gnustep:2.0.0"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "smalltalk",
+        "stack": [
+            {
+                "name": "Smalltalk",
+                "url": "https://pharo.org/",
+                "color": "#596706"
+            }
+        ],
+        "file_extension": ".st",
+        "syntax_highlighters": [
+            "groovy",
+            
+            "smalltalk"
+        ],
+        "concept_definition": {
+            "list": "OrderedCollection",
+            "dict": "Dictionary",
+            "lambda": "BlockClosure"
+        },
+        "vscode_extensions": [
+            "pleasedskin.smalltalk"
+        ],
+        "vscode_extensions_archive": [
+            "badetitou.pharo-language-server",
+            "badetitou.pharo-highlighter",
+            "leocamello.vscode-smalltalk"
+        ],
+        "docker": [
+            {
+                "language_version_notes": "willyhorizont/pharo:13.1.0",
+                "docker_images": [
+                    "willyhorizont/pharo:13.1.0"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "actionscript",
+        "stack": [
+            {
+                "name": "ActionScript",
+                "url": "https://flex.apache.org/",
+                "color": "#882B0F"
+            }
+        ],
+        "file_extension": ".as",
+        "syntax_highlighters": [
+            "rust",
+            "groovy",
+            "go",
+            "swift",
+            "c-plus-plus",
+            "objective-c",
+            "c-sharp",
+            "dart",
+            
+            "lua",
+            
+            "actionscript"
+        ],
+        "concept_definition": {
+            "list": "Array",
+            "dict": "Object",
+            "lambda": "Anonymous Function"
+        },
+        "vscode_extensions": [
+            "bowlerhatllc.vscode-as3mxml"
+        ],
+        "vscode_extensions_archive": [
+            "RobinMiau.ruffle"
+        ],
+        "docker": [
+            {
+                "language_version_notes": "debian:bookworm + [jdk:1.7 and apache.org/apache-flex-sdk:4.16.1 and nexussays/playerglobal.swc:27.0] -> actionscript:3.0 -> [SWF:38 in FlashPlayer:27]",
+                "docker_images": [
+                    "willyhorizont/actionscript:3.0"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "groovy",
+        "stack": [
+            {
+                "name": "Groovy",
+                "url": "https://groovy-lang.org/",
+                "color": "#4298b8"
+            }
+        ],
+        "file_extension": ".groovy",
+        "syntax_highlighters": [
+            "groovy"
+        ],
+        "concept_definition": {
+            "list": "List",
+            "dict": "Map",
+            "lambda": "Closure"
+        },
+        "vscode_extensions": [
+            "NicolasVuillamy.vscode-groovy-lint"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "groovy:5.0.6-jdk21-noble",
+                "docker_images": [
+                    "groovy:5.0.6-jdk21-noble"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "cangjie",
+        "stack": [
+            {
+                "name": "Cangjie",
+                "url": "https://cangjie-lang.cn/en",
+                "color": "#00868B"
+            }
+        ],
+        "file_extension": ".cj",
+        "syntax_highlighters": [
+            "swift",
+            
+            "go",
+            "rust",
+            "groovy",
+            "c-sharp",
+            
+            "cangjie"
+        ],
+        "concept_definition": {
+            "list": "ArrayList",
+            "dict": "HashMap",
+            "lambda": "Closure"
+        },
+        "vscode_extensions": [
+            "IDE-Innovation-Lab.cangjie"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "willyhorizont/cangjie:1.1.3",
+                "docker_images": [
+                    "willyhorizont/cangjie:1.1.3"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "c3",
+        "stack": [
+            {
+                "name": "C3",
+                "url": "https://c3-lang.org/",
+                "color": "#2563eb"
+            }
+        ],
+        "file_extension": ".c3",
+        "syntax_highlighters": [
+            "rust",
+            "c-plus-plus",
+            "groovy",
+            "swift",
+            "go",
+            "objective-c",
+            "c-sharp",
+            "dart",
+            
+            "c3"
+        ],
+        "concept_definition": {
+            "list": "List",
+            "dict": "HashMap",
+            "lambda": null
+        },
+        "vscode_extensions": [
+            "c3.vscode-c3"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "willyhorizont/c3:0.8.2",
+                "docker_images": [
+                    "willyhorizont/c3:0.8.2"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "c",
+        "stack": [
+            {
+                "name": "C",
+                "url": "https://www.c-language.org/",
+                "color": "#555555"
+            }
+        ],
+        "file_extension": ".c",
+        "syntax_highlighters": [
+            "c"
+        ],
+        "concept_definition": {
+            "list": null,
+            "dict": null,
+            "lambda": null
+        },
+        "vscode_extensions": [
+            
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "gcc:16.1.0-trixie and c:23",
+                "docker_images": [
+                    "gcc:16.1.0-trixie"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "d",
+        "stack": [
+            {
+                "name": "D",
+                "url": "https://dlang.org/",
+                "color": "#ba595e"
+            }
+        ],
+        "file_extension": ".d",
+        "syntax_highlighters": [
+            "c-sharp",
+            "c-plus-plus",
+            "rust",
+            "java",
+            "groovy",
+            "go",
+            "swift",
+            "objective-c",
+            "dart",
+            
+            "d"
+        ],
+        "concept_definition": {
+            "list": "Array",
+            "dict": "Associative Array",
+            "lambda": "Delegate"
+        },
+        "vscode_extensions": [
+            "webfreak.code-d"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "willyhorizont/dmd:2.112.0",
+                "docker_images": [
+                    "willyhorizont/dmd:2.112.0"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "v",
+        "stack": [
+            {
+                "name": "V",
+                "url": "https://vlang.io/",
+                "color": "#4f87c4"
+            }
+        ],
+        "file_extension": ".v",
+        "syntax_highlighters": [
+            "go",
+            
+            "lua",
+            
+            "rust",
+            
+            "v"
+        ],
+        "concept_definition": {
+            "list": "array",
+            "dict": "map",
+            "lambda": "anonymous function"
+        },
+        "vscode_extensions": [
+            "vlanguage.vscode-vlang"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "willyhorizont/v:0.5.2",
+                "docker_images": [
+                    "willyhorizont/v:0.5.2"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "vala",
+        "stack": [
+            {
+                "name": "Vala",
+                "url": "https://vala.dev/",
+                "color": "#a56de2"
+            }
+        ],
+        "file_extension": ".vala",
+        "syntax_highlighters": [
+            "rust",
+            "go",
+            "c-sharp",
+            
+            "javascript-or-typescript",
+            
+            "visual-basic-dot-net",
+            "lua",
+
+            "vala"
+        ],
+        "concept_definition": {
+            "list": "ArrayList",
+            "dict": "HashMap",
+            "lambda": "Delegate"
+        },
+        "vscode_extensions": [
+            "prince781.vala"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "willyhorizont/vala:0.56.19",
+                "docker_images": [
+                    "willyhorizont/vala:0.56.19"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "crystal",
+        "stack": [
+            {
+                "name": "Crystal",
+                "url": "https://crystal-lang.org/",
+                "color": "#000100"
+            }
+        ],
+        "file_extension": ".cr",
+        "syntax_highlighters": [
+            "ruby",
+            
+            "julia",
+            "powershell",
+            "python",
+
+            "crystal"
+        ],
+        "concept_definition": {
+            "list": "Array",
+            "dict": "Hash",
+            "lambda": "Proc"
+        },
+        "vscode_extensions": [
+            "crystal-lang-tools.crystal-lang"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "willyhorizont/crystal:1.21.0",
+                "docker_images": [
+                    "willyhorizont/crystal:1.21.0"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "wren",
+        "stack": [
+            {
+                "name": "Wren",
+                "url": "https://wren.io/",
+                "color": "#383838"
+            }
+        ],
+        "file_extension": ".wren",
+        "syntax_highlighters": [
+            "rust",
+            "go",
+            
+            "visual-basic-dot-net",
+            
+            "c-plus-plus",
+            
+            "lua",
+            
+            "wren"
+        ],
+        "concept_definition": {
+            "list": "List",
+            "dict": "Map",
+            "lambda": "Function"
+        },
+        "vscode_extensions": [
+            "BojanEndrovski.wren"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "willyhorizont/wren:0.4.0",
+                "docker_images": [
+                    "willyhorizont/wren:0.4.0"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "pike",
+        "stack": [
+            {
+                "name": "Pike",
+                "url": "https://pike.lysator.liu.se/",
+                "color": "#005390"
+            }
+        ],
+        "file_extension": ".pike",
+        "syntax_highlighters": [
+            "rust",
+            "go",
+            
+            "pike"
+        ],
+        "concept_definition": {
+            "list": "array",
+            "dict": "mapping",
+            "lambda": "lambda"
+        },
+        "vscode_extensions": [
+            "undeadfish.vscode-pike-lang"
+        ],
+        "vscode_extensions_archive": [
+            
+        ],
+        "docker": [
+            {
+                "language_version_notes": "willyhorizont/pike:8.0.1956",
+                "docker_images": [
+                    "willyhorizont/pike:8.0.1956"
+                ]
+            }
+        ]
+    }
+]

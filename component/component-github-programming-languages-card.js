@@ -23,46 +23,41 @@
         const githubApiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/commits?path=${filePath}&per_page=1`;
         let rawJsonUrl;
         rawJsonUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/refs/heads/main/${filePath}`;
-        // rawJsonUrl = `http://127.0.0.1:5500/languages.json`;
+        // rawJsonUrl = `http://127.0.0.1:5500/${filePath}`;
+        // rawJsonUrl = `${filePath}`;
 
         let programmingLanguagesDataJson = null;
+        const LOCAL_DATABASE_KEY_PROGRAMMING_LANGUAGES_DATA = "programming-languages";
 
         try {
-            const LOCAL_STORAGE_KEY_PROGRAMMING_LANGUAGES_SHA = "programming-languages-sha";
-            const LOCAL_DATABASE_KEY_PROGRAMMING_LANGUAGES_DATA = "programming-languages";
-
-            const cachedSha = localStorage.getItem(LOCAL_STORAGE_KEY_PROGRAMMING_LANGUAGES_SHA);
             const localDatabase = WillyHorizont.UtilsWeb.setupLocalDatabase(LOCAL_DATABASE_KEY_PROGRAMMING_LANGUAGES_DATA);
-            const cachedData = await localDatabase.getItem(LOCAL_DATABASE_KEY_PROGRAMMING_LANGUAGES_DATA);
 
-            const LOCAL_STORAGE_KEY_LAST_SYNC_PROGRAMMING_LANGUAGES_DATE = "site-last-sync-programming-languages-date";
-            const lastSyncProgrammingLanguagesDate = localStorage.getItem(LOCAL_STORAGE_KEY_LAST_SYNC_PROGRAMMING_LANGUAGES_DATE);
+            const jsonResponse = await WillyHorizont.Utils.fetchThrowErrorIfNotOk(rawJsonUrl);
+            programmingLanguagesDataJson = await jsonResponse.json();
+            // console.log({ programmingLanguagesDataJson });
 
-            if ((lastSyncProgrammingLanguagesDate !== null) && (WillyHorizont.Utils.getMinutesDifference(new Date().getTime().toString(), lastSyncProgrammingLanguagesDate) <= 5)) {
-                programmingLanguagesDataJson = cachedData;
-                return programmingLanguagesDataJson;
+            await localDatabase.setItem(LOCAL_DATABASE_KEY_PROGRAMMING_LANGUAGES_DATA, programmingLanguagesDataJson);
+            console.log("cache updated from source.");
+        } catch (err) {
+            console.error("Failed checking for update:", err);
+        }
+
+        try {
+            if (!programmingLanguagesDataJson) {
+                const localDatabase = WillyHorizont.UtilsWeb.setupLocalDatabase(LOCAL_DATABASE_KEY_PROGRAMMING_LANGUAGES_DATA);
+    
+                const cachedData = await localDatabase.getItem(LOCAL_DATABASE_KEY_PROGRAMMING_LANGUAGES_DATA);
+    
+                if (cachedData) {
+                    programmingLanguagesDataJson = cachedData;
+                } else {
+                    const jsonResponse = await WillyHorizont.Utils.fetchThrowErrorIfNotOk(filePath);
+                    programmingLanguagesDataJson = await jsonResponse.json();
+                    // console.log({ programmingLanguagesDataJson });
+                }
             }
-
-            const apiResponse = await WillyHorizont.Utils.fetchThrowErrorIfNotOk(githubApiUrl);
-            const commitData = await apiResponse.json();
-
-            const latestSha = ((commitData.length > 0) ? commitData[0].sha : null); 
-
-            if (latestSha && (cachedSha === latestSha) && cachedData && !WillyHorizont.UtilsWeb.IS_IN_DEVELOPMENT_MODE) {
-                programmingLanguagesDataJson = cachedData;
-                // console.log({ programmingLanguagesDataJson });
-                console.log("using cached data.");
-            } else {
-                const jsonResponse = await WillyHorizont.Utils.fetchThrowErrorIfNotOk(rawJsonUrl);
-                programmingLanguagesDataJson = await jsonResponse.json();
-                // console.log({ programmingLanguagesDataJson });
-
-                if (latestSha) localStorage.setItem(LOCAL_STORAGE_KEY_PROGRAMMING_LANGUAGES_SHA, latestSha);
-                await localDatabase.setItem(LOCAL_DATABASE_KEY_PROGRAMMING_LANGUAGES_DATA, programmingLanguagesDataJson);
-                console.log("cache updated from source.");
-            }
-        } catch (error) {
-            console.error("Failed checking for update:", error);
+        } catch (err) {
+            console.error("Failed getting cache data:", err);
         }
         return programmingLanguagesDataJson;
     };

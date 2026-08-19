@@ -2,19 +2,29 @@
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD")
-V="2.3.6" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!!
+V="2.3.7" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!!
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
-\. "$HOME/.nvm/nvm.sh"
-npm version "$V" --no-git-tag-version
+
+LID="javascript-or-typescript"
+IMG=$("$RD/tools/utils.sh" --get-docker-image $LID 2>/dev/null)
+
+docker run -i --rm \
+    --entrypoint bash \
+    -v "$RD:$RD" \
+    "$IMG" \
+    -c "
+        cd \"$RD\"
+        npm version \"$V\" --no-git-tag-version
+    "
+
 H="
-[Last updated: $T]
-version $V:
+[Last updated: $T][version: $V]
 "
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-update last-commit.sh;
+update and fix component-github-programming-languages-card;
 "
 M=$(sed -e '/./,$!d' <<< "$M")
 M="$H
