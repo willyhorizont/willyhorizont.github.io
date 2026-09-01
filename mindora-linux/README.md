@@ -17,7 +17,7 @@ curl -L -o ~/.config/labwc/SPRM.sh https://willyhorizont.github.io/linux/SPRM.sh
 ## Installed Packages
 * labwc
 * ly
-* gvfs-backends
+* gvfs
 * adwaita-icon-theme
 * hicolor-icon-theme
 * git
@@ -25,16 +25,15 @@ curl -L -o ~/.config/labwc/SPRM.sh https://willyhorizont.github.io/linux/SPRM.sh
 * mousepad
 * foot
 * pcmanfm-qt
-* sfbar
+* waybar
 * bc
-* fonts-dejavu-core
-* fonts-liberation
-* yabar
+* dejavu-fonts-all
+* liberation-fonts
+* lavalauncher
 
 ## Disabled Fedora Features
 ```
 sudo systemctl disable dnf-makecache.timer
-sudo systemctl disable abrt-journal-core.service
 ```
 
 ## Install package
@@ -61,9 +60,7 @@ sudo dnf remove packagename && sudo dnf autoremove
 
 ## Top Best Lightweight Alternative for Bottom Panel
 * waybar
-* sfbar
 * lavalauncher
 
 ## Top Best Lightweight Alternative for Top Bar
 * waybar
-* yabar

@@ -8,7 +8,7 @@
 sudo dnf install --setopt=install_weak_deps=False -y \
     labwc \
     ly \
-    gvfs-backends \
+    gvfs \
     adwaita-icon-theme \
     hicolor-icon-theme \
     git \
@@ -16,47 +16,48 @@ sudo dnf install --setopt=install_weak_deps=False -y \
     mousepad \
     foot \
     pcmanfm-qt \
-    sfbar \
+    waybar \
     bc \
-    fonts-dejavu-core \
-    fonts-liberation \
-    yabar
+    dejavu-fonts-all \
+    liberation-fonts \
+    lavalauncher
 
 sudo systemctl disable dnf-makecache.timer
-sudo systemctl disable abrt-journal-core.service
 
 mkdir -p ~/.config/labwc
-mkdir -p ~/.config/yabar
+mkdir -p ~/.config/waybar
 
 curl -L -o ~/.config/labwc/SPRM.sh https://willyhorizont.github.io/linux/SPRM.sh
 
-cat << 'EOF' >> ~/.config/yabar/yabar.conf
-bar-list: ["topbar"];
-
-topbar: {
-    font: "monospace, Courier New 10";
-    position: "top";
-    height: 20;
-    
-    background-color-hex: "C2066D";
-    foreground-color-hex: "FFFFFF";
-    
-    block-list: ["monitor"];
-
-    monitor: {
-        exec: "~/.config/labwc/SPRM.sh";
-        type: "periodic";
-        interval: 2;
-        align: "left";
-        fixed-size: 800;
+cat << 'EOF' > ~/.config/waybar/config
+[
+    {
+        "layer": "top",
+        "position": "top",
+        "height": 20,
+        "modules-left": ["custom/monitor"],
+        "custom/monitor": {
+            "exec": "~/.config/labwc/SPRM.sh",
+            "interval": 2,
+            "format": "{}"
+        }
     }
+]
+EOF
+
+cat << 'EOF' > ~/.config/waybar/style.css
+window#waybar {
+    background-color: #C2066D;
+    color: #FFFFFF;
+    font-family: monospace, "Courier New";
+    font-size: 13px;
 }
 EOF
 
 cat << 'EOF' > ~/.config/labwc/autostart
 #!/bin/sh
-yabar &
-sfbar &
+waybar &
+lavalauncher &
 EOF
 
 chmod +x ~/.config/labwc/SPRM.sh
