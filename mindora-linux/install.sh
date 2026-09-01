@@ -17,6 +17,9 @@ sudo dnf install --setopt=install_weak_deps=False -y \
     foot \
     pcmanfm-qt \
     sfbar \
+    bc \
+    fonts-dejavu-core \
+    fonts-liberation \
     yabar
 
 sudo systemctl disable dnf-makecache.timer
@@ -25,7 +28,7 @@ sudo systemctl disable abrt-journal-core.service
 mkdir -p ~/.config/labwc
 mkdir -p ~/.config/yabar
 
-curl -L -o ~/.config/labwc/yabar-simple-resource-monitor.sh https://willyhorizont.github.io/linux-minx/yabar-simple-resource-monitor.sh
+curl -L -o ~/.config/labwc/SPRM.sh https://willyhorizont.github.io/linux/SPRM.sh
 
 cat << 'EOF' >> ~/.config/yabar/yabar.conf
 bar-list: ["topbar"];
@@ -41,7 +44,7 @@ topbar: {
     block-list: ["monitor"];
 
     monitor: {
-        exec: "~/.config/labwc/yabar-simple-resource-monitor.sh";
+        exec: "~/.config/labwc/SPRM.sh";
         type: "periodic";
         interval: 2;
         align: "left";
@@ -56,7 +59,7 @@ yabar &
 sfbar &
 EOF
 
-chmod +x ~/.config/labwc/yabar-simple-resource-monitor.sh
+chmod +x ~/.config/labwc/SPRM.sh
 chmod +x ~/.config/labwc/autostart
 
 echo "====================================================================="

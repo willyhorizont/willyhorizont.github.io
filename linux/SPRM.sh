@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# SPRM (Simple Panel Resource Monitor)
+
 NET_INTERFACE="wlp3s0"
 INTERVAL=2
 
@@ -36,16 +38,7 @@ format_bytes() {
 }
 
 while true; do
-    if command -v sensors >/dev/null 2>&1; then
-        TEMP=$(sensors 2>/dev/null | awk '/Core|temp1/ {sum+=$3; count++} END {if (count > 0) printf "%.1f", sum/count; else print "0.0"}')
-    else
-        TEMP="0.0"
-    fi
-    if [ "$TEMP" = "0.0" ] && [ -f /sys/class/thermal/thermal_zone0/temp ]; then
-        TEMP_RAW=$(cat /sys/class/thermal/thermal_zone0/temp)
-        TEMP=$(echo "scale=1; $TEMP_RAW / 1000" | bc -l)
-    fi
-    
+    TEMP=$(sensors 2>/dev/null | awk '/Core/ {sum+=$3; count++} END {if (count > 0) printf "%.1f", sum/count; else print "0.0"}')
     if (( $(echo "$TEMP >= 100.0" | bc -l) )); then TEMP_LIMIT="9999"; else TEMP_LIMIT="$TEMP"; fi
 
     CPU_LINE=$(grep '^cpu ' /proc/stat)
@@ -70,8 +63,7 @@ while true; do
     fi
     PREV_TOTAL=$TOTAL
     PREV_IDLE=$NEW_IDLE
-    
-    CPU=$(printf "%4.1f" "$CPU_PERCENT")
+    CPU=$(printf "%4s" "$CPU_PERCENT")
 
     GPU_RAW=$(cat /sys/class/drm/card0/device/gpu_busy_percent 2>/dev/null || echo "0")
     GPU=$(printf "%4.1f" "$GPU_RAW")
@@ -131,7 +123,7 @@ while true; do
         RR="T ${TEMP_LIMIT}°C | C ${CPU}% | G ${GPU}% | M ${RAM_USED_STR}/${RAM_TOT_STR}GB | D ${DISK_FREE_GBYTES}/${DISK_TOT_GBYTES}GB | R ${F_R} | W ${F_W} | v ${F_D} | ^ ${F_U} "
     fi
 
-    printf "%%{B#C2066D}%%{F#FFFFFF} %s %%{B-}\n" "$RR"
+    echo "$RR"
 
     sleep $INTERVAL
 done

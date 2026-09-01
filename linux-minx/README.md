@@ -9,6 +9,12 @@ curl -L -o ~/linux-minx/install.sh https://willyhorizont.github.io/linux-minx/in
 bash ~/linux-minx/install.sh
 ```
 
+## Update Top Bar Simple Resource Monitor
+```
+curl -L -o ~/.icewm/SPRM.sh https://willyhorizont.github.io/linux/SPRM.sh
+bash ~/.icewm/SPRM.sh | lemonbar -p -B "#C2066D" -F "#FFFFFF" -g x20+0+0 -f "monospace:size=10"
+```
+
 ## Installed Packages
 * sudo
 * xserver-xorg-core
@@ -27,6 +33,9 @@ bash ~/linux-minx/install.sh
 * lxterminal
 * pcmanfm
 * lxpanel
+* bc
+* fonts-dejavu-core
+* fonts-liberation
 * lemonbar
 
 ## Install package

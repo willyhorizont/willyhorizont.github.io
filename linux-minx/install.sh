@@ -24,6 +24,9 @@ apt update && apt install --no-install-recommends -y \
     lxterminal \
     pcmanfm \
     lxpanel \
+    bc \
+    fonts-dejavu-core \
+    fonts-liberation \
     lemonbar
 
 /usr/sbin/usermod -aG sudo $USER
@@ -37,15 +40,15 @@ DesktopMenuButton=0
 ShowTaskBar=0
 EOF
 
-curl -L -o ~/.icewm/lemonbar-simple-resource-monitor.sh https://willyhorizont.github.io/linux-minx/lemonbar-simple-resource-monitor.sh
+curl -L -o ~/.icewm/SPRM.sh https://willyhorizont.github.io/linux/SPRM.sh
 
 cat << 'EOF' > ~/.icewm/startup
 #!/bin/bash
 lxpanel &
-~/.icewm/lemonbar-simple-resource-monitor.sh | lemonbar -p -g x20+0+0 -f "monospace-10" &
+~/.icewm/SPRM.sh | lemonbar -p -B "#C2066D" -F "#FFFFFF" -g x20+0+0 -f "monospace:size=10" &
 EOF
 
-chmod +x ~/.icewm/lemonbar-simple-resource-monitor.sh
+chmod +x ~/.icewm/SPRM.sh
 chmod +x ~/.icewm/startup
 
 echo "====================================================================="

@@ -9,6 +9,11 @@ curl -L -o ~/mindora-linux/install.sh https://willyhorizont.github.io/mindora-li
 bash ~/mindora-linux/install.sh
 ```
 
+## Update Top Bar Simple Resource Monitor
+```
+curl -L -o ~/.config/labwc/SPRM.sh https://willyhorizont.github.io/linux/SPRM.sh
+```
+
 ## Installed Packages
 * labwc
 * ly
@@ -21,6 +26,9 @@ bash ~/mindora-linux/install.sh
 * foot
 * pcmanfm-qt
 * sfbar
+* bc
+* fonts-dejavu-core
+* fonts-liberation
 * yabar
 
 ## Disabled Fedora Features
