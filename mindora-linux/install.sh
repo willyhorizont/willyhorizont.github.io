@@ -2,7 +2,7 @@
 
 # =====================================================================
 # Linux Mindora
-## Ultra Lightweight Fedora Based Linux Distro for Older Hardware and Newer Hardware
+## Ultra Lightweight Fedora Based Linux Distro for Older and Newer Hardware
 # =====================================================================
 
 sudo dnf install --setopt=install_weak_deps=False -y \
@@ -19,25 +19,48 @@ sudo dnf install --setopt=install_weak_deps=False -y \
     sfbar \
     yabar
 
-echo "====================================================================="
-echo " Base Setup Done!"
-echo " to connect Wi-Fi, run this command:"
-echo "   sudo nmcli device wifi connect 'Your Wifi Name' password 'Your Wifi Password'"
-echo "====================================================================="
-
 sudo systemctl disable dnf-makecache.timer
 sudo systemctl disable abrt-journal-core.service
 
 mkdir -p ~/.config/labwc
+mkdir -p ~/.config/yabar
+
+curl -L -o ~/.config/labwc/yabar-simple-resource-monitor.sh https://willyhorizont.github.io/linux-minx/yabar-simple-resource-monitor.sh
+
+cat << 'EOF' >> ~/.config/yabar/yabar.conf
+bar-list: ["topbar"];
+
+topbar: {
+    font: "monospace, Courier New 10";
+    position: "top";
+    height: 20;
+    
+    background-color-hex: "C2066D";
+    foreground-color-hex: "FFFFFF";
+    
+    block-list: ["monitor"];
+
+    monitor: {
+        exec: "~/.config/labwc/yabar-simple-resource-monitor.sh";
+        type: "periodic";
+        interval: 2;
+        align: "left";
+        fixed-size: 800;
+    }
+}
+EOF
 
 cat << 'EOF' > ~/.config/labwc/autostart
 #!/bin/sh
-
 yabar &
 sfbar &
 EOF
 
+chmod +x ~/.config/labwc/yabar-simple-resource-monitor.sh
 chmod +x ~/.config/labwc/autostart
 
-echo "=== Bootstrap Done! ==="
-echo " Please reboot"
+echo "====================================================================="
+echo " Mindora Linux Installation Done!"
+echo " to connect Wi-Fi, run this command:"
+echo "   sudo nmcli device wifi connect 'Your Wifi Name' password 'Your Wifi Password'"
+echo "====================================================================="

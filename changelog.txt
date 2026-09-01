@@ -1,3 +1,7 @@
+[Last updated: 02 Sep 2026 @ 02:50 AM][version: 2.3.9]
+update linux-mintx;
+update mindora-linux;
+
 [Last updated: 02 Sep 2026 @ 01:27 AM][version: 2.3.8]
 add linux-mintx;
 add mindora-linux;

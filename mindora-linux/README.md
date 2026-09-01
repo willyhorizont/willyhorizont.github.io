@@ -1,0 +1,61 @@
+# Linux Mindora
+## Ultra Lightweight Fedora Based Linux Distro for Older and Newer Hardware
+
+## Install
+```
+sudo dnf install --setopt=install_weak_deps=False -y curl ca-certificates
+mkdir -p ~/mindora-linux
+curl -L -o ~/mindora-linux/install.sh https://willyhorizont.github.io/mindora-linux/install.sh
+bash ~/mindora-linux/install.sh
+```
+
+## Installed Packages
+* labwc
+* ly
+* gvfs-backends
+* adwaita-icon-theme
+* hicolor-icon-theme
+* git
+* firefox
+* mousepad
+* foot
+* pcmanfm-qt
+* sfbar
+* yabar
+
+## Disabled Fedora Features
+```
+sudo systemctl disable dnf-makecache.timer
+sudo systemctl disable abrt-journal-core.service
+```
+
+## Install package
+```
+sudo dnf install --setopt=install_weak_deps=False packagename
+```
+
+## Uninstall package
+```
+sudo dnf remove packagename && sudo dnf autoremove
+```
+
+## Top Best Lightweight Alternative for Text Editor
+* mousepad
+* kwrite
+* kate
+
+## Top Best Lightweight Alternative for File Manager
+* pcmanfm-qt
+* thunar
+
+## Top Best Lightweight Alternative for Terminal Emulator
+* foot
+
+## Top Best Lightweight Alternative for Bottom Panel
+* waybar
+* sfbar
+* lavalauncher
+
+## Top Best Lightweight Alternative for Top Bar
+* waybar
+* yabar
