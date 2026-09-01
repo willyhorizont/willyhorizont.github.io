@@ -3,125 +3,166 @@
 NET_INTERFACE="wlp3s0"
 INTERVAL=2
 
-PREV_TOTAL=0
-PREV_IDLE=0
-PREV_DISK_R=0
-PREV_DISK_W=0
-PREV_NET_D=0
-PREV_NET_U=0
+LAST_CPU_USER=0
+LAST_CPU_NICE=0
+LAST_CPU_SYSTEM=0
+LAST_CPU_IDLE=0
+LAST_CPU_IOWAIT=0
+LAST_CPU_IRQ=0
+LAST_CPU_SOFTIRQ=0
+LAST_BYTES_READ=0
+LAST_BYTES_WRITE=0
+LAST_BYTES_DOWN=0
+LAST_BYTES_UP=0
 
-format_bytes() {
-    local bytes_raw=$1
-    local bytes=$(echo "$bytes_raw" | awk '{print ($1 < 0) ? 0 : $1}')
-    
-    if (( $(echo "$bytes <= 0" | bc -l) )); then
+get_monotonic_time() {
+    echo $(date +%s%N | awk '{print int($1/1000)}')
+}
+LAST_TIME=$(get_monotonic_time)
+
+_pad() {
+    printf "%*s" "$2" "$1"
+}
+
+_fmt() {
+    local bytes_p_sec=$1
+    if (( $(echo "$bytes_p_sec <= 0" | bc -l) )); then
         printf "      0B/s"
         return
     fi
     
     local units=("B/s" "KB/s" "MB/s")
     local i=0
-    local v=$bytes
+    local v=$bytes_p_sec
     
     while (( $(echo "$v >= 1024" | bc -l) )) && [ $i -lt 2 ]; do
         v=$(echo "scale=4; $v / 1024" | bc -l)
         i=$((i+1))
     done
     
+    local num_str=""
     if [ $i -eq 0 ]; then
-        printf "%7.3f%s" "$v" "${units[$i]}"
+        num_str=$(printf "%.3f" "$v")
     else
-        printf "%6.2f%s" "$v" "${units[$i]}"
+        num_str=$(printf "%.2f" "$v")
     fi
+    
+    local f_p=$(echo "$num_str" | cut -d. -f1)
+    local b_p=$(echo "$num_str" | cut -d. -f2)
+    
+    if [ ${#f_p} -gt 3 ]; then
+        printf "999999GB/s"
+        return
+    fi
+    
+    local padded_fp=$(_pad "$f_p" 3)
+    printf "%s.%s%s" "$padded_fp" "$b_p" "${units[$i]}"
 }
 
 while true; do
-    TEMP=$(sensors 2>/dev/null | awk '/Core/ {sum+=$3; count++} END {if (count > 0) printf "%.1f", sum/count; else print "0.0"}')
-    if (( $(echo "$TEMP >= 100.0" | bc -l) )); then TEMP_LIMIT="9999"; else TEMP_LIMIT="$TEMP"; fi
-
-    CPU_LINE=$(grep '^cpu ' /proc/stat)
-    USER=$(echo "$CPU_LINE" | awk '{print $2}')
-    NICE=$(echo "$CPU_LINE" | awk '{print $3}')
-    SYSTEM=$(echo "$CPU_LINE" | awk '{print $4}')
-    IDLE=$(echo "$CPU_LINE" | awk '{print $5}')
-    IOWAIT=$(echo "$CPU_LINE" | awk '{print $6}')
-    IRQ=$(echo "$CPU_LINE" | awk '{print $7}')
-    SOFTIRQ=$(echo "$CPU_LINE" | awk '{print $8}')
-    
-    NEW_IDLE=$((IDLE + IOWAIT))
-    NEW_NON_IDLE=$((USER + NICE + SYSTEM + IRQ + SOFTIRQ))
-    TOTAL=$((NEW_IDLE + NEW_NON_IDLE))
-    
-    DIFF_TOTAL=$((TOTAL - PREV_TOTAL))
-    DIFF_IDLE=$((NEW_IDLE - PREV_IDLE))
-    
-    CPU_PERCENT="0.0"
-    if [ $PREV_TOTAL -gt 0 ] && [ $DIFF_TOTAL -gt 0 ]; then
-        CPU_PERCENT=$(echo "scale=1; (($DIFF_TOTAL - $DIFF_IDLE) / $DIFF_TOTAL) * 100" | bc -l)
+    if command -v sensors >/dev/null 2>&1; then
+        TEMP=$(sensors 2>/dev/null | awk '/Core/ {sum+=$3; count++} END {if (count > 0) printf "%.1f", sum/count; else print "0.0"}')
+    else
+        if [ -f /sys/class/thermal/thermal_zone0/temp ]; then
+            TEMP_RAW=$(cat /sys/class/thermal/thermal_zone0/temp)
+            TEMP=$(echo "scale=1; $TEMP_RAW / 1000" | bc -l)
+        else
+            TEMP="0.0"
+        fi
     fi
-    PREV_TOTAL=$TOTAL
-    PREV_IDLE=$NEW_IDLE
-    CPU=$(printf "%4s" "$CPU_PERCENT")
 
-    GPU_RAW=$(cat /sys/class/drm/card0/device/gpu_busy_percent 2>/dev/null || echo "0")
-    GPU=$(printf "%4.1f" "$GPU_RAW")
+    if (( $(echo "$TEMP >= 100.0" | bc -l) )); then temp_label="9999"; else temp_label=$(printf "%.1f" "$TEMP"); fi
 
-    RAM_DATA=($(awk '/MemTotal/ {t=$2} /MemAvailable/ {a=$2} END {print (t-a), t}' /proc/meminfo))
-    RAM_USED_GB=$(echo "scale=2; ${RAM_DATA[0]} / 1024 / 1024" | bc -l)
-    RAM_TOT_GB=$(echo "scale=2; ${RAM_DATA[1]} / 1024 / 1024" | bc -l)
-    RAM_USED_STR=$(printf "%5.2f" "$RAM_USED_GB")
-    RAM_TOT_STR=$(printf "%.2f" "$RAM_TOT_GB")
+    CPU_LINE=$(awk '/^cpu / {print $2" "$3" "$4" "$5" "$6" "$7" "$8}' /proc/stat)
+    user=$(echo "$CPU_LINE" | cut -d' ' -f1)
+    nice=$(echo "$CPU_LINE" | cut -d' ' -f2)
+    system=$(echo "$CPU_LINE" | cut -d' ' -f3)
+    idle=$(echo "$CPU_LINE" | cut -d' ' -f4)
+    iowait=$(echo "$CPU_LINE" | cut -d' ' -f5)
+    irq=$(echo "$CPU_LINE" | cut -d' ' -f6)
+    softirq=$(echo "$CPU_LINE" | cut -d' ' -f7)
 
-    DISK_DATA=($(df -B1 / | awk 'NR==2 {print $4, $2}'))
-    DISK_FREE_GBYTES=$(echo "scale=2; ${DISK_DATA[0]} / 1000000000" | bc -l)
-    DISK_TOT_GBYTES=$(echo "scale=2; ${DISK_DATA[1]} / 1000000000" | bc -l)
+    old_idle=$((LAST_CPU_IDLE + LAST_CPU_IOWAIT))
+    new_idle=$((idle + iowait))
+    
+    old_non_idle=$((LAST_CPU_USER + LAST_CPU_NICE + LAST_CPU_SYSTEM + LAST_CPU_IRQ + LAST_CPU_SOFTIRQ))
+    new_non_idle=$((user + nice + system + irq + softirq))
+    
+    tot_old=$((old_idle + old_non_idle))
+    tot_new=$((new_idle + new_non_idle))
+    
+    tot_delta=$((tot_new - tot_old))
+    idle_delta=$((new_idle - old_idle))
+    
+    cpu_percent="0.0"
+    if [ $tot_delta -gt 0 ]; then
+        cpu_percent=$(echo "scale=4; (($tot_delta - $idle_delta) / $tot_delta) * 100" | bc -l)
+    fi
+    
+    LAST_CPU_USER=$user; LAST_CPU_NICE=$nice; LAST_CPU_SYSTEM=$system
+    LAST_CPU_IDLE=$idle; LAST_CPU_IOWAIT=$iowait; LAST_CPU_IRQ=$irq; LAST_CPU_SOFTIRQ=$softirq
+    
+    cpu_str=$(printf "%.1f" "$cpu_percent")
+    cpu=$(_pad "$cpu_str" 4)
+
+    gpu_v=$(cat /sys/class/drm/card0/device/gpu_busy_percent 2>/dev/null || echo "0")
+    gpu=$(_pad "$(printf "%.1f" "$gpu_v")" 4)
+
+    RAM_RAW=($(awk '/MemTotal/ {t=$2} /MemAvailable/ {a=$2} END {print (t-a), t}' /proc/meminfo))
+    ram_used_gbytes=$(echo "scale=4; ${RAM_RAW[0]} / 1024 / 1024" | bc -l)
+    ram_tot_gbytes=$(echo "scale=4; ${RAM_RAW[1]} / 1024 / 1024" | bc -l)
+    ram_used_str=$(_pad "$(printf "%.2f" "$ram_used_gbytes")" 5)
+    ram_tot_str=$(printf "%.2f" "$ram_tot_gbytes")
+
+    DISK_RAW=($(df -B1 / | awk 'NR==2 {print $4, $2}'))
+    disk_free_gbytes=$(echo "scale=2; ${DISK_RAW[0]} / 1000000000" | bc -l)
+    disk_tot_gbytes=$(echo "scale=2; ${DISK_RAW[1]} / 1000000000" | bc -l)
 
     DISK_IO=($(awk '/ss/ || /sd/ || /nvme/ {r+=$6; w+=$10} END {print r, w}' /proc/diskstats))
-    CUR_DISK_R=$((DISK_IO[0] * 512))
-    CUR_DISK_W=$((DISK_IO[1] * 512))
-    
-    RATE_R=0; RATE_W=0
-    if [ $PREV_DISK_R -gt 0 ]; then
-        RATE_R=$(echo "scale=2; ($CUR_DISK_R - $PREV_DISK_R) / $INTERVAL" | bc -l)
-    fi
-    if [ $PREV_DISK_W -gt 0 ]; then
-        RATE_W=$(echo "scale=2; ($CUR_DISK_W - $PREV_DISK_W) / $INTERVAL" | bc -l)
-    fi
-    PREV_DISK_R=$CUR_DISK_R
-    PREV_DISK_W=$CUR_DISK_W
+    cur_disk_r=$((DISK_IO[0] * 512))
+    cur_disk_w=$((DISK_IO[1] * 512))
 
     NET_IO=($(grep "$NET_INTERFACE" /proc/net/dev | awk -F: '{print $2}' | awk '{print $1, $9}'))
-    CUR_NET_D=${NET_IO[0]:-0}
-    CUR_NET_U=${NET_IO[1]:-0}
-    
-    RATE_D=0; RATE_U=0
-    if [ $PREV_NET_D -gt 0 ]; then
-        RATE_D=$(echo "scale=2; ($CUR_NET_D - $PREV_NET_D) / $INTERVAL" | bc -l)
-    fi
-    if [ $PREV_NET_U -gt 0 ]; then
-        RATE_U=$(echo "scale=2; ($CUR_NET_U - $PREV_NET_U) / $INTERVAL" | bc -l)
-    fi
-    PREV_NET_D=$CUR_NET_D
-    PREV_NET_U=$CUR_NET_U
+    cur_net_down=${NET_IO[0]:-0}
+    cur_net_up=${NET_IO[1]:-0}
 
-    F_R=$(format_bytes "$RATE_R")
-    F_W=$(format_bytes "$RATE_W")
-    F_D=$(format_bytes "$RATE_D")
-    F_U=$(format_bytes "$RATE_U")
+    now=$(get_monotonic_time)
+    time_delta=$(echo "scale=6; ($now - $LAST_TIME) / 1000000.0" | bc -l)
+    if (( $(echo "$time_delta <= 0" | bc -l) )); then time_delta="2.0"; fi
 
-    if [ "$TEMP_LIMIT" = "9999" ] || [[ "$F_R" == *"999999"* ]] || [[ "$F_W" == *"999999"* ]] || [[ "$F_D" == *"999999"* ]] || [[ "$F_U" == *"999999"* ]]; then
-        [ "$TEMP_LIMIT" = "9999" ] && OUT_T="9999°C" || OUT_T="${TEMP_LIMIT}°C"
-        [[ "$F_R" == *"999999"* ]] && OUT_R="999999GB/s" || OUT_R="$F_R"
-        [[ "$F_W" == *"999999"* ]] && OUT_W="999999GB/s" || OUT_W="$F_W"
-        [[ "$F_D" == *"999999"* ]] && OUT_D="999999GB/s" || OUT_D="$F_D"
-        [[ "$F_U" == *"999999"* ]] && OUT_U="999999GB/s" || OUT_U="$F_U"
+    r_rate=0; w_rate=0; d_rate=0; u_rate=0
+    if [ $LAST_BYTES_READ -gt 0 ]; then r_rate=$(echo "scale=4; ($cur_disk_r - $LAST_BYTES_READ) / $time_delta" | bc -l); fi
+    if [ $LAST_BYTES_WRITE -gt 0 ]; then w_rate=$(echo "scale=4; ($cur_disk_w - $LAST_BYTES_WRITE) / $time_delta" | bc -l); fi
+    if [ $LAST_BYTES_DOWN -gt 0 ]; then d_rate=$(echo "scale=4; ($cur_net_down - $LAST_BYTES_DOWN) / $time_delta" | bc -l); fi
+    if [ $LAST_BYTES_UP -gt 0 ]; then u_rate=$(echo "scale=4; ($cur_net_up - $LAST_BYTES_UP) / $time_delta" | bc -l); fi
 
-        RR="T ${OUT_T} | C ${CPU}% | G ${GPU}% | M ${RAM_USED_STR}/${RAM_TOT_STR}GB | D ${DISK_FREE_GBYTES}/${DISK_TOT_GBYTES}GB | R ${OUT_R} | W ${OUT_W} | v ${OUT_D} | ^ ${OUT_U} "
+    (( $(echo "$r_rate < 0" | bc -l) )) && r_rate=0
+    (( $(echo "$w_rate < 0" | bc -l) )) && w_rate=0
+    (( $(echo "$d_rate < 0" | bc -l) )) && d_rate=0
+    (( $(echo "$u_rate < 0" | bc -l) )) && u_rate=0
+
+    LAST_TIME=$now
+    LAST_BYTES_READ=$cur_disk_r; LAST_BYTES_WRITE=$cur_disk_w
+    LAST_BYTES_DOWN=$cur_net_down; LAST_BYTES_UP=$cur_net_up
+
+    f_r=$(_fmt "$r_rate")
+    f_w=$(_fmt "$w_rate")
+    f_d=$(_fmt "$d_rate")
+    f_u=$(_fmt "$u_rate")
+
+    if [ "$temp_label" = "9999" ] || [[ "$f_r" == *"999999"* ]] || [[ "$f_w" == *"999999"* ]] || [[ "$f_d" == *"999999"* ]] || [[ "$f_u" == *"999999"* ]]; then
+        [ "$temp_label" = "9999" ] && out_t="9999°C" || out_t="${temp_label}°C"
+        [[ "$f_r" == *"999999"* ]] && out_r="999999GB/s" || out_r="$f_r"
+        [[ "$f_w" == *"999999"* ]] && out_w="999999GB/s" || out_w="$f_w"
+        [[ "$f_d" == *"999999"* ]] && out_d="999999GB/s" || out_d="$f_d"
+        [[ "$f_u" == *"999999"* ]] && out_u="999999GB/s" || out_u="$f_u"
+
+        rr="T ${out_t} | C ${cpu}% | G ${gpu}% | M ${ram_used_str}/${ram_tot_str}GB | D ${disk_free_gbytes}/${disk_tot_gbytes}GB | R ${out_r} | W ${out_w} | ▼ ${out_d} | ▲ ${out_u} "
     else
-        RR="T ${TEMP_LIMIT}°C | C ${CPU}% | G ${GPU}% | M ${RAM_USED_STR}/${RAM_TOT_STR}GB | D ${DISK_FREE_GBYTES}/${DISK_TOT_GBYTES}GB | R ${F_R} | W ${F_W} | v ${F_D} | ^ ${F_U} "
+        rr="T ${temp_label}°C | C ${cpu}% | G ${gpu}% | M ${ram_used_str}/${ram_tot_str}GB | D ${disk_free_gbytes}/${disk_tot_gbytes}GB | R ${f_r} | W ${f_w} | ▼ ${f_d} | ▲ ${f_u} "
     fi
 
-    printf "%%{B#C2066D}%%{F#FFFFFF} %s %%{B-}\n" "$RR"
+    printf "%%{B#C2066D}%%{F#FFFFFF} %s %%{B-}\n" "$rr"
 
     sleep $INTERVAL
 done
