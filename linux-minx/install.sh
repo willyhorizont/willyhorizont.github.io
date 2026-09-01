@@ -45,7 +45,7 @@ curl -L -o ~/.icewm/SPRM.sh https://willyhorizont.github.io/linux/SPRM.sh
 cat << 'EOF' > ~/.icewm/startup
 #!/bin/bash
 lxpanel &
-~/.icewm/SPRM.sh | lemonbar -p -B "#C2066D" -F "#FFFFFF" -g x20+0+0 -f "monospace:size=10" &
+~/.icewm/SPRM.sh | lemonbar -p -B "#C2066D" -F "#FFFFFF" -g x20+0+0 -f "fixed" &
 EOF
 
 chmod +x ~/.icewm/SPRM.sh

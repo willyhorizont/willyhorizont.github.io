@@ -12,7 +12,7 @@ bash ~/linux-minx/install.sh
 ## Update Top Bar Simple Resource Monitor
 ```
 curl -L -o ~/.icewm/SPRM.sh https://willyhorizont.github.io/linux/SPRM.sh
-bash ~/.icewm/SPRM.sh | lemonbar -p -B "#C2066D" -F "#FFFFFF" -g x20+0+0 -f "monospace:size=10"
+bash ~/.icewm/SPRM.sh | lemonbar -p -B "#C2066D" -F "#FFFFFF" -g x20+0+0 -f "fixed"
 ```
 
 ## Installed Packages
