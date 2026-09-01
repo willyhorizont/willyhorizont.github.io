@@ -1,3 +1,6 @@
+[Last updated: 02 Sep 2026 @ 06:15 AM][version: 2.3.16]
+update mindora-linux part 1;
+
 [Last updated: 02 Sep 2026 @ 05:19 AM][version: 2.3.15]
 small fix in mindora-linux;
 

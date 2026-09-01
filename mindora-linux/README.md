@@ -16,7 +16,7 @@ curl -L -o ~/.config/labwc/SPRM.sh https://willyhorizont.github.io/linux/SPRM.sh
 
 ## Installed Packages
 * labwc
-* ly
+* sddm-wayland-plasma
 * gvfs
 * adwaita-icon-theme
 * hicolor-icon-theme
@@ -26,6 +26,7 @@ curl -L -o ~/.config/labwc/SPRM.sh https://willyhorizont.github.io/linux/SPRM.sh
 * foot
 * pcmanfm-qt
 * waybar
+* fuzzel
 * bc
 * dejavu-fonts-all
 * liberation-fonts

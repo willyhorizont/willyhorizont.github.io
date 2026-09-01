@@ -7,7 +7,7 @@
 
 sudo dnf install --setopt=install_weak_deps=False -y \
     labwc \
-    ly \
+    sddm-wayland-plasma \
     gvfs \
     adwaita-icon-theme \
     hicolor-icon-theme \
@@ -17,17 +17,70 @@ sudo dnf install --setopt=install_weak_deps=False -y \
     foot \
     pcmanfm-qt \
     waybar \
+    fuzzel \
     bc \
     dejavu-fonts-all \
     liberation-fonts \
     lavalauncher
 
 sudo systemctl disable dnf-makecache.timer
+sudo systemctl enable sddm.service --now
+sudo systemctl set-default graphical.target
 
 mkdir -p ~/.config/labwc
 mkdir -p ~/.config/waybar
+mkdir -p ~/.config/lavalauncher
 
 curl -L -o ~/.config/labwc/SPRM.sh https://willyhorizont.github.io/linux/SPRM.sh
+
+cat << 'EOF' > ~/.config/lavalauncher/local.config
+# =====================================================================
+# Lavalaucher Dock Configuration for Linux Mindora
+# =====================================================================
+
+global
+{
+    output = "all";
+    position = "bottom";
+    alignment = "center";
+    
+    icon-size = 36;
+    background-colour = "#1A1A1A";
+    border-colour = "#C2066D";
+    border-width = 2;
+    padding = 6;
+}
+
+button
+{
+    icon = "system-run";
+    command = "fuzzel";
+}
+
+button
+{
+    icon = "foot";
+    command = "foot";
+}
+
+button
+{
+    icon = "firefox";
+    command = "firefox";
+}
+
+button
+{
+    icon = "mousepad";
+    command = "mousepad";
+}
+
+button
+{
+    icon = "pcmanfm-qt";
+    command = "pcmanfm-qt";
+}
+EOF
 
 cat << 'EOF' > ~/.config/waybar/config
 [
