@@ -1,3 +1,7 @@
+[Last updated: 02 Sep 2026 @ 03:46 AM][version: 2.3.12]
+update linux-mintx/lemonbar-simple-resource-monitor.sh part 3;
+update mindora-linux/yabar-simple-resource-monitor.sh part 3;
+
 [Last updated: 02 Sep 2026 @ 03:33 AM][version: 2.3.11]
 update linux-mintx/lemonbar-simple-resource-monitor.sh part 2;
 update mindora-linux/yabar-simple-resource-monitor.sh part 2;
