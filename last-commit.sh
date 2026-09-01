@@ -2,7 +2,7 @@
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD")
-V="2.3.7" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!!
+V="2.3.8" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!!
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -24,7 +24,8 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-update and fix component-github-programming-languages-card;
+add linux-mintx;
+add mindora-linux;
 "
 M=$(sed -e '/./,$!d' <<< "$M")
 M="$H
