@@ -120,18 +120,16 @@ EOF
 chmod +x ~/.config/labwc/SPRM.sh
 chmod +x ~/.config/labwc/autostart
 
-if ! grep -q "exec labwc" ~/.bash_profile; then
 cat << 'EOF' >> ~/.bash_profile
 
-if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
+if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ]; then
     exec labwc
 fi
 EOF
-fi
 
 echo "====================================================================="
 echo " Mindora Linux Installation Done!"
-echo " Please reboot"
+echo " Please reboot your computer now."
 echo " to connect Wi-Fi, run this command:"
 echo "   sudo nmcli device wifi connect 'Your Wifi Name' password 'Your Wifi Password'"
 echo "====================================================================="
