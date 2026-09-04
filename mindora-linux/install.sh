@@ -9,9 +9,6 @@ sudo dnf install --setopt=install_weak_deps=False -y \
     labwc \
     polkit \
     dbus-x11 \
-    xorg-x11-server-Xwayland \
-    mesa-dri-drivers \
-    mesa-va-drivers \
     gvfs \
     adwaita-icon-theme \
     hicolor-icon-theme \
@@ -91,7 +88,7 @@ EOF
 
 cat << 'EOF' > ~/.config/waybar/style.css
 window#waybar {
-    background-color: #C2066D;
+    background-color: #1A1A1A;
     color: #FFFFFF;
     font-family: monospace, "DejaVu Sans Mono";
     font-size: 13px;
@@ -102,7 +99,7 @@ window#waybar.top {
 }
 
 window#waybar.bottom {
-    background-color: #C2066D;
+    background-color: #1A1A1A;
     border-top: 2px solid #C2066D;
 }
 
@@ -115,7 +112,7 @@ window#waybar.bottom {
 
 #custom-launcher:hover, #custom-terminal:hover, #custom-browser:hover, #custom-editor:hover, #custom-files:hover {
     background-color: #C2066D;
-    color: #FFFFFF;
+    color: #1A1A1A;
 }
 EOF
 
@@ -132,12 +129,14 @@ cat << 'EOF' >> ~/.bash_profile
 if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
     export XDG_SESSION_TYPE=wayland
     export XDG_CURRENT_DESKTOP=labwc
+
     dbus-run-session labwc
 fi
 EOF
 
 echo "====================================================================="
-echo " Mindora Linux Installation Done! Please reboot your machine now."
-echo " To connect Wi-Fi, run this command:"
+echo " Mindora Linux Installation Done!"
+echo " Please reboot your computer now."
+echo " to connect Wi-Fi, run this command:"
 echo "   sudo nmcli device wifi connect 'Your Wifi Name' password 'Your Wifi Password'"
 echo "====================================================================="
