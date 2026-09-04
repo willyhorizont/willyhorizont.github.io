@@ -7,6 +7,8 @@
 
 sudo dnf install --setopt=install_weak_deps=False -y \
     labwc \
+    polkit \
+    dbus-x11 \
     gvfs \
     adwaita-icon-theme \
     hicolor-icon-theme \
@@ -23,6 +25,8 @@ sudo dnf install --setopt=install_weak_deps=False -y \
 
 sudo systemctl disable dnf-makecache.timer
 sudo systemctl set-default multi-user.target
+
+sudo usermod -aG video,input,render $USER
 
 mkdir -p ~/.config/labwc
 mkdir -p ~/.config/waybar
@@ -122,8 +126,11 @@ chmod +x ~/.config/labwc/autostart
 
 cat << 'EOF' >> ~/.bash_profile
 
-if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ]; then
-    exec labwc
+if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
+    export XDG_SESSION_TYPE=wayland
+    export XDG_CURRENT_DESKTOP=labwc
+
+    dbus-run-session labwc
 fi
 EOF
 

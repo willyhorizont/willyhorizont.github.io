@@ -16,6 +16,8 @@ curl -L -o ~/.config/labwc/SPRM.sh https://willyhorizont.github.io/linux/SPRM.sh
 
 ## Installed Packages
 * labwc
+* polkit
+* dbus-x11
 * gvfs
 * adwaita-icon-theme
 * hicolor-icon-theme
