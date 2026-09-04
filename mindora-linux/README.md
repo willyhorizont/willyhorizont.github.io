@@ -16,7 +16,7 @@ curl -L -o ~/.config/labwc/SPRM.sh https://willyhorizont.github.io/linux/SPRM.sh
 
 ## Installed Packages
 * labwc
-* sddm-wayland-plasma
+* ly
 * gvfs
 * adwaita-icon-theme
 * hicolor-icon-theme
@@ -30,7 +30,6 @@ curl -L -o ~/.config/labwc/SPRM.sh https://willyhorizont.github.io/linux/SPRM.sh
 * bc
 * dejavu-fonts-all
 * liberation-fonts
-* lavalauncher
 
 ## Disabled Fedora Features
 ```

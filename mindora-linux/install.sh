@@ -7,7 +7,7 @@
 
 sudo dnf install --setopt=install_weak_deps=False -y \
     labwc \
-    sddm-wayland-plasma \
+    ly \
     gvfs \
     adwaita-icon-theme \
     hicolor-icon-theme \
@@ -20,79 +20,65 @@ sudo dnf install --setopt=install_weak_deps=False -y \
     fuzzel \
     bc \
     dejavu-fonts-all \
-    liberation-fonts \
-    lavalauncher
+    liberation-fonts
 
 sudo systemctl disable dnf-makecache.timer
-sudo systemctl enable sddm.service --now
+sudo systemctl enable ly.service --now
 sudo systemctl set-default graphical.target
 
 mkdir -p ~/.config/labwc
 mkdir -p ~/.config/waybar
-mkdir -p ~/.config/lavalauncher
 
 curl -L -o ~/.config/labwc/SPRM.sh https://willyhorizont.github.io/linux/SPRM.sh
-
-cat << 'EOF' > ~/.config/lavalauncher/local.config
-# =====================================================================
-# Lavalaucher Dock Configuration for Linux Mindora
-# =====================================================================
-
-global
-{
-    output = "all";
-    position = "bottom";
-    alignment = "center";
-    
-    icon-size = 36;
-    background-colour = "#1A1A1A";
-    border-colour = "#C2066D";
-    border-width = 2;
-    padding = 6;
-}
-
-button
-{
-    icon = "system-run";
-    command = "fuzzel";
-}
-
-button
-{
-    icon = "foot";
-    command = "foot";
-}
-
-button
-{
-    icon = "firefox";
-    command = "firefox";
-}
-
-button
-{
-    icon = "mousepad";
-    command = "mousepad";
-}
-
-button
-{
-    icon = "pcmanfm-qt";
-    command = "pcmanfm-qt";
-}
-EOF
 
 cat << 'EOF' > ~/.config/waybar/config
 [
     {
         "layer": "top",
         "position": "top",
-        "height": 20,
+        "height": 24,
         "modules-left": ["custom/monitor"],
         "custom/monitor": {
             "exec": "~/.config/labwc/SPRM.sh",
             "interval": 2,
             "format": "{}"
+        }
+    },
+    {
+        "layer": "top",
+        "position": "bottom",
+        "height": 40,
+        "modules-center": [
+            "custom/launcher",
+            "custom/terminal",
+            "custom/browser",
+            "custom/editor",
+            "custom/files"
+        ],
+        "custom/launcher": {
+            "format": "  ",
+            "on-click": "fuzzel",
+            "tooltip": false
+        },
+        "custom/terminal": {
+            "format": "  ",
+            "on-click": "foot",
+            "tooltip": false
+        },
+        "custom/browser": {
+            "format": "  ",
+            "on-click": "firefox",
+            "tooltip": false
+        },
+        "custom/editor": {
+            "format": "  ",
+            "on-click": "mousepad",
+            "tooltip": false
+        },
+        "custom/files": {
+            "format": "  ",
+            "on-click": "pcmanfm-qt",
+            "tooltip": false
         }
     }
 ]
@@ -100,17 +86,37 @@ EOF
 
 cat << 'EOF' > ~/.config/waybar/style.css
 window#waybar {
-    background-color: #C2066D;
+    background-color: #1A1A1A;
     color: #FFFFFF;
-    font-family: monospace, "Courier New";
+    font-family: monospace, "DejaVu Sans Mono";
     font-size: 13px;
+}
+
+window#waybar.top {
+    background-color: #C2066D;
+}
+
+window#waybar.bottom {
+    background-color: #1A1A1A;
+    border-top: 2px solid #C2066D;
+}
+
+#custom-launcher, #custom-terminal, #custom-browser, #custom-editor, #custom-files {
+    font-size: 18px;
+    padding: 0 15px;
+    color: #FFFFFF;
+    transition: all 0.3s ease;
+}
+
+#custom-launcher:hover, #custom-terminal:hover, #custom-browser:hover, #custom-editor:hover, #custom-files:hover {
+    background-color: #C2066D;
+    color: #1A1A1A;
 }
 EOF
 
 cat << 'EOF' > ~/.config/labwc/autostart
 #!/bin/sh
 waybar &
-lavalauncher &
 EOF
 
 chmod +x ~/.config/labwc/SPRM.sh
