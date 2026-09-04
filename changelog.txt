@@ -1,3 +1,6 @@
+[Last updated: 04 Sep 2026 @ 09:16 PM][version: 2.3.18]
+update fedora mindora linux labwc, remove ly;
+
 [Last updated: 04 Sep 2026 @ 08:10 PM][version: 2.3.17]
 update mindora-linux part 2;
 

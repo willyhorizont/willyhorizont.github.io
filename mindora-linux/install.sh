@@ -7,7 +7,6 @@
 
 sudo dnf install --setopt=install_weak_deps=False -y \
     labwc \
-    ly \
     gvfs \
     adwaita-icon-theme \
     hicolor-icon-theme \
@@ -23,8 +22,7 @@ sudo dnf install --setopt=install_weak_deps=False -y \
     liberation-fonts
 
 sudo systemctl disable dnf-makecache.timer
-sudo systemctl enable ly.service --now
-sudo systemctl set-default graphical.target
+sudo systemctl set-default multi-user.target
 
 mkdir -p ~/.config/labwc
 mkdir -p ~/.config/waybar
@@ -122,8 +120,18 @@ EOF
 chmod +x ~/.config/labwc/SPRM.sh
 chmod +x ~/.config/labwc/autostart
 
+if ! grep -q "exec labwc" ~/.bash_profile; then
+cat << 'EOF' >> ~/.bash_profile
+
+if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
+    exec labwc
+fi
+EOF
+fi
+
 echo "====================================================================="
 echo " Mindora Linux Installation Done!"
+echo " Please reboot"
 echo " to connect Wi-Fi, run this command:"
 echo "   sudo nmcli device wifi connect 'Your Wifi Name' password 'Your Wifi Password'"
 echo "====================================================================="
