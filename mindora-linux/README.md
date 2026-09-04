@@ -18,6 +18,9 @@ curl -L -o ~/.config/labwc/SPRM.sh https://willyhorizont.github.io/linux/SPRM.sh
 * labwc
 * polkit
 * dbus-x11
+* xorg-x11-server-Xwayland
+* mesa-dri-drivers
+* mesa-va-drivers
 * gvfs
 * adwaita-icon-theme
 * hicolor-icon-theme
