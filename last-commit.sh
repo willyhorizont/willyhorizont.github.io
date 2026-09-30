@@ -2,7 +2,7 @@
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD")
-V="2.3.23" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!!
+V="2.3.24" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!!
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -24,7 +24,7 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-update fedora mindora linux labwc, fix attempt 5;
+add stop docker.service containerd.service;
 "
 M=$(sed -e '/./,$!d' <<< "$M")
 M="$H
@@ -42,3 +42,5 @@ git tag -d "$V" 2>/dev/null
 git tag -a "$V" -m "$M"
 git push origin main
 git push origin --tags
+
+sudo systemctl stop --no-block docker.service containerd.service 2>/dev/null
