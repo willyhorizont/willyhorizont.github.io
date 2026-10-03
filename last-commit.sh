@@ -2,7 +2,7 @@
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD")
-V="2.3.24" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!!
+V="2.3.25" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!!
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -11,7 +11,10 @@ IMG=$("$RD/tools/utils.sh" --get-docker-image $LID 2>/dev/null)
 
 docker run -i --rm \
     --entrypoint bash \
+    -v "$HOME:$HOME" \
+    -v "$PWD:$PWD" \
     -v "$RD:$RD" \
+    -v "$SD:$SD" \
     "$IMG" \
     -c "
         cd \"$RD\"
@@ -24,7 +27,7 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-add stop docker.service containerd.service;
+add license file;
 "
 M=$(sed -e '/./,$!d' <<< "$M")
 M="$H
@@ -43,4 +46,5 @@ git tag -a "$V" -m "$M"
 git push origin main
 git push origin --tags
 
-sudo systemctl stop --no-block docker.service containerd.service 2>/dev/null
+sudo -p "$L
+Enter password to stop docker container: " systemctl stop --no-block docker.service containerd.service 2>/dev/null

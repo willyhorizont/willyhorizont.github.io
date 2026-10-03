@@ -28,9 +28,6 @@
 
     "editor.semanticHighlighting.enabled": true,
 
-    "workbench.editor.showTabs": "multiple",
-    "workbench.tree.indent": 24,
-
     "views.customizations": {
         "viewContainerLocations": {
             "workbench.views.service.auxiliarybar.d8075f6a-32ff-4930-b609-1ce17888bc4e": 0
@@ -146,6 +143,15 @@
         "tab.inactiveBackground": "#29161d",
         "editorOverviewRuler.border": "#29161d",
         "panel.background": "#29161d",
+        "editor.lineHighlightBorder": "#FF0000",
+        "editor.rangeHighlightBorder": "#FF0000",
+        "editor.rangeHighlightBackground": "#FF00001A",
+        "editor.lineHighlightBackground": "#FF00001A",
+        "editor.findMatchBackground": "#ffffff33",
+        "editor.wordHighlightBorder": "#0095ff",
+        "editor.wordHighlightBackground": "#0000004f",
+        "editor.findMatchBorder": "#ffffff",
+        "editor.findMatchHighlightBackground": "#FF000044",
     },
     "editor.tokenColorCustomizations": {
         "[Visual Studio 2017 Dark - C++]": {
@@ -213,32 +219,6 @@
     },
     // "files.defaultLanguage": "javascript",
     // "files.defaultLanguage": "typescriptreact",
-    "files.associations": {
-        // "*.*": "typescriptreact",
-        // "*.*": "typescript",
-        // "*.*": "javascriptreact",
-        // "*.*": "snippets",
-        // "*.*": "cuda-cpp",
-        // "*.*": "sql",
-        // "*.*": "objective-c",
-
-        // "*.elv": "raku",
-        // "*.gd": "python",
-        // "*.kt": "java",
-        // "*.nix": "fsharp",
-        // "*.nu": "python",
-        // "*.r": "javascript",
-        // "*.scala": "java",
-        // "*.tcl": "shellscript",
-        // "*.vim": "csharp",
-        
-        "*.m": "objective-c",
-        "*.st": "smalltalk",
-        // "stdlib.h": "c",
-        // "cstdlib": "c",
-        // "type_traits": "c",
-        // "stdio.h": "c"
-    },
     "terminal.integrated.cursorStyle": "line",
     "terminal.integrated.cursorBlinking": true,
     "terminal.integrated.cursorStyleInactive": "line",
@@ -256,13 +236,19 @@
     // },
 
     "explorer.compactFolders": false,
+    "workbench.tree.indent": 24,
+    "workbench.editor.showTabs": "multiple",
+    "workbench.editor.wrapTabs": true,
     "workbench.editor.tabSizing": "fixed",
-    "workbench.editor.tabSizingFixedMinWidth": 38,
-    "workbench.editor.pinnedTabSizing": "normal",
+    "workbench.editor.tabSizingFixedMinWidth": 50,
+    "workbench.editor.pinnedTabSizing": "shrink",
+    "workbench.editor.tabCloseButton": "off",
+    "workbench.editor.preventPinnedEditorClose": "keyboardAndMouse",
+    "workbench.editor.tabActionCloseVisibility": false,
+    "workbench.editor.tabActionUnpinVisibility": false,
     "workbench.sideBar.location": "right",
     "workbench.editor.pinnedTabsOnSeparateRow": true,
     "workbench.editor.titleScrollbarSizing": "large",
-    "workbench.editor.wrapTabs": true,
     "workbench.iconTheme": "vscode-great-icons",
     "editor.fontFamily": "'Source Code Pro', Consolas, 'Courier New', monospace",
     "editor.maxTokenizationLineLength": 9999999999999999999999999999999999999999999999999999999,
@@ -274,6 +260,8 @@
     "prettier.tabWidth": 4,
     "editor.tabSize": 4,
     "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "editor.formatOnSave": false,
     "[html]": {
         // "editor.defaultFormatter": "vscode.html-language-features",
         "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -288,7 +276,6 @@
     "json.maxItemsComputed": 500000,
     "javascript.updateImportsOnFileMove.enabled": "always",
     "editor.lineHeight": 27,
-    "editor.detectIndentation": false,
     "[json]": {
         "editor.quickSuggestions": {
             "strings": true
@@ -337,7 +324,6 @@
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "go.toolsManagement.autoUpdate": true,
-    "C_Cpp.default.cppStandard": "c++17",
     "cmake.configureOnOpen": true,
     "terminal.integrated.commandsToSkipShell": [
         "language-julia.interrupt",
@@ -355,115 +341,457 @@
         "editor.semanticHighlighting.enabled": true, // Enable semantic highlighting
         "editor.formatOnType": false // Enable formatting while typing
     },
-    "[dart]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": false,
-        "editor.detectIndentation": false
-    },
-    "d.dubCompiler": "dmd.EXE",
-    "r.rpath.windows": "C:\\\\Users\\\\willy\\\\AppData\\\\Local\\\\Programs\\\\R-4.3.2\\\\bin\\\\x64\\\\R.exe",
-    "r.rterm.windows": "C:\\\\Users\\\\willy\\\\AppData\\\\Local\\\\Programs\\\\R-4.3.2\\\\bin\\\\x64\\\\Rterm.exe",
     "code-runner.ignoreSelection": true,
     "code-runner.runInTerminal": true,
-    "code-runner.executorMapByFileExtension": {
-        ".kt": "bash $workspaceRoot/languages/kotlin/run.sh $dirWithoutTrailingSlash/$fileName",
-        ".scala": "bash $workspaceRoot/languages/scala/run.sh $dirWithoutTrailingSlash/$fileName",
-        ".nu": "bash $workspaceRoot/languages/nu/run.sh $dirWithoutTrailingSlash/$fileName",
-        ".elv": "bash $workspaceRoot/languages/elvish/run.sh $dirWithoutTrailingSlash/$fileName",
-        ".vim": "bash $workspaceRoot/languages/vim-script/run.sh $dirWithoutTrailingSlash/$fileName",
-        ".nix": "bash $workspaceRoot/languages/nix/run.sh $dirWithoutTrailingSlash/$fileName",
-        ".tcl": "bash $workspaceRoot/languages/tcl/run.sh $dirWithoutTrailingSlash/$fileName",
-        ".gd": "bash $workspaceRoot/languages/gdscript/run.sh $dirWithoutTrailingSlash/$fileName",
-        ".typ": "bash $workspaceRoot/languages/typst/run.sh $dirWithoutTrailingSlash/$fileName",
-        ".exs": "bash $workspaceRoot/languages/elixir/run.sh $dirWithoutTrailingSlash/$fileName",
-        ".ml": "bash $workspaceRoot/languages/ocaml/run.sh $dirWithoutTrailingSlash/$fileName",
-        ".erl": "bash $workspaceRoot/languages/erlang/run.sh $dirWithoutTrailingSlash/$fileName",
-        ".gleam": "bash $workspaceRoot/languages/gleam/run.sh $dirWithoutTrailingSlash/$fileName",
-        ".zig": "bash $workspaceRoot/languages/zig/run.sh $dirWithoutTrailingSlash/$fileName",
-        ".nim": "bash $workspaceRoot/languages/nim/run.sh $dirWithoutTrailingSlash/$fileName",
-        ".odin": "bash $workspaceRoot/languages/odin/run.sh $dirWithoutTrailingSlash/$fileName",
-        ".cpp": "bash $workspaceRoot/languages/c-plus-plus/run.sh $dirWithoutTrailingSlash/$fileName",
-        ".st": "bash $workspaceRoot/languages/smalltalk-dialect-pharo/run.sh $dirWithoutTrailingSlash/$fileName",
-        ".as": "bash $workspaceRoot/languages/actionscript/run.sh $dirWithoutTrailingSlash/$fileName",
+    "files.associations": {
+        // 1. JavaScript / TypeScript
+        "*.js": "javascript",
 
-        // ".mojo": "bash ./languages/mojo/run.sh $fileName",
-        // ".rs": "bash ./languages/rust/run.sh $fileName",
+        // 2. Python
+        "*.py": "python",
+
+        // 3. PHP
+        "*.php": "php",
+
+        // 4. Go
+        "*.go": "go",
+
+        // 5. Perl
+        "*.pl": "perl",
+
+        // 6. Julia
+        "*.jl": "julia",
+
+        // 7. Lua
+        "*.lua": "lua",
+
+        // 8. Ruby
+        "*.rb": "ruby",
+
+        // 9. R
+        "*.r": "r",
+
+        // 10. Kotlin
+        "*.kt": "rust",
+
+        // 11. Swift
+        "*.swift": "swift",
+
+        // 12. Dart
+        "*.dart": "dart",
+
+        // 13. VB.NET (Visual Basic dotNET)
+        "*.vb": "vb",
+
+        // 14. C# (C Sharp)
+        "*.cs": "csharp",
+
+        // 15. MATLAB / Octave
+        "*.m": "objective-c",
+
+        // 16. Wolfram Language (Mathematica)
+        "*.wl": "cpp",
+
+        // 17. Raku
+        "*.raku": "java",
+
+        // 18. Scala
+        "*.scala": "swift",
+
+        // 19. Java
+        "*.java": "java",
+
+        // 20. Nu
+        "*.nu": "julia",
+
+        // 21. Elvish
+        "*.elv": "python",
+
+        // 22. Vim Script
+        "*.vim": "csharp",
+
+        // 23. Rust
+        "*.rs": "rust",
+
+        // 24. Nix
+        "*.nix": "lua",
+
+        // 25. Tcl
+        "*.tcl": "lua",
+
+        // 26. GDScript
+        "*.gd": "dart",
+
+        // 27. Typst
+        "*.typ": "dart",
+
+        // 28. PowerShell
+        "*.ps1": "powershell",
+
+        // 29. Elixir
+        "*.exs": "ruby",
+
+        // 30. OCaml
+        "*.ml": "rust",
+
+        // 31. Erlang
+        "*.erl": "rust",
+
+        // 32. Gleam
+        "*.gleam": "rust",
+
+        // 33. Zig
+        "*.zig": "java",
+
+        // 34. Nim
+        "*.nim": "rust",
+
+        // 35. Odin
+        "*.odin": "rust",
+
+        // 36. C++ (C Plus Plus)
+        "*.cpp": "cpp",
+
+        // 37. Objective C
+        "*.m": "objective-c",
+
+        // 38. Smalltalk
+        "*.st": "groovy",
+
+        // 39. ActionScript
+        "*.as": "rust",
+
+        // 40. Groovy
+        "*.groovy": "groovy",
+
+        // 41. Cangjie
+        "*.cj": "swift",
+
+        // 42. C3
+        "*.c3": "rust",
+
+        // 43. C
+        "*.c": "c",
+
+        // 44. D
+        "*.d": "csharp",
+
+        // 45. V
+        "*.v": "go",
+
+        // 46. Vala
+        "*.vala": "rust",
+
+        // 47. Crystal
+        "*.cr": "ruby",
+
+        // 48. Wren
+        "*.wren": "rust",
+
+        // 49. Pike
+        "*.pike": "rust",
+
+        "*.h": "objective-c",
+    },
+    "code-runner.executorMapByFileExtension": {
+        ".sh": "bash $fullFileName",
+
+        // 1. JavaScript / TypeScript
+        ".js": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/javascript-or-typescript/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 2. Python
+        ".py": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/python/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 3. PHP
+        ".php": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/php/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 4. Go
+        ".go": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/go/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 5. Perl
+        ".pl": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/perl/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 6. Julia
+        ".jl": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/julia/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 7. Lua
+        ".lua": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/lua/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 8. Ruby
+        ".rb": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/ruby/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 9. R
+        ".r": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/r/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 10. Kotlin
+        ".kt": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/kotlin/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 11. Swift
+        ".swift": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/swift/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 12. Dart
+        ".dart": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/dart/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 13. VB.NET (Visual Basic dotNET)
+        ".vb": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/visual-basic-dot-net/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 14. C# (C Sharp)
+        ".cs": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/c-sharp/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 15. MATLAB / Octave
+        ".m": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/objective-c/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 16. Wolfram Language (Mathematica)
+        ".wl": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/wolfram-language-mathematica/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 17. Raku
+        ".raku": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/raku/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 18. Scala
+        ".scala": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/scala/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 19. Java
+        ".java": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/java/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 20. Nu
+        ".nu": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/nu/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 21. Elvish
+        ".elv": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/elvish/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 22. Vim Script
+        ".vim": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/vim-script/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 23. Rust
+        ".rs": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/rust/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 24. Nix
+        ".nix": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/nix/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 25. Tcl
+        ".tcl": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/tcl/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 26. GDScript
+        ".gd": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/gdscript/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 27. Typst
+        ".typ": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/typst/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 28. PowerShell
+        ".ps1": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/powershell/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 29. Elixir
+        ".exs": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/elixir/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 30. OCaml
+        ".ml": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/ocaml/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 31. Erlang
+        ".erl": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/erlang/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 32. Gleam
+        ".gleam": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/gleam/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 33. Zig
+        ".zig": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/zig/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 34. Nim
+        ".nim": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/nim/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 35. Odin
+        ".odin": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/odin/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 36. C++ (C Plus Plus)
+        ".cpp": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/c-plus-plus/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 37. Objective C
+        ".m": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/objective-c/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 38. Smalltalk
+        ".st": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/smalltalk/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 39. ActionScript
+        ".as": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/actionscript/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 40. Groovy
+        ".groovy": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/groovy/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 41. Cangjie
+        ".cj": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/cangjie/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 42. C3
+        ".c3": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/c3/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 43. C
+        ".c": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/c/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 44. D
+        ".d": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/d/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 45. V
+        ".v": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/v/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 46. Vala
+        ".vala": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/vala/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 47. Crystal
+        ".cr": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/crystal/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 48. Wren
+        ".wren": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/wren/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 49. Pike
+        ".pike": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/pike/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
     },
     "code-runner.executorMap": {
         "shellscript": "bash $fullFileName",
-        "javascript": "bash $workspaceRoot/languages/javascript-or-typescript/run.sh $dirWithoutTrailingSlash/$fileName",
-        "python": "bash $workspaceRoot/languages/python/run.sh $dirWithoutTrailingSlash/$fileName",
-        "php": "bash $workspaceRoot/languages/php/run.sh $dirWithoutTrailingSlash/$fileName",
-        "go": "bash $workspaceRoot/languages/go/run.sh $dirWithoutTrailingSlash/$fileName",
-        "perl": "bash $workspaceRoot/languages/perl/run.sh $dirWithoutTrailingSlash/$fileName",
-        "julia": "bash $workspaceRoot/languages/julia/run.sh $dirWithoutTrailingSlash/$fileName",
-        "lua": "bash $workspaceRoot/languages/lua/run.sh $dirWithoutTrailingSlash/$fileName",
-        "ruby": "bash $workspaceRoot/languages/ruby/run.sh $dirWithoutTrailingSlash/$fileName",
-        "r": "bash $workspaceRoot/languages/r/run.sh $dirWithoutTrailingSlash/$fileName",
-        "kotlin": "bash $workspaceRoot/languages/kotlin/run.sh $dirWithoutTrailingSlash/$fileName",
-        "swift": "cd $dir && swiftc $fileName && $dir$fileNameWithoutExt && rm -f $dir$fileNameWithoutExt",
-        "dart": "cd $dir && dart run $fileName",
-        "vb": "cd $dir && vbc $fileName && $dir$fileNameWithoutExt.exe && del \"$dir$fileNameWithoutExt.exe\"",
-        "csharp": "cd $dir && csc $fileName && $dir$fileNameWithoutExt.exe && del \"$dir$fileNameWithoutExt.exe\"",
-        "matlab": "cd \"$dir..\\..\\utils\" && python run_matlab_gnu_octave_file.py $dir$fileName",
-        "wolfram": "cd $dir && wolframscript -file $fileName",
-        "raku": "cd $dir && raku $fileName",
-        // "scala": "cd $dir && scala $fileName", // run .scala file using scala interpreter
-        "scala": "bash $workspaceRoot/languages/scala/run.sh $dirWithoutTrailingSlash/$fileName",
-        "java": "bash $workspaceRoot/languages/java/run.sh $dirWithoutTrailingSlash/$fileName",
-        "gdscript": "bash $workspaceRoot/languages/gdscript/run.sh $dirWithoutTrailingSlash/$fileName",
-        "rust": "bash $workspaceRoot/languages/rust/run.sh $dirWithoutTrailingSlash/$fileName",
-        "powershell": "bash $workspaceRoot/languages/powershell/run.sh $dirWithoutTrailingSlash/$fileName",
-        "elixir": "bash $workspaceRoot/languages/elixir/run.sh $dirWithoutTrailingSlash/$fileName",
-        "ocaml": "bash $workspaceRoot/languages/ocaml/run.sh $dirWithoutTrailingSlash/$fileName",
-        "erlang": "bash $workspaceRoot/languages/erlang/run.sh $dirWithoutTrailingSlash/$fileName",
-        "gleam": "bash $workspaceRoot/languages/gleam/run.sh $dirWithoutTrailingSlash/$fileName",
-        "zig": "bash $workspaceRoot/languages/zig/run.sh $dirWithoutTrailingSlash/$fileName",
-        "nim": "bash $workspaceRoot/languages/nim/run.sh $dirWithoutTrailingSlash/$fileName",
-        "odin": "bash $workspaceRoot/languages/odin/run.sh $dirWithoutTrailingSlash/$fileName",
-        "cpp": "bash $workspaceRoot/languages/c-plus-plus/run.sh $dirWithoutTrailingSlash/$fileName",
-        "objective-c": "bash $workspaceRoot/languages/objective-c/run.sh $dirWithoutTrailingSlash/$fileName",
-        "smalltalk": "bash $workspaceRoot/languages/smalltalk-dialect-pharo/run.sh $dirWithoutTrailingSlash/$fileName",
-        "actionscript": "bash $workspaceRoot/languages/actionscript/run.sh $dirWithoutTrailingSlash/$fileName",
-        "groovy": "bash $workspaceRoot/languages/groovy/run.sh $dirWithoutTrailingSlash/$fileName",
 
-        "mojo": "bash $workspaceRoot/languages/mojo/run.sh $dirWithoutTrailingSlash/$fileName",
-        "scala2": "cd $dir && scalac $fileName && scala $fileNameWithoutExt && del \"$dir*.class\"", // compile .scala file to .class and run the .class
-        "scala3": "cd $dir && scalac $fileName && scala $fileNameWithoutExt && del \"$dir*.class\"  && del \"$dir*.tasty\"", // compile .scala file to .class and run the .class
-        // "c": "gcc --version",
-        "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt && rm -f \"$dir$fileNameWithoutExt\"",
-        // "java": "cd $dir && javac $fileName && java $fileNameWithoutExt && del \"$dir*.class\"",
-        "perl6": "cd $dir && perl6 $fileName",
-        "crystal": "cd $dir && crystal $fileName",
-        "v": "cd $dir && v run $fileName",
-        // "odin": "cd $dir && odin run $fileName -file",
-        // "cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-        // "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-        "bat": "cmd /c",
-        "fsharp": "fsi",
-        "typescript": "ts-node",
-        "coffeescript": "coffee",
-        "applescript": "osascript",
-        "clojure": "lein exec",
-        "haxe": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt",
-        "racket": "racket",
-        "scheme": "csi -script",
-        "ahk": "autohotkey",
-        "autoit": "autoit3",
-        "pascal": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
-        "d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt",
-        "haskell": "runghc",
-        // "nim": "nim compile --verbosity:0 --hints:off --run",
-        "lisp": "sbcl --script",
-        "kit": "kitc --run",
-        "sass": "sass --style expanded",
-        "scss": "scss --style expanded",
-        "less": "cd $dir && lessc $fileName $fileNameWithoutExt.css",
-        "FortranFreeForm": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-        "fortran-modern": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-        "fortran_fixed-form": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-        "fortran": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-        "sml": "cd $dir && sml $fileName"
+        // 1. JavaScript / TypeScript
+        "javascript": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/javascript-or-typescript/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 2. Python
+        "python": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/python/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 3. PHP
+        "php": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/php/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 4. Go
+        "go": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/go/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 5. Perl
+        "perl": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/perl/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 6. Julia
+        "julia": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/julia/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 7. Lua
+        "lua": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/lua/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 8. Ruby
+        "ruby": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/ruby/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 9. R
+        "r": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/r/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 10. Kotlin
+        // ".kt": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/kotlin/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 11. Swift
+        "swift": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/swift/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 12. Dart
+        "dart": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/dart/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 13. VB.NET (Visual Basic dotNET)
+        "vb": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/visual-basic-dot-net/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 14. C# (C Sharp)
+        "csharp": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/c-sharp/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 15. MATLAB / Octave
+        // ".m": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/objective-c/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 16. Wolfram Language (Mathematica)
+        // ".wl": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/wolfram-language-mathematica/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 17. Raku
+        "raku": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/raku/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 18. Scala
+        // ".scala": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/scala/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 19. Java
+        "java": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/java/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 20. Nu
+        // ".nu": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/nu/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 21. Elvish
+        // ".elv": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/elvish/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 22. Vim Script
+        // ".vim": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/vim-script/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 23. Rust
+        "rust": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/rust/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 24. Nix
+        // ".nix": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/nix/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 25. Tcl
+        // ".tcl": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/tcl/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 26. GDScript
+        // ".gd": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/gdscript/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 27. Typst
+        // ".typ": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/typst/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 28. PowerShell
+        "powershell": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/powershell/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 29. Elixir
+        // ".exs": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/elixir/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 30. OCaml
+        // ".ml": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/ocaml/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 31. Erlang
+        // ".erl": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/erlang/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 32. Gleam
+        // ".gleam": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/gleam/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 33. Zig
+        // ".zig": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/zig/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 34. Nim
+        // ".nim": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/nim/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 35. Odin
+        // ".odin": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/odin/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 36. C++ (C Plus Plus)
+        "cpp": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/c-plus-plus/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 37. Objective C
+        "objective-c": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/objective-c/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 38. Smalltalk
+        // ".st": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/smalltalk/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 39. ActionScript
+        // ".as": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/actionscript/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 40. Groovy
+        "groovy": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/groovy/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 41. Cangjie
+        // ".cj": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/cangjie/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 42. C3
+        // ".c3": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/c3/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 43. C
+        "c": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/c/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 44. D
+        // ".d": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/d/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 45. V
+        // ".v": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/v/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 46. Vala
+        // ".vala": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/vala/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 47. Crystal
+        // ".cr": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/crystal/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 48. Wren
+        // ".wren": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/wren/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
+
+        // 49. Pike
+        // ".pike": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/pike/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
     },
     "java.project.resourceFilters": [
         "node_modules",
@@ -481,9 +809,6 @@
     ],
     "rubyLsp.rubyVersionManager": {
         "identifier": "none"
-    },
-    "[go]": {
-        "editor.formatOnSave": false
     },
     "MATLAB.matlabConnectionTiming": "never",
     "MATLAB.telemetry": false,
@@ -532,6 +857,31 @@
         "editor.insertSpaces": true,
         "editor.detectIndentation": false
     },
+    "[c3]": {
+        "editor.wordWrap": "off",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false
+    },
+    "[nim]": {
+        "editor.wordWrap": "off",
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false
+    },
+    "[dart]": {
+        "editor.wordWrap": "off",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false
+    },
+    "[go]": {
+        "editor.wordWrap": "off",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false,
+        "editor.formatOnSave": false
+    },
     "[markdown]": {
         "editor.wordWrap": "off",
         "editor.tabSize": 4,
@@ -571,5 +921,12 @@
     "julia.juliaup.customDepot": false,
     "julia.promptToInstall": false,
     "julia.executablePath": "/usr/local/julia/bin/julia",
-    "workbench.notifications.position": "bottom-left"
+    "workbench.notifications.position": "bottom-left",
+    "notification.statusMode": "off",
+    "c3.lsp.enable": false,
+    "c3.lsp.checkForUpdate": false,
+    "zenMode.silentNotifications": true,
+    // "workbench.notification.extensionHidingList": [
+    //     "c3.vscode-c3"
+    // ],
 }
