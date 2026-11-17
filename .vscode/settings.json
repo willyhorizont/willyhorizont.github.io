@@ -152,7 +152,33 @@
         "editor.wordHighlightBackground": "#0000004f",
         "editor.findMatchBorder": "#ffffff",
         "editor.findMatchHighlightBackground": "#FF000044",
+
+        "terminal.background": "#000000",
+        "terminal.foreground": "#CCFF00",
+        "terminal.ansiBlack": "#000000",         // color 0
+        "terminal.ansiRed": "#FF1493",           // color 1
+        "terminal.ansiGreen": "#FF1493",         // color 2
+        "terminal.ansiYellow": "#00ADD8",        // color 3
+        "terminal.ansiBlue": "#CCFF00",          // color 4
+        "terminal.ansiMagenta": "#CCFF00",       // color 5
+        "terminal.ansiCyan": "#FF1493",          // color 6
+        "terminal.ansiWhite": "#00ADD8",         // color 7
+        "terminal.ansiBrightBlack": "#00ADD8",   // color 8
+        "terminal.ansiBrightRed": "#FF1493",     // color 9
+        "terminal.ansiBrightGreen": "#FF1493",   // color 10
+        "terminal.ansiBrightYellow": "#FF1493",  // color 11
+        "terminal.ansiBrightBlue": "#00ADD8",    // color 12
+        "terminal.ansiBrightMagenta": "#FF1493", // color 13
+        "terminal.ansiBrightCyan": "#CCFF00",    // color 14
+        "terminal.ansiBrightWhite": "#FFFFFF",   // color 15
     },
+    "terminal.integrated.fontSize": 10,
+    "terminal.integrated.cursorStyle": "line",
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.cursorStyleInactive": "line",
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "terminal.integrated.defaultProfile.windows": "bash",
+    "terminal.integrated.gpuAcceleration": "off",
     "editor.tokenColorCustomizations": {
         "[Visual Studio 2017 Dark - C++]": {
             "variables": "#dfc570",
@@ -219,9 +245,6 @@
     },
     // "files.defaultLanguage": "javascript",
     // "files.defaultLanguage": "typescriptreact",
-    "terminal.integrated.cursorStyle": "line",
-    "terminal.integrated.cursorBlinking": true,
-    "terminal.integrated.cursorStyleInactive": "line",
     "[typst]": {
         "editor.wordWrap": "off",
         "editor.tabSize": 4,
@@ -250,7 +273,11 @@
     "workbench.editor.pinnedTabsOnSeparateRow": true,
     "workbench.editor.titleScrollbarSizing": "large",
     "workbench.iconTheme": "vscode-great-icons",
-    "editor.fontFamily": "'Source Code Pro', Consolas, 'Courier New', monospace",
+    "editor.unicodeHighlight.invisibleCharacters": false,
+    "editor.unicodeHighlight.ambiguousCharacters": false,
+    "editor.unicodeHighlight.nonBasicASCII": false,
+    "editor.fontFamily": "'JetBrains Mono', monospace",
+    "editor.fontLigatures": false,
     "editor.maxTokenizationLineLength": 9999999999999999999999999999999999999999999999999999999,
     "editor.rulers": [],
     "editor.wordWrap": "off",
@@ -264,15 +291,14 @@
     "editor.formatOnSave": false,
     "[html]": {
         // "editor.defaultFormatter": "vscode.html-language-features",
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
+        "editor.defaultFormatter": "mohd-akram.vscode-html-format"
     },
     "code-runner.showRunIconInEditorTitleMenu": true,
 
-    "terminal.integrated.defaultProfile.linux": "bash",
-    "terminal.integrated.defaultProfile.windows": "PowerShell",
     "php.suggest.basic": false,
     "window.title": "${rootName}${separator}${activeEditorLong}${dirty}",
-    "terminal.integrated.gpuAcceleration": "off",
+    "window.menuStyle": "custom",
+    "window.titleBarStyle": "native",
     "json.maxItemsComputed": 500000,
     "javascript.updateImportsOnFileMove.enabled": "always",
     "editor.lineHeight": 27,
@@ -344,6 +370,14 @@
     "code-runner.ignoreSelection": true,
     "code-runner.runInTerminal": true,
     "files.associations": {
+        // "last-commit.sh": "plaintext",
+        "**/*tint2*": "shellscript",
+        "*.awk": "shellscript",
+        "**/i3/**/*conf*": "shellscript",
+        "**/LXDE/**/*conf*": "shellscript",
+        "**/LXDE/**/*autostart*": "shellscript",
+        "**/openbox/**/*autostart*": "shellscript",
+
         // 1. JavaScript / TypeScript
         "*.js": "javascript",
 
@@ -494,7 +528,7 @@
         "*.h": "objective-c",
     },
     "code-runner.executorMapByFileExtension": {
-        ".sh": "bash $fullFileName",
+        ".sh": "bash -c $fullFileName",
 
         // 1. JavaScript / TypeScript
         ".js": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/javascript-or-typescript/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
@@ -644,7 +678,7 @@
         ".pike": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/pike/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
     },
     "code-runner.executorMap": {
-        "shellscript": "bash $fullFileName",
+        "shellscript": "bash -c $fullFileName",
 
         // 1. JavaScript / TypeScript
         "javascript": "bash -c 'cd \"$HOME/willyhorizont.github.io/cross-language-programming-concepts\" && \"$HOME/willyhorizont.github.io/cross-language-programming-concepts/languages/javascript-or-typescript/runner.sh\" \"$dirWithoutTrailingSlash/$fileName\"'",
@@ -895,7 +929,6 @@
     "diffEditor.maxComputationTime": 0,
     "diffEditor.experimental.showMoves": true,
     "diffEditor.renderSideBySide": true,
-    "editor.unicodeHighlight.invisibleCharacters": false,
     "application.shellEnvironmentResolutionTimeout": 100,
     "chat.disableAIFeatures": true,
     "tclLsp.features.signatureHelp": false,
@@ -904,10 +937,6 @@
     "tclLsp.ai.enabled": false,
     "window.newWindowProfile": "Default",
     "julia.juliaup.install.hint": false,
-    "[plaintext]": {
-        "editor.unicodeHighlight.ambiguousCharacters": false,
-        "editor.unicodeHighlight.invisibleCharacters": false
-    },
     "kotlin.languageServer.enabled": false,
     "kotlin.debugAdapter.enabled": false,
     "window.titleSeparator": " | ",
