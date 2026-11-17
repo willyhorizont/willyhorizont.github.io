@@ -1,8 +1,10 @@
 #!/bin/bash
 
+$HOME/willyhorizont.github.io/linux/confirm-cmd.sh || exit 1
+
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD")
-V="2.3.27" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!!
+V="2.3.28" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!!
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -27,11 +29,7 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-big update in cv;
-update portfolio, add Cross Languages Programming Concepts;
-update contact, update linkedin, update linkedin logo url;
-update links, update linkedin, update linkedin logo url;
-update utils.js;
+small fix in portfolio;
 "
 M=$(sed -e '/./,$!d' <<< "$M")
 M="$H

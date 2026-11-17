@@ -417,7 +417,6 @@
                 const devToolConsoleTextareaEl = document.getElementById("input-of-dev-tool-console-textarea");
                 if (!devToolConsoleTextareaEl) return;
                 devToolConsoleTextareaEl.value = `
-const pos = "";
 (async () => {
     if (!FILE_IJAZAH) {
         const file_ijazah = await uploadIjazah();
@@ -427,6 +426,7 @@ const pos = "";
         const file_transkrip_nilai = await uploadTranskripNilai();
         if (!file_transkrip_nilai?.url) return;
     }
+    const pos = "";
     renderJobApplication({
         pos,
         org: "",
