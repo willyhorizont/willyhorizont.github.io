@@ -1,3 +1,6 @@
+[Last updated: 18 Nov 2026 @ 07:23 PM][version: 2.3.29]
+set window.title back after print;
+
 [Last updated: 17 Nov 2026 @ 11:46 AM][version: 2.3.28]
 small fix in portfolio;
 

@@ -4,24 +4,11 @@ $HOME/willyhorizont.github.io/linux/confirm-cmd.sh || exit 1
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD")
-V="2.3.28" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!!
+V="2.3.29" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!!
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
-LID="javascript-or-typescript"
-IMG=$("$RD/tools/utils.sh" --get-docker-image $LID 2>/dev/null)
-
-docker run -i --rm \
-    --entrypoint bash \
-    -v "$HOME:$HOME" \
-    -v "$PWD:$PWD" \
-    -v "$RD:$RD" \
-    -v "$SD:$SD" \
-    "$IMG" \
-    -c "
-        cd \"$RD\"
-        npm version \"$V\" --no-git-tag-version
-    "
+python3 "$HOME/willyhorizont.github.io/linux/npm-version.py" "$V" "$RD"
 
 H="
 [Last updated: $T][version: $V]
@@ -29,7 +16,7 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-small fix in portfolio;
+set window.title back after print;
 "
 M=$(sed -e '/./,$!d' <<< "$M")
 M="$H
@@ -47,7 +34,3 @@ git tag -d "$V" 2>/dev/null
 git tag -a "$V" -m "$M"
 git push origin main
 git push origin --tags
-
-sudo -p "$L
-Enter password to stop docker container: " systemctl disable --now docker.service 2>/dev/null
-sudo systemctl disable --now containerd.service
